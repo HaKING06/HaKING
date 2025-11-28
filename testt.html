@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HaKING | STEAM</title>
+    <link rel="icon" type="image/png" href="image/HICON.png">
+    <!-- LIBS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+
+ /* ======================================= */
+        /* POPUP (REKLAM-CSS) */
+ /* ======================================= */
+/* Pop-up'ı Gizleyen ve Tüm Ekranı Kapsayan Arka Plan */
+.modal-overlay {
+    display: none; 
+    position: fixed;
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu çıksın */
+    background-color: rgba(0, 0, 0, 0.9); 
+    backdrop-filter: blur(5px); 
+    -webkit-backdrop-filter: blur(5px); /* Safari desteği */
+}
+
+/* Pop-up İçerik Kutusu */
+.modal-content {
+    background-color: #fefefe;
+    margin: 30px auto; /* Üstten ve alttan boşluk bırakır, dikeyde ortalar */
+    border-radius: 12px;
+    padding: 0;
+    position: relative;
+    width: 90%; 
+    max-width: 450px; /* Maksimum genişlik (640px ile orantılı) */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    text-align: center; /* İçindeki img/video'yu ortalamak için */
+}
+
+/* Kapatma Butonu */
+.modal-close-btn {
+    color: #fff; 
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+}
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+/* Fotoğraf Kapsayıcısı: 640x1140 en boy oranını korur */
+.modal-image-container {
+    position: relative;
+    height: 0;
+    /* 1140 / 640 = 178.125% -> Genişliğe göre yüksekliği ayarlar */
+    padding-top: 178.125%; 
+    overflow: hidden;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* Fotoğraf Stili: Kapsayıcıyı tam doldurur */
+.modal-image-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* En boy oranını koruyarak doldurur */
+    display: block; /* img varsayılan inline olduğu için */
+}
+
+/* Video Kapsayıcısı: Fotoğrafın Altında Uyumlu Boyut */
+.modal-video-container {
+    position: relative;
+    height: 0;
+    /* Video için daha kısa bir yükseklik, örn: 640x360 gibi yatay bir videonun oranı (360/640=56.25%) */
+    /* Veya fotoğrafın yarısı kadar dikey (1140/2 = 570) oranına göre (570/640=89.0625%) */
+    /* Ben videonun biraz daha kısa olmasını istediğiniz varsayarak %80 verdim, ayarlayabilirsiniz. */
+padding-top: 29.41%; 
+    
+    overflow: hidden;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin-top: -4px;
+}
+
+/* Video Stili: Kapsayıcıyı tam doldurur */
+.modal-video-responsive {
+position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 🔑 DEĞİŞİKLİK: Video tam görünmeli ve kırpılmamalı, bu yüzden 'cover' yerine 'contain' kullanıyoruz. */
+    /* Ancak, 'contain' kullanmak videonun çevresinde boşluk bırakabilir. 
+       Eğer video tam kutuya sığarsa (ki padding-top ile ayarladık), 'cover' veya 'contain' kullanmak yerine tamamen kaldırabiliriz.
+       Ancak en güvenlisi tam boyutu almaktır: */
+    object-fit: fill; /* Kapsayıcıyı tam doldurur, en-boy oranını bozabilir ama boşluk bırakmaz */
+    /* Veya: object-fit: contain; kullanarak video boşluk bırakarak tam gözükmesini sağlayabilirsiniz. Hangisi daha az "çirkin" duruyorsa... */
+}
+
+/* Linklerin blok seviyesinde olmasını sağlar */
+.modal-image-link,
+.modal-video-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+        /* === CORE === */
+        :root {
+            --bg: #020101; --panel: rgba(5, 2, 2, 0.95);
+            --red: #ff0000; --red-dim: #8a0000;
+            --gold: #ffb700; --gold-dim: #b8860b;
+            --soul: #00f3ff; --soul-dim: #008b99;
+            --text: #eeeeee; --muted: #888888;
+            --nav-w: 100px;
+            --f-head: 'Cinzel', serif;
+            --f-ui: 'Rajdhani', sans-serif;
+            --f-code: 'JetBrains Mono', monospace;
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@400&family=Rajdhani:wght@500;700&display=swap');
+
+        * { margin:0; padding:0; box-sizing:border-box; cursor:none; user-select:none; outline:none; -webkit-tap-highlight-color:transparent; }
+        body { background:var(--bg); color:var(--text); font-family:var(--f-ui); height:100vh; width:100vw; overflow:hidden; }
+
+        /* === CURSOR === */
+        #cursor { position:fixed; top:0; left:0; width:20px; height:20px; z-index:99999; pointer-events:none; mix-blend-mode:exclusion; transition:transform 0.1s; }
+        #cursor::before { content:''; position:absolute; top:9px; left:-5px; width:30px; height:2px; background:var(--red); box-shadow:0 0 5px var(--red); }
+        #cursor::after { content:''; position:absolute; left:9px; top:-5px; width:2px; height:30px; background:var(--red); box-shadow:0 0 5px var(--red); }
+        #cursor .dot { position:absolute; top:50%; left:50%; width:4px; height:4px; background:var(--gold); border-radius:50%; transform:translate(-50%,-50%); }
+        body.hover #cursor { transform:scale(1.5) rotate(45deg); }
+        @media(hover:none){ #cursor{display:none;} *{cursor:auto;} }
+
+        /* === LOADER === */
+        #loader { position:fixed; inset:0; background:#000; z-index:50000; display:flex; flex-direction:column; align-items:center; justify-content:center; transition: opacity 0.5s ease; }
+        .seal-wrap { position:relative; width:160px; height:160px; display:flex; align-items:center; justify-content:center; margin-bottom:40px; }
+        .seal-svg { position:absolute; inset:0; width:100%; height:100%; }
+
+        .seal-wrap { position:relative; width:150px; height:150px; margin-bottom:30px; display:flex; align-items:center; justify-content:center; }
+        .seal-ring { position:absolute; inset:0; border:2px dashed var(--red); border-radius:50%; animation:spin 10s linear infinite; }
+        .seal-in { position:absolute; inset:15px; border:1px solid var(--gold); border-radius:50%; animation:spinR 5s linear infinite; opacity:0.5; }
+        .seal-text { position:absolute; z-index:10; font-family:var(--f-head); font-weight:900; font-size:60px; color:var(--red); text-shadow:0 0 20px var(--red); animation:pulse 1s infinite alternate; }
+        
+        .load-txt { font-family:var(--f-code); color:var(--gold); letter-spacing:3px; font-size:14px; margin-bottom:15px; }
+        .load-bar { width:300px; height:4px; background:#221111; position:relative; overflow:hidden; border-radius:2px; }
+        .load-fill { position:absolute; left:0; top:0; height:100%; width:0%; background:var(--red); box-shadow:0 0 20px var(--red); transition: width 0.2s linear; }
+        .console { position:absolute; bottom:20px; left:20px; font-family:var(--f-code); font-size:10px; color:#666; }
+        
+        /* Dönen Üçgenler */
+        .lt1 { fill:none; stroke:var(--gold); stroke-width:3; transform-origin: center; transform-box: fill-box; animation:spin 10s linear infinite; filter:drop-shadow(0 0 10px var(--gold)); }
+        .lt2 { fill:none; stroke:var(--red); stroke-width:3; transform-origin: center; transform-box: fill-box; animation:spinR 15s linear infinite; filter:drop-shadow(0 0 10px var(--red)); }
+        
+        /* Ortadaki H */
+        .seal-text { position:absolute; z-index:10; font-family:var(--f-head); font-weight:900; font-size:60px; color:var(--red); text-shadow:0 0 30px var(--red); animation:pulse 1s infinite alternate; }
+        
+        .load-txt { font-family:var(--f-code); color:var(--gold); letter-spacing:3px; font-size:14px; margin-bottom:15px; }
+        .load-bar { width:300px; height:4px; background:#221111; position:relative; overflow:hidden; }
+        .load-fill { position:absolute; left:0; top:0; height:100%; width:0%; background:var(--red); box-shadow:0 0 20px var(--red); transition: width 0.2s linear; }
+        .console { position:absolute; bottom:20px; left:20px; font-family:var(--f-code); font-size:10px; color:#666; }
+
+        /* === BACKGROUND === */
+        #canvas { position:fixed; inset:0; z-index:0; opacity:0.4; }
+        .scanlines { position:fixed; inset:0; z-index:1; pointer-events:none; background:linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3) 51%); background-size:100% 4px; opacity:0.3; }
+        .vignette { position:fixed; inset:0; z-index:2; pointer-events:none; background:radial-gradient(circle, transparent 20%, #000 140%); }
+
+        /* === LANG (FIXED TOP RIGHT) === */
+        .lang-box { position:fixed; top:30px; right:40px; z-index:60000; font-family:var(--f-code); }
+        .lang-btn { background:rgba(0,0,0,0.9); border:1px solid var(--gold); color:var(--gold); padding:10px 20px; font-size:12px; cursor:none; display:flex; align-items:center; gap:10px; transition:0.3s; clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
+        .lang-btn:hover { background:var(--gold); color:black; box-shadow:0 0 20px var(--gold-dim); }
+        .lang-list { position:absolute; top:110%; right:0; width:160px; background:rgba(5,0,0,0.98); border:1px solid var(--red); display:none; flex-direction:column; max-height:400px; overflow-y:auto; box-shadow:0 10px 40px #000; }
+        .lang-list.show { display:flex; animation:slideDown 0.3s; }
+        .lang-opt { padding:10px; text-align:right; color:#888; border-bottom:1px solid #222; font-size:11px; transition:0.2s; cursor:none; text-transform: uppercase; }
+        .lang-opt:hover { background:var(--red-dim); color:white; }
+        
+        /* === LAYOUT === */
+        #app { display:grid; grid-template-columns:var(--nav-w) 1fr; height:100%; position:relative; z-index:10; opacity:0; transition:opacity 1s; pointer-events: none; }
+        .sidebar { background:linear-gradient(180deg, #020000, #0a0000); border-right:1px solid rgba(255,0,0,0.2); display:flex; flex-direction:column; align-items:center; padding:20px 0; z-index:100; box-shadow:10px 0 50px rgba(0,0,0,0.7); }
+
+        /* LOGO: MAIN UI */
+        .logo { width:80px; height:80px; position:relative; display:flex; align-items:center; justify-content:center; cursor:none; margin-bottom:2rem; }
+        .logo svg { position:absolute; width:100%; height:100%; }
+        .t1 { fill:none; stroke:var(--gold); stroke-width:2; animation:spin 20s linear infinite; transform-origin:center; transform-box: fill-box; }
+        .t2 { fill:none; stroke:var(--red); stroke-width:2; animation:spinR 25s linear infinite; transform-origin:center; transform-box: fill-box; }
+        .lh { position:absolute; z-index:10; font-family:var(--f-head); font-weight:bold; font-size:36px; color:white; text-shadow:0 0 15px var(--gold); pointer-events:none; }
+        .logo:hover .t1, .logo:hover .t2 { stroke:white; filter:drop-shadow(0 0 8px white); animation-duration:3s; }
+
+        /* NAV (TRANSPARENT) */
+        .navs { display:flex; flex-direction:column; gap:15px; width:100%; }
+        .nav-btn { width:100%; height:75px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; color:var(--muted); transition:0.3s; position:relative; cursor:none; background:transparent; }
+        .nav-btn i { width:24px; height:24px; transition:0.3s; z-index:2; }
+        .nav-lbl { font-size:9px; letter-spacing:1px; opacity:0.6; transition:0.3s; font-family:var(--f-code); text-transform:uppercase; }
+        .nav-btn:hover, .nav-btn.active { color:var(--text); background:linear-gradient(90deg, rgba(255,0,0,0.15), transparent); }
+        .nav-btn:hover i, .nav-btn.active i { color:var(--red); transform:scale(1.2); filter:drop-shadow(0 0 10px var(--red)); }
+        .nav-btn:hover .nav-lbl, .nav-btn.active .nav-lbl { opacity:1; color:var(--gold); }
+        .nav-btn.active::before { content:''; position:absolute; left:0; top:20%; height:60%; width:3px; background:var(--red); box-shadow:0 0 10px var(--red); }
+
+        /* STAGE */
+        .stage { position:relative; width:100%; height:100%; overflow:hidden; }
+        .section { position:absolute; inset:0; padding:3rem 6rem; overflow-y:auto; opacity:0; pointer-events:none; transform:translateY(40px) scale(0.98); transition:0.6s cubic-bezier(0.23,1,0.32,1); scrollbar-width:thin; scrollbar-color:var(--red-dim) #000; }
+        .section.active { opacity:1; pointer-events:all; transform:translateY(0) scale(1); }
+
+        .head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem; }
+        .h-tit { font-family:var(--f-head); font-size:4rem; margin:0; line-height:0.9; letter-spacing:5px; color:white; text-shadow:2px 2px 0 #000; text-transform:uppercase; }
+        .h-sub { font-family:var(--f-code); color:var(--gold); letter-spacing:3px; font-size:0.9rem; display:block; margin-bottom:10px; }
+        .h-stat { color:var(--soul); text-shadow:0 0 10px var(--soul); animation:pulse 2s infinite; font-family:var(--f-code); font-size:0.8rem; text-align:right; }
+
+        .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:30px; padding-bottom:150px; }
+        
+        /* CARDS */
+        .panel { background:var(--panel); border:1px solid rgba(255,255,255,0.08); padding:2rem; position:relative; overflow:hidden; transition:0.4s; backdrop-filter:blur(10px); }
+        .panel:hover { border-color:var(--red); box-shadow:0 15px 50px -10px rgba(255,0,0,0.15); background:rgba(25,5,5,0.95); transform:translateY(-5px); }
+        .panel::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg, transparent, var(--red), transparent); transform:translateX(-100%); transition:0.6s; }
+        .panel:hover::before { transform:translateX(100%); }
+
+        /* PROFILE (BEŞGEN + ÇERÇEVE) */
+        .profile { grid-column:span 12; display:flex; align-items:center; gap:4rem; padding:4rem; background:linear-gradient(135deg, #0a0505, #000); border:1px solid var(--gold-dim); }
+        .avi-w { width:260px; height:260px; position:relative; flex-shrink:0; }
+        
+        /* AVATAR GÖRÜNTÜSÜ (BEŞGEN) */
+        .avi-img { 
+            width:100%; height:100%; object-fit:cover; 
+            clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
+            filter: contrast(1.1);
+        }
+        /* DIŞ ÇERÇEVE (KÖŞELİ - TECH) */
+        .frame-corner { position: absolute; width: 40px; height: 40px; border: 3px solid var(--gold); transition: 0.3s; }
+        .fc-tl { top: -10px; left: -10px; border-right: none; border-bottom: none; }
+        .fc-tr { top: -10px; right: -10px; border-left: none; border-bottom: none; }
+        .fc-bl { bottom: -10px; left: -10px; border-right: none; border-top: none; }
+        .fc-br { bottom: -10px; right: -10px; border-left: none; border-top: none; }
+        
+        .p-info h2 { font-family:var(--f-head); font-size:4.5rem; margin:0; line-height:1; color:white; }
+        .p-info p { font-family:var(--f-code); color:var(--muted); margin:15px 0 30px; font-size:1.2rem; }
+        .badge { display:inline-flex; align-items:center; gap:10px; padding:10px 25px; border:1px solid var(--gold); color:var(--gold); font-weight:bold; background:rgba(255,183,0,0.08); }
+
+        .stat h3 { color:var(--red); font-family:var(--f-head); margin-bottom:10px; font-size:1rem; }
+        .stat-val { font-size:3rem; font-weight:bold; color:white; font-family:var(--f-ui); }
+
+        /* GAMES */
+        .game { grid-column:span 4; height:350px; position:relative; border:1px solid #222; overflow:hidden; transition:0.4s; background:#000; }
+        .game-bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:0.5s; filter:grayscale(0.8) brightness(0.6); }
+        .game:hover .game-bg { filter:grayscale(0) brightness(1.1); transform:scale(1.05); }
+        .game:hover { border-color:var(--red); box-shadow:0 0 30px rgba(255,0,0,0.3); }
+        .game-ov { position:absolute; bottom:0; left:0; width:100%; padding:25px; background:linear-gradient(to top, #000 20%, transparent); border-top:2px solid var(--red); transform:translateY(100%); transition:0.4s ease; }
+        .game:hover .game-ov { transform:translateY(0); }
+        .g-tit { font-family:var(--f-head); font-size:1.6rem; margin-bottom:5px; color:white; }
+        .g-time { font-family:var(--f-code); color:var(--gold); font-size:0.9rem; }
+        
+        /* BUTTON FIX */
+        .btn-view { 
+            grid-column:span 12; padding:30px; text-align:center; border:1px solid var(--muted); color:var(--muted); 
+            font-family:var(--f-code); font-size:1.3rem; letter-spacing:6px; transition:0.3s; text-decoration:none; 
+            position:relative; overflow:hidden; z-index:1; background: rgba(20,0,0,0.5);
+        }
+        .btn-view:hover { color:white; border-color:var(--red); letter-spacing:10px; background:rgba(255,0,0,0.2); }
+        .btn-view::before { content:''; position:absolute; top:0; left:0; width:0%; height:100%; background:var(--red); z-index:-1; transition:0.4s; }
+        .btn-view:hover::before { width:100%; }
+
+        /* MACHINE 3D (V LOGO DÜZ) */
+        .rig { grid-column:span 12; height:600px; position:relative; background:radial-gradient(circle at center, #101015 0%, #000 80%); border:1px solid var(--soul); display:flex; align-items:center; justify-content:center; overflow:hidden; perspective:1200px; }
+        .holo { position:absolute; bottom:-100px; width:700px; height:700px; border:2px solid rgba(0,243,255,0.2); border-radius:50%; transform:rotateX(75deg); animation:spin 20s linear infinite; background:repeating-radial-gradient(rgba(0,243,255,0.05) 0, transparent 40px); }
+        .laptop { position:relative; width:450px; height:20px; transform-style:preserve-3d; transform:rotateX(70deg) rotateZ(20deg); transition:0.8s; z-index:10; }
+        .rig:hover .laptop { transform:rotateX(60deg) rotateZ(0deg) translateY(-20px) scale(1.05); }
+        .lid { width:450px; height:280px; background:#0a0a0a; border:3px solid #222; position:absolute; bottom:0; transform-origin:bottom; transform:rotateX(-100deg); display:flex; align-items:center; justify-content:center; box-shadow:0 0 50px rgba(0,243,255,0.1); transform-style:preserve-3d; }
+        
+        /* V LOGO FIX: 0 DERECE (DÜZ) */
+        .v-logo { font-family:var(--f-head); font-size:6rem; color:white; opacity:0.8; text-shadow:0 0 20px var(--soul); transform:rotate(0deg); }
+        
+        .base { width:450px; height:300px; background:#111; border:2px solid #444; position:absolute; top:0; transform-origin:top; display:flex; justify-content:center; }
+        .kb { width:85%; height:40%; margin-top:40px; background:linear-gradient(45deg, transparent 30%, rgba(0,243,255,0.3) 50%, transparent 70%); animation:rgb 3s infinite linear; border:1px solid #333; }
+        .rtx { position:absolute; top:40px; right:40px; padding:10px 20px; border:2px solid #76b900; color:#76b900; font-family:sans-serif; font-weight:900; letter-spacing:1px; box-shadow:0 0 20px rgba(118,185,0,0.3); animation:pulseGreen 2s infinite; z-index:10; }
+
+        /* ORACLE */
+        .tarot { grid-column:span 4; height:450px; background:#080202; border:2px solid #222; border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:0.6s; perspective:1000px; }
+        .tarot:hover { border-color:var(--gold); box-shadow:0 0 40px rgba(255,183,0,0.2); transform:translateY(-10px) rotateY(10deg); }
+        .t-icon { color:var(--gold); margin-bottom:20px; }
+        .t-val { font-family:var(--f-ui); font-size:3rem; font-weight:bold; color:white; }
+        .t-lbl { font-family:var(--f-head); color:#888; letter-spacing:4px; margin-top:15px; }
+
+        /* NETWORK */
+        .net { grid-column:span 12; display:flex; align-items:center; justify-content:space-between; padding:30px 50px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; color:white; transition:0.3s; }
+        .net:hover { transform:translateX(20px); background:rgba(255,255,255,0.05); }
+        .dc:hover { border-left:5px solid #5865F2; } .ig:hover { border-left:5px solid #E1306C; } 
+        .yt:hover { border-left:5px solid #FF0000; } .st:hover { border-left:5px solid #1b2838; }
+        .net h3 { font-family:var(--f-head); font-size:2rem; margin:0; }
+        .net span { font-family:var(--f-code); color:var(--muted); font-size:1.1rem; }
+
+        /* FORM (FIXED & CENTERED) */
+        .form-box { 
+            grid-column: 3 / span 8; /* Center */
+            background:var(--panel); border:1px solid var(--red); padding:60px; box-shadow:0 0 50px rgba(0,0,0,0.8); 
+            display: flex; flex-direction: column; width: 100%; max-width: 800px; margin: 0 auto;
+        }
+        .h-in { display: block; width: 100%; background: #000; border: 1px solid #333; color: white; padding: 25px; font-family:var(--f-code); font-size:1.1rem; margin-bottom:30px; transition:0.3s; box-sizing:border-box; }
+        .h-in:focus { border-color:var(--red); box-shadow:0 0 25px rgba(255,0,0,0.15); }
+        .btn-send { width: 100%; padding: 25px; background: linear-gradient(90deg, var(--red-dim), var(--red)); border: none; color: white; font-family: var(--f-head); font-weight: 900; font-size: 1.4rem; letter-spacing: 4px; transition: 0.3s; clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); }
+        .btn-send:hover { background: white; color: black; letter-spacing: 8px; }
+
+        /* MOBILE */
+        @media(max-width:1200px){ .game, .tarot { grid-column:span 6; } .form-box { grid-column:1 / span 12; } }
+        @media(max-width:768px){
+            #app { grid-template-columns:1fr; grid-template-rows:1fr 70px; }
+            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; }
+            .logo, .nav-lbl { display:none; }
+            .navs { flex-direction:row; margin:0; justify-content:space-evenly; }
+            .nav-btn { height:100%; }
+            .section { padding:20px; padding-bottom:120px; }
+            .profile { flex-direction:column; text-align:center; padding:20px; }
+            .grid > * { grid-column:span 12 !important; }
+            .h-tit { font-size:2.5rem; } .net { padding:20px; flex-direction:column; gap:10px; text-align:center; }
+            .form-box { padding:30px; grid-column:span 12; }
+            .rig { height:350px; } .laptop { transform:scale(0.6) rotateX(60deg); }
+        }
+
+        @keyframes spin { 100%{transform:rotate(360deg);} } @keyframes spinR { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} } 
+        @keyframes pulse { 50%{opacity:0.5;text-shadow:0 0 15px var(--soul);} } @keyframes rgb { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+        @keyframes pulseGreen { 50%{opacity:0.6;} } @keyframes slideDown { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
+        @keyframes pulseBorder { 0%{box-shadow:0 0 15px var(--red);} 50%{box-shadow:0 0 35px var(--gold);} 100%{box-shadow:0 0 15px var(--red);} }
+    </style>
+</head>
+<body>
+
+
+
+    <div id="first-time-modal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close-btn">&times;</span>
+        
+        <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-image-link">
+            <div class="modal-image-container">
+                <img src="add/SOL.png" alt="Popup Görseli" class="modal-image-full">
+            </div>
+        </a>
+
+        <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-video-link">
+            <div class="modal-video-container">
+                <video id="modal-video" autoplay muted loop playsinline class="modal-video-responsive">
+                    <source src="add/MBL.mp4" type="video/mp4">
+                    Tarayıcınız video etiketini desteklemiyor.
+                </video>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+    <div id="canvas"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div id="cursor"><div class="dot"></div></div>
+
+    <!-- BOOT -->
+    <div id="loader">
+        <div class="seal-wrap">
+            <div class="seal-ring"></div><div class="seal-in"></div>
+            <svg viewBox="0 0 100 100" class="seal-svg">
+                <polygon points="50,10 85,75 15,75" class="lt1"/>
+                <polygon points="50,90 85,25 15,25" class="lt2"/>
+            </svg>
+            <div class="seal-text">H</div>
+        </div>
+        <div class="load-txt" id="ltxt">YER ALTI...</div>
+        <div class="load-bar"><div class="load-fill"></div></div>
+    </div>
+
+    <!-- LANG -->
+    <div class="lang-box">
+        <button class="lang-btn" id="lang-togg"><i data-lucide="globe" style="width:14px"></i> <span id="curr-lang">EN</span></button>
+        <div class="lang-list" id="lang-menu">
+            <!-- Dilleri buraya kopyala yapıştır -->
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div id="app">
+        <aside class="sidebar">
+            <div class="logo" onclick="nav('sanctum')">
+                <svg viewBox="0 0 100 100" class="t1"><polygon points="50,10 85,75 15,75" fill="none" stroke="#ffb700" stroke-width="2"/></svg>
+                <svg viewBox="0 0 100 100" class="t2" style="position:absolute;top:0;left:0"><polygon points="50,90 85,25 15,25" fill="none" stroke="#ff0000" stroke-width="2"/></svg>
+                <div class="lh">H</div>
+            </div>
+            <nav class="navs">
+                <button class="nav-btn active" data-t="sanctum"><i data-lucide="skull"></i><span class="nav-lbl" data-k="nav_sanctum">SANCTUM</span></button>
+                <button class="nav-btn" data-t="armory"><i data-lucide="swords"></i><span class="nav-lbl" data-k="nav_armory">ARMORY</span></button>
+                <button class="nav-btn" data-t="machine"><i data-lucide="cpu"></i><span class="nav-lbl" data-k="nav_machine">MACHINE</span></button>
+                <button class="nav-btn" data-t="oracle"><i data-lucide="bar-chart-2"></i><span class="nav-lbl" data-k="nav_oracle">ORACLE</span></button>
+                <button class="nav-btn" data-t="network"><i data-lucide="globe"></i><span class="nav-lbl" data-k="nav_network">NETWORK</span></button>
+                <button class="nav-btn" data-t="trans"><i data-lucide="send"></i><span class="nav-lbl" data-k="nav_trans">CONTACT</span></button>
+            </nav>
+            <div style="height:70px;"></div>
+        </aside>
+
+        <main class="stage">
+            <section id="sanctum" class="section active">
+                <div class="head"><div><h1 class="h-tit">HaKING</h1><span class="h-sub" data-k="role">UNDERWORLD OPERATOR</span></div><div class="h-stat" data-k="sys">SYSTEM ONLINE</div></div>
+                <div class="grid">
+                    <div class="profile">
+                        <div class="avi-w">
+                            <div class="frame-corner fc-tl"></div><div class="frame-corner fc-tr"></div>
+                            <div class="frame-corner fc-bl"></div><div class="frame-corner fc-br"></div>
+                            <img src="image/HaKING2.png" class="avi-img" onerror="this.src='https://avatars.akamai.steamstatic.com/b5bd56c1aa4644a474a298e131597431c4897244_full.jpg'">
+                        </div>
+                        <div class="p-info"><h2>Halit Güneş</h2><p>// FULL-STACK DEV & GAMER<br>// ID: halitguns06.dev</p><div class="badge"><i data-lucide="shield" size="16"></i> STEAM LEVEL 30</div></div>
+                    </div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="playtime">TIME</h3><div class="stat-val">1,148h</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="value">VALUE</h3><div class="stat-val">$1975</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="games">GAMES</h3><div class="stat-val">144</div></div>
+                </div>
+            </section>
+
+            <section id="armory" class="section">
+                <div class="head"><div><h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">DIGITAL ARSENAL</span></div></div>
+                <div class="grid">
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time"><i data-lucide="clock" size="14"></i> 193.8h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time">162.9h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time">91.4h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time">73.7h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/379430/header.jpg')"></div><div class="game-ov"><div class="g-tit">KINGDOM COME</div><span class="g-time">71.0h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg')"></div><div class="game-ov"><div class="g-tit">HOGWARTS</div><span class="g-time">51.4h</span></div></div>
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank" class="btn-view" data-k="view_all">[ VIEW FULL COLLECTION ]</a>
+                </div>
+            </section>
+
+            <section id="machine" class="section">
+                <div class="head"><div><h1 class="h-tit" data-k="nav_machine">MACHINE</h1><span class="h-sub" data-k="sub_machine">SYSTEM ARCHITECTURE</span></div></div>
+                <div class="grid">
+                    <div class="rig">
+                        <div class="holo"></div><div class="laptop"><div class="lid"><div class="v-logo">V</div></div><div class="base"><div class="kb"></div></div></div><div class="rtx">RTX 4070</div>
+                    </div>
+                    <div class="panel" style="grid-column:span 12; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); text-align:center;">
+                        <div><div style="color:#888">CPU</div><div style="color:var(--soul);font-weight:bold">i7-14700HX</div></div>
+                        <div><div style="color:#888">GPU</div><div style="color:var(--soul);font-weight:bold">RTX 4070</div></div>
+                        <div><div style="color:#888">RAM</div><div style="color:var(--soul);font-weight:bold">16GB DDR5</div></div>
+                        <div><div style="color:#888">SSD</div><div style="color:var(--soul);font-weight:bold">1TB NVMe</div></div>
+                        <div><div style="color:#888">LCD</div><div style="color:var(--soul);font-weight:bold">144Hz IPS</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="oracle" class="section">
+                <div class="head"><div><h1 class="h-tit" data-k="nav_oracle">ORACLE</h1><span class="h-sub" data-k="sub_oracle">INSIGHTS</span></div></div>
+                <div class="grid">
+                    <div class="tarot"><i data-lucide="trophy" size="64" color="#ffb700" style="margin-bottom:15px;"></i><div class="t-val">34%</div><div class="t-lbl" data-k="achievements">COMPLETION</div></div>
+                    <div class="tarot"><i data-lucide="medal" size="64" color="#00f3ff" style="margin-bottom:15px;"></i><div class="t-val">5</div><div class="t-lbl" data-k="perfect">PERFECT</div></div>
+                    <div class="tarot"><i data-lucide="crown" size="64" color="#ff0000" style="margin-bottom:15px;"></i><div class="t-val">1,162</div><div class="t-lbl" data-k="dom_class">TOTAL GLORY</div></div>
+                </div>
+            </section>
+
+            <section id="network" class="section">
+                <div class="head"><div><h1 class="h-tit" data-k="nav_network">NETWORK</h1><span class="h-sub" data-k="sub_network">UPLINKS</span></div></div>
+                <div class="grid">
+                    <a href="https://discord.gg/mJy5z97yB5" target="_blank" class="net dc"><div><h3>DISCORD</h3><span>haking06</span></div><div class="net-stat">JOIN</div></a>
+                    <a href="https://www.instagram.com/ngna_halit/" target="_blank" class="net ig"><div><h3>INSTAGRAM</h3><span>ngna_halit</span></div><div class="net-stat">FOLLOW</div></a>
+                    <a href="https://www.youtube.com/@HaKING06" target="_blank" class="net yt"><div><h3>YOUTUBE</h3><span>HaKING06</span></div><div class="net-stat">SUBSCRIBE</div></a>
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" class="net st"><div><h3>STEAM</h3><span>HaKING</span></div><div class="net-stat">CONNECT</div></a>
+                    <a href="https://steamdb.info/calculator/76561199760755154/" target="_blank" class="net st"><div><h3>STEAM.DB</h3><span>HaKING</span></div><div class="net-stat">CHECK</div></a>
+                </div>
+            </section>
+
+            <section id="trans" class="section">
+                <div class="head"><div><h1 class="h-tit" data-k="nav_trans">CONTACT</h1><span class="h-sub" data-k="sub_trans">SECURE</span></div></div>
+                <div class="grid">
+                    <div class="form-box">
+                        <form action="mailto:halitguns06@gmail.com" method="POST" enctype="text/plain">
+                            <input type="hidden" name="Mail_Konusu" value="">
+                            <input type="text" name="name" class="h-in" placeholder="CODENAME" required>
+                            <input type="email" name="email" class="h-in" placeholder="FREQUENCY" required>
+                            <textarea name="msg" class="h-in" rows="5" placeholder="PACKET..." required></textarea>
+                            <button class="btn-send">TRANSMIT</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const LANG_DATA = {
+    en: { role: "UNDERWORLD OPERATOR", sys: "SYSTEM ONLINE", playtime: "TIME", value: "VALUE", games: "GAMES", nav_sanctum: "SANCTUM", nav_armory: "ARMORY", sub_armory: "DIGITAL ARSENAL", nav_machine: "MACHINE", sub_machine: "SYSTEM ARCHITECTURE", nav_oracle: "ORACLE", sub_oracle: "INSIGHTS", achievements: "COMPLETION", perfect: "PERFECT", dom_class: "TOTAL GLORY", nav_network: "NETWORK", sub_network: "UPLINKS", nav_trans: "CONTACT", sub_trans: "SECURE", view_all: "VIEW COLLECTION", send_btn: "TRANSMIT", ph_name: "CODENAME", ph_email: "FREQUENCY", ph_msg: "PACKET" },
+    tr: { role: "YERALTI OPERATÖRÜ", sys: "SİSTEM AKTİF", playtime: "SÜRE", value: "DEĞER", games: "OYUNLAR", nav_sanctum: "ANA ÜS", nav_armory: "CEPHANELİK", sub_armory: "DİJİTAL ARŞİV", nav_machine: "MAKİNE", sub_machine: "SİSTEM MİMARİSİ", nav_oracle: "KAHİN", sub_oracle: "ANALİZLER", achievements: "TAMAMLAMA", perfect: "KUSURSUZ", dom_class: "TOPLAM ŞAN", nav_network: "AĞ", sub_network: "BAĞLANTILAR", nav_trans: "İLETİŞİM", sub_trans: "GÜVENLİ", view_all: "TÜMÜNÜ GÖR", send_btn: "GÖNDER", ph_name: "KOD ADI", ph_email: "FREKANS", ph_msg: "VERİ PAKETİ" },
+    es: { role: "OPERADOR", sys: "SISTEMA ONLINE", playtime: "TIEMPO", value: "VALOR", games: "JUEGOS", nav_sanctum: "SANTUARIO", nav_armory: "ARMERÍA", sub_armory: "ARSENAL DIGITAL", nav_machine: "MÁQUINA", sub_machine: "ARQUITECTURA", nav_oracle: "ORÁCULO", sub_oracle: "ANÁLISIS", achievements: "COMPLETADO", perfect: "PERFECTOS", dom_class: "GLORIA TOTAL", nav_network: "RED", sub_network: "ENLACES", nav_trans: "CONTACTO", sub_trans: "SEGURO", view_all: "VER TODO", send_btn: "ENVIAR", ph_name: "NOMBRE", ph_email: "FRECUENCIA", ph_msg: "MENSAJE" },
+    ru: { role: "ОПЕРАТОР", sys: "СИСТЕМА АКТИВНА", playtime: "ВРЕМЯ", value: "СТОИМОСТЬ", games: "ИГРЫ", nav_sanctum: "СВЯТИЛИЩЕ", nav_armory: "АРСЕНАЛ", sub_armory: "ЦИФРОВОЙ АРХИВ", nav_machine: "МАШИНА", sub_machine: "АРХИТЕКТУРА", nav_oracle: "ОРАКУЛ", sub_oracle: "АНАЛИЗ", achievements: "ЗАВЕРШЕНО", perfect: "ИДЕАЛЬНЫЕ",dom_class: "ПОЛНАЯ СЛАВА", nav_network: "СЕТЬ", sub_network: "СВЯЗИ", nav_trans: "СВЯЗЬ", sub_trans: "КАНАЛ", view_all: "ВСЕ ИГРЫ", send_btn: "ОТПРАВИТЬ", ph_name: "ИМЯ", ph_email: "ЧАСТОТА", ph_msg: "СООБЩЕНИЕ" },
+    de: { role: "OPERATOR", sys: "SYSTEM ONLINE", playtime: "ZEIT", value: "WERT", games: "SPIELE", nav_sanctum: "HEILIGTUM", nav_armory: "WAFFENKAMMER", sub_armory: "DIGITALES ARSENAL", nav_machine: "MASCHINE", sub_machine: "ARCHITEKTUR", nav_oracle: "ORAKEL", sub_oracle: "ANALYSE", achievements: "ABSCHLUSS", perfect: "PERFEKT", dom_class: "TOTALER RUHM", nav_network: "NETZWERK", sub_network: "VERBINDUNGEN", nav_trans: "KONTAKT", sub_trans: "SICHER", view_all: "ANZEIGEN", send_btn: "SENDEN", ph_name: "NAME", ph_email: "FREQUENZ", ph_msg: "NACHRICHT" },
+    fr: { role: "OPÉRATEUR", sys: "SYSTÈME EN LIGNE", playtime: "TEMPS", value: "VALEUR", games: "JEUX", nav_sanctum: "SANCTUAIRE", nav_armory: "ARMURERIE", sub_armory: "ARSENAL NUMÉRIQUE", nav_machine: "MACHINE", sub_machine: "ARCHITECTURE", nav_oracle: "ORACLE", sub_oracle: "ANALYSE", achievements: "COMPLÉTION", perfect: "PARFAITS", dom_class: "GLOIRE TOTALE", nav_network: "RÉSEAU", sub_network: "LIENS", nav_trans: "CONTACT", sub_trans: "SÉCURISÉ", view_all: "VOIR TOUT", send_btn: "ENVOYER", ph_name: "NOM", ph_email: "FRÉQUENCE", ph_msg: "MESSAGE" },
+    jp: { role: "オペレーター", sys: "システム稼働中", playtime: "時間", value: "価値", games: "ゲーム", nav_sanctum: "聖域", nav_armory: "武器庫", sub_armory: "デジタル保管庫", nav_machine: "機械", sub_machine: "設計", nav_oracle: "神託", sub_oracle: "分析", achievements: "完了率", perfect: "完全", dom_class: "完全な栄光", nav_network: "通信網", sub_network: "リンク", nav_trans: "連絡", sub_trans: "安全", view_all: "見る", send_btn: "送信", ph_name: "名前", ph_email: "周波数", ph_msg: "メッセージ" },
+    cn: { role: "操作员", sys: "系统在线", playtime: "时间", value: "价值", games: "游戏", nav_sanctum: "圣所", nav_armory: "军械库", sub_armory: "数字武库", nav_machine: "机器", sub_machine: "架构", nav_oracle: "神谕", sub_oracle: "分析", achievements: "完成度", perfect: "完美", dom_class: "无上荣耀", nav_network: "网络", sub_network: "链接", nav_trans: "联系", sub_trans: "安全频道", view_all: "查看", send_btn: "发送", ph_name: "代号", ph_email: "频率", ph_msg: "消息" },
+    pt: { role: "OPERADOR", sys: "SISTEMA ONLINE", playtime: "TEMPO", value: "VALOR", games: "JOGOS", nav_sanctum: "SANTUÁRIO", nav_armory: "ARSENAL", sub_armory: "ARSENAL DIGITAL", nav_machine: "MÁQUINA", sub_machine: "ARQUITETURA", nav_oracle: "ORÁCULO", sub_oracle: "ANÁLISE", achievements: "CONCLUSÃO", perfect: "PERFEITOS", dom_class: "GLÓRIA TOTAL", nav_network: "REDE", sub_network: "LINKS", nav_trans: "CONTATO", sub_trans: "SEGURO", view_all: "VER TUDO", send_btn: "ENVIAR", ph_name: "NOME", ph_email: "FREQUÊNCIA", ph_msg: "MENSAGEM" },
+    it: { role: "OPERATORE", sys: "SISTEMA ONLINE", playtime: "TEMPO", value: "VALORE", games: "GIOCHI", nav_sanctum: "SANTUARIO", nav_armory: "ARMERIA", sub_armory: "ARSENALE DIGITALE", nav_machine: "MACCHINA", sub_machine: "ARCHITETTURA", nav_oracle: "ORACOLO", sub_oracle: "ANALISI", achievements: "COMPLETAMENTO", perfect: "PERFETTI", dom_class: "GLORIA TOTALE", nav_network: "RETE", sub_network: "LINK", nav_trans: "CONTATTO", sub_trans: "SICURO", view_all: "VEDI TUTTO", send_btn: "INVIA", ph_name: "NOME", ph_email: "FREQUENZA", ph_msg: "MESSAGGIO" },
+    kr: { role: "운영자", sys: "시스템 온라인", playtime: "시간", value: "가치", games: "게임", nav_sanctum: "성소", nav_armory: "무기고", sub_armory: "디지털 무기고", nav_machine: "머신", sub_machine: "아키텍처", nav_oracle: "오라클", sub_oracle: "분석", achievements: "완료율", perfect: "완벽", dom_class: "총 영광", nav_network: "네트워크", sub_network: "링크", nav_trans: "연락", sub_trans: "보안 채널", view_all: "보기", send_btn: "전송", ph_name: "이름", ph_email: "주파수", ph_msg: "메시지" },
+    ar: { role: "مشغل", sys: "النظام نشط", playtime: "وقت", value: "قيمة", games: "ألعاب", nav_sanctum: "ملاذ", nav_armory: "ترسانة", sub_armory: "ترسانة رقمية", nav_machine: "آلة", sub_machine: "هندسة", nav_oracle: "عراف", sub_oracle: "تحليل", achievements: "إنجاز", perfect: "مثالية", dom_class: "مجد كلي", nav_network: "شبكة", sub_network: "روابط", nav_trans: "اتصال", sub_trans: "آمن", view_all: "عرض", send_btn: "إرسال", ph_name: "اسم", ph_email: "تردد", ph_msg: "رسالة" },
+    hi: { role: "ऑपरेटर", sys: "सिस्टम ऑनलाइन", playtime: "समय", value: "मूल्य", games: "गेम्स", nav_sanctum: "पवित्र", nav_armory: "शस्त्रागार", sub_armory: "डिजिटल शस्त्रागार", nav_machine: "मशीन", sub_machine: "आर्किटेक्चर", nav_oracle: "ओरेकल", sub_oracle: "अंतर्दृष्टि", achievements: "पूर्णता", perfect: "बढ़िया", dom_class: "पूर्ण महिमा", nav_network: "नेटवर्क", sub_network: "लिंक्स", nav_trans: "संपर्क", sub_trans: "सुरक्षित", view_all: "देखें", send_btn: "भेजें", ph_name: "नाम", ph_email: "आवृत्ति", ph_msg: "संदेश" },
+    bn: { role: "অপারেটর", sys: "সিস্টেম অনলাইন", playtime: "সময়", value: "মান", games: "গেমস", nav_sanctum: "স্যাঙ্কটাম", nav_armory: "আর্মরি", sub_armory: "ডিজিটাল অস্ত্রাগার", nav_machine: "মেশিন", sub_machine: "আর্কিটেকচার", nav_oracle: "ওরাকল", sub_oracle: "অন্তর্দৃষ্টি", achievements: "সম্পূর্ণতা", perfect: "নিখুঁত", dom_class: "চূড়ান্ত গৌরব", nav_network: "নেটওয়ার্ক", sub_network: "লিঙ্ক", nav_trans: "যোগাযোগ", sub_trans: "সুরক্ষিত", view_all: "দেখুন", send_btn: "পাঠান", ph_name: "নাম", ph_email: "ফ্রিকোয়েন্সি", ph_msg: "বার্তা" },
+    nl: { role: "OPERATOR", sys: "SYSTEEM ONLINE", playtime: "TIJD", value: "WAARDE", games: "GAMES", nav_sanctum: "HEILIGDOM", nav_armory: "WAPENKAMER", sub_armory: "DIGITAAL ARSENAL", nav_machine: "MACHINE", sub_machine: "ARCHITECTUUR", nav_oracle: "ORAKEL", sub_oracle: "ANALYSE", achievements: "VOLTOOIING", perfect: "PERFECT", dom_class: "TOTALE GLORIE", nav_network: "NETWERK", sub_network: "LINKS", nav_trans: "CONTACT", sub_trans: "VEILIG", view_all: "BEKIJKEN", send_btn: "VERZENDEN", ph_name: "NAAM", ph_email: "FREQUENTIE", ph_msg: "BERICHT" },
+    pl: { role: "OPERATOR", sys: "SYSTEM ONLINE", playtime: "CZAS", value: "WARTOŚĆ", games: "GRY", nav_sanctum: "SANKTUARIUM", nav_armory: "ZBROJOWNIA", sub_armory: "CYFROWY ARSENAŁ", nav_machine: "MASZYNA", sub_machine: "ARCHITEKTURA", nav_oracle: "WYROCZNIA", sub_oracle: "ANALIZA", achievements: "UKOŃCZENIE", perfect: "PERFEKCYJNE", dom_class: "PEŁNA CHWAŁA", nav_network: "SIEĆ", sub_network: "ŁĄCZA", nav_trans: "KONTAKT", sub_trans: "BEZPIECZNY", view_all: "ZOBACZ", send_btn: "WYŚLIJ", ph_name: "NAZWA", ph_email: "CZĘSTOTLIWOŚĆ", ph_msg: "WIADOMOŚĆ" },
+    sv: { role: "OPERATÖR", sys: "SYSTEM ONLINE", playtime: "TID", value: "VÄRDE", games: "SPEL", nav_sanctum: "HELGEDOM", nav_armory: "VAPENKAMMARE", sub_armory: "DIGITALT ARSENAL", nav_machine: "MASKIN", sub_machine: "ARKITEKTUR", nav_oracle: "ORAKEL", sub_oracle: "ANALYS", achievements: "SLUTFÖRANDE", perfect: "PERFEKTA", dom_class: "TOTAL ÄRA", nav_network: "NÄTVERK", sub_network: "LÄNKAR", nav_trans: "KONTAKT", sub_trans: "SÄKER", view_all: "VISA", send_btn: "SKICKA", ph_name: "NAMN", ph_email: "FREKVENS", ph_msg: "MEDDELANDE" },
+    vi: { role: "ĐIỀU HÀNH", sys: "HỆ THỐNG ONLINE", playtime: "THỜI GIAN", value: "GIÁ TRỊ", games: "TRÒ CHƠI", nav_sanctum: "THÁNH ĐỊA", nav_armory: "KHO VŨ KHÍ", sub_armory: "KHO VŨ KHÍ SỐ", nav_machine: "MÁY MÓC", sub_machine: "KIẾN TRÚC", nav_oracle: "TIÊN TRI", sub_oracle: "PHÂN TÍCH", achievements: "HOÀN THÀNH", perfect: "HOÀN HẢO", dom_class: "VINH QUANG TỐI THƯỢNG", nav_network: "MẠNG", sub_network: "LIÊN KẾT", nav_trans: "LIÊN HỆ", sub_trans: "AN TOÀN", view_all: "XEM", send_btn: "GỬI", ph_name: "TÊN", ph_email: "TẦN SỐ", ph_msg: "TIN NHẮN" },
+    el: { role: "ΧΕΙΡΙΣΤΗΣ", sys: "ΣΥΣΤΗΜΑ ONLINE", playtime: "ΩΡΑ", value: "ΑΞΙΑ", games: "ΠΑΙΧΝΙΔΙΑ", nav_sanctum: "ΑΔΥΤΟ", nav_armory: "ΟΠΛΟΣΤΑΣΙΟ", sub_armory: "ΨΗΦΙΑΚΟ ΟΠΛΟΣΤΑΣΙΟ", nav_machine: "ΜΗΧΑΝΗ", sub_machine: "ΑΡΧΙΤΕΚΤΟΝΙΚΗ", nav_oracle: "ΜΑΝΤΕΙΟ", sub_oracle: "ΑΝΑΛΥΣΗ", achievements: "ΟΛΟΚΛΗΡΩΣΗ", perfect: "ΤΕΛΕΙΑ",dom_class: "ΑΠΟΛΥΤΗ ΔΟΞΑ", nav_network: "ΔΙΚΤΥΟ", sub_network: "ΣΥΝΔΕΣΜΟΙ", nav_trans: "ΕΠΙΚΟΙΝΩΝΙΑ", sub_trans: "ΑΣΦΑΛΕΣ", view_all: "ΠΡΟΒΟΛΗ", send_btn: "ΑΠΟΣΤΟΛΗ", ph_name: "ΟΝΟΜΑ", ph_email: "ΣΥΧΝΟΤΗΤΑ", ph_msg: "ΜΗΝΥΜΑ" },
+    th: { role: "ผู้ดำเนินการ", sys: "ระบบออนไลน์", playtime: "เวลา", value: "มูลค่า", games: "เกม", nav_sanctum: "สถานที่ศักดิ์สิทธิ์", nav_armory: "คลังแสง", sub_armory: "คลังแสงดิจิทัล", nav_machine: "เครื่องจักร", sub_machine: "สถาปัตยกรรม", nav_oracle: "ออราเคิล", sub_oracle: "วิเคราะห์", achievements: "สำเร็จ", perfect: "สมบูรณ์", dom_class: "เกียรติยศสูงสุด", nav_network: "เครือข่าย", sub_network: "ลิงก์", nav_trans: "ติดต่อ", sub_trans: "ปลอดภัย", view_all: "ดู", send_btn: "ส่ง", ph_name: "ชื่อ", ph_email: "ความถี่", ph_msg: "ข้อความ" }
+};
+
+const LANG_OPTIONS = [
+    { c: 'tr', n: 'TURKISH' }, { c: 'en', n: 'ENGLISH' }, { c: 'es', n: 'SPANISH' }, { c: 'ru', n: 'RUSSIAN' },
+    { c: 'de', n: 'GERMAN' }, { c: 'fr', n: 'FRENCH' }, { c: 'jp', n: 'JAPANESE' }, { c: 'cn', n: 'CHINESE' },
+    { c: 'pt', n: 'PORTUGUESE' }, { c: 'it', n: 'ITALIAN' }, { c: 'kr', n: 'KOREAN' }, { c: 'ar', n: 'ARABIC' },
+    { c: 'hi', n: 'HINDI' }, { c: 'bn', n: 'BENGALI' }, { c: 'nl', n: 'DUTCH' }, { c: 'pl', n: 'POLISH' },
+    { c: 'sv', n: 'SWEDISH' }, { c: 'vi', n: 'VIETNAMESE' }, { c: 'el', n: 'GREEK' }, { c: 'th', n: 'THAI' }
+];
+        function setLang(c) {
+            let t=LANG_DATA[c]||LANG_DATA['en'];
+            document.querySelectorAll('[data-k]').forEach(e=>e.innerText=t[e.getAttribute('data-k')]||e.innerText);
+            document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t[e.getAttribute('data-p')]||e.placeholder);
+            document.getElementById('curr-lang').innerText=c.toUpperCase();
+            document.getElementById('lang-menu').classList.remove('show');
+        }
+
+        window.onload=()=>{
+
+
+            
+            lucide.createIcons(); initThree(); initCur();
+            const m=document.getElementById('lang-menu');
+            
+            // Populate Lang Menu
+            LANG_OPTIONS.forEach(l=>{
+                let d=document.createElement('div');
+                d.className='lang-opt';
+                d.innerText=l.n;
+                d.onclick=()=>setLang(l.c);
+                m.appendChild(d);
+
+                
+            });
+            
+            
+            setLang('tr'); // Default to TR
+
+            
+
+gsap.to('.load-fill',{width:'100%',duration:2,ease:'power2.inOut',onComplete:()=>{
+    gsap.to('#loader',{opacity:0,duration:0.8,onComplete:()=>{
+        document.getElementById('loader').style.display='none';
+        document.getElementById('app').style.opacity=1;
+        document.getElementById('app').style.pointerEvents='all';
+
+        // 🔑 ÇÖZÜM: Loader tamamen kapandıktan 4.5 saniye sonra pop-up'ı göster
+        setTimeout(checkAndShowModalWithTimer, 100);
+
+                    
+                }});
+            }});
+
+            document.querySelectorAll('.nav-btn').forEach(b=>{b.onclick=()=>nav(b.getAttribute('data-t'))});
+            document.getElementById('lang-togg').onclick=(e)=>{e.stopPropagation();m.classList.toggle('show')};
+            document.onclick=()=>m.classList.remove('show');
+        };
+
+        function nav(id){
+            let c=document.querySelector('.section.active'), n=document.getElementById(id);
+            document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+            document.querySelector(`[data-t="${id}"]`).classList.add('active');
+            if(c!==n){
+                sfxClick();
+                gsap.to(c,{opacity:0,y:-50,duration:0.4,onComplete:()=>{
+                    c.classList.remove('active'); gsap.set(n,{opacity:0,y:50});
+                    n.classList.add('active'); gsap.to(n,{opacity:1,y:0,duration:0.4});
+                }});
+            }
+        }
+
+        function initCur(){
+            let c=document.getElementById('cursor');
+            document.onmousemove=e=>{c.style.left=e.clientX+'px'; c.style.top=e.clientY+'px';};
+            document.onmousedown=()=>document.body.classList.add('hover');
+            document.onmouseup=()=>document.body.classList.remove('hover');
+            document.querySelectorAll('a,button,input,textarea,.card,.nav-btn').forEach(l=>{l.onmouseenter=()=>document.body.classList.add('hover');l.onmouseleave=()=>document.body.classList.remove('hover');});
+        }
+
+        const sfx={click:new Howl({src:['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a'],volume:0.2})};
+        function sfxClick(){sfx.click.play();}
+
+        function initThree(){
+            const c=document.getElementById('canvas');
+            const s=new THREE.Scene();
+            const cam=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+            const r=new THREE.WebGLRenderer({alpha:true});
+            r.setSize(window.innerWidth,window.innerHeight);
+            c.appendChild(r.domElement);
+            const g=new THREE.BufferGeometry();
+            const pos=new Float32Array(2000*3);
+            for(let i=0;i<4500;i++)pos[i]=(Math.random()-0.5)*200;
+            g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+            const m=new THREE.PointsMaterial({size:0.15,color:0xff0000,transparent:true,opacity:0.5});
+            const mesh=new THREE.Points(g,m); s.add(mesh); cam.position.z=50;
+            function a(){requestAnimationFrame(a);mesh.rotation.y+=0.001;r.render(s,cam);} a();
+            window.onresize=()=>{cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();r.setSize(window.innerWidth,window.innerHeight);}
+        }
+
+
+         /* ======================================= */
+        /* POPUP (REKLAM-Script) */
+        /* ======================================= */
+
+
+// 🔑 ANAHTAR: Sayaç başlangıcını kaydettiğimiz isim
+    const POPUP_LAST_CLOSED_TIME_KEY = 'popup_last_closed_time';
+    
+    // ⏱️ 10 dakika bekleme süresi
+    const SHOW_DELAY_MINUTES = 10; 
+    const DELAY_MILLIS = SHOW_DELAY_MINUTES * 60 * 1000; // 10 dakika milisaniye cinsinden
+
+    function checkAndShowModalWithTimer() {
+        const modal = document.getElementById('first-time-modal');
+        const closeBtn = document.querySelector('.modal-close-btn');
+        const videoElement = document.getElementById('modal-video');
+
+        // Son kapatma zamanını al
+        const lastClosedTime = localStorage.getItem(POPUP_LAST_CLOSED_TIME_KEY);
+        const currentTime = new Date().getTime(); 
+
+        // Koşul: 
+        // 1. Daha önce hiç kapatılmadıysa VEYA 
+        // 2. Son kapatılma zamanından bu yana 10 dakikadan fazla geçtiyse
+        if (!lastClosedTime || (currentTime - parseInt(lastClosedTime) > DELAY_MILLIS)) {
+            
+            // Pop-up'ı göster
+            modal.style.display = 'block';
+            
+            // Video varsa otomatik oynatmayı dene
+            if (videoElement) {
+                videoElement.play().catch(error => {});
+            }
+            
+            // NOT: Bu noktada süreyi kaydetmiyoruz. Süre, kullanıcı KAPATMA tuşuna bastığında kaydedilecek.
+            // Bu, F5 atıldığında 10 dakika dolduysa pop-up'ın her seferinde açılmasını sağlar.
+        }
+
+        // 🔑 KAPATMA BUTONU: Kullanıcı butona bastığında süreyi kaydet ve pop-up'ı kapat.
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            if (videoElement) {
+                videoElement.pause();
+                videoElement.currentTime = 0; 
+            }
+            
+            // Sadece pop-up kapatıldığında süreyi kaydet (10 dakikalık bekleme başlasın)
+            localStorage.setItem(POPUP_LAST_CLOSED_TIME_KEY, new Date().getTime().toString());
+        };
+
+        // Pop-up dışına tıklandığında kapatma
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                if (videoElement) {
+                    videoElement.pause();
+                    videoElement.currentTime = 0;
+                }
+                
+                // Dışa tıklandığında da süreyi kaydet
+                localStorage.setItem(POPUP_LAST_CLOSED_TIME_KEY, new Date().getTime().toString());
+            }
+        };
+    }
+
+
+
+    </script>
+</body>
+</html>
