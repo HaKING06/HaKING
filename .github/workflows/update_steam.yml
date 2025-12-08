@@ -1,0 +1,37 @@
+name: Update Steam Stats
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Her gece yarısı çalışır
+  workflow_dispatch: # İstediğin zaman elle çalıştırmak için
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu Çek
+        uses: actions/checkout@v3
+
+      - name: Python Kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Kütüphaneleri Yükle
+        run: pip install requests
+
+      - name: Scripti Çalıştır
+        env:
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+        run: python update_stats.py
+
+      - name: Değişiklikleri Kaydet
+        run: |
+          git config --global user.name 'HaKING Bot'
+          git config --global user.email 'bot@haking.dev'
+          git add steam_data.json
+          git commit -m "Steam verileri güncellendi" || exit 0
+          git push

@@ -434,21 +434,21 @@ position: absolute;
                         </div>
                         <div class="p-info"><h2>Halit Güneş</h2><p>// FULL-STACK DEV & GAMER<br>// ID: halitguns06.dev</p> <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank"><div class="badge"><i data-lucide="shield" size="16"></i>STEAM LEVEL 31</div></a></div>
                     </div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="playtime">TIME</h3><div class="stat-val">1,201h</div></div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="value">VALUE</h3><div class="stat-val">$1522</div></div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="games">GAMES</h3><div class="stat-val">166</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="playtime">TIME</h3><div class="stat-val" id="total-hours">1,171h</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="value">VALUE</h3><div class="stat-val">$1975</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="games">GAMES</h3><div class="stat-val" id="total-games">144</div></div>
                 </div>
             </section>
 
             <section id="armory" class="section">
                 <div class="head"><div><h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">DIGITAL ARSENAL</span></div></div>
                 <div class="grid">
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time"><i data-lucide="clock" size="14"></i> 193.8h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time">162.9h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time">91.4h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time">73.7h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/379430/header.jpg')"></div><div class="game-ov"><div class="g-tit">KINGDOM COME</div><span class="g-time">71.0h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg')"></div><div class="game-ov"><div class="g-tit">HOGWARTS</div><span class="g-time">51.4h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time" id="time-fc25"><i data-lucide="clock" size="14"></i> 197.8h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time" id="time-bannerlord">162.9h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time" id="time-witcher3">91.4h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time" id="time-godofwar">73.7h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/379430/header.jpg')"></div><div class="game-ov"><div class="g-tit">KINGDOM COME</div><span class="g-time" id="time-kingdomcome">71.0h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')"></div><div class="game-ov"><div class="g-tit">CYBERPUNK 2077</div><span class="g-time" id="time-cyberpunk">61.9h</span></div></div>
                     <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank" class="btn-view" data-k="view_all">[ VIEW FULL COLLECTION ]</a>
                 </div>
             </section>
@@ -693,6 +693,28 @@ gsap.to('.load-fill',{width:'100%',duration:2,ease:'power2.inOut',onComplete:()=
         };
     }
 
+
+
+/* === STEAM DATA LOADER === */
+fetch('./steam_data.json')
+  .then(response => response.json())
+  .then(data => {
+      // Toplam İstatistikler
+      if(document.getElementById('total-hours')) document.getElementById('total-hours').innerText = data.total_hours;
+      if(document.getElementById('total-games')) document.getElementById('total-games').innerText = data.total_games;
+
+      // Oyun Saatleri
+      if(data.games_playtime) {
+          if(document.getElementById('time-fc25')) document.getElementById('time-fc25').innerText = data.games_playtime.fc25;
+          if(document.getElementById('time-bannerlord')) document.getElementById('time-bannerlord').innerText = data.games_playtime.bannerlord;
+          if(document.getElementById('time-witcher3')) document.getElementById('time-witcher3').innerText = data.games_playtime.witcher3;
+          if(document.getElementById('time-godofwar')) document.getElementById('time-godofwar').innerText = data.games_playtime.godofwar;
+          if(document.getElementById('time-kingdomcome')) document.getElementById('time-kingdomcome').innerText = data.games_playtime.kingdomcome;
+          if(document.getElementById('time-cyberpunk')) document.getElementById('time-cyberpunk').innerText = data.games_playtime.cyberpunk;
+      }
+      console.log("Sistem Güncellendi: Steam Verileri Yüklendi.");
+  })
+  .catch(err => console.log('Veri henüz oluşmadı veya hata var:', err));
 
 
     </script>
