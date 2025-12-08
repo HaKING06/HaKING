@@ -2,7 +2,7 @@ name: Update Steam Stats
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Her gece yarısı çalışır
+    - cron: '*/30 * * * *' # Her 30 dakikada bir çalış
   workflow_dispatch: # İstediğin zaman elle çalıştırmak için
 
 permissions:

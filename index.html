@@ -424,7 +424,7 @@ position: absolute;
 
         <main class="stage">
             <section id="sanctum" class="section active">
-                <div class="head"><div><h1 class="h-tit">HaKING</h1><span class="h-sub" data-k="role">UNDERWORLD OPERATOR</span></div><div class="h-stat" data-k="sys">SYSTEM ONLINE</div></div>
+                <div class="head"><div><h1 class="h-tit">HaKING</h1><span class="h-sub" data-k="role">UNDERWORLD OPERATOR</span></div><div class="h-stat" id="sys-status" data-k="sys">SYSTEM ONLINE</div></div>
                 <div class="grid">
                     <div class="profile">
                         <div class="avi-w">
@@ -507,29 +507,548 @@ position: absolute;
     </div>
 
     <script>
-        const LANG_DATA = {
-    en: { role: "UNDERWORLD OPERATOR", sys: "SYSTEM ONLINE", playtime: "TIME", value: "VALUE", games: "GAMES", nav_sanctum: "SANCTUM", nav_armory: "ARMORY", sub_armory: "DIGITAL ARSENAL", nav_machine: "MACHINE", sub_machine: "SYSTEM ARCHITECTURE", nav_oracle: "ORACLE", sub_oracle: "INSIGHTS", achievements: "COMPLETION", perfect: "PERFECT", dom_class: "TOTAL GLORY", nav_network: "NETWORK", sub_network: "UPLINKS", nav_trans: "CONTACT", sub_trans: "SECURE", view_all: "VIEW COLLECTION", send_btn: "TRANSMIT", ph_name: "CODENAME", ph_email: "FREQUENCY", ph_msg: "PACKET" },
-    tr: { role: "YERALTI OPERATÖRÜ", sys: "SİSTEM AKTİF", playtime: "SÜRE", value: "DEĞER", games: "OYUNLAR", nav_sanctum: "ANA ÜS", nav_armory: "CEPHANELİK", sub_armory: "DİJİTAL ARŞİV", nav_machine: "MAKİNE", sub_machine: "SİSTEM MİMARİSİ", nav_oracle: "KAHİN", sub_oracle: "ANALİZLER", achievements: "TAMAMLAMA", perfect: "KUSURSUZ", dom_class: "TOPLAM ŞAN", nav_network: "AĞ", sub_network: "BAĞLANTILAR", nav_trans: "İLETİŞİM", sub_trans: "GÜVENLİ", view_all: "TÜMÜNÜ GÖR", send_btn: "GÖNDER", ph_name: "KOD ADI", ph_email: "FREKANS", ph_msg: "VERİ PAKETİ" },
-    es: { role: "OPERADOR", sys: "SISTEMA ONLINE", playtime: "TIEMPO", value: "VALOR", games: "JUEGOS", nav_sanctum: "SANTUARIO", nav_armory: "ARMERÍA", sub_armory: "ARSENAL DIGITAL", nav_machine: "MÁQUINA", sub_machine: "ARQUITECTURA", nav_oracle: "ORÁCULO", sub_oracle: "ANÁLISIS", achievements: "COMPLETADO", perfect: "PERFECTOS", dom_class: "GLORIA TOTAL", nav_network: "RED", sub_network: "ENLACES", nav_trans: "CONTACTO", sub_trans: "SEGURO", view_all: "VER TODO", send_btn: "ENVIAR", ph_name: "NOMBRE", ph_email: "FRECUENCIA", ph_msg: "MENSAJE" },
-    ru: { role: "ОПЕРАТОР", sys: "СИСТЕМА АКТИВНА", playtime: "ВРЕМЯ", value: "СТОИМОСТЬ", games: "ИГРЫ", nav_sanctum: "СВЯТИЛИЩЕ", nav_armory: "АРСЕНАЛ", sub_armory: "ЦИФРОВОЙ АРХИВ", nav_machine: "МАШИНА", sub_machine: "АРХИТЕКТУРА", nav_oracle: "ОРАКУЛ", sub_oracle: "АНАЛИЗ", achievements: "ЗАВЕРШЕНО", perfect: "ИДЕАЛЬНЫЕ",dom_class: "ПОЛНАЯ СЛАВА", nav_network: "СЕТЬ", sub_network: "СВЯЗИ", nav_trans: "СВЯЗЬ", sub_trans: "КАНАЛ", view_all: "ВСЕ ИГРЫ", send_btn: "ОТПРАВИТЬ", ph_name: "ИМЯ", ph_email: "ЧАСТОТА", ph_msg: "СООБЩЕНИЕ" },
-    de: { role: "OPERATOR", sys: "SYSTEM ONLINE", playtime: "ZEIT", value: "WERT", games: "SPIELE", nav_sanctum: "HEILIGTUM", nav_armory: "WAFFENKAMMER", sub_armory: "DIGITALES ARSENAL", nav_machine: "MASCHINE", sub_machine: "ARCHITEKTUR", nav_oracle: "ORAKEL", sub_oracle: "ANALYSE", achievements: "ABSCHLUSS", perfect: "PERFEKT", dom_class: "TOTALER RUHM", nav_network: "NETZWERK", sub_network: "VERBINDUNGEN", nav_trans: "KONTAKT", sub_trans: "SICHER", view_all: "ANZEIGEN", send_btn: "SENDEN", ph_name: "NAME", ph_email: "FREQUENZ", ph_msg: "NACHRICHT" },
-    fr: { role: "OPÉRATEUR", sys: "SYSTÈME EN LIGNE", playtime: "TEMPS", value: "VALEUR", games: "JEUX", nav_sanctum: "SANCTUAIRE", nav_armory: "ARMURERIE", sub_armory: "ARSENAL NUMÉRIQUE", nav_machine: "MACHINE", sub_machine: "ARCHITECTURE", nav_oracle: "ORACLE", sub_oracle: "ANALYSE", achievements: "COMPLÉTION", perfect: "PARFAITS", dom_class: "GLOIRE TOTALE", nav_network: "RÉSEAU", sub_network: "LIENS", nav_trans: "CONTACT", sub_trans: "SÉCURISÉ", view_all: "VOIR TOUT", send_btn: "ENVOYER", ph_name: "NOM", ph_email: "FRÉQUENCE", ph_msg: "MESSAGE" },
-    jp: { role: "オペレーター", sys: "システム稼働中", playtime: "時間", value: "価値", games: "ゲーム", nav_sanctum: "聖域", nav_armory: "武器庫", sub_armory: "デジタル保管庫", nav_machine: "機械", sub_machine: "設計", nav_oracle: "神託", sub_oracle: "分析", achievements: "完了率", perfect: "完全", dom_class: "完全な栄光", nav_network: "通信網", sub_network: "リンク", nav_trans: "連絡", sub_trans: "安全", view_all: "見る", send_btn: "送信", ph_name: "名前", ph_email: "周波数", ph_msg: "メッセージ" },
-    cn: { role: "操作员", sys: "系统在线", playtime: "时间", value: "价值", games: "游戏", nav_sanctum: "圣所", nav_armory: "军械库", sub_armory: "数字武库", nav_machine: "机器", sub_machine: "架构", nav_oracle: "神谕", sub_oracle: "分析", achievements: "完成度", perfect: "完美", dom_class: "无上荣耀", nav_network: "网络", sub_network: "链接", nav_trans: "联系", sub_trans: "安全频道", view_all: "查看", send_btn: "发送", ph_name: "代号", ph_email: "频率", ph_msg: "消息" },
-    pt: { role: "OPERADOR", sys: "SISTEMA ONLINE", playtime: "TEMPO", value: "VALOR", games: "JOGOS", nav_sanctum: "SANTUÁRIO", nav_armory: "ARSENAL", sub_armory: "ARSENAL DIGITAL", nav_machine: "MÁQUINA", sub_machine: "ARQUITETURA", nav_oracle: "ORÁCULO", sub_oracle: "ANÁLISE", achievements: "CONCLUSÃO", perfect: "PERFEITOS", dom_class: "GLÓRIA TOTAL", nav_network: "REDE", sub_network: "LINKS", nav_trans: "CONTATO", sub_trans: "SEGURO", view_all: "VER TUDO", send_btn: "ENVIAR", ph_name: "NOME", ph_email: "FREQUÊNCIA", ph_msg: "MENSAGEM" },
-    it: { role: "OPERATORE", sys: "SISTEMA ONLINE", playtime: "TEMPO", value: "VALORE", games: "GIOCHI", nav_sanctum: "SANTUARIO", nav_armory: "ARMERIA", sub_armory: "ARSENALE DIGITALE", nav_machine: "MACCHINA", sub_machine: "ARCHITETTURA", nav_oracle: "ORACOLO", sub_oracle: "ANALISI", achievements: "COMPLETAMENTO", perfect: "PERFETTI", dom_class: "GLORIA TOTALE", nav_network: "RETE", sub_network: "LINK", nav_trans: "CONTATTO", sub_trans: "SICURO", view_all: "VEDI TUTTO", send_btn: "INVIA", ph_name: "NOME", ph_email: "FREQUENZA", ph_msg: "MESSAGGIO" },
-    kr: { role: "운영자", sys: "시스템 온라인", playtime: "시간", value: "가치", games: "게임", nav_sanctum: "성소", nav_armory: "무기고", sub_armory: "디지털 무기고", nav_machine: "머신", sub_machine: "아키텍처", nav_oracle: "오라클", sub_oracle: "분석", achievements: "완료율", perfect: "완벽", dom_class: "총 영광", nav_network: "네트워크", sub_network: "링크", nav_trans: "연락", sub_trans: "보안 채널", view_all: "보기", send_btn: "전송", ph_name: "이름", ph_email: "주파수", ph_msg: "메시지" },
-    ar: { role: "مشغل", sys: "النظام نشط", playtime: "وقت", value: "قيمة", games: "ألعاب", nav_sanctum: "ملاذ", nav_armory: "ترسانة", sub_armory: "ترسانة رقمية", nav_machine: "آلة", sub_machine: "هندسة", nav_oracle: "عراف", sub_oracle: "تحليل", achievements: "إنجاز", perfect: "مثالية", dom_class: "مجد كلي", nav_network: "شبكة", sub_network: "روابط", nav_trans: "اتصال", sub_trans: "آمن", view_all: "عرض", send_btn: "إرسال", ph_name: "اسم", ph_email: "تردد", ph_msg: "رسالة" },
-    hi: { role: "ऑपरेटर", sys: "सिस्टम ऑनलाइन", playtime: "समय", value: "मूल्य", games: "गेम्स", nav_sanctum: "पवित्र", nav_armory: "शस्त्रागार", sub_armory: "डिजिटल शस्त्रागार", nav_machine: "मशीन", sub_machine: "आर्किटेक्चर", nav_oracle: "ओरेकल", sub_oracle: "अंतर्दृष्टि", achievements: "पूर्णता", perfect: "बढ़िया", dom_class: "पूर्ण महिमा", nav_network: "नेटवर्क", sub_network: "लिंक्स", nav_trans: "संपर्क", sub_trans: "सुरक्षित", view_all: "देखें", send_btn: "भेजें", ph_name: "नाम", ph_email: "आवृत्ति", ph_msg: "संदेश" },
-    bn: { role: "অপারেটর", sys: "সিস্টেম অনলাইন", playtime: "সময়", value: "মান", games: "গেমস", nav_sanctum: "স্যাঙ্কটাম", nav_armory: "আর্মরি", sub_armory: "ডিজিটাল অস্ত্রাগার", nav_machine: "মেশিন", sub_machine: "আর্কিটেকচার", nav_oracle: "ওরাকল", sub_oracle: "অন্তর্দৃষ্টি", achievements: "সম্পূর্ণতা", perfect: "নিখুঁত", dom_class: "চূড়ান্ত গৌরব", nav_network: "নেটওয়ার্ক", sub_network: "লিঙ্ক", nav_trans: "যোগাযোগ", sub_trans: "সুরক্ষিত", view_all: "দেখুন", send_btn: "পাঠান", ph_name: "নাম", ph_email: "ফ্রিকোয়েন্সি", ph_msg: "বার্তা" },
-    nl: { role: "OPERATOR", sys: "SYSTEEM ONLINE", playtime: "TIJD", value: "WAARDE", games: "GAMES", nav_sanctum: "HEILIGDOM", nav_armory: "WAPENKAMER", sub_armory: "DIGITAAL ARSENAL", nav_machine: "MACHINE", sub_machine: "ARCHITECTUUR", nav_oracle: "ORAKEL", sub_oracle: "ANALYSE", achievements: "VOLTOOIING", perfect: "PERFECT", dom_class: "TOTALE GLORIE", nav_network: "NETWERK", sub_network: "LINKS", nav_trans: "CONTACT", sub_trans: "VEILIG", view_all: "BEKIJKEN", send_btn: "VERZENDEN", ph_name: "NAAM", ph_email: "FREQUENTIE", ph_msg: "BERICHT" },
-    pl: { role: "OPERATOR", sys: "SYSTEM ONLINE", playtime: "CZAS", value: "WARTOŚĆ", games: "GRY", nav_sanctum: "SANKTUARIUM", nav_armory: "ZBROJOWNIA", sub_armory: "CYFROWY ARSENAŁ", nav_machine: "MASZYNA", sub_machine: "ARCHITEKTURA", nav_oracle: "WYROCZNIA", sub_oracle: "ANALIZA", achievements: "UKOŃCZENIE", perfect: "PERFEKCYJNE", dom_class: "PEŁNA CHWAŁA", nav_network: "SIEĆ", sub_network: "ŁĄCZA", nav_trans: "KONTAKT", sub_trans: "BEZPIECZNY", view_all: "ZOBACZ", send_btn: "WYŚLIJ", ph_name: "NAZWA", ph_email: "CZĘSTOTLIWOŚĆ", ph_msg: "WIADOMOŚĆ" },
-    sv: { role: "OPERATÖR", sys: "SYSTEM ONLINE", playtime: "TID", value: "VÄRDE", games: "SPEL", nav_sanctum: "HELGEDOM", nav_armory: "VAPENKAMMARE", sub_armory: "DIGITALT ARSENAL", nav_machine: "MASKIN", sub_machine: "ARKITEKTUR", nav_oracle: "ORAKEL", sub_oracle: "ANALYS", achievements: "SLUTFÖRANDE", perfect: "PERFEKTA", dom_class: "TOTAL ÄRA", nav_network: "NÄTVERK", sub_network: "LÄNKAR", nav_trans: "KONTAKT", sub_trans: "SÄKER", view_all: "VISA", send_btn: "SKICKA", ph_name: "NAMN", ph_email: "FREKVENS", ph_msg: "MEDDELANDE" },
-    vi: { role: "ĐIỀU HÀNH", sys: "HỆ THỐNG ONLINE", playtime: "THỜI GIAN", value: "GIÁ TRỊ", games: "TRÒ CHƠI", nav_sanctum: "THÁNH ĐỊA", nav_armory: "KHO VŨ KHÍ", sub_armory: "KHO VŨ KHÍ SỐ", nav_machine: "MÁY MÓC", sub_machine: "KIẾN TRÚC", nav_oracle: "TIÊN TRI", sub_oracle: "PHÂN TÍCH", achievements: "HOÀN THÀNH", perfect: "HOÀN HẢO", dom_class: "VINH QUANG TỐI THƯỢNG", nav_network: "MẠNG", sub_network: "LIÊN KẾT", nav_trans: "LIÊN HỆ", sub_trans: "AN TOÀN", view_all: "XEM", send_btn: "GỬI", ph_name: "TÊN", ph_email: "TẦN SỐ", ph_msg: "TIN NHẮN" },
-    el: { role: "ΧΕΙΡΙΣΤΗΣ", sys: "ΣΥΣΤΗΜΑ ONLINE", playtime: "ΩΡΑ", value: "ΑΞΙΑ", games: "ΠΑΙΧΝΙΔΙΑ", nav_sanctum: "ΑΔΥΤΟ", nav_armory: "ΟΠΛΟΣΤΑΣΙΟ", sub_armory: "ΨΗΦΙΑΚΟ ΟΠΛΟΣΤΑΣΙΟ", nav_machine: "ΜΗΧΑΝΗ", sub_machine: "ΑΡΧΙΤΕΚΤΟΝΙΚΗ", nav_oracle: "ΜΑΝΤΕΙΟ", sub_oracle: "ΑΝΑΛΥΣΗ", achievements: "ΟΛΟΚΛΗΡΩΣΗ", perfect: "ΤΕΛΕΙΑ",dom_class: "ΑΠΟΛΥΤΗ ΔΟΞΑ", nav_network: "ΔΙΚΤΥΟ", sub_network: "ΣΥΝΔΕΣΜΟΙ", nav_trans: "ΕΠΙΚΟΙΝΩΝΙΑ", sub_trans: "ΑΣΦΑΛΕΣ", view_all: "ΠΡΟΒΟΛΗ", send_btn: "ΑΠΟΣΤΟΛΗ", ph_name: "ΟΝΟΜΑ", ph_email: "ΣΥΧΝΟΤΗΤΑ", ph_msg: "ΜΗΝΥΜΑ" },
-    th: { role: "ผู้ดำเนินการ", sys: "ระบบออนไลน์", playtime: "เวลา", value: "มูลค่า", games: "เกม", nav_sanctum: "สถานที่ศักดิ์สิทธิ์", nav_armory: "คลังแสง", sub_armory: "คลังแสงดิจิทัล", nav_machine: "เครื่องจักร", sub_machine: "สถาปัตยกรรม", nav_oracle: "ออราเคิล", sub_oracle: "วิเคราะห์", achievements: "สำเร็จ", perfect: "สมบูรณ์", dom_class: "เกียรติยศสูงสุด", nav_network: "เครือข่าย", sub_network: "ลิงก์", nav_trans: "ติดต่อ", sub_trans: "ปลอดภัย", view_all: "ดู", send_btn: "ส่ง", ph_name: "ชื่อ", ph_email: "ความถี่", ph_msg: "ข้อความ" }
+const LANG_DATA = {
+    en: { 
+        role: "UNDERWORLD OPERATOR", 
+        sys: "SYSTEM ONLINE", 
+        sys_off: "SYSTEM OFFLINE", 
+        playtime: "TIME", 
+        value: "VALUE", 
+        games: "GAMES", 
+        nav_sanctum: "SANCTUM", 
+        nav_armory: "ARMORY", 
+        sub_armory: "DIGITAL ARSENAL", 
+        nav_machine: "MACHINE", 
+        sub_machine: "SYSTEM ARCHITECTURE", 
+        nav_oracle: "ORACLE", 
+        sub_oracle: "INSIGHTS", 
+        achievements: "COMPLETION", 
+        perfect: "PERFECT", 
+        dom_class: "TOTAL GLORY", 
+        nav_network: "NETWORK", 
+        sub_network: "UPLINKS", 
+        nav_trans: "CONTACT", 
+        sub_trans: "SECURE", 
+        view_all: "VIEW COLLECTION", 
+        send_btn: "TRANSMIT", 
+        ph_name: "CODENAME", 
+        ph_email: "FREQUENCY", 
+        ph_msg: "PACKET" 
+    },
+    tr: { 
+        role: "YERALTI OPERATÖRÜ", 
+        sys: "SİSTEM AKTİF", 
+        sys_off: "SİSTEM ÇEVRİMDIŞI", 
+        playtime: "SÜRE", 
+        value: "DEĞER", 
+        games: "OYUNLAR", 
+        nav_sanctum: "ANA ÜS", 
+        nav_armory: "CEPHANELİK", 
+        sub_armory: "DİJİTAL ARŞİV", 
+        nav_machine: "MAKİNE", 
+        sub_machine: "SİSTEM MİMARİSİ", 
+        nav_oracle: "KAHİN", 
+        sub_oracle: "ANALİZLER", 
+        achievements: "TAMAMLAMA", 
+        perfect: "KUSURSUZ", 
+        dom_class: "TOPLAM ŞAN", 
+        nav_network: "AĞ", 
+        sub_network: "BAĞLANTILAR", 
+        nav_trans: "İLETİŞİM", 
+        sub_trans: "GÜVENLİ", 
+        view_all: "TÜMÜNÜ GÖR", 
+        send_btn: "GÖNDER", 
+        ph_name: "KOD ADI", 
+        ph_email: "FREKANS", 
+        ph_msg: "VERİ PAKETİ" 
+    },
+    es: { 
+        role: "OPERADOR", 
+        sys: "SISTEMA ONLINE", 
+        sys_off: "SISTEMA OFFLINE", 
+        playtime: "TIEMPO", 
+        value: "VALOR", 
+        games: "JUEGOS", 
+        nav_sanctum: "SANTUARIO", 
+        nav_armory: "ARMERÍA", 
+        sub_armory: "ARSENAL DIGITAL", 
+        nav_machine: "MÁQUINA", 
+        sub_machine: "ARQUITECTURA", 
+        nav_oracle: "ORÁCULO", 
+        sub_oracle: "ANÁLISIS", 
+        achievements: "COMPLETADO", 
+        perfect: "PERFECTOS", 
+        dom_class: "GLORIA TOTAL", 
+        nav_network: "RED", 
+        sub_network: "ENLACES", 
+        nav_trans: "CONTACTO", 
+        sub_trans: "SEGURO", 
+        view_all: "VER TODO", 
+        send_btn: "ENVIAR", 
+        ph_name: "NOMBRE", 
+        ph_email: "FRECUENCIA", 
+        ph_msg: "MENSAJE" 
+    },
+    ru: { 
+        role: "ОПЕРАТОР", 
+        sys: "СИСТЕМА АКТИВНА", 
+        sys_off: "СИСТЕМА ОТКЛЮЧЕНА", 
+        playtime: "ВРЕМЯ", 
+        value: "СТОИМОСТЬ", 
+        games: "ИГРЫ", 
+        nav_sanctum: "СВЯТИЛИЩЕ", 
+        nav_armory: "АРСЕНАЛ", 
+        sub_armory: "ЦИФРОВОЙ АРХИВ", 
+        nav_machine: "МАШИНА", 
+        sub_machine: "АРХИТЕКТУРА", 
+        nav_oracle: "ОРАКУЛ", 
+        sub_oracle: "АНАЛИЗ", 
+        achievements: "ЗАВЕРШЕНО", 
+        perfect: "ИДЕАЛЬНЫЕ",
+        dom_class: "ПОЛНАЯ СЛАВА", 
+        nav_network: "СЕТЬ", 
+        sub_network: "СВЯЗИ", 
+        nav_trans: "СВЯЗЬ", 
+        sub_trans: "КАНАЛ", 
+        view_all: "ВСЕ ИГРЫ", 
+        send_btn: "ОТПРАВИТЬ", 
+        ph_name: "ИМЯ", 
+        ph_email: "ЧАСТОТА", 
+        ph_msg: "СООБЩЕНИЕ" 
+    },
+    de: { 
+        role: "OPERATOR", 
+        sys: "SYSTEM ONLINE", 
+        sys_off: "SYSTEM OFFLINE", 
+        playtime: "ZEIT", 
+        value: "WERT", 
+        games: "SPIELE", 
+        nav_sanctum: "HEILIGTUM", 
+        nav_armory: "WAFFENKAMMER", 
+        sub_armory: "DIGITALES ARSENAL", 
+        nav_machine: "MASCHINE", 
+        sub_machine: "ARCHITEKTUR", 
+        nav_oracle: "ORAKEL", 
+        sub_oracle: "ANALYSE", 
+        achievements: "ABSCHLUSS", 
+        perfect: "PERFEKT", 
+        dom_class: "TOTALER RUHM", 
+        nav_network: "NETZWERK", 
+        sub_network: "VERBINDUNGEN", 
+        nav_trans: "KONTAKT", 
+        sub_trans: "SICHER", 
+        view_all: "ANZEIGEN", 
+        send_btn: "SENDEN", 
+        ph_name: "NAME", 
+        ph_email: "FREQUENZ", 
+        ph_msg: "NACHRICHT" 
+    },
+    fr: { 
+        role: "OPÉRATEUR", 
+        sys: "SYSTÈME EN LIGNE", 
+        sys_off: "SYSTÈME HORS LIGNE", 
+        playtime: "TEMPS", 
+        value: "VALEUR", 
+        games: "JEUX", 
+        nav_sanctum: "SANCTUAIRE", 
+        nav_armory: "ARMURERIE", 
+        sub_armory: "ARSENAL NUMÉRIQUE", 
+        nav_machine: "MACHINE", 
+        sub_machine: "ARCHITECTURE", 
+        nav_oracle: "ORACLE", 
+        sub_oracle: "ANALYSE", 
+        achievements: "COMPLÉTION", 
+        perfect: "PARFAITS", 
+        dom_class: "GLOIRE TOTALE", 
+        nav_network: "RÉSEAU", 
+        sub_network: "LIENS", 
+        nav_trans: "CONTACT", 
+        sub_trans: "SÉCURISÉ", 
+        view_all: "VOIR TOUT", 
+        send_btn: "ENVOYER", 
+        ph_name: "NOM", 
+        ph_email: "FRÉQUENCE", 
+        ph_msg: "MESSAGE" 
+    },
+    jp: { 
+        role: "オペレーター", 
+        sys: "システム稼働中", 
+        sys_off: "システム停止中", 
+        playtime: "時間", 
+        value: "価値", 
+        games: "ゲーム", 
+        nav_sanctum: "聖域", 
+        nav_armory: "武器庫", 
+        sub_armory: "デジタル保管庫", 
+        nav_machine: "機械", 
+        sub_machine: "設計", 
+        nav_oracle: "神託", 
+        sub_oracle: "分析", 
+        achievements: "完了率", 
+        perfect: "完全", 
+        dom_class: "完全な栄光", 
+        nav_network: "通信網", 
+        sub_network: "リンク", 
+        nav_trans: "連絡", 
+        sub_trans: "安全", 
+        view_all: "見る", 
+        send_btn: "送信", 
+        ph_name: "名前", 
+        ph_email: "周波数", 
+        ph_msg: "メッセージ" 
+    },
+    cn: { 
+        role: "操作员", 
+        sys: "系统在线", 
+        sys_off: "系统离线", 
+        playtime: "时间", 
+        value: "价值", 
+        games: "游戏", 
+        nav_sanctum: "圣所", 
+        nav_armory: "军械库", 
+        sub_armory: "数字武库", 
+        nav_machine: "机器", 
+        sub_machine: "架构", 
+        nav_oracle: "神谕", 
+        sub_oracle: "分析", 
+        achievements: "完成度", 
+        perfect: "完美", 
+        dom_class: "无上荣耀", 
+        nav_network: "网络", 
+        sub_network: "链接", 
+        nav_trans: "联系", 
+        sub_trans: "安全频道", 
+        view_all: "查看", 
+        send_btn: "发送", 
+        ph_name: "代号", 
+        ph_email: "频率", 
+        ph_msg: "消息" 
+    },
+    pt: { 
+        role: "OPERADOR", 
+        sys: "SISTEMA ONLINE", 
+        sys_off: "SISTEMA OFFLINE", 
+        playtime: "TEMPO", 
+        value: "VALOR", 
+        games: "JOGOS", 
+        nav_sanctum: "SANTUÁRIO", 
+        nav_armory: "ARSENAL", 
+        sub_armory: "ARSENAL DIGITAL", 
+        nav_machine: "MÁQUINA", 
+        sub_machine: "ARQUITETURA", 
+        nav_oracle: "ORÁCULO", 
+        sub_oracle: "ANÁLISE", 
+        achievements: "CONCLUSÃO", 
+        perfect: "PERFEITOS", 
+        dom_class: "GLÓRIA TOTAL", 
+        nav_network: "REDE", 
+        sub_network: "LINKS", 
+        nav_trans: "CONTATO", 
+        sub_trans: "SEGURO", 
+        view_all: "VER TUDO", 
+        send_btn: "ENVIAR", 
+        ph_name: "NOME", 
+        ph_email: "FREQUÊNCIA", 
+        ph_msg: "MENSAGEM" 
+    },
+    it: { 
+        role: "OPERATORE", 
+        sys: "SISTEMA ONLINE", 
+        sys_off: "SISTEMA OFFLINE", 
+        playtime: "TEMPO", 
+        value: "VALORE", 
+        games: "GIOCHI", 
+        nav_sanctum: "SANTUARIO", 
+        nav_armory: "ARMERIA", 
+        sub_armory: "ARSENALE DIGITALE", 
+        nav_machine: "MACCHINA", 
+        sub_machine: "ARCHITETTURA", 
+        nav_oracle: "ORACOLO", 
+        sub_oracle: "ANALISI", 
+        achievements: "COMPLETAMENTO", 
+        perfect: "PERFETTI", 
+        dom_class: "GLORIA TOTALE", 
+        nav_network: "RETE", 
+        sub_network: "LINK", 
+        nav_trans: "CONTATTO", 
+        sub_trans: "SICURO", 
+        view_all: "VEDI TUTTO", 
+        send_btn: "INVIA", 
+        ph_name: "NOME", 
+        ph_email: "FREQUENZA", 
+        ph_msg: "MESSAGGIO" 
+    },
+    kr: { 
+        role: "운영자", 
+        sys: "시스템 온라인", 
+        sys_off: "시스템 오프라인", 
+        playtime: "시간", 
+        value: "가치", 
+        games: "게임", 
+        nav_sanctum: "성소", 
+        nav_armory: "무기고", 
+        sub_armory: "디지털 무기고", 
+        nav_machine: "머신", 
+        sub_machine: "아키텍처", 
+        nav_oracle: "오라클", 
+        sub_oracle: "분석", 
+        achievements: "완료율", 
+        perfect: "완벽", 
+        dom_class: "총 영광", 
+        nav_network: "네트워크", 
+        sub_network: "링크", 
+        nav_trans: "연락", 
+        sub_trans: "보안 채널", 
+        view_all: "보기", 
+        send_btn: "전송", 
+        ph_name: "이름", 
+        ph_email: "주파수", 
+        ph_msg: "메시지" 
+    },
+    ar: { 
+        role: "مشغل", 
+        sys: "النظام نشط", 
+        sys_off: "النظام غير متصل", 
+        playtime: "وقت", 
+        value: "قيمة", 
+        games: "ألعاب", 
+        nav_sanctum: "ملاذ", 
+        nav_armory: "ترسانة", 
+        sub_armory: "ترسانة رقمية", 
+        nav_machine: "آلة", 
+        sub_machine: "هندسة", 
+        nav_oracle: "عراف", 
+        sub_oracle: "تحليل", 
+        achievements: "إنجاز", 
+        perfect: "مثالية", 
+        dom_class: "مجد كلي", 
+        nav_network: "شبكة", 
+        sub_network: "روابط", 
+        nav_trans: "اتصال", 
+        sub_trans: "آمن", 
+        view_all: "عرض", 
+        send_btn: "إرسال", 
+        ph_name: "اسم", 
+        ph_email: "تردد", 
+        ph_msg: "رسالة" 
+    },
+    hi: { 
+        role: "ऑपरेटर", 
+        sys: "सिस्टम ऑनलाइन", 
+        sys_off: "सिस्टम ऑफलाइन", 
+        playtime: "समय", 
+        value: "मूल्य", 
+        games: "गेम्स", 
+        nav_sanctum: "पवित्र", 
+        nav_armory: "शस्त्रागार", 
+        sub_armory: "डिजिटल शस्त्रागार", 
+        nav_machine: "मशीन", 
+        sub_machine: "आर्किटेक्चर", 
+        nav_oracle: "ओरेकल", 
+        sub_oracle: "अंतर्दृष्टि", 
+        achievements: "पूर्णता", 
+        perfect: "बढ़िया", 
+        dom_class: "पूर्ण महिमा", 
+        nav_network: "नेटवर्क", 
+        sub_network: "लिंक्स", 
+        nav_trans: "संपर्क", 
+        sub_trans: "सुरक्षित", 
+        view_all: "देखें", 
+        send_btn: "भेजें", 
+        ph_name: "नाम", 
+        ph_email: "आवृत्ति", 
+        ph_msg: "संदेश" 
+    },
+    bn: { 
+        role: "অপারেটর", 
+        sys: "সিস্টেম অনলাইন", 
+        sys_off: "সিস্টেম অফলাইন", 
+        playtime: "সময়", 
+        value: "মান", 
+        games: "গেমস", 
+        nav_sanctum: "স্যাঙ্কটাম", 
+        nav_armory: "আর্মরি", 
+        sub_armory: "ডিজিটাল অস্ত্রাগার", 
+        nav_machine: "মেশিন", 
+        sub_machine: "আর্কিটেকচার", 
+        nav_oracle: "ওরাকল", 
+        sub_oracle: "অন্তর্দৃষ্টি", 
+        achievements: "সম্পূর্ণতা", 
+        perfect: "নিখুঁত", 
+        dom_class: "চূড়ান্ত গৌরব", 
+        nav_network: "নেটওয়ার্ক", 
+        sub_network: "লিঙ্ক", 
+        nav_trans: "যোগাযোগ", 
+        sub_trans: "সুরক্ষিত", 
+        view_all: "দেখুন", 
+        send_btn: "পাঠান", 
+        ph_name: "নাম", 
+        ph_email: "ফ্রিকোয়েন্সি", 
+        ph_msg: "বার্তা" 
+    },
+    nl: { 
+        role: "OPERATOR", 
+        sys: "SYSTEEM ONLINE", 
+        sys_off: "SYSTEEM OFFLINE", 
+        playtime: "TIJD", 
+        value: "WAARDE", 
+        games: "GAMES", 
+        nav_sanctum: "HEILIGDOM", 
+        nav_armory: "WAPENKAMER", 
+        sub_armory: "DIGITAAL ARSENAL", 
+        nav_machine: "MACHINE", 
+        sub_machine: "ARCHITECTUUR", 
+        nav_oracle: "ORAKEL", 
+        sub_oracle: "ANALYSE", 
+        achievements: "VOLTOOIING", 
+        perfect: "PERFECT", 
+        dom_class: "TOTALE GLORIE", 
+        nav_network: "NETWERK", 
+        sub_network: "LINKS", 
+        nav_trans: "CONTACT", 
+        sub_trans: "VEILIG", 
+        view_all: "BEKIJKEN", 
+        send_btn: "VERZENDEN", 
+        ph_name: "NAAM", 
+        ph_email: "FREQUENTIE", 
+        ph_msg: "BERICHT" 
+    },
+    pl: { 
+        role: "OPERATOR", 
+        sys: "SYSTEM ONLINE", 
+        sys_off: "SYSTEM OFFLINE", 
+        playtime: "CZAS", 
+        value: "WARTOŚĆ", 
+        games: "GRY", 
+        nav_sanctum: "SANKTUARIUM", 
+        nav_armory: "ZBROJOWNIA", 
+        sub_armory: "CYFROWY ARSENAŁ", 
+        nav_machine: "MASZYNA", 
+        sub_machine: "ARCHITEKTURA", 
+        nav_oracle: "WYROCZNIA", 
+        sub_oracle: "ANALIZA", 
+        achievements: "UKOŃCZENIE", 
+        perfect: "PERFEKCYJNE", 
+        dom_class: "PEŁNA CHWAŁA", 
+        nav_network: "SIEĆ", 
+        sub_network: "ŁĄCZA", 
+        nav_trans: "KONTAKT", 
+        sub_trans: "BEZPIECZNY", 
+        view_all: "ZOBACZ", 
+        send_btn: "WYŚLIJ", 
+        ph_name: "NAZWA", 
+        ph_email: "CZĘSTOTLIWOŚĆ", 
+        ph_msg: "WIADOMOŚĆ" 
+    },
+    sv: { 
+        role: "OPERATÖR", 
+        sys: "SYSTEM ONLINE", 
+        sys_off: "SYSTEM OFFLINE", 
+        playtime: "TID", 
+        value: "VÄRDE", 
+        games: "SPEL", 
+        nav_sanctum: "HELGEDOM", 
+        nav_armory: "VAPENKAMMARE", 
+        sub_armory: "DIGITALT ARSENAL", 
+        nav_machine: "MASKIN", 
+        sub_machine: "ARKITEKTUR", 
+        nav_oracle: "ORAKEL", 
+        sub_oracle: "ANALYS", 
+        achievements: "SLUTFÖRANDE", 
+        perfect: "PERFEKTA", 
+        dom_class: "TOTAL ÄRA", 
+        nav_network: "NÄTVERK", 
+        sub_network: "LÄNKAR", 
+        nav_trans: "KONTAKT", 
+        sub_trans: "SÄKER", 
+        view_all: "VISA", 
+        send_btn: "SKICKA", 
+        ph_name: "NAMN", 
+        ph_email: "FREKVENS", 
+        ph_msg: "MEDDELANDE" 
+    },
+    vi: { 
+        role: "ĐIỀU HÀNH", 
+        sys: "HỆ THỐNG ONLINE", 
+        sys_off: "HỆ THỐNG OFFLINE", 
+        playtime: "THỜI GIAN", 
+        value: "GIÁ TRỊ", 
+        games: "TRÒ CHƠI", 
+        nav_sanctum: "THÁNH ĐỊA", 
+        nav_armory: "KHO VŨ KHÍ", 
+        sub_armory: "KHO VŨ KHÍ SỐ", 
+        nav_machine: "MÁY MÓC", 
+        sub_machine: "KIẾN TRÚC", 
+        nav_oracle: "TIÊN TRI", 
+        sub_oracle: "PHÂN TÍCH", 
+        achievements: "HOÀN THÀNH", 
+        perfect: "HOÀN HẢO", 
+        dom_class: "VINH QUANG TỐI THƯỢNG", 
+        nav_network: "MẠNG", 
+        sub_network: "LIÊN KẾT", 
+        nav_trans: "LIÊN HỆ", 
+        sub_trans: "AN TOÀN", 
+        view_all: "XEM", 
+        send_btn: "GỬI", 
+        ph_name: "TÊN", 
+        ph_email: "TẦN SỐ", 
+        ph_msg: "TIN NHẮN" 
+    },
+    el: { 
+        role: "ΧΕΙΡΙΣΤΗΣ", 
+        sys: "ΣΥΣΤΗΜΑ ONLINE", 
+        sys_off: "ΣΥΣΤΗΜΑ OFFLINE", 
+        playtime: "ΩΡΑ", 
+        value: "ΑΞΙΑ", 
+        games: "ΠΑΙΧΝΙΔΙΑ", 
+        nav_sanctum: "ΑΔΥΤΟ", 
+        nav_armory: "ΟΠΛΟΣΤΑΣΙΟ", 
+        sub_armory: "ΨΗΦΙΑΚΟ ΟΠΛΟΣΤΑΣΙΟ", 
+        nav_machine: "ΜΗΧΑΝΗ", 
+        sub_machine: "ΑΡΧΙΤΕΚΤΟΝΙΚΗ", 
+        nav_oracle: "ΜΑΝΤΕΙΟ", 
+        sub_oracle: "ΑΝΑΛΥΣΗ", 
+        achievements: "ΟΛΟΚΛΗΡΩΣΗ", 
+        perfect: "ΤΕΛΕΙΑ",
+        dom_class: "ΑΠΟΛΥΤΗ ΔΟΞΑ", 
+        nav_network: "ΔΙΚΤΥΟ", 
+        sub_network: "ΣΥΝΔΕΣΜΟΙ", 
+        nav_trans: "ΕΠΙΚΟΙΝΩΝΙΑ", 
+        sub_trans: "ΑΣΦΑΛΕΣ", 
+        view_all: "ΠΡΟΒΟΛΗ", 
+        send_btn: "ΑΠΟΣΤΟΛΗ", 
+        ph_name: "ΟΝΟΜΑ", 
+        ph_email: "ΣΥΧΝΟΤΗΤΑ", 
+        ph_msg: "ΜΗΝΥΜΑ" 
+    },
+    th: { 
+        role: "ผู้ดำเนินการ", 
+        sys: "ระบบออนไลน์", 
+        sys_off: "ระบบออฟไลน์", 
+        playtime: "เวลา", 
+        value: "มูลค่า", 
+        games: "เกม", 
+        nav_sanctum: "สถานที่ศักดิ์สิทธิ์", 
+        nav_armory: "คลังแสง", 
+        sub_armory: "คลังแสงดิจิทัล", 
+        nav_machine: "เครื่องจักร", 
+        sub_machine: "สถาปัตยกรรม", 
+        nav_oracle: "ออราเคิล", 
+        sub_oracle: "วิเคราะห์", 
+        achievements: "สำเร็จ", 
+        perfect: "สมบูรณ์", 
+        dom_class: "เกียรติยศสูงสุด", 
+        nav_network: "เครือข่าย", 
+        sub_network: "ลิงก์", 
+        nav_trans: "ติดต่อ", 
+        sub_trans: "ปลอดภัย", 
+        view_all: "ดู", 
+        send_btn: "ส่ง", 
+        ph_name: "ชื่อ", 
+        ph_email: "ความถี่", 
+        ph_msg: "ข้อความ" 
+    }
 };
-
 const LANG_OPTIONS = [
     { c: 'tr', n: 'TURKISH' }, { c: 'en', n: 'ENGLISH' }, { c: 'es', n: 'SPANISH' }, { c: 'ru', n: 'RUSSIAN' },
     { c: 'de', n: 'GERMAN' }, { c: 'fr', n: 'FRENCH' }, { c: 'jp', n: 'JAPANESE' }, { c: 'cn', n: 'CHINESE' },
@@ -537,7 +1056,11 @@ const LANG_OPTIONS = [
     { c: 'hi', n: 'HINDI' }, { c: 'bn', n: 'BENGALI' }, { c: 'nl', n: 'DUTCH' }, { c: 'pl', n: 'POLISH' },
     { c: 'sv', n: 'SWEDISH' }, { c: 'vi', n: 'VIETNAMESE' }, { c: 'el', n: 'GREEK' }, { c: 'th', n: 'THAI' }
 ];
+
+            let activeLang = 'tr'; // Varsayılan dil
+
         function setLang(c) {
+            activeLang = c; // Seçili dili hafızaya al
             let t=LANG_DATA[c]||LANG_DATA['en'];
             document.querySelectorAll('[data-k]').forEach(e=>e.innerText=t[e.getAttribute('data-k')]||e.innerText);
             document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t[e.getAttribute('data-p')]||e.placeholder);
@@ -695,27 +1218,60 @@ gsap.to('.load-fill',{width:'100%',duration:2,ease:'power2.inOut',onComplete:()=
 
 
 
-/* === STEAM DATA LOADER === */
+/* === STEAM DATA & STATUS LOADER === */
 fetch('./steam_data.json')
   .then(response => response.json())
   .then(data => {
-      // Toplam İstatistikler
+      // 1. İstatistikler
       if(document.getElementById('total-hours')) document.getElementById('total-hours').innerText = data.total_hours;
       if(document.getElementById('total-games')) document.getElementById('total-games').innerText = data.total_games;
 
-      // Oyun Saatleri
+      // 2. Oyun Saatleri
       if(data.games_playtime) {
-          if(document.getElementById('time-fc25')) document.getElementById('time-fc25').innerText = data.games_playtime.fc25;
-          if(document.getElementById('time-bannerlord')) document.getElementById('time-bannerlord').innerText = data.games_playtime.bannerlord;
-          if(document.getElementById('time-witcher3')) document.getElementById('time-witcher3').innerText = data.games_playtime.witcher3;
-          if(document.getElementById('time-godofwar')) document.getElementById('time-godofwar').innerText = data.games_playtime.godofwar;
-          if(document.getElementById('time-kingdomcome')) document.getElementById('time-kingdomcome').innerText = data.games_playtime.kingdomcome;
-          if(document.getElementById('time-cyberpunk')) document.getElementById('time-cyberpunk').innerText = data.games_playtime.cyberpunk;
+          if(data.games_playtime.fc25 && document.getElementById('time-fc25')) 
+              document.getElementById('time-fc25').innerText = data.games_playtime.fc25;
+          if(data.games_playtime.bannerlord && document.getElementById('time-bannerlord')) 
+              document.getElementById('time-bannerlord').innerText = data.games_playtime.bannerlord;
+          if(data.games_playtime.witcher3 && document.getElementById('time-witcher3')) 
+              document.getElementById('time-witcher3').innerText = data.games_playtime.witcher3;
+          if(data.games_playtime.godofwar && document.getElementById('time-godofwar')) 
+              document.getElementById('time-godofwar').innerText = data.games_playtime.godofwar;
+          if(data.games_playtime.kingdomcome && document.getElementById('time-kingdomcome')) 
+              document.getElementById('time-kingdomcome').innerText = data.games_playtime.kingdomcome;
+          if(data.games_playtime.cyberpunk && document.getElementById('time-cyberpunk')) 
+              document.getElementById('time-cyberpunk').innerText = data.games_playtime.cyberpunk;
       }
-      console.log("Sistem Güncellendi: Steam Verileri Yüklendi.");
-  })
-  .catch(err => console.log('Veri henüz oluşmadı veya hata var:', err));
 
+      // 3. Sistem Durumu ve Dil Entegrasyonu
+      const sysEl = document.getElementById('sys-status');
+      
+      if(sysEl && data.system_status) {
+          if(data.system_status === "OFFLINE") {
+              // OFFLINE İSE:
+              sysEl.setAttribute('data-k', 'sys_off'); // Çeviri anahtarını 'sys_off' yap
+              
+              // Stil: Sönük yap
+              sysEl.style.color = "#888"; 
+              sysEl.style.textShadow = "none";
+              sysEl.style.animation = "none"; 
+          } else {
+              // ONLINE İSE:
+              sysEl.setAttribute('data-k', 'sys'); // Çeviri anahtarını 'sys' yap
+              
+              // Stil: Parlak yap (CSS'e dönsün)
+              sysEl.style.color = ""; 
+              sysEl.style.textShadow = "";
+              sysEl.style.animation = "";
+          }
+          
+          // DİL GÜNCELLEMESİNİ TETİKLE
+          // Bu komut, az önce değiştirdiğimiz data-k'yı okuyup o anki dilde yazıyı basar.
+          setLang(activeLang);
+      }
+
+      console.log("HaKING Core: Status Synced.");
+  })
+  .catch(err => console.log('Data error:', err));
 
     </script>
 </body>
