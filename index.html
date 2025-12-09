@@ -20,7 +20,7 @@
 .modal-overlay {
     display: none; 
     position: fixed;
-    z-index: 9999; 
+    z-index: 999999; 
     left: 0;
     top: 0;
     width: 100%;
@@ -54,7 +54,7 @@
     font-weight: bold;
     cursor: pointer;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    z-index: 10000;
+    z-index: 1000000;
 }
 .modal-close-btn:hover,
 .modal-close-btn:focus {
@@ -387,7 +387,15 @@ position: absolute;
             #app { grid-template-columns:1fr; grid-template-rows:1fr 80px; }
             
             /* Sidebar'ı alt tarafa sabitle */
-            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; justify-content: space-evenly; }
+            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; justify-content: space-evenly; 
+            /* --- YENİ EKLENEN KISIM BAŞLANGIÇ --- */
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            z-index: 5000; 
+            background: rgba(5, 2, 2, 0.98); /* Arka planı koyulaştırdık ki içerik karışmasın */
+            /* --- YENİ EKLENEN KISIM BİTİŞ --- */}
+            .section { padding: 20px 20px 100px 20px; /* Alttan 100px boşluk bıraktık */}
             .logo { display:none; } /* Mobilde logoyu gizle */
             
             /* Nav butonlarını sıkıştır */
