@@ -375,53 +375,95 @@ position: absolute;
         .send_btn:hover { background: white; color: black; letter-spacing: 8px; }
 
         /* ================================================= */
-        /* 📱 MOBILE OPTIMIZATION (BREAKPOINTS) */
+        /* 📱 MOBILE OPTIMIZATION (DÜZELTİLMİŞ HALİ) */
         /* ================================================= */
-        @media(max-width:1200px){ 
-            .game, .tarot { grid-column:span 6; } 
-            .form-box { grid-column:1 / span 12; } 
-        }
-
         @media(max-width:768px){
-            /* Düzeni değiştir: Menüyü aşağıya al */
-            #app { grid-template-columns:1fr; grid-template-rows:1fr 80px; }
             
-            /* Sidebar'ı alt tarafa sabitle */
-            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; justify-content: space-evenly; 
-            /* --- YENİ EKLENEN KISIM BAŞLANGIÇ --- */
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            z-index: 5000; 
-            background: rgba(5, 2, 2, 0.98); /* Arka planı koyulaştırdık ki içerik karışmasın */
-            /* --- YENİ EKLENEN KISIM BİTİŞ --- */}
-            .section { padding: 20px 20px 100px 20px; /* Alttan 100px boşluk bıraktık */}
-            .logo { display:none; } /* Mobilde logoyu gizle */
+            /* 1. DÜZENİ DEĞİŞTİR: Grid yerine normal akış */
+            #app { 
+                display: block; /* Grid'i iptal et */
+                height: auto;   /* Yüksekliği serbest bırak */
+                overflow-x: hidden;
+            }
             
-            /* Nav butonlarını sıkıştır */
-            .navs { flex-direction:row; margin:0; width: 100%; justify-content:space-between; padding: 0 10px; }
-            .nav-btn { height:100%; width: auto; flex-grow: 1; }
-            .nav-lbl { display: none; } /* Yazıları gizle, sadece ikon kalsın */
+            /* 2. SIDEBAR'I ALTA ÇİVİLE (FIXED) */
+            .sidebar { 
+                position: fixed;        /* Sayfadan bağımsız yap */
+                bottom: 0;              /* En alta yapıştır */
+                left: 0; 
+                width: 100%;            /* Genişlik tam olsun */
+                height: 70px !important; /* ⚠️ ÖNEMLİ: Yüksekliği sabitle (Eskiden %100'dü o yüzden ortadaydı) */
+                z-index: 5000;          /* En üstte dursun */
+                
+                background: rgba(5, 2, 2, 0.98); /* Arka plan rengi */
+                border-right: none; 
+                border-top: 2px solid var(--red); /* Üstüne çizgi çek */
+                
+                /* İkonları hizala */
+                display: flex;
+                flex-direction: row; 
+                justify-content: space-evenly; 
+                align-items: center;
+                padding: 0; 
+            }
 
-            /* İçerik alanını düzenle */
-            .section { padding: 20px 20px 100px 20px; } /* Alttan boşluk bırak (Nav için) */
+            /* Logoyu gizle */
+            .logo { display:none; } 
             
-            /* Başlıkları Küçült */
+            /* Nav butonlarını yatay diz */
+            .navs { 
+                flex-direction: row; 
+                margin: 0; 
+                width: 100%; 
+                justify-content: space-between; 
+                padding: 0 10px; 
+            }
+            
+            .nav-btn { 
+                height: 100%; 
+                width: auto; 
+                flex-grow: 1; 
+                display: flex;           /* İkonu ortalamak için */
+                align-items: center;     /* Dikey ortala */
+                justify-content: center; /* Yatay ortala */
+            }
+            
+            .nav-lbl { display: none; } /* Yazıları gizle */
+
+            /* 3. İÇERİK ALANI DÜZENLEMESİ */
+            /* Sayfa kaydırılabilir olsun ve menünün altında kalmasın */
+            .stage {
+                height: auto;       /* Yükseklik serbest */
+                overflow: visible;  /* Kaydırma çubuğu html'den gelsin */
+            }
+
+            .section { 
+                position: relative; /* Absolute yerine relative yap ki birbirinin altına insin */
+                opacity: 1 !important; /* Görünürlüğü zorla */
+                transform: none !important; /* Animasyon kaymasını engelle */
+                pointer-events: all;
+                padding: 20px 20px 100px 20px; /* Alttan 100px boşluk bırak (Menü için) */
+                height: auto;
+                overflow: visible;
+            }
+            
+            /* Diğer stil küçültmeleri */
             .h-tit { font-size: 2.5rem; letter-spacing: 2px; }
             .head { flex-direction: column; align-items: flex-start; gap: 10px; }
             .h-stat { text-align: left; font-size: 0.9rem; }
             
             /* Izgara (Grid) Yapısını Tek Sütuna İndir */
-            .grid > * { grid-column: span 12 !important; }
+            .grid { display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px; }
+            .grid > * { width: 100%; margin-bottom: 10px; }
 
             /* Profil Kısmı */
             .profile { flex-direction:column; text-align:center; padding: 2rem 1rem; gap: 2rem; }
             .p-info h2 { font-size: 2.5rem; }
             .avi-w { width: 200px; height: 200px; }
             
-            /* 3D Laptop Ayarı (Mobilde Taşmayı Önle) */
+            /* 3D Laptop Ayarı */
             .rig { height: 400px; }
-            .laptop { transform: scale(0.55) rotateX(60deg); } /* Küçült ve açı ver */
+            .laptop { transform: scale(0.55) rotateX(60deg); }
             .rtx { top: 20px; right: 20px; font-size: 0.8rem; padding: 5px 10px; }
 
             /* Network & Form */
