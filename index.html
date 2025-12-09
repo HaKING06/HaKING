@@ -189,8 +189,7 @@ position: absolute;
         /* === BACKGROUND === */
         #canvas { position:fixed; inset:0; z-index:0; opacity:0.4; }
         .scanlines { position:fixed; inset:0; z-index:1; pointer-events:none; background:linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3) 51%); background-size:100% 4px; opacity:0.3; }
-        .vignette { position:fixed; inset:0; z-index:2; pointer-events:none; background:radial-gradient(circle, transparent 20%, #000 140%); }
-
+        
         /* === LANG (FIXED TOP RIGHT) === */
         .lang-box { position:fixed; top:30px; right:40px; z-index:60000; font-family:var(--f-code); }
         .lang-btn { background:rgba(0,0,0,0.9); border:1px solid var(--gold); color:var(--gold); padding:10px 20px; font-size:12px; cursor:none; display:flex; align-items:center; gap:10px; transition:0.3s; clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
@@ -214,7 +213,7 @@ position: absolute;
 
         /* NAV (TRANSPARENT) */
         .navs { display:flex; flex-direction:column; gap:15px; width:100%; }
-        .nav-btn { width:100%; height:75px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; color:var(--muted); transition:0.3s; position:relative; cursor:none; background:transparent; }
+        .nav-btn { width:100%; height:75px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; color:var(--muted); transition:0.3s; position:relative; cursor:none; background:transparent; border:none;}
         .nav-btn i { width:24px; height:24px; transition:0.3s; z-index:2; }
         .nav-lbl { font-size:9px; letter-spacing:1px; opacity:0.6; transition:0.3s; font-family:var(--f-code); text-transform:uppercase; }
         .nav-btn:hover, .nav-btn.active { color:var(--text); background:linear-gradient(90deg, rgba(255,0,0,0.15), transparent); }
@@ -298,12 +297,63 @@ position: absolute;
         .kb { width:85%; height:40%; margin-top:40px; background:linear-gradient(45deg, transparent 30%, rgba(0,243,255,0.3) 50%, transparent 70%); animation:rgb 3s infinite linear; border:1px solid #333; }
         .rtx { position:absolute; top:40px; right:40px; padding:10px 20px; border:2px solid #76b900; color:#76b900; font-family:sans-serif; font-weight:900; letter-spacing:1px; box-shadow:0 0 20px rgba(118,185,0,0.3); animation:pulseGreen 2s infinite; z-index:10; }
 
-        /* ORACLE */
-        .tarot { grid-column:span 4; height:450px; background:#080202; border:2px solid #222; border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:0.6s; perspective:1000px; }
-        .tarot:hover { border-color:var(--gold); box-shadow:0 0 40px rgba(255,183,0,0.2); transform:translateY(-10px) rotateY(10deg); }
-        .t-icon { color:var(--gold); margin-bottom:20px; }
-        .t-val { font-family:var(--f-ui); font-size:3rem; font-weight:bold; color:white; }
-        .t-lbl { font-family:var(--f-head); color:#888; letter-spacing:4px; margin-top:15px; }
+        /* === MUSEUM (YENİ - YATAY RESİMLER) === */
+        .museum-item { 
+            grid-column: span 6; /* Yan yana 2 tane sığsın (daha geniş) */
+            aspect-ratio: 16 / 9; /* 16:9 Sinema formatı (Youtube videosu gibi) */
+            position: relative; 
+            border: 1px solid #333; 
+            overflow: hidden; 
+            transition: 0.4s; 
+            background: #000;
+            border-radius: 4px;
+        }
+        
+        /* Resim Ayarı */
+        .museum-bg { 
+            position: absolute; 
+            inset: 0; 
+            background-size: cover; /* Resmi kutuya tam sığdırır, boşluk bırakmaz */
+            background-position: center; 
+            transition: 0.5s; 
+            filter: grayscale(0.5) brightness(0.7); /* Hafif sanatsal karanlık */
+        }
+
+        /* Hover (Üzerine Gelince) Efekti */
+        .museum-item:hover { 
+            border-color: var(--soul); /* Mavi çerçeve */
+            transform: scale(1.02); /* Hafif büyüsün */
+            z-index: 10;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+        }
+        .museum-item:hover .museum-bg { 
+            filter: grayscale(0) brightness(1); /* Resim canlansın */
+            transform: scale(1.1); /* Resim içerde yakınlaşsın */
+        }
+
+        /* Üzerindeki Yazı */
+        .museum-ov { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            padding: 15px; 
+            background: linear-gradient(to top, #000 10%, transparent); 
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .m-tit { font-family: var(--f-code); font-size: 0.9rem; color: white; letter-spacing: 2px; }
+        .m-icon { color: var(--soul); opacity: 0; transition: 0.3s; transform: translateY(10px); }
+        
+        .museum-item:hover .m-icon { opacity: 1; transform: translateY(0); }
+
+        /* MOBİL VE TABLET AYARI */
+        @media(max-width:1200px){ 
+            .game { grid-column:span 6; } /* Oyunlar tablette 2'li */
+            .museum-item { grid-column: span 12; } /* Müzeler tablette tekli (dev gibi) */
+        }
+        /* Mobile zaten senin kodunda .grid > * { grid-column: span 12 } olduğu için otomatik tek sütun olacak. */
 
         /* NETWORK */
         .net { grid-column:span 12; display:flex; align-items:center; justify-content:space-between; padding:30px 50px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; color:white; transition:0.3s; }
@@ -324,26 +374,61 @@ position: absolute;
         .send_btn { width: 100%; padding: 25px; background: linear-gradient(90deg, var(--red-dim), var(--red)); border: none; color: white; font-family: var(--f-head); font-weight: 900; font-size: 1.4rem; letter-spacing: 4px; transition: 0.3s; clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); }
         .send_btn:hover { background: white; color: black; letter-spacing: 8px; }
 
-        /* MOBILE */
-        @media(max-width:1200px){ .game, .tarot { grid-column:span 6; } .form-box { grid-column:1 / span 12; } }
+        /* ================================================= */
+        /* 📱 MOBILE OPTIMIZATION (BREAKPOINTS) */
+        /* ================================================= */
+        @media(max-width:1200px){ 
+            .game, .tarot { grid-column:span 6; } 
+            .form-box { grid-column:1 / span 12; } 
+        }
+
         @media(max-width:768px){
-            #app { grid-template-columns:1fr; grid-template-rows:1fr 70px; }
-            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; }
-            .logo, .nav-lbl { display:none; }
-            .navs { flex-direction:row; margin:0; justify-content:space-evenly; }
-            .nav-btn { height:100%; }
-            .section { padding:20px; padding-bottom:120px; }
-            .profile { flex-direction:column; text-align:center; padding:20px; }
-            .grid > * { grid-column:span 12 !important; }
-            .h-tit { font-size:2.5rem; } .net { padding:20px; flex-direction:column; gap:10px; text-align:center; }
-            .form-box { padding:30px; grid-column:span 12; }
-            .rig { height:350px; } .laptop { transform:scale(0.6) rotateX(60deg); }
+            /* Düzeni değiştir: Menüyü aşağıya al */
+            #app { grid-template-columns:1fr; grid-template-rows:1fr 80px; }
+            
+            /* Sidebar'ı alt tarafa sabitle */
+            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; justify-content: space-evenly; }
+            .logo { display:none; } /* Mobilde logoyu gizle */
+            
+            /* Nav butonlarını sıkıştır */
+            .navs { flex-direction:row; margin:0; width: 100%; justify-content:space-between; padding: 0 10px; }
+            .nav-btn { height:100%; width: auto; flex-grow: 1; }
+            .nav-lbl { display: none; } /* Yazıları gizle, sadece ikon kalsın */
+
+            /* İçerik alanını düzenle */
+            .section { padding: 20px 20px 100px 20px; } /* Alttan boşluk bırak (Nav için) */
+            
+            /* Başlıkları Küçült */
+            .h-tit { font-size: 2.5rem; letter-spacing: 2px; }
+            .head { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .h-stat { text-align: left; font-size: 0.9rem; }
+            
+            /* Izgara (Grid) Yapısını Tek Sütuna İndir */
+            .grid > * { grid-column: span 12 !important; }
+
+            /* Profil Kısmı */
+            .profile { flex-direction:column; text-align:center; padding: 2rem 1rem; gap: 2rem; }
+            .p-info h2 { font-size: 2.5rem; }
+            .avi-w { width: 200px; height: 200px; }
+            
+            /* 3D Laptop Ayarı (Mobilde Taşmayı Önle) */
+            .rig { height: 400px; }
+            .laptop { transform: scale(0.55) rotateX(60deg); } /* Küçült ve açı ver */
+            .rtx { top: 20px; right: 20px; font-size: 0.8rem; padding: 5px 10px; }
+
+            /* Network & Form */
+            .net { flex-direction:column; gap:10px; text-align:center; padding: 20px; }
+            .form-box { padding: 30px 20px; }
+            .send_btn { font-size: 1.1rem; }
+            
+            /* Dil Butonu */
+            .lang-box { top: 15px; right: 20px; }
+            .lang-btn { padding: 5px 10px; }
         }
 
         @keyframes spin { 100%{transform:rotate(360deg);} } @keyframes spinR { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} } 
         @keyframes pulse { 50%{opacity:0.5;text-shadow:0 0 15px var(--soul);} } @keyframes rgb { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
         @keyframes pulseGreen { 50%{opacity:0.6;} } @keyframes slideDown { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
-        @keyframes pulseBorder { 0%{box-shadow:0 0 15px var(--red);} 50%{box-shadow:0 0 35px var(--gold);} 100%{box-shadow:0 0 15px var(--red);} }
     </style>
 </head>
 <body>
@@ -378,7 +463,6 @@ position: absolute;
 
     <div id="canvas"></div>
     <div class="scanlines"></div>
-    <div class="vignette"></div>
     <div id="cursor"><div class="dot"></div></div>
 
     <!-- BOOT -->
@@ -415,7 +499,7 @@ position: absolute;
                 <button class="nav-btn active" data-t="sanctum"><i data-lucide="skull"></i><span class="nav-lbl" data-k="nav_sanctum">SANCTUM</span></button>
                 <button class="nav-btn" data-t="armory"><i data-lucide="swords"></i><span class="nav-lbl" data-k="nav_armory">ARMORY</span></button>
                 <button class="nav-btn" data-t="machine"><i data-lucide="cpu"></i><span class="nav-lbl" data-k="nav_machine">MACHINE</span></button>
-                <button class="nav-btn" data-t="oracle"><i data-lucide="bar-chart-2"></i><span class="nav-lbl" data-k="nav_oracle">ORACLE</span></button>
+                <button class="nav-btn" data-t="museum"><i data-lucide="image"></i><span class="nav-lbl" data-k="nav_museum">MUSEUM</span></button>
                 <button class="nav-btn" data-t="network"><i data-lucide="globe"></i><span class="nav-lbl" data-k="nav_network">NETWORK</span></button>
                 <button class="nav-btn" data-t="trans"><i data-lucide="send"></i><span class="nav-lbl" data-k="nav_trans">CONTACT</span></button>
             </nav>
@@ -434,21 +518,21 @@ position: absolute;
                         </div>
                         <div class="p-info"><h2>Halit Güneş</h2><p>// FULL-STACK DEV & GAMER<br>// ID: halitguns06.dev</p> <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank"><div class="badge"><i data-lucide="shield" size="16"></i>STEAM LEVEL 31</div></a></div>
                     </div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="playtime">TIME</h3><div class="stat-val" id="total-hours">1,171h</div></div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="value">VALUE</h3><div class="stat-val">$1975</div></div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="games">GAMES</h3><div class="stat-val" id="total-games">144</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="playtime">TIME</h3><div class="stat-val" id="total-hours">Loading...</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="value">VALUE</h3><div class="stat-val">$2050</div></div>
+                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="games">GAMES</h3><div class="stat-val" id="total-games">Loading...</div></div>
                 </div>
             </section>
 
             <section id="armory" class="section">
                 <div class="head"><div><h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">DIGITAL ARSENAL</span></div></div>
                 <div class="grid">
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time" id="time-fc25"><i data-lucide="clock" size="14"></i> 197.8h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time" id="time-bannerlord">162.9h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time" id="time-witcher3">91.4h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time" id="time-godofwar">73.7h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/379430/header.jpg')"></div><div class="game-ov"><div class="g-tit">KINGDOM COME</div><span class="g-time" id="time-kingdomcome">71.0h</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')"></div><div class="game-ov"><div class="g-tit">CYBERPUNK 2077</div><span class="g-time" id="time-cyberpunk">61.9h</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time" id="time-fc25">Loading...</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time" id="time-bannerlord">Loading...</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time" id="time-witcher3">Loading...</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time" id="time-godofwar">Loading...</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/379430/header.jpg')"></div><div class="game-ov"><div class="g-tit">KINGDOM COME</div><span class="g-time" id="time-kingdomcome">Loading...</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')"></div><div class="game-ov"><div class="g-tit">CYBERPUNK 2077</div><span class="g-time" id="time-cyberpunk">Loading...</span></div></div>
                     <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank" class="btn-view" data-k="view_all">[ VIEW FULL COLLECTION ]</a>
                 </div>
             </section>
@@ -469,12 +553,42 @@ position: absolute;
                 </div>
             </section>
 
-            <section id="oracle" class="section">
-                <div class="head"><div><h1 class="h-tit" data-k="nav_oracle">ORACLE</h1><span class="h-sub" data-k="sub_oracle">INSIGHTS</span></div></div>
+            <section id="museum" class="section">
+                <div class="head">
+                    <div><h1 class="h-tit" data-k="nav_museum">MUSEUM</h1><span class="h-sub" data-k="sub_museum">VISUAL ARCHIVE</span></div>
+                </div>
                 <div class="grid">
-                    <div class="tarot"><i data-lucide="trophy" size="64" color="#ffb700" style="margin-bottom:15px;"></i><div class="t-val">34%</div><div class="t-lbl" data-k="achievements">COMPLETION</div></div>
-                    <div class="tarot"><i data-lucide="medal" size="64" color="#00f3ff" style="margin-bottom:15px;"></i><div class="t-val">5</div><div class="t-lbl" data-k="perfect">PERFECT</div></div>
-                    <div class="tarot"><i data-lucide="crown" size="64" color="#ff0000" style="margin-bottom:15px;"></i><div class="t-val">1,162</div><div class="t-lbl" data-k="dom_class">TOTAL GLORY</div></div>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3587443677" target="_blank" class="museum-item">
+                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/12378042621997334601/E47F3FB4C5AE4FF1EA7B74A8FB267E155A12F65B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
+                        <div class="museum-ov"><span class="m-tit">God of War Ragnarök</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+                    
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3565203458" target="_blank" class="museum-item">
+                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/15566897679527924002/A32EBC50B8201D63E7E651ED6EAE5D164CF2C2C2/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
+                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part II Remastered</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3552788785" target="_blank" class="museum-item">
+                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/17036147118589743603/4C23D97CA5EC7A5B6BB7F287EEC18A4A9A3FB741/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
+                        <div class="museum-ov"><span class="m-tit">The Witcher 3: Wild Hunt</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3518267543" target="_blank" class="museum-item">
+                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
+                        <div class="museum-ov"><span class="m-tit">The Witcher 2: Assassins of Kings Enhanced Edition</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3589141535" target="_blank" class="museum-item">
+                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/11321918544718607285/91300EB97577DF31955304DDCB2E0B7634810273/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
+                        <div class="museum-ov"><span class="m-tit">Hogwarts Legacy</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3556595502" target="_blank" class="museum-item">
+                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/9998270276105590867/8FBC96CBFE406B735EF9F7A814AFABAF8FB8FCCE/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
+                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part I</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/screenshots/" target="_blank" class="btn-view" data-k="view_gallery">VIEW FULL GALLERY</a>
                 </div>
             </section>
 
@@ -520,8 +634,9 @@ const LANG_DATA = {
         sub_armory: "DIGITAL ARSENAL", 
         nav_machine: "MACHINE", 
         sub_machine: "SYSTEM ARCHITECTURE", 
-        nav_oracle: "ORACLE", 
-        sub_oracle: "INSIGHTS", 
+        nav_museum: "MUSEUM",
+        sub_museum: "VISUAL ARCHIVE",
+        view_gallery: "VIEW FULL GALLERY",
         achievements: "COMPLETION", 
         perfect: "PERFECT", 
         dom_class: "TOTAL GLORY", 
@@ -547,8 +662,9 @@ const LANG_DATA = {
         sub_armory: "DİJİTAL ARŞİV", 
         nav_machine: "MAKİNE", 
         sub_machine: "SİSTEM MİMARİSİ", 
-        nav_oracle: "KAHİN", 
-        sub_oracle: "ANALİZLER", 
+        nav_museum: "MÜZE",
+        sub_museum: "GÖRSEL ARŞİV",
+        view_gallery: "TÜM GALERİYİ GÖR",
         achievements: "TAMAMLAMA", 
         perfect: "KUSURSUZ", 
         dom_class: "TOPLAM ŞAN", 
@@ -574,8 +690,9 @@ const LANG_DATA = {
         sub_armory: "ARSENAL DIGITAL", 
         nav_machine: "MÁQUINA", 
         sub_machine: "ARQUITECTURA", 
-        nav_oracle: "ORÁCULO", 
-        sub_oracle: "ANÁLISIS", 
+        nav_museum: "MUSEO",
+        sub_museum: "ARCHIVO VISUAL",
+        view_gallery: "VER GALERÍA COMPLETA",
         achievements: "COMPLETADO", 
         perfect: "PERFECTOS", 
         dom_class: "GLORIA TOTAL", 
@@ -601,8 +718,9 @@ const LANG_DATA = {
         sub_armory: "ЦИФРОВОЙ АРХИВ", 
         nav_machine: "МАШИНА", 
         sub_machine: "АРХИТЕКТУРА", 
-        nav_oracle: "ОРАКУЛ", 
-        sub_oracle: "АНАЛИЗ", 
+        nav_museum: "МУЗЕЙ",
+        sub_museum: "ВИЗУАЛЬНЫЙ АРХИВ",
+        view_gallery: "ОТКРЫТЬ ГАЛЕРЕЮ",
         achievements: "ЗАВЕРШЕНО", 
         perfect: "ИДЕАЛЬНЫЕ",
         dom_class: "ПОЛНАЯ СЛАВА", 
@@ -628,8 +746,9 @@ const LANG_DATA = {
         sub_armory: "DIGITALES ARSENAL", 
         nav_machine: "MASCHINE", 
         sub_machine: "ARCHITEKTUR", 
-        nav_oracle: "ORAKEL", 
-        sub_oracle: "ANALYSE", 
+        nav_museum: "MUSEUM",
+        sub_museum: "BILDARCHIV",
+        view_gallery: "GALERIE ANSEHEN",
         achievements: "ABSCHLUSS", 
         perfect: "PERFEKT", 
         dom_class: "TOTALER RUHM", 
@@ -655,8 +774,9 @@ const LANG_DATA = {
         sub_armory: "ARSENAL NUMÉRIQUE", 
         nav_machine: "MACHINE", 
         sub_machine: "ARCHITECTURE", 
-        nav_oracle: "ORACLE", 
-        sub_oracle: "ANALYSE", 
+        nav_museum: "MUSÉE",
+        sub_museum: "ARCHIVES VISUELLES",
+        view_gallery: "VOIR LA GALERIE",
         achievements: "COMPLÉTION", 
         perfect: "PARFAITS", 
         dom_class: "GLOIRE TOTALE", 
@@ -682,8 +802,9 @@ const LANG_DATA = {
         sub_armory: "デジタル保管庫", 
         nav_machine: "機械", 
         sub_machine: "設計", 
-        nav_oracle: "神託", 
-        sub_oracle: "分析", 
+        nav_museum: "博物館",
+        sub_museum: "映像アーカイブ",
+        view_gallery: "ギャラリー表示",
         achievements: "完了率", 
         perfect: "完全", 
         dom_class: "完全な栄光", 
@@ -709,8 +830,9 @@ const LANG_DATA = {
         sub_armory: "数字武库", 
         nav_machine: "机器", 
         sub_machine: "架构", 
-        nav_oracle: "神谕", 
-        sub_oracle: "分析", 
+        nav_museum: "博物馆",
+        sub_museum: "视觉档案",
+        view_gallery: "查看画廊",
         achievements: "完成度", 
         perfect: "完美", 
         dom_class: "无上荣耀", 
@@ -736,8 +858,9 @@ const LANG_DATA = {
         sub_armory: "ARSENAL DIGITAL", 
         nav_machine: "MÁQUINA", 
         sub_machine: "ARQUITETURA", 
-        nav_oracle: "ORÁCULO", 
-        sub_oracle: "ANÁLISE", 
+        nav_museum: "MUSEU",
+        sub_museum: "ARQUIVO VISUAL",
+        view_gallery: "VER GALERIA",
         achievements: "CONCLUSÃO", 
         perfect: "PERFEITOS", 
         dom_class: "GLÓRIA TOTAL", 
@@ -763,8 +886,9 @@ const LANG_DATA = {
         sub_armory: "ARSENALE DIGITALE", 
         nav_machine: "MACCHINA", 
         sub_machine: "ARCHITETTURA", 
-        nav_oracle: "ORACOLO", 
-        sub_oracle: "ANALISI", 
+        nav_museum: "MUSEO",
+        sub_museum: "ARCHIVIO VISIVO",
+        view_gallery: "VEDI GALLERIA",
         achievements: "COMPLETAMENTO", 
         perfect: "PERFETTI", 
         dom_class: "GLORIA TOTALE", 
@@ -790,8 +914,9 @@ const LANG_DATA = {
         sub_armory: "디지털 무기고", 
         nav_machine: "머신", 
         sub_machine: "아키텍처", 
-        nav_oracle: "오라클", 
-        sub_oracle: "분석", 
+        nav_museum: "박물관",
+        sub_museum: "시각 아카이브",
+        view_gallery: "갤러리 보기",
         achievements: "완료율", 
         perfect: "완벽", 
         dom_class: "총 영광", 
@@ -817,8 +942,9 @@ const LANG_DATA = {
         sub_armory: "ترسانة رقمية", 
         nav_machine: "آلة", 
         sub_machine: "هندسة", 
-        nav_oracle: "عراف", 
-        sub_oracle: "تحليل", 
+        nav_museum: "متحف",
+        sub_museum: "أرشيف مرئي",
+        view_gallery: "عرض المعرض",
         achievements: "إنجاز", 
         perfect: "مثالية", 
         dom_class: "مجد كلي", 
@@ -844,8 +970,9 @@ const LANG_DATA = {
         sub_armory: "डिजिटल शस्त्रागार", 
         nav_machine: "मशीन", 
         sub_machine: "आर्किटेक्चर", 
-        nav_oracle: "ओरेकल", 
-        sub_oracle: "अंतर्दृष्टि", 
+        nav_museum: "संग्रहालय",
+        sub_museum: "दृश्य पुरालेख",
+        view_gallery: "गैलरी देखें",
         achievements: "पूर्णता", 
         perfect: "बढ़िया", 
         dom_class: "पूर्ण महिमा", 
@@ -871,8 +998,9 @@ const LANG_DATA = {
         sub_armory: "ডিজিটাল অস্ত্রাগার", 
         nav_machine: "মেশিন", 
         sub_machine: "আর্কিটেকচার", 
-        nav_oracle: "ওরাকল", 
-        sub_oracle: "অন্তর্দৃষ্টি", 
+        nav_museum: "যাদুঘর",
+        sub_museum: "ভিজ্যুয়াল আর্কাইভ",
+        view_gallery: "গ্যালারি দেখুন",
         achievements: "সম্পূর্ণতা", 
         perfect: "নিখুঁত", 
         dom_class: "চূড়ান্ত গৌরব", 
@@ -898,8 +1026,9 @@ const LANG_DATA = {
         sub_armory: "DIGITAAL ARSENAL", 
         nav_machine: "MACHINE", 
         sub_machine: "ARCHITECTUUR", 
-        nav_oracle: "ORAKEL", 
-        sub_oracle: "ANALYSE", 
+        nav_museum: "MUSEUM",
+        sub_museum: "VISUEEL ARCHIEF",
+        view_gallery: "BEKIJK GALERIJ",
         achievements: "VOLTOOIING", 
         perfect: "PERFECT", 
         dom_class: "TOTALE GLORIE", 
@@ -925,8 +1054,9 @@ const LANG_DATA = {
         sub_armory: "CYFROWY ARSENAŁ", 
         nav_machine: "MASZYNA", 
         sub_machine: "ARCHITEKTURA", 
-        nav_oracle: "WYROCZNIA", 
-        sub_oracle: "ANALIZA", 
+        nav_museum: "MUZEUM",
+        sub_museum: "ARCHIWUM WIZUALNE",
+        view_gallery: "ZOBACZ GALERIĘ",
         achievements: "UKOŃCZENIE", 
         perfect: "PERFEKCYJNE", 
         dom_class: "PEŁNA CHWAŁA", 
@@ -952,8 +1082,9 @@ const LANG_DATA = {
         sub_armory: "DIGITALT ARSENAL", 
         nav_machine: "MASKIN", 
         sub_machine: "ARKITEKTUR", 
-        nav_oracle: "ORAKEL", 
-        sub_oracle: "ANALYS", 
+        nav_museum: "MUSEUM",
+        sub_museum: "VISUELLT ARKIV",
+        view_gallery: "VISA GALLERI",
         achievements: "SLUTFÖRANDE", 
         perfect: "PERFEKTA", 
         dom_class: "TOTAL ÄRA", 
@@ -979,8 +1110,9 @@ const LANG_DATA = {
         sub_armory: "KHO VŨ KHÍ SỐ", 
         nav_machine: "MÁY MÓC", 
         sub_machine: "KIẾN TRÚC", 
-        nav_oracle: "TIÊN TRI", 
-        sub_oracle: "PHÂN TÍCH", 
+        nav_museum: "BẢO TÀNG",
+        sub_museum: "LƯU TRỮ HÌNH ẢNH",
+        view_gallery: "XEM BỘ SƯU TẬP",
         achievements: "HOÀN THÀNH", 
         perfect: "HOÀN HẢO", 
         dom_class: "VINH QUANG TỐI THƯỢNG", 
@@ -1006,8 +1138,9 @@ const LANG_DATA = {
         sub_armory: "ΨΗΦΙΑΚΟ ΟΠΛΟΣΤΑΣΙΟ", 
         nav_machine: "ΜΗΧΑΝΗ", 
         sub_machine: "ΑΡΧΙΤΕΚΤΟΝΙΚΗ", 
-        nav_oracle: "ΜΑΝΤΕΙΟ", 
-        sub_oracle: "ΑΝΑΛΥΣΗ", 
+        nav_museum: "ΜΟΥΣΕΙΟ",
+        sub_museum: "ΟΠΤΙΚΟ ΑΡΧΕΙΟ",
+        view_gallery: "ΠΡΟΒΟΛΗ ΣΥΛΛΟΓΗΣ",
         achievements: "ΟΛΟΚΛΗΡΩΣΗ", 
         perfect: "ΤΕΛΕΙΑ",
         dom_class: "ΑΠΟΛΥΤΗ ΔΟΞΑ", 
@@ -1033,8 +1166,9 @@ const LANG_DATA = {
         sub_armory: "คลังแสงดิจิทัล", 
         nav_machine: "เครื่องจักร", 
         sub_machine: "สถาปัตยกรรม", 
-        nav_oracle: "ออราเคิล", 
-        sub_oracle: "วิเคราะห์", 
+        nav_museum: "พิพิธภัณฑ์",
+        sub_museum: "คลังภาพ",
+        view_gallery: "ดูแกลเลอรี",
         achievements: "สำเร็จ", 
         perfect: "สมบูรณ์", 
         dom_class: "เกียรติยศสูงสุด", 
