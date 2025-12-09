@@ -375,42 +375,44 @@ position: absolute;
         .send_btn:hover { background: white; color: black; letter-spacing: 8px; }
 
         /* ================================================= */
-        /* 📱 MOBILE OPTIMIZATION (DÜZELTİLMİŞ HALİ) */
+        /* 📱 MOBİL DÜZELTMELERİ (SON HALİ) */
         /* ================================================= */
         @media(max-width:768px){
             
-            /* 1. DÜZENİ DEĞİŞTİR: Grid yerine normal akış */
-            #app { 
-                display: block; /* Grid'i iptal et */
-                height: auto;   /* Yüksekliği serbest bırak */
-                overflow-x: hidden;
+            /* 1. GÖVDEYİ KAYDIRMAYA HAZIRLA */
+            body {
+                overflow: hidden; /* Ana gövdeyi kilitle, sadece içerik kaysın */
+                position: fixed;
+                width: 100%;
+                height: 100%;
             }
-            
-            /* 2. SIDEBAR'I ALTA ÇİVİLE (FIXED) */
+
+            /* 2. SIDEBAR (MENÜ) - TIKLANABİLİRLİK AYARI */
             .sidebar { 
-                position: fixed;        /* Sayfadan bağımsız yap */
-                bottom: 0;              /* En alta yapıştır */
+                position: fixed; 
+                bottom: 0; 
                 left: 0; 
-                width: 100%;            /* Genişlik tam olsun */
-                height: 70px !important; /* ⚠️ ÖNEMLİ: Yüksekliği sabitle (Eskiden %100'dü o yüzden ortadaydı) */
-                z-index: 5000;          /* En üstte dursun */
+                width: 100%; 
+                height: 70px !important; 
                 
-                background: rgba(5, 2, 2, 0.98); /* Arka plan rengi */
-                border-right: none; 
-                border-top: 2px solid var(--red); /* Üstüne çizgi çek */
+                /* 🔥 KRİTİK: Z-Index'i çok yüksek yapıyoruz ki en üstte kalsın */
+                z-index: 10000; 
                 
-                /* İkonları hizala */
+                background: rgba(5, 2, 2, 0.98); 
+                border-top: 2px solid var(--red);
                 display: flex;
                 flex-direction: row; 
                 justify-content: space-evenly; 
                 align-items: center;
-                padding: 0; 
+                padding: 0;
+                
+                /* Tıklamaları garantiye al */
+                pointer-events: all; 
             }
 
-            /* Logoyu gizle */
             .logo { display:none; } 
-            
-            /* Nav butonlarını yatay diz */
+
+            /* Nav Butonları */
             .navs { 
                 flex-direction: row; 
                 margin: 0; 
@@ -423,57 +425,63 @@ position: absolute;
                 height: 100%; 
                 width: auto; 
                 flex-grow: 1; 
-                display: flex;           /* İkonu ortalamak için */
-                align-items: center;     /* Dikey ortala */
-                justify-content: center; /* Yatay ortala */
+                display: flex;
+                align-items: center;     
+                justify-content: center;
+                pointer-events: all; /* Buton tıklamasını zorla */
             }
             
-            .nav-lbl { display: none; } /* Yazıları gizle */
+            .nav-lbl { display: none; } 
 
-            /* 3. İÇERİK ALANI DÜZENLEMESİ */
-            /* Sayfa kaydırılabilir olsun ve menünün altında kalmasın */
+            /* 3. İÇERİK ALANI (SCROLL BURADA OLACAK) */
+            /* Sahneyi ekran boyutu eksi menü boyutu kadar yapıyoruz */
             .stage {
-                height: auto;       /* Yükseklik serbest */
-                overflow: visible;  /* Kaydırma çubuğu html'den gelsin */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: calc(100% - 70px); /* Menü payını düş */
+                overflow-y: auto; /* 🔥 KAYDIRMAYI AÇAN KOD */
+                overflow-x: hidden;
+                z-index: 10; /* Menünün altında, arka planın üstünde */
+                -webkit-overflow-scrolling: touch; /* iPhone'da akıcı kaydırma */
             }
 
+            /* Bölümler */
             .section { 
-                position: relative; /* Absolute yerine relative yap ki birbirinin altına insin */
-                opacity: 1 !important; /* Görünürlüğü zorla */
-                transform: none !important; /* Animasyon kaymasını engelle */
+                position: absolute; /* Animasyon için absolute kalmalı */
+                top: 0;
+                left: 0;
+                width: 100%;
+                min-height: 100%; /* İçerik azsa bile ekranı kapla */
+                padding: 20px 20px 40px 20px; 
+                opacity: 0; /* JS bunu 1 yapacak */
+                pointer-events: none; /* Aktif olmayanlara tıklanmasın */
+            }
+
+            /* Sadece Aktif Olan Bölüm Tıklanabilir Olsun */
+            .section.active {
+                opacity: 1;
                 pointer-events: all;
-                padding: 20px 20px 100px 20px; /* Alttan 100px boşluk bırak (Menü için) */
-                height: auto;
-                overflow: visible;
+                position: absolute; /* Akışta yer kaplasın */
             }
             
-            /* Diğer stil küçültmeleri */
-            .h-tit { font-size: 2.5rem; letter-spacing: 2px; }
-            .head { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .h-stat { text-align: left; font-size: 0.9rem; }
-            
-            /* Izgara (Grid) Yapısını Tek Sütuna İndir */
+            /* Izgara ve Profil Düzenlemeleri */
             .grid { display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px; }
-            .grid > * { width: 100%; margin-bottom: 10px; }
+            .grid > * { width: 100%; margin-bottom: 10px; grid-column: span 12 !important; }
 
-            /* Profil Kısmı */
             .profile { flex-direction:column; text-align:center; padding: 2rem 1rem; gap: 2rem; }
             .p-info h2 { font-size: 2.5rem; }
             .avi-w { width: 200px; height: 200px; }
             
-            /* 3D Laptop Ayarı */
             .rig { height: 400px; }
             .laptop { transform: scale(0.55) rotateX(60deg); }
             .rtx { top: 20px; right: 20px; font-size: 0.8rem; padding: 5px 10px; }
 
-            /* Network & Form */
             .net { flex-direction:column; gap:10px; text-align:center; padding: 20px; }
             .form-box { padding: 30px 20px; }
-            .send_btn { font-size: 1.1rem; }
             
-            /* Dil Butonu */
             .lang-box { top: 15px; right: 20px; }
-            .lang-btn { padding: 5px 10px; }
         }
 
         @keyframes spin { 100%{transform:rotate(360deg);} } @keyframes spinR { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} } 
