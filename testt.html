@@ -20,7 +20,7 @@
 .modal-overlay {
     display: none; 
     position: fixed;
-    z-index: 9999; 
+    z-index: 999999; 
     left: 0;
     top: 0;
     width: 100%;
@@ -54,7 +54,7 @@
     font-weight: bold;
     cursor: pointer;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    z-index: 10000;
+    z-index: 1000000;
 }
 .modal-close-btn:hover,
 .modal-close-btn:focus {
@@ -152,12 +152,62 @@ position: absolute;
         body { background:var(--bg); color:var(--text); font-family:var(--f-ui); height:100vh; width:100vw; overflow:hidden; }
 
         /* === CURSOR === */
-        #cursor { position:fixed; top:0; left:0; width:20px; height:20px; z-index:99999; pointer-events:none; mix-blend-mode:exclusion; transition:transform 0.1s; }
-        #cursor::before { content:''; position:absolute; top:9px; left:-5px; width:30px; height:2px; background:var(--red); box-shadow:0 0 5px var(--red); }
-        #cursor::after { content:''; position:absolute; left:9px; top:-5px; width:2px; height:30px; background:var(--red); box-shadow:0 0 5px var(--red); }
-        #cursor .dot { position:absolute; top:50%; left:50%; width:4px; height:4px; background:var(--gold); border-radius:50%; transform:translate(-50%,-50%); }
-        body.hover #cursor { transform:scale(1.5) rotate(45deg); }
-        @media(hover:none){ #cursor{display:none;} *{cursor:auto;} }
+        #cursor { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 10px;        /* 20px'den 10px'e düştü */
+        height: 10px;       /* 20px'den 10px'e düştü */
+        z-index: 9999999999; 
+        pointer-events: none; 
+        mix-blend-mode: exclusion; 
+        transition: transform 0.1s; 
+    }
+
+    /* Yatay Çizgi */
+    #cursor::before { 
+        content: ''; 
+        position: absolute; 
+        top: 4px;           /* Hizalamak için ayarlandı */
+        left: -2px;         /* Hizalamak için ayarlandı */
+        width: 14px;        /* 30px'den 14px'e düştü */
+        height: 2px; 
+        background: var(--red); 
+        box-shadow: 0 0 3px var(--red); /* Gölge biraz kısıldı */
+    }
+
+    /* Dikey Çizgi */
+    #cursor::after { 
+        content: ''; 
+        position: absolute; 
+        left: 4px;          /* Hizalamak için ayarlandı */
+        top: -2px;          /* Hizalamak için ayarlandı */
+        width: 2px; 
+        height: 14px;       /* 30px'den 14px'e düştü */
+        background: var(--red); 
+        box-shadow: 0 0 3px var(--red); 
+    }
+
+    /* Orta Nokta */
+    #cursor .dot { 
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        width: 2px;         /* 4px'den 2px'e düştü */
+        height: 2px;        /* 4px'den 2px'e düştü */
+        background: var(--gold); 
+        border-radius: 50%; 
+        transform: translate(-50%, -50%); 
+    }
+
+    body.hover #cursor { 
+        transform: scale(1.5) rotate(45deg); 
+    }
+
+    @media(hover: none) { 
+        #cursor { display: none; } 
+        * { cursor: auto; } 
+    }
 
         /* === LOADER === */
         #loader { position:fixed; inset:0; background:#000; z-index:50000; display:flex; flex-direction:column; align-items:center; justify-content:center; transition: opacity 0.5s ease; }
@@ -375,55 +425,113 @@ position: absolute;
         .send_btn:hover { background: white; color: black; letter-spacing: 8px; }
 
         /* ================================================= */
-        /* 📱 MOBILE OPTIMIZATION (BREAKPOINTS) */
+        /* 📱 MOBİL DÜZELTMELERİ (SON HALİ) */
         /* ================================================= */
-        @media(max-width:1200px){ 
-            .game, .tarot { grid-column:span 6; } 
-            .form-box { grid-column:1 / span 12; } 
-        }
-
         @media(max-width:768px){
-            /* Düzeni değiştir: Menüyü aşağıya al */
-            #app { grid-template-columns:1fr; grid-template-rows:1fr 80px; }
             
-            /* Sidebar'ı alt tarafa sabitle */
-            .sidebar { flex-direction:row; width:100%; height:100%; order:2; border-right:none; border-top:2px solid var(--red); padding:0; justify-content: space-evenly; }
-            .logo { display:none; } /* Mobilde logoyu gizle */
-            
-            /* Nav butonlarını sıkıştır */
-            .navs { flex-direction:row; margin:0; width: 100%; justify-content:space-between; padding: 0 10px; }
-            .nav-btn { height:100%; width: auto; flex-grow: 1; }
-            .nav-lbl { display: none; } /* Yazıları gizle, sadece ikon kalsın */
+            /* 1. GÖVDEYİ KAYDIRMAYA HAZIRLA */
+            body {
+                overflow: hidden; /* Ana gövdeyi kilitle, sadece içerik kaysın */
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
 
-            /* İçerik alanını düzenle */
-            .section { padding: 20px 20px 100px 20px; } /* Alttan boşluk bırak (Nav için) */
-            
-            /* Başlıkları Küçült */
-            .h-tit { font-size: 2.5rem; letter-spacing: 2px; }
-            .head { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .h-stat { text-align: left; font-size: 0.9rem; }
-            
-            /* Izgara (Grid) Yapısını Tek Sütuna İndir */
-            .grid > * { grid-column: span 12 !important; }
+            /* 2. SIDEBAR (MENÜ) - TIKLANABİLİRLİK AYARI */
+            .sidebar { 
+                position: fixed; 
+                bottom: 0; 
+                left: 0; 
+                width: 100%; 
+                height: 70px !important; 
+                
+                /* 🔥 KRİTİK: Z-Index'i çok yüksek yapıyoruz ki en üstte kalsın */
+                z-index: 10000; 
+                
+                background: rgba(5, 2, 2, 0.98); 
+                border-top: 2px solid var(--red);
+                display: flex;
+                flex-direction: row; 
+                justify-content: space-evenly; 
+                align-items: center;
+                padding: 0;
+                
+                /* Tıklamaları garantiye al */
+                pointer-events: all; 
+            }
 
-            /* Profil Kısmı */
+            .logo { display:none; } 
+
+            /* Nav Butonları */
+            .navs { 
+                flex-direction: row; 
+                margin: 0; 
+                width: 100%; 
+                justify-content: space-between; 
+                padding: 0 10px; 
+            }
+            
+            .nav-btn { 
+                height: 100%; 
+                width: auto; 
+                flex-grow: 1; 
+                display: flex;
+                align-items: center;     
+                justify-content: center;
+                pointer-events: all; /* Buton tıklamasını zorla */
+            }
+            
+            .nav-lbl { display: none; } 
+
+            /* 3. İÇERİK ALANI (SCROLL BURADA OLACAK) */
+            /* Sahneyi ekran boyutu eksi menü boyutu kadar yapıyoruz */
+            .stage {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: calc(100% - 70px); /* Menü payını düş */
+                overflow-y: auto; /* 🔥 KAYDIRMAYI AÇAN KOD */
+                overflow-x: hidden;
+                z-index: 10; /* Menünün altında, arka planın üstünde */
+                -webkit-overflow-scrolling: touch; /* iPhone'da akıcı kaydırma */
+            }
+
+            /* Bölümler */
+            .section { 
+                position: absolute; /* Animasyon için absolute kalmalı */
+                top: 0;
+                left: 0;
+                width: 100%;
+                min-height: 100%; /* İçerik azsa bile ekranı kapla */
+                padding: 20px 20px 40px 20px; 
+                opacity: 0; /* JS bunu 1 yapacak */
+                pointer-events: none; /* Aktif olmayanlara tıklanmasın */
+            }
+
+            /* Sadece Aktif Olan Bölüm Tıklanabilir Olsun */
+            .section.active {
+                opacity: 1;
+                pointer-events: all;
+                position: absolute; /* Akışta yer kaplasın */
+            }
+            
+            /* Izgara ve Profil Düzenlemeleri */
+            .grid { display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px; }
+            .grid > * { width: 100%; margin-bottom: 10px; grid-column: span 12 !important; }
+
             .profile { flex-direction:column; text-align:center; padding: 2rem 1rem; gap: 2rem; }
             .p-info h2 { font-size: 2.5rem; }
             .avi-w { width: 200px; height: 200px; }
             
-            /* 3D Laptop Ayarı (Mobilde Taşmayı Önle) */
             .rig { height: 400px; }
-            .laptop { transform: scale(0.55) rotateX(60deg); } /* Küçült ve açı ver */
+            .laptop { transform: scale(0.55) rotateX(60deg); }
             .rtx { top: 20px; right: 20px; font-size: 0.8rem; padding: 5px 10px; }
 
-            /* Network & Form */
             .net { flex-direction:column; gap:10px; text-align:center; padding: 20px; }
             .form-box { padding: 30px 20px; }
-            .send_btn { font-size: 1.1rem; }
             
-            /* Dil Butonu */
             .lang-box { top: 15px; right: 20px; }
-            .lang-btn { padding: 5px 10px; }
         }
 
         @keyframes spin { 100%{transform:rotate(360deg);} } @keyframes spinR { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} } 
@@ -448,7 +556,7 @@ position: absolute;
         <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-video-link">
             <div class="modal-video-container">
                 <video id="modal-video" autoplay muted loop playsinline class="modal-video-responsive">
-                    <source src="add/MBL.mp4" type="video/mp4">
+                    <source src="https://fadmoxedziq5rcev.public.blob.vercel-storage.com/silent-night-z01gJElXIRxRuk581NHC0zuC6YDUez.mp4" type="video/mp4">
                     Tarayıcınız video etiketini desteklemiyor.
                 </video>
             </div>
@@ -530,10 +638,10 @@ position: absolute;
                     <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time" id="time-fc25">Loading...</span></div></div>
                     <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time" id="time-bannerlord">Loading...</span></div></div>
                     <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time" id="time-witcher3">Loading...</span></div></div>
+                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')"></div><div class="game-ov"><div class="g-tit">CYBERPUNK 2077</div><span class="g-time" id="time-cyberpunk">Loading...</span></div></div>
                     <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time" id="time-godofwar">Loading...</span></div></div>
                     <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/379430/header.jpg')"></div><div class="game-ov"><div class="g-tit">KINGDOM COME</div><span class="g-time" id="time-kingdomcome">Loading...</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')"></div><div class="game-ov"><div class="g-tit">CYBERPUNK 2077</div><span class="g-time" id="time-cyberpunk">Loading...</span></div></div>
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank" class="btn-view" data-k="view_all">[ VIEW FULL COLLECTION ]</a>
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank" class="btn-view" data-k="view_all">VIEW FULL COLLECTION</a>
                 </div>
             </section>
 

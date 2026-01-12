@@ -152,12 +152,62 @@ position: absolute;
         body { background:var(--bg); color:var(--text); font-family:var(--f-ui); height:100vh; width:100vw; overflow:hidden; }
 
         /* === CURSOR === */
-        #cursor { position:fixed; top:0; left:0; width:20px; height:20px; z-index:99999; pointer-events:none; mix-blend-mode:exclusion; transition:transform 0.1s; }
-        #cursor::before { content:''; position:absolute; top:9px; left:-5px; width:30px; height:2px; background:var(--red); box-shadow:0 0 5px var(--red); }
-        #cursor::after { content:''; position:absolute; left:9px; top:-5px; width:2px; height:30px; background:var(--red); box-shadow:0 0 5px var(--red); }
-        #cursor .dot { position:absolute; top:50%; left:50%; width:4px; height:4px; background:var(--gold); border-radius:50%; transform:translate(-50%,-50%); }
-        body.hover #cursor { transform:scale(1.5) rotate(45deg); }
-        @media(hover:none){ #cursor{display:none;} *{cursor:auto;} }
+        #cursor { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 10px;        /* 20px'den 10px'e düştü */
+        height: 10px;       /* 20px'den 10px'e düştü */
+        z-index: 9999999999; 
+        pointer-events: none; 
+        mix-blend-mode: exclusion; 
+        transition: transform 0.1s; 
+    }
+
+    /* Yatay Çizgi */
+    #cursor::before { 
+        content: ''; 
+        position: absolute; 
+        top: 4px;           /* Hizalamak için ayarlandı */
+        left: -2px;         /* Hizalamak için ayarlandı */
+        width: 14px;        /* 30px'den 14px'e düştü */
+        height: 2px; 
+        background: var(--red); 
+        box-shadow: 0 0 3px var(--red); /* Gölge biraz kısıldı */
+    }
+
+    /* Dikey Çizgi */
+    #cursor::after { 
+        content: ''; 
+        position: absolute; 
+        left: 4px;          /* Hizalamak için ayarlandı */
+        top: -2px;          /* Hizalamak için ayarlandı */
+        width: 2px; 
+        height: 14px;       /* 30px'den 14px'e düştü */
+        background: var(--red); 
+        box-shadow: 0 0 3px var(--red); 
+    }
+
+    /* Orta Nokta */
+    #cursor .dot { 
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        width: 2px;         /* 4px'den 2px'e düştü */
+        height: 2px;        /* 4px'den 2px'e düştü */
+        background: var(--gold); 
+        border-radius: 50%; 
+        transform: translate(-50%, -50%); 
+    }
+
+    body.hover #cursor { 
+        transform: scale(1.5) rotate(45deg); 
+    }
+
+    @media(hover: none) { 
+        #cursor { display: none; } 
+        * { cursor: auto; } 
+    }
 
         /* === LOADER === */
         #loader { position:fixed; inset:0; background:#000; z-index:50000; display:flex; flex-direction:column; align-items:center; justify-content:center; transition: opacity 0.5s ease; }
