@@ -33,7 +33,7 @@ def get_steam_data():
             261550: "bannerlord",
             292030: "witcher3",
             2322010: "godofwar",
-            379430: "kingdomcome",
+            812140: "odyssey",
             1091500: "cyberpunk"
         }
 
