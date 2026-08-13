@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -12,115 +13,113 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-
- /* ======================================= */
+        /* ======================================= */
         /* POPUP (REKLAM-CSS) */
- /* ======================================= */
-/* Pop-up'ı Gizleyen ve Tüm Ekranı Kapsayan Arka Plan */
-.modal-overlay {
-    display: none; 
-    position: fixed;
-    z-index: 999999; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu çıksın */
-    background-color: rgba(0, 0, 0, 0.9); 
-    backdrop-filter: blur(5px); 
-    -webkit-backdrop-filter: blur(5px); /* Safari desteği */
-}
+        /* ======================================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 999999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            overflow: hidden;
+        }
 
-/* Pop-up İçerik Kutusu */
-.modal-content {
-    background-color: #fefefe;
-    margin: 30px auto; /* Üstten ve alttan boşluk bırakır, dikeyde ortalar */
-    border-radius: 12px;
-    padding: 0;
-    position: relative;
-    width: 90%; 
-    max-width: 450px; /* Maksimum genişlik (640px ile orantılı) */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-    text-align: center; /* İçindeki img/video'yu ortalamak için */
-}
+        .modal-content {
+            background: rgba(10, 5, 5, 0.95);
+            border: 1px solid var(--red-dim);
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.25), inset 0 0 15px rgba(255, 0, 0, 0.1);
+            margin: 5% auto;
+            border-radius: 6px;
+            padding: 0;
+            position: relative;
+            width: 90%;
+            max-width: 440px;
+            overflow: hidden;
+            animation: modalSlideIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
 
-/* Kapatma Butonu */
-.modal-close-btn {
-    color: #fff; 
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    z-index: 1000000;
-}
-.modal-close-btn:hover,
-.modal-close-btn:focus {
-    color: #bbb;
-    text-decoration: none;
-}
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
 
-/* Fotoğraf Kapsayıcısı: 640x1140 en boy oranını korur */
-.modal-image-container {
-    position: relative;
-    height: 0;
-    /* 1140 / 640 = 178.125% -> Genişliğe göre yüksekliği ayarlar */
-    padding-top: 178.125%; 
-    overflow: hidden;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-/* Fotoğraf Stili: Kapsayıcıyı tam doldurur */
-.modal-image-full {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* En boy oranını koruyarak doldurur */
-    display: block; /* img varsayılan inline olduğu için */
-}
+        .modal-close-btn {
+            color: var(--text);
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--red-dim);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000010;
+            transition: 0.3s;
+        }
 
-/* Video Kapsayıcısı: Fotoğrafın Altında Uyumlu Boyut */
-.modal-video-container {
-    position: relative;
-    height: 0;
-    /* Video için daha kısa bir yükseklik, örn: 640x360 gibi yatay bir videonun oranı (360/640=56.25%) */
-    /* Veya fotoğrafın yarısı kadar dikey (1140/2 = 570) oranına göre (570/640=89.0625%) */
-    /* Ben videonun biraz daha kısa olmasını istediğiniz varsayarak %80 verdim, ayarlayabilirsiniz. */
-padding-top: 29.41%; 
-    
-    overflow: hidden;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    margin-top: -4px;
-}
+        .modal-close-btn:hover {
+            background: var(--red);
+            color: #fff;
+            box-shadow: 0 0 15px var(--red);
+            border-color: var(--red);
+        }
 
-/* Video Stili: Kapsayıcıyı tam doldurur */
-.modal-video-responsive {
-position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* 🔑 DEĞİŞİKLİK: Video tam görünmeli ve kırpılmamalı, bu yüzden 'cover' yerine 'contain' kullanıyoruz. */
-    /* Ancak, 'contain' kullanmak videonun çevresinde boşluk bırakabilir. 
-       Eğer video tam kutuya sığarsa (ki padding-top ile ayarladık), 'cover' veya 'contain' kullanmak yerine tamamen kaldırabiliriz.
-       Ancak en güvenlisi tam boyutu almaktır: */
-    object-fit: fill; /* Kapsayıcıyı tam doldurur, en-boy oranını bozabilir ama boşluk bırakmaz */
-    /* Veya: object-fit: contain; kullanarak video boşluk bırakarak tam gözükmesini sağlayabilirsiniz. Hangisi daha az "çirkin" duruyorsa... */
-}
+        .modal-tab:hover {
+            color: var(--text) !important;
+        }
 
-/* Linklerin blok seviyesinde olmasını sağlar */
-.modal-image-link,
-.modal-video-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
+        .modal-tab.active {
+            color: var(--gold) !important;
+            background: rgba(255, 183, 0, 0.05) !important;
+            border-bottom: 2px solid var(--gold) !important;
+        }
+
+        .modal-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-image-full {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .modal-video-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-video-responsive {
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal-image-link,
+        .modal-video-link {
+            display: block;
+            text-decoration: none;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
 
 
 
@@ -135,461 +134,1344 @@ position: absolute;
 
         /* === CORE === */
         :root {
-            --bg: #020101; --panel: rgba(5, 2, 2, 0.95);
-            --red: #ff0000; --red-dim: #8a0000;
-            --gold: #ffb700; --gold-dim: #b8860b;
-            --soul: #00f3ff; --soul-dim: #008b99;
-            --text: #eeeeee; --muted: #888888;
+            --bg: #020101;
+            --panel: rgba(5, 2, 2, 0.95);
+            --red: #ff0000;
+            --red-dim: #8a0000;
+            --gold: #ffb700;
+            --gold-dim: #b8860b;
+            --soul: #00f3ff;
+            --soul-dim: #008b99;
+            --text: #eeeeee;
+            --muted: #888888;
             --nav-w: 100px;
             --f-head: 'Cinzel', serif;
             --f-ui: 'Rajdhani', sans-serif;
             --f-code: 'JetBrains Mono', monospace;
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
+
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@400&family=Rajdhani:wght@500;700&display=swap');
 
-        * { margin:0; padding:0; box-sizing:border-box; cursor:none; user-select:none; outline:none; -webkit-tap-highlight-color:transparent; }
-        body { background:var(--bg); color:var(--text); font-family:var(--f-ui); height:100vh; width:100vw; overflow:hidden; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+            user-select: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--f-ui);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
 
         /* === CURSOR === */
-        #cursor { 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 10px;        /* 20px'den 10px'e düştü */
-        height: 10px;       /* 20px'den 10px'e düştü */
-        z-index: 9999999999; 
-        pointer-events: none; 
-        mix-blend-mode: exclusion; 
-        transition: transform 0.1s; 
-    }
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            /* 20px'den 10px'e düştü */
+            height: 10px;
+            /* 20px'den 10px'e düştü */
+            z-index: 9999999999;
+            pointer-events: none;
+            mix-blend-mode: exclusion;
+            transition: transform 0.1s;
+        }
 
-    /* Yatay Çizgi */
-    #cursor::before { 
-        content: ''; 
-        position: absolute; 
-        top: 4px;           /* Hizalamak için ayarlandı */
-        left: -2px;         /* Hizalamak için ayarlandı */
-        width: 14px;        /* 30px'den 14px'e düştü */
-        height: 2px; 
-        background: var(--red); 
-        box-shadow: 0 0 3px var(--red); /* Gölge biraz kısıldı */
-    }
+        /* Yatay Çizgi */
+        #cursor::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            /* Hizalamak için ayarlandı */
+            left: -2px;
+            /* Hizalamak için ayarlandı */
+            width: 14px;
+            /* 30px'den 14px'e düştü */
+            height: 2px;
+            background: var(--red);
+            box-shadow: 0 0 3px var(--red);
+            /* Gölge biraz kısıldı */
+        }
 
-    /* Dikey Çizgi */
-    #cursor::after { 
-        content: ''; 
-        position: absolute; 
-        left: 4px;          /* Hizalamak için ayarlandı */
-        top: -2px;          /* Hizalamak için ayarlandı */
-        width: 2px; 
-        height: 14px;       /* 30px'den 14px'e düştü */
-        background: var(--red); 
-        box-shadow: 0 0 3px var(--red); 
-    }
+        /* Dikey Çizgi */
+        #cursor::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            /* Hizalamak için ayarlandı */
+            top: -2px;
+            /* Hizalamak için ayarlandı */
+            width: 2px;
+            height: 14px;
+            /* 30px'den 14px'e düştü */
+            background: var(--red);
+            box-shadow: 0 0 3px var(--red);
+        }
 
-    /* Orta Nokta */
-    #cursor .dot { 
-        position: absolute; 
-        top: 50%; 
-        left: 50%; 
-        width: 2px;         /* 4px'den 2px'e düştü */
-        height: 2px;        /* 4px'den 2px'e düştü */
-        background: var(--gold); 
-        border-radius: 50%; 
-        transform: translate(-50%, -50%); 
-    }
+        /* Orta Nokta */
+        #cursor .dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            /* 4px'den 2px'e düştü */
+            height: 2px;
+            /* 4px'den 2px'e düştü */
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-    body.hover #cursor { 
-        transform: scale(1.5) rotate(45deg); 
-    }
+        body.hover #cursor {
+            transform: scale(1.5) rotate(45deg);
+        }
 
-    @media(hover: none) { 
-        #cursor { display: none; } 
-        * { cursor: auto; } 
-    }
+        @media(hover: none) {
+            #cursor {
+                display: none;
+            }
+
+            * {
+                cursor: auto;
+            }
+        }
 
         /* === LOADER === */
-        #loader { position:fixed; inset:0; background:#000; z-index:50000; display:flex; flex-direction:column; align-items:center; justify-content:center; transition: opacity 0.5s ease; }
-        .seal-wrap { position:relative; width:160px; height:160px; display:flex; align-items:center; justify-content:center; margin-bottom:40px; }
-        .seal-svg { position:absolute; inset:0; width:100%; height:100%; }
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 50000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
 
-        .seal-wrap { position:relative; width:150px; height:150px; margin-bottom:30px; display:flex; align-items:center; justify-content:center; }
-        .seal-ring { position:absolute; inset:0; border:2px dashed var(--red); border-radius:50%; animation:spin 10s linear infinite; }
-        .seal-in { position:absolute; inset:15px; border:1px solid var(--gold); border-radius:50%; animation:spinR 5s linear infinite; opacity:0.5; }
-        .seal-text { position:absolute; z-index:10; font-family:var(--f-head); font-weight:900; font-size:60px; color:var(--red); text-shadow:0 0 20px var(--red); animation:pulse 1s infinite alternate; }
-        
-        .load-txt { font-family:var(--f-code); color:var(--gold); letter-spacing:3px; font-size:14px; margin-bottom:15px; }
-        .load-bar { width:300px; height:4px; background:#221111; position:relative; overflow:hidden; border-radius:2px; }
-        .load-fill { position:absolute; left:0; top:0; height:100%; width:0%; background:var(--red); box-shadow:0 0 20px var(--red); transition: width 0.2s linear; }
-        .console { position:absolute; bottom:20px; left:20px; font-family:var(--f-code); font-size:10px; color:#666; }
-        
+        .seal-wrap {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .seal-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px dashed var(--red);
+            border-radius: 50%;
+            animation: spin 10s linear infinite;
+        }
+
+        .seal-in {
+            position: absolute;
+            inset: 15px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            animation: spinR 5s linear infinite;
+            opacity: 0.5;
+        }
+
+        .seal-text {
+            position: absolute;
+            z-index: 10;
+            font-family: var(--f-head);
+            font-weight: 900;
+            font-size: 60px;
+            color: var(--red);
+            text-shadow: 0 0 30px var(--red);
+            animation: pulse 1s infinite alternate;
+        }
+
+        .load-txt {
+            font-family: var(--f-code);
+            color: var(--gold);
+            letter-spacing: 3px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .load-bar {
+            width: 300px;
+            height: 4px;
+            background: #221111;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .load-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--red);
+            box-shadow: 0 0 20px var(--red);
+            transition: width 0.2s linear;
+        }
+
+        .console {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-family: var(--f-code);
+            font-size: 10px;
+            color: #444;
+        }
+
         /* Dönen Üçgenler */
-        .lt1 { fill:none; stroke:var(--gold); stroke-width:3; transform-origin: center; transform-box: fill-box; animation:spin 10s linear infinite; filter:drop-shadow(0 0 10px var(--gold)); }
-        .lt2 { fill:none; stroke:var(--red); stroke-width:3; transform-origin: center; transform-box: fill-box; animation:spinR 15s linear infinite; filter:drop-shadow(0 0 10px var(--red)); }
-        
-        /* Ortadaki H */
-        .seal-text { position:absolute; z-index:10; font-family:var(--f-head); font-weight:900; font-size:60px; color:var(--red); text-shadow:0 0 30px var(--red); animation:pulse 1s infinite alternate; }
-        
-        .load-txt { font-family:var(--f-code); color:var(--gold); letter-spacing:3px; font-size:14px; margin-bottom:15px; }
-        .load-bar { width:300px; height:4px; background:#221111; position:relative; overflow:hidden; }
-        .load-fill { position:absolute; left:0; top:0; height:100%; width:0%; background:var(--red); box-shadow:0 0 20px var(--red); transition: width 0.2s linear; }
-        .console { position:absolute; bottom:20px; left:20px; font-family:var(--f-code); font-size:10px; color:#666; }
+        .lt1 {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 3;
+            transform-origin: 50px 50px;
+            animation: spin 10s linear infinite;
+            filter: drop-shadow(0 0 10px var(--gold));
+        }
+
+        .lt2 {
+            fill: none;
+            stroke: var(--red);
+            stroke-width: 3;
+            transform-origin: 50px 50px;
+            animation: spinR 15s linear infinite;
+            filter: drop-shadow(0 0 10px var(--red));
+        }
 
         /* === BACKGROUND === */
-        #canvas { position:fixed; inset:0; z-index:0; opacity:0.4; }
-        .scanlines { position:fixed; inset:0; z-index:1; pointer-events:none; background:linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3) 51%); background-size:100% 4px; opacity:0.3; }
-        
+        #canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 51%);
+            background-size: 100% 4px;
+            opacity: 0.3;
+        }
+
         /* === LANG (FIXED TOP RIGHT) === */
-        .lang-box { position:fixed; top:30px; right:40px; z-index:60000; font-family:var(--f-code); }
-        .lang-btn { background:rgba(0,0,0,0.9); border:1px solid var(--gold); color:var(--gold); padding:10px 20px; font-size:12px; cursor:none; display:flex; align-items:center; gap:10px; transition:0.3s; clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
-        .lang-btn:hover { background:var(--gold); color:black; box-shadow:0 0 20px var(--gold-dim); }
-        .lang-list { position:absolute; top:110%; right:0; width:160px; background:rgba(5,0,0,0.98); border:1px solid var(--red); display:none; flex-direction:column; max-height:400px; overflow-y:auto; box-shadow:0 10px 40px #000; }
-        .lang-list.show { display:flex; animation:slideDown 0.3s; }
-        .lang-opt { padding:10px; text-align:right; color:#888; border-bottom:1px solid #222; font-size:11px; transition:0.2s; cursor:none; text-transform: uppercase; }
-        .lang-opt:hover { background:var(--red-dim); color:white; }
-        
+        .lang-box {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 60000;
+            font-family: var(--f-code);
+        }
+
+        .lang-btn {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 20px;
+            font-size: 12px;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .lang-btn:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 20px var(--gold-dim);
+        }
+
+        .lang-list {
+            position: absolute;
+            top: 110%;
+            right: 0;
+            width: 160px;
+            background: rgba(5, 0, 0, 0.98);
+            border: 1px solid var(--red);
+            display: none;
+            flex-direction: column;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px #000;
+        }
+
+        .lang-list.show {
+            display: flex;
+            animation: slideDown 0.3s;
+        }
+
+        .lang-opt {
+            padding: 10px;
+            text-align: right;
+            color: #888;
+            border-bottom: 1px solid #222;
+            font-size: 11px;
+            transition: 0.2s;
+            cursor: none;
+            text-transform: uppercase;
+        }
+
+        .lang-opt:hover {
+            background: var(--red-dim);
+            color: white;
+        }
+
         /* === LAYOUT === */
-        #app { display:grid; grid-template-columns:var(--nav-w) 1fr; height:100%; position:relative; z-index:10; opacity:0; transition:opacity 1s; pointer-events: none; }
-        .sidebar { background:linear-gradient(180deg, #020000, #0a0000); border-right:1px solid rgba(255,0,0,0.2); display:flex; flex-direction:column; align-items:center; padding:20px 0; z-index:100; box-shadow:10px 0 50px rgba(0,0,0,0.7); }
+        #app {
+            display: grid;
+            grid-template-columns: var(--nav-w) 1fr;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s;
+            pointer-events: none;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #020000, #0a0000);
+            border-right: 1px solid rgba(255, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            z-index: 100;
+            box-shadow: 10px 0 50px rgba(0, 0, 0, 0.7);
+        }
 
         /* LOGO: MAIN UI */
-        .logo { width:80px; height:80px; position:relative; display:flex; align-items:center; justify-content:center; cursor:none; margin-bottom:2rem; }
-        .logo svg { position:absolute; width:100%; height:100%; }
-        .t1 { fill:none; stroke:var(--gold); stroke-width:2; animation:spin 20s linear infinite; transform-origin:center; transform-box: fill-box; }
-        .t2 { fill:none; stroke:var(--red); stroke-width:2; animation:spinR 25s linear infinite; transform-origin:center; transform-box: fill-box; }
-        .lh { position:absolute; z-index:10; font-family:var(--f-head); font-weight:bold; font-size:36px; color:white; text-shadow:0 0 15px var(--gold); pointer-events:none; }
-        .logo:hover .t1, .logo:hover .t2 { stroke:white; filter:drop-shadow(0 0 8px white); animation-duration:3s; }
+        .logo {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            margin-bottom: 2rem;
+        }
+
+        .logo svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .t1 {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2;
+            animation: spin 20s linear infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        .t2 {
+            fill: none;
+            stroke: var(--red);
+            stroke-width: 2;
+            animation: spinR 25s linear infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        .lh {
+            position: absolute;
+            z-index: 10;
+            font-family: var(--f-head);
+            font-weight: bold;
+            font-size: 36px;
+            color: white;
+            text-shadow: 0 0 15px var(--gold);
+            pointer-events: none;
+        }
+
+        .logo:hover .t1,
+        .logo:hover .t2 {
+            stroke: white;
+            filter: drop-shadow(0 0 8px white);
+            animation-duration: 3s;
+        }
 
         /* NAV (TRANSPARENT) */
-        .navs { display:flex; flex-direction:column; gap:15px; width:100%; }
-        .nav-btn { width:100%; height:75px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; color:var(--muted); transition:0.3s; position:relative; cursor:none; background:transparent; border:none;}
-        .nav-btn i { width:24px; height:24px; transition:0.3s; z-index:2; }
-        .nav-lbl { font-size:9px; letter-spacing:1px; opacity:0.6; transition:0.3s; font-family:var(--f-code); text-transform:uppercase; }
-        .nav-btn:hover, .nav-btn.active { color:var(--text); background:linear-gradient(90deg, rgba(255,0,0,0.15), transparent); }
-        .nav-btn:hover i, .nav-btn.active i { color:var(--red); transform:scale(1.2); filter:drop-shadow(0 0 10px var(--red)); }
-        .nav-btn:hover .nav-lbl, .nav-btn.active .nav-lbl { opacity:1; color:var(--gold); }
-        .nav-btn.active::before { content:''; position:absolute; left:0; top:20%; height:60%; width:3px; background:var(--red); box-shadow:0 0 10px var(--red); }
+        .navs {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .nav-btn {
+            width: 100%;
+            height: 75px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: var(--muted);
+            transition: 0.3s;
+            position: relative;
+            cursor: none;
+            background: transparent;
+            border: none;
+        }
+
+        .nav-btn i {
+            width: 24px;
+            height: 24px;
+            transition: 0.3s;
+            z-index: 2;
+        }
+
+        .nav-lbl {
+            font-size: 9px;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            transition: 0.3s;
+            font-family: var(--f-code);
+            text-transform: uppercase;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            color: var(--text);
+            background: linear-gradient(90deg, rgba(255, 0, 0, 0.15), transparent);
+        }
+
+        .nav-btn:hover i,
+        .nav-btn.active i {
+            color: var(--red);
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px var(--red));
+        }
+
+        .nav-btn:hover .nav-lbl,
+        .nav-btn.active .nav-lbl {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        .nav-btn.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 3px;
+            background: var(--red);
+            box-shadow: 0 0 10px var(--red);
+        }
 
         /* STAGE */
-        .stage { position:relative; width:100%; height:100%; overflow:hidden; }
-        .section { position:absolute; inset:0; padding:3rem 6rem; overflow-y:auto; opacity:0; pointer-events:none; transform:translateY(40px) scale(0.98); transition:0.6s cubic-bezier(0.23,1,0.32,1); scrollbar-width:thin; scrollbar-color:var(--red-dim) #000; }
-        .section.active { opacity:1; pointer-events:all; transform:translateY(0) scale(1); }
+        .stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-        .head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem; }
-        .h-tit { font-family:var(--f-head); font-size:4rem; margin:0; line-height:0.9; letter-spacing:5px; color:white; text-shadow:2px 2px 0 #000; text-transform:uppercase; }
-        .h-sub { font-family:var(--f-code); color:var(--gold); letter-spacing:3px; font-size:0.9rem; display:block; margin-bottom:10px; }
-        .h-stat { color:var(--soul); text-shadow:0 0 10px var(--soul); animation:pulse 2s infinite; font-family:var(--f-code); font-size:0.8rem; text-align:right; }
+        .section {
+            position: absolute;
+            inset: 0;
+            padding: 3rem 6rem;
+            overflow-y: auto;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(40px) scale(0.98);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            scrollbar-width: thin;
+            scrollbar-color: var(--red-dim) #000;
+        }
 
-        .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:30px; padding-bottom:150px; }
-        
+        .section.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0) scale(1);
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .h-tit {
+            font-family: var(--f-head);
+            font-size: 4rem;
+            margin: 0;
+            line-height: 0.9;
+            letter-spacing: 5px;
+            color: white;
+            text-shadow: 2px 2px 0 #000;
+            text-transform: uppercase;
+        }
+
+        .h-sub {
+            font-family: var(--f-code);
+            color: var(--gold);
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .h-stat {
+            color: var(--soul);
+            text-shadow: 0 0 10px var(--soul);
+            animation: pulse 2s infinite;
+            font-family: var(--f-code);
+            font-size: 0.8rem;
+            text-align: right;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+            padding-bottom: 150px;
+        }
+
         /* CARDS */
-        .panel { background:var(--panel); border:1px solid rgba(255,255,255,0.08); padding:2rem; position:relative; overflow:hidden; transition:0.4s; backdrop-filter:blur(10px); }
-        .panel:hover { border-color:var(--red); box-shadow:0 15px 50px -10px rgba(255,0,0,0.15); background:rgba(25,5,5,0.95); transform:translateY(-5px); }
-        .panel::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg, transparent, var(--red), transparent); transform:translateX(-100%); transition:0.6s; }
-        .panel:hover::before { transform:translateX(100%); }
+        .panel {
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel:hover {
+            border-color: var(--red);
+            box-shadow: 0 15px 50px -10px rgba(255, 0, 0, 0.15);
+            background: rgba(25, 5, 5, 0.95);
+            transform: translateY(-5px);
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .panel:hover::before {
+            transform: translateX(100%);
+        }
 
         /* PROFILE (BEŞGEN + ÇERÇEVE) */
-        .profile { grid-column:span 12; display:flex; align-items:center; gap:4rem; padding:4rem; background:linear-gradient(135deg, #0a0505, #000); border:1px solid var(--gold-dim); }
-        .avi-w { width:260px; height:260px; position:relative; flex-shrink:0; }
-        
+        .profile {
+            grid-column: span 12;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding: 4rem;
+            background: linear-gradient(135deg, #0a0505, #000);
+            border: 1px solid var(--gold-dim);
+        }
+
+        .avi-w {
+            width: 260px;
+            height: 260px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
         /* AVATAR GÖRÜNTÜSÜ (BEŞGEN) */
-        .avi-img { 
-            width:100%; height:100%; object-fit:cover; 
+        .avi-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
             filter: contrast(1.1);
         }
-        /* DIŞ ÇERÇEVE (KÖŞELİ - TECH) */
-        .frame-corner { position: absolute; width: 40px; height: 40px; border: 3px solid var(--gold); transition: 0.3s; }
-        .fc-tl { top: -10px; left: -10px; border-right: none; border-bottom: none; }
-        .fc-tr { top: -10px; right: -10px; border-left: none; border-bottom: none; }
-        .fc-bl { bottom: -10px; left: -10px; border-right: none; border-top: none; }
-        .fc-br { bottom: -10px; right: -10px; border-left: none; border-top: none; }
-        
-        .p-info h2 { font-family:var(--f-head); font-size:4.5rem; margin:0; line-height:1; color:white; }
-        .p-info p { font-family:var(--f-code); color:var(--muted); margin:15px 0 30px; font-size:1.2rem; }
-        .badge { display:inline-flex; align-items:center; gap:10px; padding:10px 25px; border:1px solid var(--gold); color:var(--gold); font-weight:bold; background:rgba(255,183,0,0.08); }
 
-        .stat h3 { color:var(--red); font-family:var(--f-head); margin-bottom:10px; font-size:1rem; }
-        .stat-val { font-size:3rem; font-weight:bold; color:white; font-family:var(--f-ui); }
+        /* DIŞ ÇERÇEVE (KÖŞELİ - TECH) */
+        .frame-corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gold);
+            transition: 0.3s;
+        }
+
+        .fc-tl {
+            top: -10px;
+            left: -10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .fc-tr {
+            top: -10px;
+            right: -10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .fc-bl {
+            bottom: -10px;
+            left: -10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .fc-br {
+            bottom: -10px;
+            right: -10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .p-info h2 {
+            font-family: var(--f-head);
+            font-size: 4.5rem;
+            margin: 0;
+            line-height: 1;
+            color: white;
+        }
+
+        .p-info p {
+            font-family: var(--f-code);
+            color: var(--muted);
+            margin: 15px 0 30px;
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-weight: bold;
+            background: rgba(255, 183, 0, 0.08);
+        }
+
+        .stat h3 {
+            color: var(--red);
+            font-family: var(--f-head);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .stat-val {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            font-family: var(--f-ui);
+        }
 
         /* GAMES */
-        .game { grid-column:span 4; height:350px; position:relative; border:1px solid #222; overflow:hidden; transition:0.4s; background:#000; }
-        .game-bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:0.5s; filter:grayscale(0.8) brightness(0.6); }
-        .game:hover .game-bg { filter:grayscale(0) brightness(1.1); transform:scale(1.05); }
-        .game:hover { border-color:var(--red); box-shadow:0 0 30px rgba(255,0,0,0.3); }
-        .game-ov { position:absolute; bottom:0; left:0; width:100%; padding:25px; background:linear-gradient(to top, #000 20%, transparent); border-top:2px solid var(--red); transform:translateY(100%); transition:0.4s ease; }
-        .game:hover .game-ov { transform:translateY(0); }
-        .g-tit { font-family:var(--f-head); font-size:1.6rem; margin-bottom:5px; color:white; }
-        .g-time { font-family:var(--f-code); color:var(--gold); font-size:0.9rem; }
-        
-        /* BUTTON FIX */
-        .btn-view { 
-            grid-column:span 12; padding:30px; text-align:center; border:1px solid var(--muted); color:var(--muted); 
-            font-family:var(--f-code); font-size:1.3rem; letter-spacing:6px; transition:0.3s; text-decoration:none; 
-            position:relative; overflow:hidden; z-index:1; background: rgba(20,0,0,0.5);
+        .game {
+            grid-column: span 4;
+            height: 350px;
+            position: relative;
+            border: 1px solid #222;
+            overflow: hidden;
+            transition: 0.4s;
+            background: #000;
         }
-        .btn-view:hover { color:white; border-color:var(--red); letter-spacing:10px; background:rgba(255,0,0,0.2); }
-        .btn-view::before { content:''; position:absolute; top:0; left:0; width:0%; height:100%; background:var(--red); z-index:-1; transition:0.4s; }
-        .btn-view:hover::before { width:100%; }
+
+        .game-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: 0.5s;
+            filter: grayscale(0.8) brightness(0.6);
+        }
+
+        .game:hover .game-bg {
+            filter: grayscale(0) brightness(1.1);
+            transform: scale(1.05);
+        }
+
+        .game:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .game-ov {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(to top, #000 20%, transparent);
+            border-top: 2px solid var(--red);
+            transform: translateY(100%);
+            transition: 0.4s ease;
+        }
+
+        .game:hover .game-ov {
+            transform: translateY(0);
+        }
+
+        .g-tit {
+            font-family: var(--f-head);
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .g-time {
+            font-family: var(--f-code);
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        /* BUTTON FIX */
+        .btn-view {
+            grid-column: span 12;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--muted);
+            color: var(--muted);
+            font-family: var(--f-code);
+            font-size: 1.3rem;
+            letter-spacing: 6px;
+            transition: 0.3s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            background: rgba(20, 0, 0, 0.5);
+        }
+
+        .btn-view:hover {
+            color: white;
+            border-color: var(--red);
+            letter-spacing: 10px;
+            background: rgba(255, 0, 0, 0.2);
+        }
+
+        .btn-view::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--red);
+            z-index: -1;
+            transition: 0.4s;
+        }
+
+        .btn-view:hover::before {
+            width: 100%;
+        }
 
         /* MACHINE 3D (V LOGO DÜZ) */
-        .rig { grid-column:span 12; height:600px; position:relative; background:radial-gradient(circle at center, #101015 0%, #000 80%); border:1px solid var(--soul); display:flex; align-items:center; justify-content:center; overflow:hidden; perspective:1200px; }
-        .holo { position:absolute; bottom:-100px; width:700px; height:700px; border:2px solid rgba(0,243,255,0.2); border-radius:50%; transform:rotateX(75deg); animation:spin 20s linear infinite; background:repeating-radial-gradient(rgba(0,243,255,0.05) 0, transparent 40px); }
-        .laptop { position:relative; width:450px; height:20px; transform-style:preserve-3d; transform:rotateX(70deg) rotateZ(20deg); transition:0.8s; z-index:10; }
-        .rig:hover .laptop { transform:rotateX(60deg) rotateZ(0deg) translateY(-20px) scale(1.05); }
-        .lid { width:450px; height:280px; background:#0a0a0a; border:3px solid #222; position:absolute; bottom:0; transform-origin:bottom; transform:rotateX(-100deg); display:flex; align-items:center; justify-content:center; box-shadow:0 0 50px rgba(0,243,255,0.1); transform-style:preserve-3d; }
-        
+        .rig {
+            grid-column: span 12;
+            height: 600px;
+            position: relative;
+            background: radial-gradient(circle at center, #101015 0%, #000 80%);
+            border: 1px solid var(--soul);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1200px;
+        }
+
+        .holo {
+            position: absolute;
+            bottom: -100px;
+            width: 700px;
+            height: 700px;
+            border: 2px solid rgba(0, 243, 255, 0.2);
+            border-radius: 50%;
+            transform: rotateX(75deg);
+            animation: spin 20s linear infinite;
+            background: repeating-radial-gradient(rgba(0, 243, 255, 0.05) 0, transparent 40px);
+        }
+
+        .laptop {
+            position: relative;
+            width: 450px;
+            height: 20px;
+            transform-style: preserve-3d;
+            transform: rotateX(70deg) rotateZ(20deg);
+            transition: 0.8s;
+            z-index: 10;
+        }
+
+        .rig:hover .laptop {
+            transform: rotateX(60deg) rotateZ(0deg) translateY(-20px) scale(1.05);
+        }
+
+        .lid {
+            width: 450px;
+            height: 280px;
+            background: #0a0a0a;
+            border: 3px solid #222;
+            position: absolute;
+            bottom: 0;
+            transform-origin: bottom;
+            transform: rotateX(-100deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.1);
+            transform-style: preserve-3d;
+        }
+
         /* V LOGO FIX: 0 DERECE (DÜZ) */
-        .v-logo { font-family:var(--f-head); font-size:6rem; color:white; opacity:0.8; text-shadow:0 0 20px var(--soul); transform:rotate(0deg); }
-        
-        .base { width:450px; height:300px; background:#111; border:2px solid #444; position:absolute; top:0; transform-origin:top; display:flex; justify-content:center; }
-        .kb { width:85%; height:40%; margin-top:40px; background:linear-gradient(45deg, transparent 30%, rgba(0,243,255,0.3) 50%, transparent 70%); animation:rgb 3s infinite linear; border:1px solid #333; }
-        .rtx { position:absolute; top:40px; right:40px; padding:10px 20px; border:2px solid #76b900; color:#76b900; font-family:sans-serif; font-weight:900; letter-spacing:1px; box-shadow:0 0 20px rgba(118,185,0,0.3); animation:pulseGreen 2s infinite; z-index:10; }
+        .v-logo {
+            font-family: var(--f-head);
+            font-size: 6rem;
+            color: white;
+            opacity: 0.8;
+            text-shadow: 0 0 20px var(--soul);
+            transform: rotate(0deg);
+        }
+
+        .base {
+            width: 450px;
+            height: 300px;
+            background: #111;
+            border: 2px solid #444;
+            position: absolute;
+            top: 0;
+            transform-origin: top;
+            display: flex;
+            justify-content: center;
+        }
+
+        .kb {
+            width: 85%;
+            height: 40%;
+            margin-top: 40px;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 243, 255, 0.3) 50%, transparent 70%);
+            animation: rgb 3s infinite linear;
+            border: 1px solid #333;
+        }
+
+        .rtx {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            padding: 10px 20px;
+            border: 2px solid #76b900;
+            color: #76b900;
+            font-family: sans-serif;
+            font-weight: 900;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(118, 185, 0, 0.3);
+            animation: pulseGreen 2s infinite;
+            z-index: 10;
+        }
 
         /* === MUSEUM (YENİ - YATAY RESİMLER) === */
-        .museum-item { 
-            grid-column: span 6; /* Yan yana 2 tane sığsın (daha geniş) */
-            aspect-ratio: 16 / 9; /* 16:9 Sinema formatı (Youtube videosu gibi) */
-            position: relative; 
-            border: 1px solid #333; 
-            overflow: hidden; 
-            transition: 0.4s; 
+        .museum-item {
+            grid-column: span 6;
+            /* Yan yana 2 tane sığsın (daha geniş) */
+            aspect-ratio: 16 / 9;
+            /* 16:9 Sinema formatı (Youtube videosu gibi) */
+            position: relative;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: 0.4s;
             background: #000;
             border-radius: 4px;
         }
-        
+
         /* Resim Ayarı */
-        .museum-bg { 
-            position: absolute; 
-            inset: 0; 
-            background-size: cover; /* Resmi kutuya tam sığdırır, boşluk bırakmaz */
-            background-position: center; 
-            transition: 0.5s; 
-            filter: grayscale(0.5) brightness(0.7); /* Hafif sanatsal karanlık */
+        .museum-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            /* Resmi kutuya tam sığdırır, boşluk bırakmaz */
+            background-position: center;
+            transition: 0.5s;
+            filter: grayscale(0.5) brightness(0.7);
+            /* Hafif sanatsal karanlık */
         }
 
         /* Hover (Üzerine Gelince) Efekti */
-        .museum-item:hover { 
-            border-color: var(--soul); /* Mavi çerçeve */
-            transform: scale(1.02); /* Hafif büyüsün */
+        .museum-item:hover {
+            border-color: var(--soul);
+            /* Mavi çerçeve */
+            transform: scale(1.02);
+            /* Hafif büyüsün */
             z-index: 10;
             box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
         }
-        .museum-item:hover .museum-bg { 
-            filter: grayscale(0) brightness(1); /* Resim canlansın */
-            transform: scale(1.1); /* Resim içerde yakınlaşsın */
+
+        .museum-item:hover .museum-bg {
+            filter: grayscale(0) brightness(1);
+            /* Resim canlansın */
+            transform: scale(1.1);
+            /* Resim içerde yakınlaşsın */
         }
 
         /* Üzerindeki Yazı */
-        .museum-ov { 
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            padding: 15px; 
-            background: linear-gradient(to top, #000 10%, transparent); 
+        .museum-ov {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, #000 10%, transparent);
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
-        .m-tit { font-family: var(--f-code); font-size: 0.9rem; color: white; letter-spacing: 2px; }
-        .m-icon { color: var(--soul); opacity: 0; transition: 0.3s; transform: translateY(10px); }
-        
-        .museum-item:hover .m-icon { opacity: 1; transform: translateY(0); }
+
+        .m-tit {
+            font-family: var(--f-code);
+            font-size: 0.9rem;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .m-icon {
+            color: var(--soul);
+            opacity: 0;
+            transition: 0.3s;
+            transform: translateY(10px);
+        }
+
+        .museum-item:hover .m-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* MOBİL VE TABLET AYARI */
-        @media(max-width:1200px){ 
-            .game { grid-column:span 6; } /* Oyunlar tablette 2'li */
-            .museum-item { grid-column: span 12; } /* Müzeler tablette tekli (dev gibi) */
+        @media(max-width:1200px) {
+            .game {
+                grid-column: span 6;
+            }
+
+            /* Oyunlar tablette 2'li */
+            .museum-item {
+                grid-column: span 12;
+            }
+
+            /* Müzeler tablette tekli (dev gibi) */
         }
+
         /* Mobile zaten senin kodunda .grid > * { grid-column: span 12 } olduğu için otomatik tek sütun olacak. */
 
         /* NETWORK */
-        .net { grid-column:span 12; display:flex; align-items:center; justify-content:space-between; padding:30px 50px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; color:white; transition:0.3s; }
-        .net:hover { transform:translateX(20px); background:rgba(255,255,255,0.05); }
-        .dc:hover { border-left:5px solid #5865F2; } .ig:hover { border-left:5px solid #E1306C; } 
-        .yt:hover { border-left:5px solid #FF0000; } .st:hover { border-left:5px solid #1b2838; }
-        .net h3 { font-family:var(--f-head); font-size:2rem; margin:0; }
-        .net span { font-family:var(--f-code); color:var(--muted); font-size:1.1rem; }
+        .net {
+            grid-column: span 12;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 50px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .net:hover {
+            transform: translateX(20px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dc:hover {
+            border-left: 5px solid #5865F2;
+        }
+
+        .ig:hover {
+            border-left: 5px solid #E1306C;
+        }
+
+        .yt:hover {
+            border-left: 5px solid #FF0000;
+        }
+
+        .st:hover {
+            border-left: 5px solid #1b2838;
+        }
+
+        .net h3 {
+            font-family: var(--f-head);
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .net span {
+            font-family: var(--f-code);
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
 
         /* FORM (FIXED & CENTERED) */
-        .form-box { 
-            grid-column: 3 / span 8; /* Center */
-            background:var(--panel); border:1px solid var(--red); padding:60px; box-shadow:0 0 50px rgba(0,0,0,0.8); 
-            display: flex; flex-direction: column; width: 100%; max-width: 800px; margin: 0 auto;
+        .form-box {
+            grid-column: 3 / span 8;
+            /* Center */
+            background: var(--panel);
+            border: 1px solid var(--red);
+            padding: 60px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        .h-in { display: block; width: 100%; background: #000; border: 1px solid #333; color: white; padding: 25px; font-family:var(--f-code); font-size:1.1rem; margin-bottom:30px; transition:0.3s; box-sizing:border-box; }
-        .h-in:focus { border-color:var(--red); box-shadow:0 0 25px rgba(255,0,0,0.15); }
-        .send_btn { width: 100%; padding: 25px; background: linear-gradient(90deg, var(--red-dim), var(--red)); border: none; color: white; font-family: var(--f-head); font-weight: 900; font-size: 1.4rem; letter-spacing: 4px; transition: 0.3s; clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px); }
-        .send_btn:hover { background: white; color: black; letter-spacing: 8px; }
+
+        .h-in {
+            display: block;
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            color: white;
+            padding: 25px;
+            font-family: var(--f-code);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        .h-in:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
+        }
+
+        .send_btn {
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(90deg, var(--red-dim), var(--red));
+            border: none;
+            color: white;
+            font-family: var(--f-head);
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+            transition: 0.3s;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        .send_btn:hover {
+            background: white;
+            color: black;
+            letter-spacing: 8px;
+        }
 
         /* ================================================= */
         /* 📱 MOBİL DÜZELTMELERİ (SON HALİ) */
         /* ================================================= */
-        @media(max-width:768px){
-            
+        @media(max-width:768px) {
+
             /* 1. GÖVDEYİ KAYDIRMAYA HAZIRLA */
             body {
-                overflow: hidden; /* Ana gövdeyi kilitle, sadece içerik kaysın */
+                overflow: hidden;
                 position: fixed;
                 width: 100%;
                 height: 100%;
             }
 
             /* 2. SIDEBAR (MENÜ) - TIKLANABİLİRLİK AYARI */
-            .sidebar { 
-                position: fixed; 
-                bottom: 0; 
-                left: 0; 
-                width: 100%; 
-                height: 70px !important; 
-                
-                /* 🔥 KRİTİK: Z-Index'i çok yüksek yapıyoruz ki en üstte kalsın */
-                z-index: 10000; 
-                
-                background: rgba(5, 2, 2, 0.98); 
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 70px !important;
+                z-index: 10000;
+                background: rgba(5, 2, 2, 0.98);
                 border-top: 2px solid var(--red);
                 display: flex;
-                flex-direction: row; 
-                justify-content: space-evenly; 
+                flex-direction: row;
+                justify-content: space-evenly;
                 align-items: center;
                 padding: 0;
-                
-                /* Tıklamaları garantiye al */
-                pointer-events: all; 
+                pointer-events: all;
             }
 
-            .logo { display:none; } 
+            .logo {
+                display: none;
+            }
 
             /* Nav Butonları */
-            .navs { 
-                flex-direction: row; 
-                margin: 0; 
-                width: 100%; 
-                justify-content: space-between; 
-                padding: 0 10px; 
+            .navs {
+                flex-direction: row;
+                margin: 0;
+                width: 100%;
+                justify-content: space-between;
+                padding: 0 10px;
             }
-            
-            .nav-btn { 
-                height: 100%; 
-                width: auto; 
-                flex-grow: 1; 
-                display: flex;
-                align-items: center;     
-                justify-content: center;
-                pointer-events: all; /* Buton tıklamasını zorla */
-            }
-            
-            .nav-lbl { display: none; } 
 
-            /* 3. İÇERİK ALANI (SCROLL BURADA OLACAK) */
-            /* Sahneyi ekran boyutu eksi menü boyutu kadar yapıyoruz */
+            .nav-btn {
+                height: 100%;
+                width: auto;
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: all;
+                padding: 10px 5px !important;
+            }
+
+            .nav-lbl {
+                display: none;
+            }
+
+            /* 3. İÇERİK ALANI */
             .stage {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: calc(100% - 70px); /* Menü payını düş */
-                overflow-y: auto; /* 🔥 KAYDIRMAYI AÇAN KOD */
-                overflow-x: hidden;
-                z-index: 10; /* Menünün altında, arka planın üstünde */
-                -webkit-overflow-scrolling: touch; /* iPhone'da akıcı kaydırma */
+                height: calc(100% - 70px);
+                overflow: hidden;
+                z-index: 10;
             }
 
             /* Bölümler */
-            .section { 
-                position: absolute; /* Animasyon için absolute kalmalı */
-                top: 0;
-                left: 0;
-                width: 100%;
-                min-height: 100%; /* İçerik azsa bile ekranı kapla */
-                padding: 20px 20px 40px 20px; 
-                opacity: 0; /* JS bunu 1 yapacak */
-                pointer-events: none; /* Aktif olmayanlara tıklanmasın */
+            .section {
+                position: absolute;
+                inset: 0;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 20px 20px 100px 20px;
+                opacity: 0;
+                pointer-events: none;
             }
 
             /* Sadece Aktif Olan Bölüm Tıklanabilir Olsun */
             .section.active {
                 opacity: 1;
                 pointer-events: all;
-                position: absolute; /* Akışta yer kaplasın */
             }
-            
+
             /* Izgara ve Profil Düzenlemeleri */
-            .grid { display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px; }
-            .grid > * { width: 100%; margin-bottom: 10px; grid-column: span 12 !important; }
+            .grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                padding-bottom: 20px;
+            }
 
-            .profile { flex-direction:column; text-align:center; padding: 2rem 1rem; gap: 2rem; }
-            .p-info h2 { font-size: 2.5rem; }
-            .avi-w { width: 200px; height: 200px; }
-            
-            .rig { height: 400px; }
-            .laptop { transform: scale(0.55) rotateX(60deg); }
-            .rtx { top: 20px; right: 20px; font-size: 0.8rem; padding: 5px 10px; }
+            .grid>* {
+                width: 100%;
+                margin-bottom: 10px;
+                grid-column: span 12 !important;
+            }
 
-            .net { flex-direction:column; gap:10px; text-align:center; padding: 20px; }
-            .form-box { padding: 30px 20px; }
-            
-            .lang-box { top: 15px; right: 20px; }
+            .profile {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1rem;
+                gap: 2rem;
+            }
+
+            .p-info h2 {
+                font-size: 2.5rem;
+            }
+
+            .avi-w {
+                width: 200px;
+                height: 200px;
+            }
+
+            .rig {
+                height: 350px;
+            }
+
+            .laptop {
+                transform: scale(0.5) rotateX(60deg);
+            }
+
+            .rtx {
+                top: 15px;
+                right: 15px;
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            .net {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .form-box {
+                padding: 30px 20px;
+            }
+
+            .lang-box {
+                top: 15px;
+                right: 20px;
+            }
+
+            .h-tit {
+                font-size: 2.2rem !important;
+            }
         }
 
-        @keyframes spin { 100%{transform:rotate(360deg);} } @keyframes spinR { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} } 
-        @keyframes pulse { 50%{opacity:0.5;text-shadow:0 0 15px var(--soul);} } @keyframes rgb { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
-        @keyframes pulseGreen { 50%{opacity:0.6;} } @keyframes slideDown { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinR {
+            0% {
+                transform: rotate(360deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: 0.5;
+                text-shadow: 0 0 15px var(--soul);
+            }
+        }
+
+        @keyframes rgb {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        @keyframes pulseGreen {
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
+
 <body>
 
 
 
     <div id="first-time-modal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="modal-close-btn">&times;</span>
-        
-        <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-image-link">
-            <div class="modal-image-container">
-                <img src="add/SOL.png" alt="Popup Görseli" class="modal-image-full">
-            </div>
-        </a>
+        <div class="modal-content">
+            <span class="modal-close-btn" id="modal-close"><i data-lucide="x"
+                    style="width: 14px; height: 14px;"></i></span>
 
-        <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-video-link">
-            <div class="modal-video-container">
-                <video id="modal-video" autoplay muted loop playsinline class="modal-video-responsive">
-                    <source src="https://fadmoxedziq5rcev.public.blob.vercel-storage.com/silent-night-z01gJElXIRxRuk581NHC0zuC6YDUez.mp4" type="video/mp4">
-                    Tarayıcınız video etiketini desteklemiyor.
-                </video>
+            <div class="modal-tabs"
+                style="display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.6);">
+                <button class="modal-tab active" onclick="switchModalTab(event, 'banner')"
+                    style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--gold); font-family: var(--f-code); font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <i data-lucide="image" style="width: 13px; height: 13px;"></i>BANNER
+                </button>
+                <button class="modal-tab" onclick="switchModalTab(event, 'trailer')"
+                    style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); font-family: var(--f-code); font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <i data-lucide="play" style="width: 13px; height: 13px;"></i>TRAILER
+                </button>
             </div>
-        </a>
+
+            <div class="modal-body" style="position: relative;">
+                <!-- Banner Tab -->
+                <a href="https://kd.link/?code=HAK06" target="_blank" id="modal-tab-banner"
+                    class="modal-tab-content modal-image-link" style="display: block;">
+                    <div class="modal-image-container"
+                        style="padding-top: 120%; position: relative; overflow: hidden; background: #000;">
+                        <img src="add/SOL.png" alt="Popup Görseli" class="modal-image-full"
+                            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                </a>
+
+                <!-- Trailer Tab -->
+                <div id="modal-tab-trailer" class="modal-tab-content modal-video-link" style="display: none;">
+                    <div class="modal-video-container"
+                        style="padding-top: 56.25%; position: relative; overflow: hidden; background: #000;">
+                        <video id="modal-video" muted loop playsinline class="modal-video-responsive"
+                            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
+                            <source
+                                src="https://fadmoxedziq5rcev.public.blob.vercel-storage.com/silent-night-z01gJElXIRxRuk581NHC0zuC6YDUez.mp4"
+                                type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                        </video>
+                        <a href="https://kd.link/?code=HAK06" target="_blank"
+                            style="position: absolute; bottom: 15px; right: 15px; background: rgba(10,5,5,0.9); border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 4px; font-family: var(--f-code); font-size: 11px; text-decoration: none; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.8); z-index: 100;">
+                            VISIT UPLINK <i data-lucide="external-link" style="width: 12px; height: 12px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-
-
-
-
 
     <div id="canvas"></div>
     <div class="scanlines"></div>
-    <div id="cursor"><div class="dot"></div></div>
+    <div id="cursor">
+        <div class="dot"></div>
+    </div>
 
     <!-- BOOT -->
     <div id="loader">
         <div class="seal-wrap">
-            <div class="seal-ring"></div><div class="seal-in"></div>
-            <svg viewBox="0 0 100 100" class="seal-svg">
-                <polygon points="50,10 85,75 15,75" class="lt1"/>
-                <polygon points="50,90 85,25 15,25" class="lt2"/>
+            <div class="seal-ring"></div>
+            <div class="seal-in"></div>
+            <svg viewBox="0 0 100 100" class="seal-svg" style="transform-origin: 50px 50px;">
+                <polygon points="50,10 85,75 15,75" class="lt1" style="transform-origin: 50px 50px;" />
+                <polygon points="50,90 85,25 15,25" class="lt2" style="transform-origin: 50px 50px;" />
             </svg>
             <div class="seal-text">H</div>
         </div>
-        <div class="load-txt" id="ltxt">YER ALTI...</div>
-        <div class="load-bar"><div class="load-fill"></div></div>
+        <div class="load-txt" id="ltxt">YÜKLENİYOR...</div>
+        <div class="load-bar">
+            <div class="load-fill"></div>
+        </div>
     </div>
 
     <!-- LANG -->
     <div class="lang-box">
-        <button class="lang-btn" id="lang-togg"><i data-lucide="globe" style="width:14px"></i> <span id="curr-lang">EN</span></button>
+        <button class="lang-btn" id="lang-togg"><i data-lucide="globe" style="width:14px"></i> <span
+                id="curr-lang">EN</span></button>
         <div class="lang-list" id="lang-menu">
             <!-- Dilleri buraya kopyala yapıştır -->
         </div>
@@ -599,129 +1481,404 @@ position: absolute;
     <div id="app">
         <aside class="sidebar">
             <div class="logo" onclick="nav('sanctum')">
-                <svg viewBox="0 0 100 100" class="t1"><polygon points="50,10 85,75 15,75" fill="none" stroke="#ffb700" stroke-width="2"/></svg>
-                <svg viewBox="0 0 100 100" class="t2" style="position:absolute;top:0;left:0"><polygon points="50,90 85,25 15,25" fill="none" stroke="#ff0000" stroke-width="2"/></svg>
+                <svg viewBox="0 0 100 100" class="t1">
+                    <polygon points="50,10 85,75 15,75" fill="none" stroke="#ffb700" stroke-width="2" />
+                </svg>
+                <svg viewBox="0 0 100 100" class="t2" style="position:absolute;top:0;left:0">
+                    <polygon points="50,90 85,25 15,25" fill="none" stroke="#ff0000" stroke-width="2" />
+                </svg>
                 <div class="lh">H</div>
             </div>
             <nav class="navs">
-                <button class="nav-btn active" data-t="sanctum"><i data-lucide="skull"></i><span class="nav-lbl" data-k="nav_sanctum">SANCTUM</span></button>
-                <button class="nav-btn" data-t="armory"><i data-lucide="swords"></i><span class="nav-lbl" data-k="nav_armory">ARMORY</span></button>
-                <button class="nav-btn" data-t="machine"><i data-lucide="cpu"></i><span class="nav-lbl" data-k="nav_machine">MACHINE</span></button>
-                <button class="nav-btn" data-t="museum"><i data-lucide="image"></i><span class="nav-lbl" data-k="nav_museum">MUSEUM</span></button>
-                <button class="nav-btn" data-t="network"><i data-lucide="globe"></i><span class="nav-lbl" data-k="nav_network">NETWORK</span></button>
-                <button class="nav-btn" data-t="trans"><i data-lucide="send"></i><span class="nav-lbl" data-k="nav_trans">CONTACT</span></button>
+                <button class="nav-btn active" data-t="sanctum"><i data-lucide="skull"></i><span class="nav-lbl"
+                        data-k="nav_sanctum">SANCTUM</span></button>
+                <button class="nav-btn" data-t="armory"><i data-lucide="swords"></i><span class="nav-lbl"
+                        data-k="nav_armory">ARMORY</span></button>
+                <button class="nav-btn" data-t="machine"><i data-lucide="cpu"></i><span class="nav-lbl"
+                        data-k="nav_machine">MACHINE</span></button>
+                <button class="nav-btn" data-t="museum"><i data-lucide="image"></i><span class="nav-lbl"
+                        data-k="nav_museum">MUSEUM</span></button>
+                <button class="nav-btn" data-t="network"><i data-lucide="globe"></i><span class="nav-lbl"
+                        data-k="nav_network">NETWORK</span></button>
+                <button class="nav-btn" data-t="trans"><i data-lucide="send"></i><span class="nav-lbl"
+                        data-k="nav_trans">CONTACT</span></button>
+                <button class="nav-btn" data-t="support"><i data-lucide="gift"></i><span class="nav-lbl"
+                        data-k="nav_support">SUPPORT</span></button>
             </nav>
             <div style="height:70px;"></div>
         </aside>
 
         <main class="stage">
             <section id="sanctum" class="section active">
-                <div class="head"><div><h1 class="h-tit">HaKING</h1><span class="h-sub" data-k="role">UNDERWORLD OPERATOR</span></div><div class="h-stat" id="sys-status" data-k="sys">SYSTEM ONLINE</div></div>
+                <div class="head">
+                    <div>
+                        <h1 class="h-tit">HaKING</h1><span class="h-sub" data-k="role">UNDERWORLD OPERATOR</span>
+                    </div>
+                    <div class="h-stat" id="sys-status" data-k="sys">SYSTEM ONLINE</div>
+                </div>
                 <div class="grid">
                     <div class="profile">
                         <div class="avi-w">
-                            <div class="frame-corner fc-tl"></div><div class="frame-corner fc-tr"></div>
-                            <div class="frame-corner fc-bl"></div><div class="frame-corner fc-br"></div>
-                            <img src="image/HaKING2.png" class="avi-img" onerror="this.src='https://avatars.akamai.steamstatic.com/b5bd56c1aa4644a474a298e131597431c4897244_full.jpg'">
+                            <div class="frame-corner fc-tl"></div>
+                            <div class="frame-corner fc-tr"></div>
+                            <div class="frame-corner fc-bl"></div>
+                            <div class="frame-corner fc-br"></div>
+                            <img src="image/HaKING2.png" class="avi-img"
+                                onerror="this.src='https://avatars.akamai.steamstatic.com/b5bd56c1aa4644a474a298e131597431c4897244_full.jpg'">
                         </div>
-                        <div class="p-info"><h2>Halit Güneş</h2><p>// FULL-STACK DEV & GAMER<br>// ID: halitguns06.dev</p> <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank"><div class="badge"><i data-lucide="shield" size="16"></i>STEAM LEVEL 31</div></a></div>
+                        <div class="p-info">
+                            <h2>Halit Güneş</h2>
+                            <p>// <span data-k="profile_desc">FULL-STACK DEV & GAMER</span><br>// ID: halitguns06.dev
+                            </p> <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank">
+                                <div class="badge"><i data-lucide="shield" size="16"></i>STEAM LEVEL 31</div>
+                            </a>
+                        </div>
                     </div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="playtime">TIME</h3><div class="stat-val" id="total-hours">Loading...</div></div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="value">VALUE</h3><div class="stat-val">$2050</div></div>
-                    <div class="panel stat" style="grid-column: span 4;"><h3 data-k="games">GAMES</h3><div class="stat-val" id="total-games">Loading...</div></div>
+                    <div class="panel stat" style="grid-column: span 4;">
+                        <h3 data-k="playtime">TIME</h3>
+                        <div class="stat-val" id="total-hours">Loading...</div>
+                    </div>
+                    <div class="panel stat" style="grid-column: span 4;">
+                        <h3 data-k="value">VALUE</h3>
+                        <div class="stat-val">$2395</div>
+                    </div>
+                    <div class="panel stat" style="grid-column: span 4;">
+                        <h3 data-k="games">GAMES</h3>
+                        <div class="stat-val" id="total-games">Loading...</div>
+                    </div>
+
+                    <div class="panel"
+                        style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; border-color: var(--gold-dim); background: rgba(255, 183, 0, 0.02); margin-top: 10px;">
+                        <div style="display: flex; align-items: center; gap: 15px; text-align: left;">
+                            <i data-lucide="gift"
+                                style="color: var(--gold); width: 22px; height: 22px; filter: drop-shadow(0 0 5px rgba(255,183,0,0.5));"></i>
+                            <div>
+                                <h4 data-k="sanctum_support_title"
+                                    style="font-family: var(--f-head); color: #fff; font-size: 1.05rem; letter-spacing: 1px;">
+                                    SUPPORT THE OPERATOR</h4>
+                                <p data-k="sanctum_support_desc"
+                                    style="font-family: var(--f-code); color: var(--muted); font-size: 0.8rem; margin-top: 2px;">
+                                    Send items or game cards via Steam Trade Offer</p>
+                            </div>
+                        </div>
+                        <button onclick="nav('support')" class="lang-btn"
+                            style="padding: 8px 15px; border-color: var(--gold); color: var(--gold); font-size: 11px;"><span
+                                data-k="sanctum_support_btn">SECURE LINK</span></button>
+                    </div>
                 </div>
             </section>
 
             <section id="armory" class="section">
-                <div class="head"><div><h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">DIGITAL ARSENAL</span></div></div>
+                <div class="head">
+                    <div>
+                        <h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">DIGITAL
+                            ARSENAL</span>
+                    </div>
+                </div>
                 <div class="grid">
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')"></div><div class="game-ov"><div class="g-tit">EA FC 25</div><span class="g-time" id="time-fc25">Loading...</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')"></div><div class="game-ov"><div class="g-tit">BANNERLORD</div><span class="g-time" id="time-bannerlord">Loading...</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')"></div><div class="game-ov"><div class="g-tit">WITCHER 3</div><span class="g-time" id="time-witcher3">Loading...</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.steamstatic.com/steam/apps/812140/header.jpg')"></div><div class="game-ov"><div class="g-tit">AC ODYSSEY</div><span class="g-time" id="time-odyssey">Loading...</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')"></div><div class="game-ov"><div class="g-tit">CYBERPUNK 2077</div><span class="g-time" id="time-cyberpunk">Loading...</span></div></div>
-                    <div class="game"><div class="game-bg" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')"></div><div class="game-ov"><div class="g-tit">GOD OF WAR</div><span class="g-time" id="time-godofwar">Loading...</span></div></div>
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank" class="btn-view" data-k="view_all">VIEW FULL COLLECTION</a>
+                    <div class="game">
+                        <div class="game-bg"
+                            style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg')">
+                        </div>
+                        <div class="game-ov">
+                            <div class="g-tit">EA FC 25</div><span class="g-time" id="time-fc25">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="game">
+                        <div class="game-bg"
+                            style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg')">
+                        </div>
+                        <div class="game-ov">
+                            <div class="g-tit">BANNERLORD</div><span class="g-time"
+                                id="time-bannerlord">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="game">
+                        <div class="game-bg"
+                            style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg')">
+                        </div>
+                        <div class="game-ov">
+                            <div class="g-tit">WITCHER 3</div><span class="g-time" id="time-witcher3">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="game">
+                        <div class="game-bg"
+                            style="background-image:url('https://cdn.steamstatic.com/steam/apps/812140/header.jpg')">
+                        </div>
+                        <div class="game-ov">
+                            <div class="g-tit">AC ODYSSEY</div><span class="g-time" id="time-odyssey">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="game">
+                        <div class="game-bg"
+                            style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg')">
+                        </div>
+                        <div class="game-ov">
+                            <div class="g-tit">CYBERPUNK 2077</div><span class="g-time"
+                                id="time-cyberpunk">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="game">
+                        <div class="game-bg"
+                            style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg')">
+                        </div>
+                        <div class="game-ov">
+                            <div class="g-tit">GOD OF WAR</div><span class="g-time" id="time-godofwar">Loading...</span>
+                        </div>
+                    </div>
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank"
+                        class="btn-view" data-k="view_all">VIEW FULL COLLECTION</a>
                 </div>
             </section>
 
             <section id="machine" class="section">
-                <div class="head"><div><h1 class="h-tit" data-k="nav_machine">MACHINE</h1><span class="h-sub" data-k="sub_machine">SYSTEM ARCHITECTURE</span></div></div>
+                <div class="head">
+                    <div>
+                        <h1 class="h-tit" data-k="nav_machine">MACHINE</h1><span class="h-sub"
+                            data-k="sub_machine">SYSTEM ARCHITECTURE</span>
+                    </div>
+                </div>
                 <div class="grid">
                     <div class="rig">
-                        <div class="holo"></div><div class="laptop"><div class="lid"><div class="v-logo">V</div></div><div class="base"><div class="kb"></div></div></div><div class="rtx">RTX 4070</div>
+                        <div class="holo"></div>
+                        <div class="laptop">
+                            <div class="lid">
+                                <div class="v-logo">V</div>
+                            </div>
+                            <div class="base">
+                                <div class="kb"></div>
+                            </div>
+                        </div>
+                        <div class="rtx">RTX 4070</div>
                     </div>
-                    <div class="panel" style="grid-column:span 12; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); text-align:center;">
-                        <div><div style="color:#888">CPU</div><div style="color:var(--soul);font-weight:bold">i7-14700HX</div></div>
-                        <div><div style="color:#888">GPU</div><div style="color:var(--soul);font-weight:bold">RTX 4070</div></div>
-                        <div><div style="color:#888">RAM</div><div style="color:var(--soul);font-weight:bold">16GB DDR5</div></div>
-                        <div><div style="color:#888">SSD</div><div style="color:var(--soul);font-weight:bold">1TB NVMe</div></div>
-                        <div><div style="color:#888">LCD</div><div style="color:var(--soul);font-weight:bold">144Hz IPS</div></div>
+                    <div class="panel"
+                        style="grid-column:span 12; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); text-align:center;">
+                        <div>
+                            <div style="color:#888">CPU</div>
+                            <div style="color:var(--soul);font-weight:bold">i7-14700HX</div>
+                        </div>
+                        <div>
+                            <div style="color:#888">GPU</div>
+                            <div style="color:var(--soul);font-weight:bold">RTX 4070</div>
+                        </div>
+                        <div>
+                            <div style="color:#888">RAM</div>
+                            <div style="color:var(--soul);font-weight:bold">16GB DDR5</div>
+                        </div>
+                        <div>
+                            <div style="color:#888">SSD</div>
+                            <div style="color:var(--soul);font-weight:bold">1TB NVMe</div>
+                        </div>
+                        <div>
+                            <div style="color:#888">LCD</div>
+                            <div style="color:var(--soul);font-weight:bold">144Hz IPS</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="museum" class="section">
                 <div class="head">
-                    <div><h1 class="h-tit" data-k="nav_museum">MUSEUM</h1><span class="h-sub" data-k="sub_museum">VISUAL ARCHIVE</span></div>
+                    <div>
+                        <h1 class="h-tit" data-k="nav_museum">MUSEUM</h1><span class="h-sub" data-k="sub_museum">VISUAL
+                            ARCHIVE</span>
+                    </div>
                 </div>
                 <div class="grid">
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3587443677" target="_blank" class="museum-item">
-                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/12378042621997334601/E47F3FB4C5AE4FF1EA7B74A8FB267E155A12F65B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
-                        <div class="museum-ov"><span class="m-tit">God of War Ragnarök</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
-                    </a>
-                    
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3565203458" target="_blank" class="museum-item">
-                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/15566897679527924002/A32EBC50B8201D63E7E651ED6EAE5D164CF2C2C2/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
-                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part II Remastered</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3552788785" target="_blank" class="museum-item">
-                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/17036147118589743603/4C23D97CA5EC7A5B6BB7F287EEC18A4A9A3FB741/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
-                        <div class="museum-ov"><span class="m-tit">The Witcher 3: Wild Hunt</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3587443677" target="_blank"
+                        class="museum-item">
+                        <div class="museum-bg"
+                            style="background-image:url('https://images.steamusercontent.com/ugc/12378042621997334601/E47F3FB4C5AE4FF1EA7B74A8FB267E155A12F65B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')">
+                        </div>
+                        <div class="museum-ov"><span class="m-tit">God of War Ragnarök</span><i data-lucide="maximize-2"
+                                class="m-icon" size="16"></i></div>
                     </a>
 
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3518267543" target="_blank" class="museum-item">
-                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
-                        <div class="museum-ov"><span class="m-tit">The Witcher 2: Assassins of Kings Enhanced Edition</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3565203458" target="_blank"
+                        class="museum-item">
+                        <div class="museum-bg"
+                            style="background-image:url('https://images.steamusercontent.com/ugc/15566897679527924002/A32EBC50B8201D63E7E651ED6EAE5D164CF2C2C2/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')">
+                        </div>
+                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part II Remastered</span><i
+                                data-lucide="maximize-2" class="m-icon" size="16"></i></div>
                     </a>
 
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3589141535" target="_blank" class="museum-item">
-                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/11321918544718607285/91300EB97577DF31955304DDCB2E0B7634810273/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
-                        <div class="museum-ov"><span class="m-tit">Hogwarts Legacy</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3552788785" target="_blank"
+                        class="museum-item">
+                        <div class="museum-bg"
+                            style="background-image:url('https://images.steamusercontent.com/ugc/17036147118589743603/4C23D97CA5EC7A5B6BB7F287EEC18A4A9A3FB741/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')">
+                        </div>
+                        <div class="museum-ov"><span class="m-tit">The Witcher 3: Wild Hunt</span><i
+                                data-lucide="maximize-2" class="m-icon" size="16"></i></div>
                     </a>
 
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3556595502" target="_blank" class="museum-item">
-                        <div class="museum-bg" style="background-image:url('https://images.steamusercontent.com/ugc/9998270276105590867/8FBC96CBFE406B735EF9F7A814AFABAF8FB8FCCE/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')"></div>
-                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part I</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3518267543" target="_blank"
+                        class="museum-item">
+                        <div class="museum-bg"
+                            style="background-image:url('https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')">
+                        </div>
+                        <div class="museum-ov"><span class="m-tit">The Witcher 2: Assassins of Kings Enhanced
+                                Edition</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
                     </a>
 
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/screenshots/" target="_blank" class="btn-view" data-k="view_gallery">VIEW FULL GALLERY</a>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3589141535" target="_blank"
+                        class="museum-item">
+                        <div class="museum-bg"
+                            style="background-image:url('https://images.steamusercontent.com/ugc/11321918544718607285/91300EB97577DF31955304DDCB2E0B7634810273/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')">
+                        </div>
+                        <div class="museum-ov"><span class="m-tit">Hogwarts Legacy</span><i data-lucide="maximize-2"
+                                class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3556595502" target="_blank"
+                        class="museum-item">
+                        <div class="museum-bg"
+                            style="background-image:url('https://images.steamusercontent.com/ugc/9998270276105590867/8FBC96CBFE406B735EF9F7A814AFABAF8FB8FCCE/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false')">
+                        </div>
+                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part I</span><i
+                                data-lucide="maximize-2" class="m-icon" size="16"></i></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/screenshots/" target="_blank"
+                        class="btn-view" data-k="view_gallery">VIEW FULL GALLERY</a>
                 </div>
             </section>
 
             <section id="network" class="section">
-                <div class="head"><div><h1 class="h-tit" data-k="nav_network">NETWORK</h1><span class="h-sub" data-k="sub_network">UPLINKS</span></div></div>
+                <div class="head">
+                    <div>
+                        <h1 class="h-tit" data-k="nav_network">NETWORK</h1><span class="h-sub"
+                            data-k="sub_network">UPLINKS</span>
+                    </div>
+                </div>
                 <div class="grid">
-                    <a href="https://discord.gg/mJy5z97yB5" target="_blank" class="net dc"><div><h3>DISCORD</h3><span>haking06</span></div><div class="net-stat">JOIN</div></a>
-                    <a href="https://www.instagram.com/user/" target="_blank" class="net ig"><div><h3>INSTAGRAM</h3><span>...</span></div><div class="net-stat">FOLLOW</div></a>
-                    <a href="https://www.youtube.com/@HaKING06" target="_blank" class="net yt"><div><h3>YOUTUBE</h3><span>HaKING06</span></div><div class="net-stat">SUBSCRIBE</div></a>
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" class="net st"><div><h3>STEAM</h3><span>HaKING</span></div><div class="net-stat">CONNECT</div></a>
-                    <a href="https://steamdb.info/calculator/76561199760755154/" target="_blank" class="net st"><div><h3>STEAM.DB</h3><span>HaKING</span></div><div class="net-stat">CHECK</div></a>
+                    <a href="https://discord.com/users/510807224000446484" target="_blank" class="net dc">
+                        <div>
+                            <h3>DISCORD</h3><span>haking06</span>
+                        </div>
+                        <div class="net-stat">JOIN</div>
+                    </a>
+                    <a href="https://www.instagram.com/user/" target="_blank" class="net ig">
+                        <div>
+                            <h3>INSTAGRAM</h3><span>...</span>
+                        </div>
+                        <div class="net-stat">FOLLOW</div>
+                    </a>
+                    <a href="https://www.youtube.com/@gunshalit" target="_blank" class="net yt">
+                        <div>
+                            <h3>YOUTUBE</h3><span>Halit</span>
+                        </div>
+                        <div class="net-stat">SUBSCRIBE</div>
+                    </a>
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" class="net st">
+                        <div>
+                            <h3>STEAM</h3><span>HaKING</span>
+                        </div>
+                        <div class="net-stat">CONNECT</div>
+                    </a>
+                    <a href="https://steamdb.info/calculator/76561199760755154/" target="_blank" class="net st">
+                        <div>
+                            <h3>STEAM.DB</h3><span>HaKING</span>
+                        </div>
+                        <div class="net-stat">CHECK</div>
+                    </a>
                 </div>
             </section>
 
             <section id="trans" class="section">
-                <div class="head"><div><h1 class="h-tit" data-k="nav_trans">CONTACT</h1><span class="h-sub" data-k="sub_trans">SECURE</span></div></div>
+                <div class="head">
+                    <div>
+                        <h1 class="h-tit" data-k="nav_trans">CONTACT</h1><span class="h-sub"
+                            data-k="sub_trans">SECURE</span>
+                    </div>
+                </div>
                 <div class="grid">
-                    <div class="form-box">
-                        <form action="mailto:halitguns06@gmail.com" method="POST" enctype="text/plain">
-                            <input type="hidden" name="Mail_Konusu" value="">
-                            <input type="text" name="name" class="h-in" placeholder="CODENAME" required>
-                            <input data-k="ph_email" type="email" name="email" class="h-in" placeholder="FREQUENCY(Mail)" required>
-                            <textarea data-k="ph_msg" name="msg" class="h-in" rows="5" placeholder="PACKET..." required></textarea>
-                            <button data-k="send_btn" class="send_btn">TRANSMIT</button>
-                        </form>
+                    <div class="form-box" style="position: relative;">
+                        <div id="contact-terminal" style="display: block; width: 100%;">
+                            <form id="contact-form" onsubmit="handleContactSubmit(event)">
+                                <div style="position: relative; margin-bottom: 25px;">
+                                    <i data-lucide="user"
+                                        style="position: absolute; left: 20px; top: 22px; color: var(--muted); width: 18px; height: 18px;"></i>
+                                    <input data-p="ph_name" type="text" name="name" id="c-name" class="h-in"
+                                        placeholder="CODENAME" required style="padding-left: 55px; margin-bottom: 0;">
+                                </div>
+                                <div style="position: relative; margin-bottom: 25px;">
+                                    <i data-lucide="mail"
+                                        style="position: absolute; left: 20px; top: 22px; color: var(--muted); width: 18px; height: 18px;"></i>
+                                    <input data-p="ph_email" type="email" name="email" id="c-email" class="h-in"
+                                        placeholder="FREQUENCY(Mail)" required
+                                        style="padding-left: 55px; margin-bottom: 0;">
+                                </div>
+                                <div style="position: relative; margin-bottom: 25px;">
+                                    <i data-lucide="terminal"
+                                        style="position: absolute; left: 20px; top: 22px; color: var(--muted); width: 18px; height: 18px;"></i>
+                                    <textarea data-p="ph_msg" name="msg" id="c-msg" class="h-in" rows="5"
+                                        placeholder="PACKET..." required
+                                        style="padding-left: 55px; margin-bottom: 0; resize: none;"></textarea>
+                                </div>
+                                <button data-k="send_btn" class="send_btn">TRANSMIT</button>
+                            </form>
+                        </div>
+
+                        <!-- Terminal Transmission logs (Success screen) -->
+                        <div id="contact-success"
+                            style="display: none; width: 100%; flex-direction: column; justify-content: center; align-items: center; border: 1px dashed var(--red); padding: 40px 20px; background: rgba(255, 0, 0, 0.02); box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.05); text-align: center;">
+                            <i data-lucide="check-circle"
+                                style="width: 48px; height: 48px; color: var(--soul); margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--soul));"></i>
+                            <h3
+                                style="font-family: var(--f-head); letter-spacing: 3px; font-size: 1.6rem; margin-bottom: 20px; color: #fff;">
+                                TRANSMISSION COMPLETE</h3>
+                            <div id="terminal-console-output"
+                                style="width: 100%; text-align: left; font-family: var(--f-code); font-size: 12px; background: #000; padding: 20px; border: 1px solid rgba(255, 0, 0, 0.1); max-height: 150px; overflow-y: auto; color: #888; margin-bottom: 25px; line-height: 1.6;">
+                                > ESTABLISHING SECURE CONNECTION... DONE<br>
+                                > ENCRYPTING DATA SEGMENTS... DONE<br>
+                                > SAVING TO CLIPBOARD CACHE... DONE<br>
+                                > ROUTING TO MAIL CLIENT... DONE
+                            </div>
+                            <button onclick="resetContactForm()" class="lang-btn"
+                                style="border-color: var(--red); color: var(--red);">TRANSMIT NEW PACKET</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="support" class="section">
+                <div class="head">
+                    <div>
+                        <h1 class="h-tit" data-k="nav_support">SUPPORT</h1>
+                        <span class="h-sub" data-k="sub_support">DONATION UPLINK</span>
+                    </div>
+                    <div class="h-stat" data-k="support_status">SYSTEM READY</div>
+                </div>
+                <div class="grid">
+                    <div class="panel"
+                        style="grid-column: span 12; text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, rgba(15, 5, 5, 0.95), rgba(5, 5, 5, 0.98)); border: 1px solid var(--gold-dim); box-shadow: 0 0 30px rgba(255,183,0,0.05);">
+                        <i data-lucide="gift"
+                            style="width: 60px; height: 60px; color: var(--gold); margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(255,183,0,0.5));"></i>
+                        <h2
+                            style="font-family: var(--f-head); font-size: 2.2rem; color: #fff; margin-bottom: 15px; letter-spacing: 2px;">
+                            STEAM TRADE UPLINK</h2>
+                        <p data-k="support_desc"
+                            style="font-family: var(--f-ui); color: var(--muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; line-height: 1.6;">
+                            Projeyi desteklemek için Steam takas teklifi, skin veya hediye gönderebilirsiniz.
+                        </p>
+
+                        <!-- Steam Trade Button -->
+                        <a href="https://steamcommunity.com/tradeoffer/new/?partner=1800489426&token=jIoKxNd7"
+                            target="_blank" class="btn-view"
+                            style="display: inline-block; width: auto; max-width: 320px; padding: 20px 40px; margin: 0 auto 30px; text-decoration: none; border-color: var(--gold); color: var(--gold); box-shadow: 0 0 20px rgba(255,183,0,0.1); text-transform: uppercase;">
+                            <span data-k="support_btn">TAKAS TEKLİFİ GÖNDER</span>
+                        </a>
+
+                        <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; margin-top: 10px;">
+                            <h4 data-k="support_wanted"
+                                style="font-family: var(--f-code); color: var(--red); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase;">
+                                MOST WANTED ITEMS</h4>
+                            <p data-k="support_wanted_desc"
+                                style="font-family: var(--f-code); color: var(--text); font-size: 1rem; opacity: 0.8;">
+                                CS2 Skins, Steam Gift Cards, TF2 Keys
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -729,792 +1886,1186 @@ position: absolute;
     </div>
 
     <script>
-const LANG_DATA = {
-    en: { 
-        role: "UNDERWORLD OPERATOR", 
-        sys: "SYSTEM ONLINE", 
-        sys_off: "SYSTEM OFFLINE", 
-        playtime: "TIME", 
-        value: "VALUE", 
-        games: "GAMES", 
-        nav_sanctum: "SANCTUM", 
-        nav_armory: "ARMORY", 
-        sub_armory: "DIGITAL ARSENAL", 
-        nav_machine: "MACHINE", 
-        sub_machine: "SYSTEM ARCHITECTURE", 
-        nav_museum: "MUSEUM",
-        sub_museum: "VISUAL ARCHIVE",
-        view_gallery: "VIEW FULL GALLERY",
-        achievements: "COMPLETION", 
-        perfect: "PERFECT", 
-        dom_class: "TOTAL GLORY", 
-        nav_network: "NETWORK", 
-        sub_network: "UPLINKS", 
-        nav_trans: "CONTACT", 
-        sub_trans: "SECURE", 
-        view_all: "VIEW COLLECTION", 
-        send_btn: "TRANSMIT", 
-        ph_name: "CODENAME", 
-        ph_email: "FREQUENCY", 
-        ph_msg: "PACKET" 
-    },
-    tr: { 
-        role: "YERALTI OPERATÖRÜ", 
-        sys: "SİSTEM AKTİF", 
-        sys_off: "SİSTEM ÇEVRİMDIŞI", 
-        playtime: "SÜRE", 
-        value: "DEĞER", 
-        games: "OYUNLAR", 
-        nav_sanctum: "ANA ÜS", 
-        nav_armory: "CEPHANELİK", 
-        sub_armory: "DİJİTAL ARŞİV", 
-        nav_machine: "MAKİNE", 
-        sub_machine: "SİSTEM MİMARİSİ", 
-        nav_museum: "MÜZE",
-        sub_museum: "GÖRSEL ARŞİV",
-        view_gallery: "TÜM GALERİYİ GÖR",
-        achievements: "TAMAMLAMA", 
-        perfect: "KUSURSUZ", 
-        dom_class: "TOPLAM ŞAN", 
-        nav_network: "AĞ", 
-        sub_network: "BAĞLANTILAR", 
-        nav_trans: "İLETİŞİM", 
-        sub_trans: "GÜVENLİ", 
-        view_all: "TÜMÜNÜ GÖR", 
-        send_btn: "GÖNDER", 
-        ph_name: "KOD ADI", 
-        ph_email: "FREKANS", 
-        ph_msg: "VERİ PAKETİ" 
-    },
-    es: { 
-        role: "OPERADOR", 
-        sys: "SISTEMA ONLINE", 
-        sys_off: "SISTEMA OFFLINE", 
-        playtime: "TIEMPO", 
-        value: "VALOR", 
-        games: "JUEGOS", 
-        nav_sanctum: "SANTUARIO", 
-        nav_armory: "ARMERÍA", 
-        sub_armory: "ARSENAL DIGITAL", 
-        nav_machine: "MÁQUINA", 
-        sub_machine: "ARQUITECTURA", 
-        nav_museum: "MUSEO",
-        sub_museum: "ARCHIVO VISUAL",
-        view_gallery: "VER GALERÍA COMPLETA",
-        achievements: "COMPLETADO", 
-        perfect: "PERFECTOS", 
-        dom_class: "GLORIA TOTAL", 
-        nav_network: "RED", 
-        sub_network: "ENLACES", 
-        nav_trans: "CONTACTO", 
-        sub_trans: "SEGURO", 
-        view_all: "VER TODO", 
-        send_btn: "ENVIAR", 
-        ph_name: "NOMBRE", 
-        ph_email: "FRECUENCIA", 
-        ph_msg: "MENSAJE" 
-    },
-    ru: { 
-        role: "ОПЕРАТОР", 
-        sys: "СИСТЕМА АКТИВНА", 
-        sys_off: "СИСТЕМА ОТКЛЮЧЕНА", 
-        playtime: "ВРЕМЯ", 
-        value: "СТОИМОСТЬ", 
-        games: "ИГРЫ", 
-        nav_sanctum: "СВЯТИЛИЩЕ", 
-        nav_armory: "АРСЕНАЛ", 
-        sub_armory: "ЦИФРОВОЙ АРХИВ", 
-        nav_machine: "МАШИНА", 
-        sub_machine: "АРХИТЕКТУРА", 
-        nav_museum: "МУЗЕЙ",
-        sub_museum: "ВИЗУАЛЬНЫЙ АРХИВ",
-        view_gallery: "ОТКРЫТЬ ГАЛЕРЕЮ",
-        achievements: "ЗАВЕРШЕНО", 
-        perfect: "ИДЕАЛЬНЫЕ",
-        dom_class: "ПОЛНАЯ СЛАВА", 
-        nav_network: "СЕТЬ", 
-        sub_network: "СВЯЗИ", 
-        nav_trans: "СВЯЗЬ", 
-        sub_trans: "КАНАЛ", 
-        view_all: "ВСЕ ИГРЫ", 
-        send_btn: "ОТПРАВИТЬ", 
-        ph_name: "ИМЯ", 
-        ph_email: "ЧАСТОТА", 
-        ph_msg: "СООБЩЕНИЕ" 
-    },
-    de: { 
-        role: "OPERATOR", 
-        sys: "SYSTEM ONLINE", 
-        sys_off: "SYSTEM OFFLINE", 
-        playtime: "ZEIT", 
-        value: "WERT", 
-        games: "SPIELE", 
-        nav_sanctum: "HEILIGTUM", 
-        nav_armory: "WAFFENKAMMER", 
-        sub_armory: "DIGITALES ARSENAL", 
-        nav_machine: "MASCHINE", 
-        sub_machine: "ARCHITEKTUR", 
-        nav_museum: "MUSEUM",
-        sub_museum: "BILDARCHIV",
-        view_gallery: "GALERIE ANSEHEN",
-        achievements: "ABSCHLUSS", 
-        perfect: "PERFEKT", 
-        dom_class: "TOTALER RUHM", 
-        nav_network: "NETZWERK", 
-        sub_network: "VERBINDUNGEN", 
-        nav_trans: "KONTAKT", 
-        sub_trans: "SICHER", 
-        view_all: "ANZEIGEN", 
-        send_btn: "SENDEN", 
-        ph_name: "NAME", 
-        ph_email: "FREQUENZ", 
-        ph_msg: "NACHRICHT" 
-    },
-    fr: { 
-        role: "OPÉRATEUR", 
-        sys: "SYSTÈME EN LIGNE", 
-        sys_off: "SYSTÈME HORS LIGNE", 
-        playtime: "TEMPS", 
-        value: "VALEUR", 
-        games: "JEUX", 
-        nav_sanctum: "SANCTUAIRE", 
-        nav_armory: "ARMURERIE", 
-        sub_armory: "ARSENAL NUMÉRIQUE", 
-        nav_machine: "MACHINE", 
-        sub_machine: "ARCHITECTURE", 
-        nav_museum: "MUSÉE",
-        sub_museum: "ARCHIVES VISUELLES",
-        view_gallery: "VOIR LA GALERIE",
-        achievements: "COMPLÉTION", 
-        perfect: "PARFAITS", 
-        dom_class: "GLOIRE TOTALE", 
-        nav_network: "RÉSEAU", 
-        sub_network: "LIENS", 
-        nav_trans: "CONTACT", 
-        sub_trans: "SÉCURISÉ", 
-        view_all: "VOIR TOUT", 
-        send_btn: "ENVOYER", 
-        ph_name: "NOM", 
-        ph_email: "FRÉQUENCE", 
-        ph_msg: "MESSAGE" 
-    },
-    jp: { 
-        role: "オペレーター", 
-        sys: "システム稼働中", 
-        sys_off: "システム停止中", 
-        playtime: "時間", 
-        value: "価値", 
-        games: "ゲーム", 
-        nav_sanctum: "聖域", 
-        nav_armory: "武器庫", 
-        sub_armory: "デジタル保管庫", 
-        nav_machine: "機械", 
-        sub_machine: "設計", 
-        nav_museum: "博物館",
-        sub_museum: "映像アーカイブ",
-        view_gallery: "ギャラリー表示",
-        achievements: "完了率", 
-        perfect: "完全", 
-        dom_class: "完全な栄光", 
-        nav_network: "通信網", 
-        sub_network: "リンク", 
-        nav_trans: "連絡", 
-        sub_trans: "安全", 
-        view_all: "見る", 
-        send_btn: "送信", 
-        ph_name: "名前", 
-        ph_email: "周波数", 
-        ph_msg: "メッセージ" 
-    },
-    cn: { 
-        role: "操作员", 
-        sys: "系统在线", 
-        sys_off: "系统离线", 
-        playtime: "时间", 
-        value: "价值", 
-        games: "游戏", 
-        nav_sanctum: "圣所", 
-        nav_armory: "军械库", 
-        sub_armory: "数字武库", 
-        nav_machine: "机器", 
-        sub_machine: "架构", 
-        nav_museum: "博物馆",
-        sub_museum: "视觉档案",
-        view_gallery: "查看画廊",
-        achievements: "完成度", 
-        perfect: "完美", 
-        dom_class: "无上荣耀", 
-        nav_network: "网络", 
-        sub_network: "链接", 
-        nav_trans: "联系", 
-        sub_trans: "安全频道", 
-        view_all: "查看", 
-        send_btn: "发送", 
-        ph_name: "代号", 
-        ph_email: "频率", 
-        ph_msg: "消息" 
-    },
-    pt: { 
-        role: "OPERADOR", 
-        sys: "SISTEMA ONLINE", 
-        sys_off: "SISTEMA OFFLINE", 
-        playtime: "TEMPO", 
-        value: "VALOR", 
-        games: "JOGOS", 
-        nav_sanctum: "SANTUÁRIO", 
-        nav_armory: "ARSENAL", 
-        sub_armory: "ARSENAL DIGITAL", 
-        nav_machine: "MÁQUINA", 
-        sub_machine: "ARQUITETURA", 
-        nav_museum: "MUSEU",
-        sub_museum: "ARQUIVO VISUAL",
-        view_gallery: "VER GALERIA",
-        achievements: "CONCLUSÃO", 
-        perfect: "PERFEITOS", 
-        dom_class: "GLÓRIA TOTAL", 
-        nav_network: "REDE", 
-        sub_network: "LINKS", 
-        nav_trans: "CONTATO", 
-        sub_trans: "SEGURO", 
-        view_all: "VER TUDO", 
-        send_btn: "ENVIAR", 
-        ph_name: "NOME", 
-        ph_email: "FREQUÊNCIA", 
-        ph_msg: "MENSAGEM" 
-    },
-    it: { 
-        role: "OPERATORE", 
-        sys: "SISTEMA ONLINE", 
-        sys_off: "SISTEMA OFFLINE", 
-        playtime: "TEMPO", 
-        value: "VALORE", 
-        games: "GIOCHI", 
-        nav_sanctum: "SANTUARIO", 
-        nav_armory: "ARMERIA", 
-        sub_armory: "ARSENALE DIGITALE", 
-        nav_machine: "MACCHINA", 
-        sub_machine: "ARCHITETTURA", 
-        nav_museum: "MUSEO",
-        sub_museum: "ARCHIVIO VISIVO",
-        view_gallery: "VEDI GALLERIA",
-        achievements: "COMPLETAMENTO", 
-        perfect: "PERFETTI", 
-        dom_class: "GLORIA TOTALE", 
-        nav_network: "RETE", 
-        sub_network: "LINK", 
-        nav_trans: "CONTATTO", 
-        sub_trans: "SICURO", 
-        view_all: "VEDI TUTTO", 
-        send_btn: "INVIA", 
-        ph_name: "NOME", 
-        ph_email: "FREQUENZA", 
-        ph_msg: "MESSAGGIO" 
-    },
-    kr: { 
-        role: "운영자", 
-        sys: "시스템 온라인", 
-        sys_off: "시스템 오프라인", 
-        playtime: "시간", 
-        value: "가치", 
-        games: "게임", 
-        nav_sanctum: "성소", 
-        nav_armory: "무기고", 
-        sub_armory: "디지털 무기고", 
-        nav_machine: "머신", 
-        sub_machine: "아키텍처", 
-        nav_museum: "박물관",
-        sub_museum: "시각 아카이브",
-        view_gallery: "갤러리 보기",
-        achievements: "완료율", 
-        perfect: "완벽", 
-        dom_class: "총 영광", 
-        nav_network: "네트워크", 
-        sub_network: "링크", 
-        nav_trans: "연락", 
-        sub_trans: "보안 채널", 
-        view_all: "보기", 
-        send_btn: "전송", 
-        ph_name: "이름", 
-        ph_email: "주파수", 
-        ph_msg: "메시지" 
-    },
-    ar: { 
-        role: "مشغل", 
-        sys: "النظام نشط", 
-        sys_off: "النظام غير متصل", 
-        playtime: "وقت", 
-        value: "قيمة", 
-        games: "ألعاب", 
-        nav_sanctum: "ملاذ", 
-        nav_armory: "ترسانة", 
-        sub_armory: "ترسانة رقمية", 
-        nav_machine: "آلة", 
-        sub_machine: "هندسة", 
-        nav_museum: "متحف",
-        sub_museum: "أرشيف مرئي",
-        view_gallery: "عرض المعرض",
-        achievements: "إنجاز", 
-        perfect: "مثالية", 
-        dom_class: "مجد كلي", 
-        nav_network: "شبكة", 
-        sub_network: "روابط", 
-        nav_trans: "اتصال", 
-        sub_trans: "آمن", 
-        view_all: "عرض", 
-        send_btn: "إرسال", 
-        ph_name: "اسم", 
-        ph_email: "تردد", 
-        ph_msg: "رسالة" 
-    },
-    hi: { 
-        role: "ऑपरेटर", 
-        sys: "सिस्टम ऑनलाइन", 
-        sys_off: "सिस्टम ऑफलाइन", 
-        playtime: "समय", 
-        value: "मूल्य", 
-        games: "गेम्स", 
-        nav_sanctum: "पवित्र", 
-        nav_armory: "शस्त्रागार", 
-        sub_armory: "डिजिटल शस्त्रागार", 
-        nav_machine: "मशीन", 
-        sub_machine: "आर्किटेक्चर", 
-        nav_museum: "संग्रहालय",
-        sub_museum: "दृश्य पुरालेख",
-        view_gallery: "गैलरी देखें",
-        achievements: "पूर्णता", 
-        perfect: "बढ़िया", 
-        dom_class: "पूर्ण महिमा", 
-        nav_network: "नेटवर्क", 
-        sub_network: "लिंक्स", 
-        nav_trans: "संपर्क", 
-        sub_trans: "सुरक्षित", 
-        view_all: "देखें", 
-        send_btn: "भेजें", 
-        ph_name: "नाम", 
-        ph_email: "आवृत्ति", 
-        ph_msg: "संदेश" 
-    },
-    bn: { 
-        role: "অপারেটর", 
-        sys: "সিস্টেম অনলাইন", 
-        sys_off: "সিস্টেম অফলাইন", 
-        playtime: "সময়", 
-        value: "মান", 
-        games: "গেমস", 
-        nav_sanctum: "স্যাঙ্কটাম", 
-        nav_armory: "আর্মরি", 
-        sub_armory: "ডিজিটাল অস্ত্রাগার", 
-        nav_machine: "মেশিন", 
-        sub_machine: "আর্কিটেকচার", 
-        nav_museum: "যাদুঘর",
-        sub_museum: "ভিজ্যুয়াল আর্কাইভ",
-        view_gallery: "গ্যালারি দেখুন",
-        achievements: "সম্পূর্ণতা", 
-        perfect: "নিখুঁত", 
-        dom_class: "চূড়ান্ত গৌরব", 
-        nav_network: "নেটওয়ার্ক", 
-        sub_network: "লিঙ্ক", 
-        nav_trans: "যোগাযোগ", 
-        sub_trans: "সুরক্ষিত", 
-        view_all: "দেখুন", 
-        send_btn: "পাঠান", 
-        ph_name: "নাম", 
-        ph_email: "ফ্রিকোয়েন্সি", 
-        ph_msg: "বার্তা" 
-    },
-    nl: { 
-        role: "OPERATOR", 
-        sys: "SYSTEEM ONLINE", 
-        sys_off: "SYSTEEM OFFLINE", 
-        playtime: "TIJD", 
-        value: "WAARDE", 
-        games: "GAMES", 
-        nav_sanctum: "HEILIGDOM", 
-        nav_armory: "WAPENKAMER", 
-        sub_armory: "DIGITAAL ARSENAL", 
-        nav_machine: "MACHINE", 
-        sub_machine: "ARCHITECTUUR", 
-        nav_museum: "MUSEUM",
-        sub_museum: "VISUEEL ARCHIEF",
-        view_gallery: "BEKIJK GALERIJ",
-        achievements: "VOLTOOIING", 
-        perfect: "PERFECT", 
-        dom_class: "TOTALE GLORIE", 
-        nav_network: "NETWERK", 
-        sub_network: "LINKS", 
-        nav_trans: "CONTACT", 
-        sub_trans: "VEILIG", 
-        view_all: "BEKIJKEN", 
-        send_btn: "VERZENDEN", 
-        ph_name: "NAAM", 
-        ph_email: "FREQUENTIE", 
-        ph_msg: "BERICHT" 
-    },
-    pl: { 
-        role: "OPERATOR", 
-        sys: "SYSTEM ONLINE", 
-        sys_off: "SYSTEM OFFLINE", 
-        playtime: "CZAS", 
-        value: "WARTOŚĆ", 
-        games: "GRY", 
-        nav_sanctum: "SANKTUARIUM", 
-        nav_armory: "ZBROJOWNIA", 
-        sub_armory: "CYFROWY ARSENAŁ", 
-        nav_machine: "MASZYNA", 
-        sub_machine: "ARCHITEKTURA", 
-        nav_museum: "MUZEUM",
-        sub_museum: "ARCHIWUM WIZUALNE",
-        view_gallery: "ZOBACZ GALERIĘ",
-        achievements: "UKOŃCZENIE", 
-        perfect: "PERFEKCYJNE", 
-        dom_class: "PEŁNA CHWAŁA", 
-        nav_network: "SIEĆ", 
-        sub_network: "ŁĄCZA", 
-        nav_trans: "KONTAKT", 
-        sub_trans: "BEZPIECZNY", 
-        view_all: "ZOBACZ", 
-        send_btn: "WYŚLIJ", 
-        ph_name: "NAZWA", 
-        ph_email: "CZĘSTOTLIWOŚĆ", 
-        ph_msg: "WIADOMOŚĆ" 
-    },
-    sv: { 
-        role: "OPERATÖR", 
-        sys: "SYSTEM ONLINE", 
-        sys_off: "SYSTEM OFFLINE", 
-        playtime: "TID", 
-        value: "VÄRDE", 
-        games: "SPEL", 
-        nav_sanctum: "HELGEDOM", 
-        nav_armory: "VAPENKAMMARE", 
-        sub_armory: "DIGITALT ARSENAL", 
-        nav_machine: "MASKIN", 
-        sub_machine: "ARKITEKTUR", 
-        nav_museum: "MUSEUM",
-        sub_museum: "VISUELLT ARKIV",
-        view_gallery: "VISA GALLERI",
-        achievements: "SLUTFÖRANDE", 
-        perfect: "PERFEKTA", 
-        dom_class: "TOTAL ÄRA", 
-        nav_network: "NÄTVERK", 
-        sub_network: "LÄNKAR", 
-        nav_trans: "KONTAKT", 
-        sub_trans: "SÄKER", 
-        view_all: "VISA", 
-        send_btn: "SKICKA", 
-        ph_name: "NAMN", 
-        ph_email: "FREKVENS", 
-        ph_msg: "MEDDELANDE" 
-    },
-    vi: { 
-        role: "ĐIỀU HÀNH", 
-        sys: "HỆ THỐNG ONLINE", 
-        sys_off: "HỆ THỐNG OFFLINE", 
-        playtime: "THỜI GIAN", 
-        value: "GIÁ TRỊ", 
-        games: "TRÒ CHƠI", 
-        nav_sanctum: "THÁNH ĐỊA", 
-        nav_armory: "KHO VŨ KHÍ", 
-        sub_armory: "KHO VŨ KHÍ SỐ", 
-        nav_machine: "MÁY MÓC", 
-        sub_machine: "KIẾN TRÚC", 
-        nav_museum: "BẢO TÀNG",
-        sub_museum: "LƯU TRỮ HÌNH ẢNH",
-        view_gallery: "XEM BỘ SƯU TẬP",
-        achievements: "HOÀN THÀNH", 
-        perfect: "HOÀN HẢO", 
-        dom_class: "VINH QUANG TỐI THƯỢNG", 
-        nav_network: "MẠNG", 
-        sub_network: "LIÊN KẾT", 
-        nav_trans: "LIÊN HỆ", 
-        sub_trans: "AN TOÀN", 
-        view_all: "XEM", 
-        send_btn: "GỬI", 
-        ph_name: "TÊN", 
-        ph_email: "TẦN SỐ", 
-        ph_msg: "TIN NHẮN" 
-    },
-    el: { 
-        role: "ΧΕΙΡΙΣΤΗΣ", 
-        sys: "ΣΥΣΤΗΜΑ ONLINE", 
-        sys_off: "ΣΥΣΤΗΜΑ OFFLINE", 
-        playtime: "ΩΡΑ", 
-        value: "ΑΞΙΑ", 
-        games: "ΠΑΙΧΝΙΔΙΑ", 
-        nav_sanctum: "ΑΔΥΤΟ", 
-        nav_armory: "ΟΠΛΟΣΤΑΣΙΟ", 
-        sub_armory: "ΨΗΦΙΑΚΟ ΟΠΛΟΣΤΑΣΙΟ", 
-        nav_machine: "ΜΗΧΑΝΗ", 
-        sub_machine: "ΑΡΧΙΤΕΚΤΟΝΙΚΗ", 
-        nav_museum: "ΜΟΥΣΕΙΟ",
-        sub_museum: "ΟΠΤΙΚΟ ΑΡΧΕΙΟ",
-        view_gallery: "ΠΡΟΒΟΛΗ ΣΥΛΛΟΓΗΣ",
-        achievements: "ΟΛΟΚΛΗΡΩΣΗ", 
-        perfect: "ΤΕΛΕΙΑ",
-        dom_class: "ΑΠΟΛΥΤΗ ΔΟΞΑ", 
-        nav_network: "ΔΙΚΤΥΟ", 
-        sub_network: "ΣΥΝΔΕΣΜΟΙ", 
-        nav_trans: "ΕΠΙΚΟΙΝΩΝΙΑ", 
-        sub_trans: "ΑΣΦΑΛΕΣ", 
-        view_all: "ΠΡΟΒΟΛΗ", 
-        send_btn: "ΑΠΟΣΤΟΛΗ", 
-        ph_name: "ΟΝΟΜΑ", 
-        ph_email: "ΣΥΧΝΟΤΗΤΑ", 
-        ph_msg: "ΜΗΝΥΜΑ" 
-    },
-    th: { 
-        role: "ผู้ดำเนินการ", 
-        sys: "ระบบออนไลน์", 
-        sys_off: "ระบบออฟไลน์", 
-        playtime: "เวลา", 
-        value: "มูลค่า", 
-        games: "เกม", 
-        nav_sanctum: "สถานที่ศักดิ์สิทธิ์", 
-        nav_armory: "คลังแสง", 
-        sub_armory: "คลังแสงดิจิทัล", 
-        nav_machine: "เครื่องจักร", 
-        sub_machine: "สถาปัตยกรรม", 
-        nav_museum: "พิพิธภัณฑ์",
-        sub_museum: "คลังภาพ",
-        view_gallery: "ดูแกลเลอรี",
-        achievements: "สำเร็จ", 
-        perfect: "สมบูรณ์", 
-        dom_class: "เกียรติยศสูงสุด", 
-        nav_network: "เครือข่าย", 
-        sub_network: "ลิงก์", 
-        nav_trans: "ติดต่อ", 
-        sub_trans: "ปลอดภัย", 
-        view_all: "ดู", 
-        send_btn: "ส่ง", 
-        ph_name: "ชื่อ", 
-        ph_email: "ความถี่", 
-        ph_msg: "ข้อความ" 
-    }
-};
-const LANG_OPTIONS = [
-    { c: 'tr', n: 'TURKISH' }, { c: 'en', n: 'ENGLISH' }, { c: 'es', n: 'SPANISH' }, { c: 'ru', n: 'RUSSIAN' },
-    { c: 'de', n: 'GERMAN' }, { c: 'fr', n: 'FRENCH' }, { c: 'jp', n: 'JAPANESE' }, { c: 'cn', n: 'CHINESE' },
-    { c: 'pt', n: 'PORTUGUESE' }, { c: 'it', n: 'ITALIAN' }, { c: 'kr', n: 'KOREAN' }, { c: 'ar', n: 'ARABIC' },
-    { c: 'hi', n: 'HINDI' }, { c: 'bn', n: 'BENGALI' }, { c: 'nl', n: 'DUTCH' }, { c: 'pl', n: 'POLISH' },
-    { c: 'sv', n: 'SWEDISH' }, { c: 'vi', n: 'VIETNAMESE' }, { c: 'el', n: 'GREEK' }, { c: 'th', n: 'THAI' }
-];
+        const LANG_DATA = {
+            en: {
+                role: "UNDERWORLD OPERATOR",
+                sys: "SYSTEM ONLINE",
+                sys_off: "SYSTEM OFFLINE",
+                playtime: "TIME",
+                value: "VALUE",
+                games: "GAMES",
+                nav_sanctum: "SANCTUM",
+                nav_armory: "ARMORY",
+                sub_armory: "DIGITAL ARSENAL",
+                nav_machine: "MACHINE",
+                sub_machine: "SYSTEM ARCHITECTURE",
+                nav_museum: "MUSEUM",
+                sub_museum: "VISUAL ARCHIVE",
+                view_gallery: "VIEW FULL GALLERY",
+                achievements: "COMPLETION",
+                perfect: "PERFECT",
+                dom_class: "TOTAL GLORY",
+                nav_network: "NETWORK",
+                sub_network: "UPLINKS",
+                nav_trans: "CONTACT",
+                sub_trans: "SECURE",
+                view_all: "VIEW COLLECTION",
+                send_btn: "TRANSMIT",
+                ph_name: "CODENAME",
+                ph_email: "FREQUENCY",
+                ph_msg: "PACKET"
+            },
+            tr: {
+                role: "YERALTI OPERATÖRÜ",
+                sys: "SİSTEM AKTİF",
+                sys_off: "SİSTEM ÇEVRİMDIŞI",
+                playtime: "SÜRE",
+                value: "DEĞER",
+                games: "OYUNLAR",
+                nav_sanctum: "ANA ÜS",
+                nav_armory: "CEPHANELİK",
+                sub_armory: "DİJİTAL ARŞİV",
+                nav_machine: "MAKİNE",
+                sub_machine: "SİSTEM MİMARİSİ",
+                nav_museum: "MÜZE",
+                sub_museum: "GÖRSEL ARŞİV",
+                view_gallery: "TÜM GALERİYİ GÖR",
+                achievements: "TAMAMLAMA",
+                perfect: "KUSURSUZ",
+                dom_class: "TOPLAM ŞAN",
+                nav_network: "AĞ",
+                sub_network: "BAĞLANTILAR",
+                nav_trans: "İLETİŞİM",
+                sub_trans: "GÜVENLİ",
+                view_all: "TÜMÜNÜ GÖR",
+                send_btn: "GÖNDER",
+                ph_name: "KOD ADI",
+                ph_email: "FREKANS",
+                ph_msg: "VERİ PAKETİ"
+            },
+            es: {
+                role: "OPERADOR",
+                sys: "SISTEMA ONLINE",
+                sys_off: "SISTEMA OFFLINE",
+                playtime: "TIEMPO",
+                value: "VALOR",
+                games: "JUEGOS",
+                nav_sanctum: "SANTUARIO",
+                nav_armory: "ARMERÍA",
+                sub_armory: "ARSENAL DIGITAL",
+                nav_machine: "MÁQUINA",
+                sub_machine: "ARQUITECTURA",
+                nav_museum: "MUSEO",
+                sub_museum: "ARCHIVO VISUAL",
+                view_gallery: "VER GALERÍA COMPLETA",
+                achievements: "COMPLETADO",
+                perfect: "PERFECTOS",
+                dom_class: "GLORIA TOTAL",
+                nav_network: "RED",
+                sub_network: "ENLACES",
+                nav_trans: "CONTACTO",
+                sub_trans: "SEGURO",
+                view_all: "VER TODO",
+                send_btn: "ENVIAR",
+                ph_name: "NOMBRE",
+                ph_email: "FRECUENCIA",
+                ph_msg: "MENSAJE"
+            },
+            ru: {
+                role: "ОПЕРАТОР",
+                sys: "СИСТЕМА АКТИВНА",
+                sys_off: "СИСТЕМА ОТКЛЮЧЕНА",
+                playtime: "ВРЕМЯ",
+                value: "СТОИМОСТЬ",
+                games: "ИГРЫ",
+                nav_sanctum: "СВЯТИЛИЩЕ",
+                nav_armory: "АРСЕНАЛ",
+                sub_armory: "ЦИФРОВОЙ АРХИВ",
+                nav_machine: "МАШИНА",
+                sub_machine: "АРХИТЕКТУРА",
+                nav_museum: "МУЗЕЙ",
+                sub_museum: "ВИЗУАЛЬНЫЙ АРХИВ",
+                view_gallery: "ОТКРЫТЬ ГАЛЕРЕЮ",
+                achievements: "ЗАВЕРШЕНО",
+                perfect: "ИДЕАЛЬНЫЕ",
+                dom_class: "ПОЛНАЯ СЛАВА",
+                nav_network: "СЕТЬ",
+                sub_network: "СВЯЗИ",
+                nav_trans: "СВЯЗЬ",
+                sub_trans: "КАНАЛ",
+                view_all: "ВСЕ ИГРЫ",
+                send_btn: "ОТПРАВИТЬ",
+                ph_name: "ИМЯ",
+                ph_email: "ЧАСТОТА",
+                ph_msg: "СООБЩЕНИЕ"
+            },
+            de: {
+                role: "OPERATOR",
+                sys: "SYSTEM ONLINE",
+                sys_off: "SYSTEM OFFLINE",
+                playtime: "ZEIT",
+                value: "WERT",
+                games: "SPIELE",
+                nav_sanctum: "HEILIGTUM",
+                nav_armory: "WAFFENKAMMER",
+                sub_armory: "DIGITALES ARSENAL",
+                nav_machine: "MASCHINE",
+                sub_machine: "ARCHITEKTUR",
+                nav_museum: "MUSEUM",
+                sub_museum: "BILDARCHIV",
+                view_gallery: "GALERIE ANSEHEN",
+                achievements: "ABSCHLUSS",
+                perfect: "PERFEKT",
+                dom_class: "TOTALER RUHM",
+                nav_network: "NETZWERK",
+                sub_network: "VERBINDUNGEN",
+                nav_trans: "KONTAKT",
+                sub_trans: "SICHER",
+                view_all: "ANZEIGEN",
+                send_btn: "SENDEN",
+                ph_name: "NAME",
+                ph_email: "FREQUENZ",
+                ph_msg: "NACHRICHT"
+            },
+            fr: {
+                role: "OPÉRATEUR",
+                sys: "SYSTÈME EN LIGNE",
+                sys_off: "SYSTÈME HORS LIGNE",
+                playtime: "TEMPS",
+                value: "VALEUR",
+                games: "JEUX",
+                nav_sanctum: "SANCTUAIRE",
+                nav_armory: "ARMURERIE",
+                sub_armory: "ARSENAL NUMÉRIQUE",
+                nav_machine: "MACHINE",
+                sub_machine: "ARCHITECTURE",
+                nav_museum: "MUSÉE",
+                sub_museum: "ARCHIVES VISUELLES",
+                view_gallery: "VOIR LA GALERIE",
+                achievements: "COMPLÉTION",
+                perfect: "PARFAITS",
+                dom_class: "GLOIRE TOTALE",
+                nav_network: "RÉSEAU",
+                sub_network: "LIENS",
+                nav_trans: "CONTACT",
+                sub_trans: "SÉCURISÉ",
+                view_all: "VOIR TOUT",
+                send_btn: "ENVOYER",
+                ph_name: "NOM",
+                ph_email: "FRÉQUENCE",
+                ph_msg: "MESSAGE"
+            },
+            jp: {
+                role: "オペレーター",
+                sys: "システム稼働中",
+                sys_off: "システム停止中",
+                playtime: "時間",
+                value: "価値",
+                games: "ゲーム",
+                nav_sanctum: "聖域",
+                nav_armory: "武器庫",
+                sub_armory: "デジタル保管庫",
+                nav_machine: "機械",
+                sub_machine: "設計",
+                nav_museum: "博物館",
+                sub_museum: "映像アーカイブ",
+                view_gallery: "ギャラリー表示",
+                achievements: "完了率",
+                perfect: "完全",
+                dom_class: "完全な栄光",
+                nav_network: "通信網",
+                sub_network: "リンク",
+                nav_trans: "連絡",
+                sub_trans: "安全",
+                view_all: "見る",
+                send_btn: "送信",
+                ph_name: "名前",
+                ph_email: "周波数",
+                ph_msg: "メッセージ"
+            },
+            cn: {
+                role: "操作员",
+                sys: "系统在线",
+                sys_off: "系统离线",
+                playtime: "时间",
+                value: "价值",
+                games: "游戏",
+                nav_sanctum: "圣所",
+                nav_armory: "军械库",
+                sub_armory: "数字武库",
+                nav_machine: "机器",
+                sub_machine: "架构",
+                nav_museum: "博物馆",
+                sub_museum: "视觉档案",
+                view_gallery: "查看画廊",
+                achievements: "完成度",
+                perfect: "完美",
+                dom_class: "无上荣耀",
+                nav_network: "网络",
+                sub_network: "链接",
+                nav_trans: "联系",
+                sub_trans: "安全频道",
+                view_all: "查看",
+                send_btn: "发送",
+                ph_name: "代号",
+                ph_email: "频率",
+                ph_msg: "消息"
+            },
+            pt: {
+                role: "OPERADOR",
+                sys: "SISTEMA ONLINE",
+                sys_off: "SISTEMA OFFLINE",
+                playtime: "TEMPO",
+                value: "VALOR",
+                games: "JOGOS",
+                nav_sanctum: "SANTUÁRIO",
+                nav_armory: "ARSENAL",
+                sub_armory: "ARSENAL DIGITAL",
+                nav_machine: "MÁQUINA",
+                sub_machine: "ARQUITETURA",
+                nav_museum: "MUSEU",
+                sub_museum: "ARQUIVO VISUAL",
+                view_gallery: "VER GALERIA",
+                achievements: "CONCLUSÃO",
+                perfect: "PERFEITOS",
+                dom_class: "GLÓRIA TOTAL",
+                nav_network: "REDE",
+                sub_network: "LINKS",
+                nav_trans: "CONTATO",
+                sub_trans: "SEGURO",
+                view_all: "VER TUDO",
+                send_btn: "ENVIAR",
+                ph_name: "NOME",
+                ph_email: "FREQUÊNCIA",
+                ph_msg: "MENSAGEM"
+            },
+            it: {
+                role: "OPERATORE",
+                sys: "SISTEMA ONLINE",
+                sys_off: "SISTEMA OFFLINE",
+                playtime: "TEMPO",
+                value: "VALORE",
+                games: "GIOCHI",
+                nav_sanctum: "SANTUARIO",
+                nav_armory: "ARMERIA",
+                sub_armory: "ARSENALE DIGITALE",
+                nav_machine: "MACCHINA",
+                sub_machine: "ARCHITETTURA",
+                nav_museum: "MUSEO",
+                sub_museum: "ARCHIVIO VISIVO",
+                view_gallery: "VEDI GALLERIA",
+                achievements: "COMPLETAMENTO",
+                perfect: "PERFETTI",
+                dom_class: "GLORIA TOTALE",
+                nav_network: "RETE",
+                sub_network: "LINK",
+                nav_trans: "CONTATTO",
+                sub_trans: "SICURO",
+                view_all: "VEDI TUTTO",
+                send_btn: "INVIA",
+                ph_name: "NOME",
+                ph_email: "FREQUENZA",
+                ph_msg: "MESSAGGIO"
+            },
+            kr: {
+                role: "운영자",
+                sys: "시스템 온라인",
+                sys_off: "시스템 오프라인",
+                playtime: "시간",
+                value: "가치",
+                games: "게임",
+                nav_sanctum: "성소",
+                nav_armory: "무기고",
+                sub_armory: "디지털 무기고",
+                nav_machine: "머신",
+                sub_machine: "아키텍처",
+                nav_museum: "박물관",
+                sub_museum: "시각 아카이브",
+                view_gallery: "갤러리 보기",
+                achievements: "완료율",
+                perfect: "완벽",
+                dom_class: "총 영광",
+                nav_network: "네트워크",
+                sub_network: "링크",
+                nav_trans: "연락",
+                sub_trans: "보안 채널",
+                view_all: "보기",
+                send_btn: "전송",
+                ph_name: "이름",
+                ph_email: "주파수",
+                ph_msg: "메시지"
+            },
+            ar: {
+                role: "مشغل",
+                sys: "النظام نشط",
+                sys_off: "النظام غير متصل",
+                playtime: "وقت",
+                value: "قيمة",
+                games: "ألعاب",
+                nav_sanctum: "ملاذ",
+                nav_armory: "ترسانة",
+                sub_armory: "ترسانة رقمية",
+                nav_machine: "آلة",
+                sub_machine: "هندسة",
+                nav_museum: "متحف",
+                sub_museum: "أرشيف مرئي",
+                view_gallery: "عرض المعرض",
+                achievements: "إنجاز",
+                perfect: "مثالية",
+                dom_class: "مجد كلي",
+                nav_network: "شبكة",
+                sub_network: "روابط",
+                nav_trans: "اتصال",
+                sub_trans: "آمن",
+                view_all: "عرض",
+                send_btn: "إرسال",
+                ph_name: "اسم",
+                ph_email: "تردد",
+                ph_msg: "رسالة"
+            },
+            hi: {
+                role: "ऑपरेटर",
+                sys: "सिस्टम ऑनलाइन",
+                sys_off: "सिस्टम ऑफलाइन",
+                playtime: "समय",
+                value: "मूल्य",
+                games: "गेम्स",
+                nav_sanctum: "पवित्र",
+                nav_armory: "शस्त्रागार",
+                sub_armory: "डिजिटल शस्त्रागार",
+                nav_machine: "मशीन",
+                sub_machine: "आर्किटेक्चर",
+                nav_museum: "संग्रहालय",
+                sub_museum: "दृश्य पुरालेख",
+                view_gallery: "गैलरी देखें",
+                achievements: "पूर्णता",
+                perfect: "बढ़िया",
+                dom_class: "पूर्ण महिमा",
+                nav_network: "नेटवर्क",
+                sub_network: "लिंक्स",
+                nav_trans: "संपर्क",
+                sub_trans: "सुरक्षित",
+                view_all: "देखें",
+                send_btn: "भेजें",
+                ph_name: "नाम",
+                ph_email: "आवृत्ति",
+                ph_msg: "संदेश"
+            },
+            bn: {
+                role: "অপারেটর",
+                sys: "সিস্টেম অনলাইন",
+                sys_off: "সিস্টেম অফলাইন",
+                playtime: "সময়",
+                value: "মান",
+                games: "গেমস",
+                nav_sanctum: "স্যাঙ্কটাম",
+                nav_armory: "আর্মরি",
+                sub_armory: "ডিজিটাল অস্ত্রাগার",
+                nav_machine: "মেশিন",
+                sub_machine: "আর্কিটেকচার",
+                nav_museum: "যাদুঘর",
+                sub_museum: "ভিজ্যুয়াল আর্কাইভ",
+                view_gallery: "গ্যালারি দেখুন",
+                achievements: "সম্পূর্ণতা",
+                perfect: "নিখুঁত",
+                dom_class: "চূড়ান্ত গৌরব",
+                nav_network: "নেটওয়ার্ক",
+                sub_network: "লিঙ্ক",
+                nav_trans: "যোগাযোগ",
+                sub_trans: "সুরক্ষিত",
+                view_all: "দেখুন",
+                send_btn: "পাঠান",
+                ph_name: "নাম",
+                ph_email: "ফ্রিকোয়েন্সি",
+                ph_msg: "বার্তা"
+            },
+            nl: {
+                role: "OPERATOR",
+                sys: "SYSTEEM ONLINE",
+                sys_off: "SYSTEEM OFFLINE",
+                playtime: "TIJD",
+                value: "WAARDE",
+                games: "GAMES",
+                nav_sanctum: "HEILIGDOM",
+                nav_armory: "WAPENKAMER",
+                sub_armory: "DIGITAAL ARSENAL",
+                nav_machine: "MACHINE",
+                sub_machine: "ARCHITECTUUR",
+                nav_museum: "MUSEUM",
+                sub_museum: "VISUEEL ARCHIEF",
+                view_gallery: "BEKIJK GALERIJ",
+                achievements: "VOLTOOIING",
+                perfect: "PERFECT",
+                dom_class: "TOTALE GLORIE",
+                nav_network: "NETWERK",
+                sub_network: "LINKS",
+                nav_trans: "CONTACT",
+                sub_trans: "VEILIG",
+                view_all: "BEKIJKEN",
+                send_btn: "VERZENDEN",
+                ph_name: "NAAM",
+                ph_email: "FREQUENTIE",
+                ph_msg: "BERICHT"
+            },
+            pl: {
+                role: "OPERATOR",
+                sys: "SYSTEM ONLINE",
+                sys_off: "SYSTEM OFFLINE",
+                playtime: "CZAS",
+                value: "WARTOŚĆ",
+                games: "GRY",
+                nav_sanctum: "SANKTUARIUM",
+                nav_armory: "ZBROJOWNIA",
+                sub_armory: "CYFROWY ARSENAŁ",
+                nav_machine: "MASZYNA",
+                sub_machine: "ARCHITEKTURA",
+                nav_museum: "MUZEUM",
+                sub_museum: "ARCHIWUM WIZUALNE",
+                view_gallery: "ZOBACZ GALERIĘ",
+                achievements: "UKOŃCZENIE",
+                perfect: "PERFEKCYJNE",
+                dom_class: "PEŁNA CHWAŁA",
+                nav_network: "SIEĆ",
+                sub_network: "ŁĄCZA",
+                nav_trans: "KONTAKT",
+                sub_trans: "BEZPIECZNY",
+                view_all: "ZOBACZ",
+                send_btn: "WYŚLIJ",
+                ph_name: "NAZWA",
+                ph_email: "CZĘSTOTLIWOŚĆ",
+                ph_msg: "WIADOMOŚĆ"
+            },
+            sv: {
+                role: "OPERATÖR",
+                sys: "SYSTEM ONLINE",
+                sys_off: "SYSTEM OFFLINE",
+                playtime: "TID",
+                value: "VÄRDE",
+                games: "SPEL",
+                nav_sanctum: "HELGEDOM",
+                nav_armory: "VAPENKAMMARE",
+                sub_armory: "DIGITALT ARSENAL",
+                nav_machine: "MASKIN",
+                sub_machine: "ARKITEKTUR",
+                nav_museum: "MUSEUM",
+                sub_museum: "VISUELLT ARKIV",
+                view_gallery: "VISA GALLERI",
+                achievements: "SLUTFÖRANDE",
+                perfect: "PERFEKTA",
+                dom_class: "TOTAL ÄRA",
+                nav_network: "NÄTVERK",
+                sub_network: "LÄNKAR",
+                nav_trans: "KONTAKT",
+                sub_trans: "SÄKER",
+                view_all: "VISA",
+                send_btn: "SKICKA",
+                ph_name: "NAMN",
+                ph_email: "FREKVENS",
+                ph_msg: "MEDDELANDE"
+            },
+            vi: {
+                role: "ĐIỀU HÀNH",
+                sys: "HỆ THỐNG ONLINE",
+                sys_off: "HỆ THỐNG OFFLINE",
+                playtime: "THỜI GIAN",
+                value: "GIÁ TRỊ",
+                games: "TRÒ CHƠI",
+                nav_sanctum: "THÁNH ĐỊA",
+                nav_armory: "KHO VŨ KHÍ",
+                sub_armory: "KHO VŨ KHÍ SỐ",
+                nav_machine: "MÁY MÓC",
+                sub_machine: "KIẾN TRÚC",
+                nav_museum: "BẢO TÀNG",
+                sub_museum: "LƯU TRỮ HÌNH ẢNH",
+                view_gallery: "XEM BỘ SƯU TẬP",
+                achievements: "HOÀN THÀNH",
+                perfect: "HOÀN HẢO",
+                dom_class: "VINH QUANG TỐI THƯỢNG",
+                nav_network: "MẠNG",
+                sub_network: "LIÊN KẾT",
+                nav_trans: "LIÊN HỆ",
+                sub_trans: "AN TOÀN",
+                view_all: "XEM",
+                send_btn: "GỬI",
+                ph_name: "TÊN",
+                ph_email: "TẦN SỐ",
+                ph_msg: "TIN NHẮN"
+            },
+            el: {
+                role: "ΧΕΙΡΙΣΤΗΣ",
+                sys: "ΣΥΣΤΗΜΑ ONLINE",
+                sys_off: "ΣΥΣΤΗΜΑ OFFLINE",
+                playtime: "ΩΡΑ",
+                value: "ΑΞΙΑ",
+                games: "ΠΑΙΧΝΙΔΙΑ",
+                nav_sanctum: "ΑΔΥΤΟ",
+                nav_armory: "ΟΠΛΟΣΤΑΣΙΟ",
+                sub_armory: "ΨΗΦΙΑΚΟ ΟΠΛΟΣΤΑΣΙΟ",
+                nav_machine: "ΜΗΧΑΝΗ",
+                sub_machine: "ΑΡΧΙΤΕΚΤΟΝΙΚΗ",
+                nav_museum: "ΜΟΥΣΕΙΟ",
+                sub_museum: "ΟΠΤΙΚΟ ΑΡΧΕΙΟ",
+                view_gallery: "ΠΡΟΒΟΛΗ ΣΥΛΛΟΓΗΣ",
+                achievements: "ΟΛΟΚΛΗΡΩΣΗ",
+                perfect: "ΤΕΛΕΙΑ",
+                dom_class: "ΑΠΟΛΥΤΗ ΔΟΞΑ",
+                nav_network: "ΔΙΚΤΥΟ",
+                sub_network: "ΣΥΝΔΕΣΜΟΙ",
+                nav_trans: "ΕΠΙΚΟΙΝΩΝΙΑ",
+                sub_trans: "ΑΣΦΑΛΕΣ",
+                view_all: "ΠΡΟΒΟΛΗ",
+                send_btn: "ΑΠΟΣΤΟΛΗ",
+                ph_name: "ΟΝΟΜΑ",
+                ph_email: "ΣΥΧΝΟΤΗΤΑ",
+                ph_msg: "ΜΗΝΥΜΑ"
+            },
+            th: {
+                role: "ผู้ดำเนินการ",
+                sys: "ระบบออนไลน์",
+                sys_off: "ระบบออฟไลน์",
+                playtime: "เวลา",
+                value: "มูลค่า",
+                games: "เกม",
+                nav_sanctum: "สถานที่ศักดิ์สิทธิ์",
+                nav_armory: "คลังแสง",
+                sub_armory: "คลังแสงดิจิทัล",
+                nav_machine: "เครื่องจักร",
+                sub_machine: "สถาปัตยกรรม",
+                nav_museum: "พิพิธภัณฑ์",
+                sub_museum: "คลังภาพ",
+                view_gallery: "ดูแกลเลอรี",
+                achievements: "สำเร็จ",
+                perfect: "สมบูรณ์",
+                dom_class: "เกียรติยศสูงสุด",
+                nav_network: "เครือข่าย",
+                sub_network: "ลิงก์",
+                nav_trans: "ติดต่อ",
+                sub_trans: "ปลอดภัย",
+                view_all: "ดู",
+                send_btn: "ส่ง",
+                ph_name: "ชื่อ",
+                ph_email: "ความถี่",
+                ph_msg: "ข้อความ"
+            }
+        };
+        const LANG_OPTIONS = [
+            { c: 'tr', n: 'TURKISH' }, { c: 'en', n: 'ENGLISH' }, { c: 'es', n: 'SPANISH' }, { c: 'ru', n: 'RUSSIAN' },
+            { c: 'de', n: 'GERMAN' }, { c: 'fr', n: 'FRENCH' }, { c: 'jp', n: 'JAPANESE' }, { c: 'cn', n: 'CHINESE' },
+            { c: 'pt', n: 'PORTUGUESE' }, { c: 'it', n: 'ITALIAN' }, { c: 'kr', n: 'KOREAN' }, { c: 'ar', n: 'ARABIC' },
+            { c: 'hi', n: 'HINDI' }, { c: 'bn', n: 'BENGALI' }, { c: 'nl', n: 'DUTCH' }, { c: 'pl', n: 'POLISH' },
+            { c: 'sv', n: 'SWEDISH' }, { c: 'vi', n: 'VIETNAMESE' }, { c: 'el', n: 'GREEK' }, { c: 'th', n: 'THAI' }
+        ];
 
-            let activeLang = 'tr'; // Varsayılan dil
+        let activeLang = 'tr'; // Varsayılan dil
+
+        // Dynamic translations for the new Support page & updates across all 20 languages
+        const extraTranslations = {
+            tr: {
+                nav_support: "HEDİYE",
+                sub_support: "DESTEK VE HEDİYELER",
+                support_desc: "Projeye katkıda bulunmak için Steam üzerinden takas teklifi gönderebilir veya hediye yollayabilirsiniz.",
+                support_btn: "TAKAS TEKLİFİ GÖNDER",
+                support_wanted: "ÖNERİLEN HEDİYELER",
+                support_wanted_desc: "CS2 Skinleri, Steam Cüzdan Kodları, Oyun Kartları",
+                support_status: "SİSTEM AKTİF",
+                profile_desc: "FULL-STACK GELİŞTİRİCİ & OYUNCU",
+                sanctum_support_title: "OPERATÖRE DESTEK OL",
+                sanctum_support_desc: "Steam Takas Teklifi ile hediye gönderin",
+                sanctum_support_btn: "GÜVENLİ BAĞLANTI"
+            },
+            en: {
+                nav_support: "GIFTS",
+                sub_support: "SUPPORT & GIFTS",
+                support_desc: "You can send a Steam trade offer, skins, or items to support the project.",
+                support_btn: "SEND TRADE OFFER",
+                support_wanted: "SUGGESTED GIFTS",
+                support_wanted_desc: "CS2 Skins, Steam Gift Cards, Game Cards",
+                support_status: "UPLINK READY",
+                profile_desc: "FULL-STACK DEV & GAMER",
+                sanctum_support_title: "SUPPORT THE OPERATOR",
+                sanctum_support_desc: "Send items or game cards via Steam Trade Offer",
+                sanctum_support_btn: "SECURE LINK"
+            },
+            es: {
+                nav_support: "REGALOS",
+                sub_support: "SOPORTE Y REGALOS",
+                support_desc: "Puedes enviar una oferta de intercambio de Steam, skins o artículos para apoyar el proyecto.",
+                support_btn: "ENVIAR OFERTA",
+                support_wanted: "REGALOS SUGERIDOS",
+                support_wanted_desc: "Skins de CS2, Tarjetas de Steam, Cartas de Juego",
+                support_status: "CONEXIÓN LISTA",
+                profile_desc: "DESARROLLADOR FULL-STACK & GAMER",
+                sanctum_support_title: "APOYAR AL OPERADOR",
+                sanctum_support_desc: "Enviar regalos a través de Steam Trade Offer",
+                sanctum_support_btn: "ENLACE SEGURO"
+            },
+            ru: {
+                nav_support: "ПОДАРКИ",
+                sub_support: "ПОДДЕРЖКА И ПОДАРКИ",
+                support_desc: "Вы можете отправить предложение обмена Steam, скины или предметы для поддержки проекта.",
+                support_btn: "ОТПРАВИТЬ ОБМЕН",
+                support_wanted: "РЕКОМЕНДУЕМЫЕ ПОДАРКИ",
+                support_wanted_desc: "CS2 скины, подарочные карты Steam, карточки",
+                support_status: "СВЯЗЬ ГОТОВА",
+                profile_desc: "FULL-STACK РАЗРАБОТЧИК И ГЕЙМЕР",
+                sanctum_support_title: "ПОДДЕРЖАТЬ ОПЕРАТОРА",
+                sanctum_support_desc: "Отправить подарки через Steam Trade Offer",
+                sanctum_support_btn: "БЕЗОПАСНАЯ СВЯЗЬ"
+            },
+            de: {
+                nav_support: "GESCHENKE",
+                sub_support: "UNTERSTÜTZUNG & GESCHENKE",
+                support_desc: "Sie können ein Steam-Handelsangebot, Skins oder Gegenstände senden, um das Projekt zu unterstützen.",
+                support_btn: "HANDELSANGEBOT SENDEN",
+                support_wanted: "EMPFOHLENE GESCHENKE",
+                support_wanted_desc: "CS2-Skins, Steam-Gutscheine, Sammelkarten",
+                support_status: "VERBINDUNG BEREIT",
+                profile_desc: "FULL-STACK-ENTWICKLER & GAMER",
+                sanctum_support_title: "BETREIBER UNTERSTÜTZEN",
+                sanctum_support_desc: "Geschenke per Steam-Handelsangebot senden",
+                sanctum_support_btn: "SICHERER LINK"
+            },
+            fr: {
+                nav_support: "CADEAUX",
+                sub_support: "SOUTIEN & CADEAUX",
+                support_desc: "Vous pouvez envoyer une offre d'échange Steam, des skins ou des objets pour soutenir le projet.",
+                support_btn: "ENVOYER UNE OFFRE",
+                support_wanted: "CADEAUX SUGGÉRÉS",
+                support_wanted_desc: "Skins CS2, Cartes Cadeaux Steam, Cartes de Jeu",
+                support_status: "LIAISON PRÊTE",
+                profile_desc: "DÉVELOPPEUR FULL-STACK & GAMER",
+                sanctum_support_title: "SOUTENIR L'OPÉRATEUR",
+                sanctum_support_desc: "Envoyer des cadeaux via Steam Trade Offer",
+                sanctum_support_btn: "LIEN SÉCURISÉ"
+            },
+            jp: {
+                nav_support: "ギフト",
+                sub_support: "サポートとギフト",
+                support_desc: "Steamのトレードオファー、スキン、またはアイテムを送信してプロジェクトを支援できます。",
+                support_btn: "トレードオファー送信",
+                support_wanted: "おすすめのギフト",
+                support_wanted_desc: "CS2スキン、Steamギフトカード、ゲームカード",
+                support_status: "接続準備完了",
+                profile_desc: "フルスタック開発者 & ゲーマー",
+                sanctum_support_title: "オペレーターを支援",
+                sanctum_support_desc: "Steamトレードオファーでギフトを送信",
+                sanctum_support_btn: "安全なリンク"
+            },
+            cn: {
+                nav_support: "礼物",
+                sub_support: "支持与礼物",
+                support_desc: "您可以发送Steam报价、皮肤或物品来支持该项目。",
+                support_btn: "发送交易报价",
+                support_wanted: "推荐礼物",
+                support_wanted_desc: "CS2皮肤、Steam礼品卡、游戏卡",
+                support_status: "连接已就绪",
+                profile_desc: "全栈开发人员与游戏玩家",
+                sanctum_support_title: "支持运营商",
+                sanctum_support_desc: "通过Steam交易报价发送礼物",
+                sanctum_support_btn: "安全链接"
+            },
+            pt: {
+                nav_support: "PRESENTES",
+                sub_support: "APOIO E PRESENTES",
+                support_desc: "Você pode enviar uma proposta de troca Steam, skins ou itens para apoiar o projeto.",
+                support_btn: "ENVIAR PROPOSTA",
+                support_wanted: "PRESENTES SUGERIDOS",
+                support_wanted_desc: "Skins de CS2, Cartões Steam, Cartas de Jogo",
+                support_status: "CONEXÃO PRONTA",
+                profile_desc: "DESENVOLVEDOR FULL-STACK & GAMER",
+                sanctum_support_title: "APOIAR O OPERADOR",
+                sanctum_support_desc: "Enviar presentes via Steam Trade Offer",
+                sanctum_support_btn: "LINK SEGURO"
+            },
+            it: {
+                nav_support: "REGALI",
+                sub_support: "SUPPORTO E REGALI",
+                support_desc: "Puoi inviare un'offerta di scambio Steam, skin o oggetti per supportare il progetto.",
+                support_btn: "INVIA OFFERTA",
+                support_wanted: "REGALI SUGGERITI",
+                support_wanted_desc: "Skin CS2, Carte Regalo Steam, Carte da Gioco",
+                support_status: "CONNESSIONE PRONTA",
+                profile_desc: "SVILUPPATORE FULL-STACK & GAMER",
+                sanctum_support_title: "SUPPORTA L'OPERATORE",
+                sanctum_support_desc: "Invia regali tramite Steam Trade Offer",
+                sanctum_support_btn: "LINK SICURO"
+            },
+            kr: {
+                nav_support: "선물",
+                sub_support: "후원 및 선물",
+                support_desc: "Steam 거래 제안, 스킨 또는 아이템을 보내 프로젝트를 후원할 수 있습니다.",
+                support_btn: "거래 제안 보내기",
+                support_wanted: "추천 선물",
+                support_wanted_desc: "CS2 스킨, Steam 기프트 카드, 게임 카드",
+                support_status: "연결 준비 완료",
+                profile_desc: "풀스택 개발자 & 게이머",
+                sanctum_support_title: "운영자 후원하기",
+                sanctum_support_desc: "Steam 거래 제안으로 선물 보내기",
+                sanctum_support_btn: "보안 링크"
+            },
+            ar: {
+                nav_support: "الهدايا",
+                sub_support: "الدعم والهدايا",
+                support_desc: "يمكنك إرسال عرض تبادل Steam أو المظاهر أو العناصر لدعم المشروع.",
+                support_btn: "إرسال عرض تبادل",
+                support_wanted: "الهدايا المقترحة",
+                support_wanted_desc: "مظاهر CS2، بطاقات هدايا Steam، بطاقات الألعاب",
+                support_status: "الاتصال جاهز",
+                profile_desc: "مطوّر ويب متكامل ولاعب",
+                sanctum_support_title: "دعم المشغل",
+                sanctum_support_desc: "إرسال الهدايا عبر عرض تبادل Steam",
+                sanctum_support_btn: "رابط آمن"
+            },
+            hi: {
+                nav_support: "उपहार",
+                sub_support: "समर्थन और उपहार",
+                support_desc: "आप परियोजना का समर्थन करने के लिए स्टीम ट्रेड ऑफर, स्किन्स या आइटम भेज सकते हैं।",
+                support_btn: "ट्रेड ऑफर भेजें",
+                support_wanted: "सुझाए गए उपहार",
+                support_wanted_desc: "CS2 स्किन्स, स्टीम गिफ्ट कार्ड्स, गेम कार्ड्स",
+                support_status: "कनेक्शन तैयार",
+                profile_desc: "फुल-स्टैक डेवलपर और गेमर",
+                sanctum_support_title: "ऑपरेटर का समर्थन करें",
+                sanctum_support_desc: "स्टीम ट्रेड ऑफर के माध्यम से उपहार भेजें",
+                sanctum_support_btn: "सुरक्षित लिंक"
+            },
+            bn: {
+                nav_support: "উপহার",
+                sub_support: "সমর্থন ও उपहार",
+                support_desc: "প্রকল্পটি সমর্থন করতে আপনি স্টিম ট্রেড অফার, স্কিন বা আইটেম পাঠাতে পারেন।",
+                support_btn: "ট্রেড অফার পাঠান",
+                support_wanted: "প্রস্তাবিত উপহার",
+                support_wanted_desc: "CS2 স্কিনস, স্টিম গিফট কার্ড, গেম কার্ড",
+                support_status: "সংযোগ প্রস্তুত",
+                profile_desc: "ফুল-স্ট্যাক ডেভেলপার এবং গেমার",
+                sanctum_support_title: "অপারেটরকে সমর্থন করুন",
+                sanctum_support_desc: "স্টিম ট্রেড অফারের মাধ্যমে উপহার পাঠান",
+                sanctum_support_btn: "সুরক্ষিত লিঙ্ক"
+            },
+            nl: {
+                nav_support: "CADEAUS",
+                sub_support: "SUPPORT & CADEAUS",
+                support_desc: "Je kunt een Steam-ruilvoorstel, skins of items sturen om het project te ondersteunen.",
+                support_btn: "RUILVOORSTEL STUREN",
+                support_wanted: "VOORGESTELDE CADEAUS",
+                support_wanted_desc: "CS2 skins, Steam cadeaubonnen, ruilkaarten",
+                support_status: "VERBINDING GEREED",
+                profile_desc: "FULL-STACK ONTWIKKELAAR & GAMER",
+                sanctum_support_title: "STEUN DE OPERATOR",
+                sanctum_support_desc: "Stuur cadeaus via Steam Trade Offer",
+                sanctum_support_btn: "BEVEILIGDE LINK"
+            },
+            pl: {
+                nav_support: "PREZENTY",
+                sub_support: "WSPARCIE I PREZENTY",
+                support_desc: "Możesz wysłać ofertę wymiany Steam, skiny lub przedmioty, aby wesprzeć projekt.",
+                support_btn: "WYŚLIJ OFERTĘ",
+                support_wanted: "SUGEROWANE PREZENTY",
+                support_wanted_desc: "Skiny CS2, Karty Podarunkowe Steam, Karty Kolekcjonerskie",
+                support_status: "POŁĄCZENIE GOTOWE",
+                profile_desc: "PROGRAMISTA FULL-STACK & GAMER",
+                sanctum_support_title: "WSPIERAJ OPERATORA",
+                sanctum_support_desc: "Wyślij prezenty przez Steam Trade Offer",
+                sanctum_support_btn: "BEZPIECZNE ŁĄCZE"
+            },
+            sv: {
+                nav_support: "GÅVOR",
+                sub_support: "STÖD & GÅVOR",
+                support_desc: "Du kan skicka ett Steam-byteserbjudande, skins eller föremål för att stödja projektet.",
+                support_btn: "SKICKA BYTESERBJUDANDE",
+                support_wanted: "FÖRESLAGNA GÅVOR",
+                support_wanted_desc: "CS2 skins, Steam-presentkort, samlarkort",
+                support_status: "ANSLUTNING REDO",
+                profile_desc: "FULL-STACK-UTVECKLARE & GAMER",
+                sanctum_support_title: "STÖD OPERATÖREN",
+                sanctum_support_desc: "Skicka gåvor via Steam Trade Offer",
+                sanctum_support_btn: "SÄKER LÄNK"
+            },
+            vi: {
+                nav_support: "QUÀ TẶNG",
+                sub_support: "HỖ TRỢ & QUÀ TẶNG",
+                support_desc: "Bạn có thể gửi đề nghị trao đổi Steam, trang phục hoặc vật phẩm để hỗ trợ dự án.",
+                support_btn: "GỬI ĐỀ NGHỊ TRAO ĐỔI",
+                support_wanted: "QUÀ TẶNG ĐỀ XUẤT",
+                support_wanted_desc: "Trang phục CS2, Thẻ quà tặng Steam, Thẻ game",
+                support_status: "KẾT NỐI SẴN SÀNG",
+                profile_desc: "NHÀ PHÁT TRIỂN FULL-STACK & GAME THỦ",
+                sanctum_support_title: "HỖ TRỢ ĐIỀU HÀNH",
+                sanctum_support_desc: "Gửi quà qua Đề nghị trao đổi Steam",
+                sanctum_support_btn: "LIÊN KẾT AN TOÀN"
+            },
+            el: {
+                nav_support: "ΔΩΡΑ",
+                sub_support: "ΥΠΟΣΤΗΡΙΞΗ & ΔΩΡΑ",
+                support_desc: "Μπορείτε να στείλετε μια προσφορά ανταλλαγής Steam, skins ή αντικείμενα για να υποστηρίξετε το έργο.",
+                support_btn: "ΑΠΟΣΤΟΛΗ ΠΡΟΣΦΟΡΑΣ",
+                support_wanted: "ΠΡΟΤΕΙΝΟΜΕΝΑ ΔΩΡΑ",
+                support_wanted_desc: "CS2 Skins, Δωροκάρτες Steam, Κάρτες Παιχνιδιού",
+                support_status: "ΣΥΝΔΕΣΗ ΕΤΟΙΜΗ",
+                profile_desc: "FULL-STACK ΠΡΟΓΡΑΜΜΑΤΙΣΤΗΣ & GAMER",
+                sanctum_support_title: "ΥΠΟΣΤΗΡΙΞΗ ΧΕΙΡΙΣΤΗ",
+                sanctum_support_desc: "Στείλτε δώρα μέσω Steam Trade Offer",
+                sanctum_support_btn: "ΑΣΦΑΛΗΣ ΣΥΝΔΕΣΜΟΣ"
+            },
+            th: {
+                nav_support: "ของขวัญ",
+                sub_support: "การสนับสนุนและของขวัญ",
+                support_desc: "คุณสามารถส่งข้อเสนอการแลกเปลี่ยน Steam สกิน หรือไอเทมเพื่อสนับสนุนโครงการได้",
+                support_btn: "ส่งข้อเสนอการแลกเปลี่ยน",
+                support_wanted: "ของขวัญที่แนะนำ",
+                support_wanted_desc: "สกิน CS2, บัตรของขวัญ Steam, การ์ดเกม",
+                support_status: "การเชื่อมต่อพร้อม",
+                profile_desc: "นักพัฒนาเว็บแบบฟูลสแต็กและเกมเมอร์",
+                sanctum_support_title: "สนับสนุนผู้ดำเนินการ",
+                sanctum_support_desc: "ส่งของขวัญผ่านข้อเสนอการแลกเปลี่ยน Steam",
+                sanctum_support_btn: "ลิงก์ที่ปลอดภัย"
+            }
+        };
+
+        // Merge extra translations
+        Object.keys(extraTranslations).forEach(lang => {
+            if (LANG_DATA[lang]) {
+                Object.assign(LANG_DATA[lang], extraTranslations[lang]);
+            }
+        });
 
         function setLang(c) {
             activeLang = c; // Seçili dili hafızaya al
-            let t=LANG_DATA[c]||LANG_DATA['en'];
-            document.querySelectorAll('[data-k]').forEach(e=>e.innerText=t[e.getAttribute('data-k')]||e.innerText);
-            document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t[e.getAttribute('data-p')]||e.placeholder);
-            document.getElementById('curr-lang').innerText=c.toUpperCase();
+            let t = LANG_DATA[c] || LANG_DATA['en'];
+            let fallback = LANG_DATA['en'];
+            document.querySelectorAll('[data-k]').forEach(e => {
+                const key = e.getAttribute('data-k');
+                e.innerText = t[key] || fallback[key] || e.innerText;
+            });
+            document.querySelectorAll('[data-p]').forEach(e => {
+                const key = e.getAttribute('data-p');
+                e.placeholder = t[key] || fallback[key] || e.placeholder;
+            });
+            document.getElementById('curr-lang').innerText = c.toUpperCase();
             document.getElementById('lang-menu').classList.remove('show');
         }
 
-        window.onload=()=>{
+        window.onload = () => {
+            lucide.createIcons();
+            const m = document.getElementById('lang-menu');
 
-
-            
-            lucide.createIcons(); initThree(); initCur();
-            const m=document.getElementById('lang-menu');
-            
             // Populate Lang Menu
-            LANG_OPTIONS.forEach(l=>{
-                let d=document.createElement('div');
-                d.className='lang-opt';
-                d.innerText=l.n;
-                d.onclick=()=>setLang(l.c);
+            LANG_OPTIONS.forEach(l => {
+                let d = document.createElement('div');
+                d.className = 'lang-opt';
+                d.innerText = l.n;
+                d.onclick = () => setLang(l.c);
                 m.appendChild(d);
-
-                
             });
-            
-            
+
             setLang('tr'); // Default to TR
+            runBootLoader(); // Start boot sequence
 
-            
-
-gsap.to('.load-fill',{width:'100%',duration:2,ease:'power2.inOut',onComplete:()=>{
-    gsap.to('#loader',{opacity:0,duration:0.8,onComplete:()=>{
-        document.getElementById('loader').style.display='none';
-        document.getElementById('app').style.opacity=1;
-        document.getElementById('app').style.pointerEvents='all';
-
-        // 🔑 ÇÖZÜM: Loader tamamen kapandıktan 4.5 saniye sonra pop-up'ı göster
-        setTimeout(checkAndShowModalWithTimer, 100);
-
-                    
-                }});
-            }});
-
-            document.querySelectorAll('.nav-btn').forEach(b=>{b.onclick=()=>nav(b.getAttribute('data-t'))});
-            document.getElementById('lang-togg').onclick=(e)=>{e.stopPropagation();m.classList.toggle('show')};
-            document.onclick=()=>m.classList.remove('show');
+            document.querySelectorAll('.nav-btn').forEach(b => { b.onclick = () => nav(b.getAttribute('data-t')) });
+            document.getElementById('lang-togg').onclick = (e) => { e.stopPropagation(); m.classList.toggle('show') };
+            document.onclick = () => m.classList.remove('show');
         };
 
-        function nav(id){
-            let c=document.querySelector('.section.active'), n=document.getElementById(id);
-            document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-            document.querySelector(`[data-t="${id}"]`).classList.add('active');
-            if(c!==n){
+        function nav(id) {
+            let c = document.querySelector('.section.active'), n = document.getElementById(id);
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            const activeNavBtn = document.querySelector(`[data-t="${id}"]`);
+            if (activeNavBtn) activeNavBtn.classList.add('active');
+            if (c !== n) {
                 sfxClick();
-                gsap.to(c,{opacity:0,y:-50,duration:0.4,onComplete:()=>{
-                    c.classList.remove('active'); gsap.set(n,{opacity:0,y:50});
-                    n.classList.add('active'); gsap.to(n,{opacity:1,y:0,duration:0.4});
-                }});
+                // Snappy, modern page fade & slide transition (duration: 0.2s - 0.25s)
+                gsap.to(c, {
+                    opacity: 0, y: -15, duration: 0.2, onComplete: () => {
+                        c.classList.remove('active'); gsap.set(n, { opacity: 0, y: 15 });
+                        n.classList.add('active'); gsap.to(n, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" });
+                    }
+                });
             }
         }
 
-        function initCur(){
-            let c=document.getElementById('cursor');
-            document.onmousemove=e=>{c.style.left=e.clientX+'px'; c.style.top=e.clientY+'px';};
-            document.onmousedown=()=>document.body.classList.add('hover');
-            document.onmouseup=()=>document.body.classList.remove('hover');
-            document.querySelectorAll('a,button,input,textarea,.card,.nav-btn').forEach(l=>{l.onmouseenter=()=>document.body.classList.add('hover');l.onmouseleave=()=>document.body.classList.remove('hover');});
+        function initCur() {
+            let c = document.getElementById('cursor');
+            document.onmousemove = e => { c.style.left = e.clientX + 'px'; c.style.top = e.clientY + 'px'; };
+            document.onmousedown = () => document.body.classList.add('hover');
+            document.onmouseup = () => document.body.classList.remove('hover');
+            document.querySelectorAll('a,button,input,textarea,.card,.nav-btn,.lang-opt').forEach(l => { l.onmouseenter = () => document.body.classList.add('hover'); l.onmouseleave = () => document.body.classList.remove('hover'); });
         }
 
-        const sfx={click:new Howl({src:['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a'],volume:0.2})};
-        function sfxClick(){sfx.click.play();}
+        const sfx = { click: new Howl({ src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a'], volume: 0.2 }) };
+        function sfxClick() { sfx.click.play(); }
 
-        function initThree(){
-            const c=document.getElementById('canvas');
-            const s=new THREE.Scene();
-            const cam=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-            const r=new THREE.WebGLRenderer({alpha:true});
-            r.setSize(window.innerWidth,window.innerHeight);
+        function initThree() {
+            const c = document.getElementById('canvas');
+            const s = new THREE.Scene();
+            const cam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const r = new THREE.WebGLRenderer({ alpha: true });
+            r.setSize(window.innerWidth, window.innerHeight);
             c.appendChild(r.domElement);
-            const g=new THREE.BufferGeometry();
-            const pos=new Float32Array(2000*3);
-            for(let i=0;i<4500;i++)pos[i]=(Math.random()-0.5)*200;
-            g.setAttribute('position',new THREE.BufferAttribute(pos,3));
-            const m=new THREE.PointsMaterial({size:0.15,color:0xff0000,transparent:true,opacity:0.5});
-            const mesh=new THREE.Points(g,m); s.add(mesh); cam.position.z=50;
-            function a(){requestAnimationFrame(a);mesh.rotation.y+=0.001;r.render(s,cam);} a();
-            window.onresize=()=>{cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();r.setSize(window.innerWidth,window.innerHeight);}
+            const g = new THREE.BufferGeometry();
+            const pos = new Float32Array(2000 * 3);
+            for (let i = 0; i < 4500; i++)pos[i] = (Math.random() - 0.5) * 200;
+            g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const m = new THREE.PointsMaterial({ size: 0.15, color: 0xff0000, transparent: true, opacity: 0.5 });
+            const mesh = new THREE.Points(g, m); s.add(mesh); cam.position.z = 50;
+            function a() { requestAnimationFrame(a); mesh.rotation.y += 0.001; r.render(s, cam); } a();
+            window.onresize = () => { cam.aspect = window.innerWidth / window.innerHeight; cam.updateProjectionMatrix(); r.setSize(window.innerWidth, window.innerHeight); }
         }
 
-
-         /* ======================================= */
+        /* ======================================= */
         /* POPUP (REKLAM-Script) */
         /* ======================================= */
+        const POPUP_LAST_CLOSED_TIME_KEY = 'popup_last_closed_time';
+        const SHOW_DELAY_MINUTES = 10;
+        const DELAY_MILLIS = SHOW_DELAY_MINUTES * 60 * 1000;
 
+        function checkAndShowModalWithTimer() {
+            const modal = document.getElementById('first-time-modal');
+            const closeBtn = document.getElementById('modal-close');
+            const videoElement = document.getElementById('modal-video');
 
-// 🔑 ANAHTAR: Sayaç başlangıcını kaydettiğimiz isim
-    const POPUP_LAST_CLOSED_TIME_KEY = 'popup_last_closed_time';
-    
-    // ⏱️ 10 dakika bekleme süresi
-    const SHOW_DELAY_MINUTES = 10; 
-    const DELAY_MILLIS = SHOW_DELAY_MINUTES * 60 * 1000; // 10 dakika milisaniye cinsinden
+            const lastClosedTime = localStorage.getItem(POPUP_LAST_CLOSED_TIME_KEY);
+            const currentTime = new Date().getTime();
 
-    function checkAndShowModalWithTimer() {
-        const modal = document.getElementById('first-time-modal');
-        const closeBtn = document.querySelector('.modal-close-btn');
-        const videoElement = document.getElementById('modal-video');
-
-        // Son kapatma zamanını al
-        const lastClosedTime = localStorage.getItem(POPUP_LAST_CLOSED_TIME_KEY);
-        const currentTime = new Date().getTime(); 
-
-        // Koşul: 
-        // 1. Daha önce hiç kapatılmadıysa VEYA 
-        // 2. Son kapatılma zamanından bu yana 10 dakikadan fazla geçtiyse
-        if (!lastClosedTime || (currentTime - parseInt(lastClosedTime) > DELAY_MILLIS)) {
-            
-            // Pop-up'ı göster
-            modal.style.display = 'block';
-            
-            // Video varsa otomatik oynatmayı dene
-            if (videoElement) {
-                videoElement.play().catch(error => {});
+            if (!lastClosedTime || (currentTime - parseInt(lastClosedTime) > DELAY_MILLIS)) {
+                modal.style.display = 'block';
             }
-            
-            // NOT: Bu noktada süreyi kaydetmiyoruz. Süre, kullanıcı KAPATMA tuşuna bastığında kaydedilecek.
-            // Bu, F5 atıldığında 10 dakika dolduysa pop-up'ın her seferinde açılmasını sağlar.
-        }
 
-        // 🔑 KAPATMA BUTONU: Kullanıcı butona bastığında süreyi kaydet ve pop-up'ı kapat.
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-            if (videoElement) {
-                videoElement.pause();
-                videoElement.currentTime = 0; 
-            }
-            
-            // Sadece pop-up kapatıldığında süreyi kaydet (10 dakikalık bekleme başlasın)
-            localStorage.setItem(POPUP_LAST_CLOSED_TIME_KEY, new Date().getTime().toString());
-        };
-
-        // Pop-up dışına tıklandığında kapatma
-        window.onclick = function(event) {
-            if (event.target === modal) {
+            closeBtn.onclick = function () {
                 modal.style.display = 'none';
                 if (videoElement) {
                     videoElement.pause();
                     videoElement.currentTime = 0;
                 }
-                
-                // Dışa tıklandığında da süreyi kaydet
                 localStorage.setItem(POPUP_LAST_CLOSED_TIME_KEY, new Date().getTime().toString());
+            };
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    if (videoElement) {
+                        videoElement.pause();
+                        videoElement.currentTime = 0;
+                    }
+                    localStorage.setItem(POPUP_LAST_CLOSED_TIME_KEY, new Date().getTime().toString());
+                }
+            };
+        }
+
+        function switchModalTab(event, tabName) {
+            event.stopPropagation();
+            sfxClick();
+
+            document.querySelectorAll('.modal-tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.modal-tab-content').forEach(content => content.style.display = 'none');
+
+            event.currentTarget.classList.add('active');
+            const targetContent = document.getElementById('modal-tab-' + tabName);
+            if (targetContent) targetContent.style.display = 'block';
+
+            const video = document.getElementById('modal-video');
+            if (video) {
+                if (tabName === 'trailer') {
+                    video.play().catch(err => console.log("Video auto play blocked", err));
+                } else {
+                    video.pause();
+                }
             }
-        };
-    }
+        }
 
+        /* ======================================= */
+        /* CONTACT FORM TRANSMISSION OVERHAUL */
+        /* ======================================= */
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            sfxClick();
 
+            const name = document.getElementById('c-name').value;
+            const email = document.getElementById('c-email').value;
+            const msg = document.getElementById('c-msg').value;
 
-/* === STEAM DATA & STATUS LOADER === */
-fetch('./steam_data.json')
-  .then(response => response.json())
-  .then(data => {
-      // 1. İstatistikler
-      if(document.getElementById('total-hours')) document.getElementById('total-hours').innerText = data.total_hours;
-      if(document.getElementById('total-games')) document.getElementById('total-games').innerText = data.total_games;
+            const terminal = document.getElementById('contact-terminal');
+            const success = document.getElementById('contact-success');
 
-      // 2. Oyun Saatleri
-      if(data.games_playtime) {
-          if(data.games_playtime.fc25 && document.getElementById('time-fc25')) 
-              document.getElementById('time-fc25').innerText = data.games_playtime.fc25;
-          if(data.games_playtime.bannerlord && document.getElementById('time-bannerlord')) 
-              document.getElementById('time-bannerlord').innerText = data.games_playtime.bannerlord;
-          if(data.games_playtime.witcher3 && document.getElementById('time-witcher3')) 
-              document.getElementById('time-witcher3').innerText = data.games_playtime.witcher3;
-          if(data.games_playtime.godofwar && document.getElementById('time-godofwar')) 
-              document.getElementById('time-godofwar').innerText = data.games_playtime.godofwar;
-          if(data.games_playtime.odyssey && document.getElementById('time-odyssey')) 
-              document.getElementById('time-odyssey').innerText = data.games_playtime.odyssey;
-          if(data.games_playtime.cyberpunk && document.getElementById('time-cyberpunk')) 
-              document.getElementById('time-cyberpunk').innerText = data.games_playtime.cyberpunk;
-      }
+            const clipboardText = `Name: ${name}\nEmail: ${email}\nMessage: ${msg}`;
+            navigator.clipboard.writeText(clipboardText).then(() => {
+                console.log("Contact backup saved to clipboard.");
+            }).catch(err => {
+                console.warn("Clipboard access denied:", err);
+            });
 
-      // 3. Sistem Durumu ve Dil Entegrasyonu
-      const sysEl = document.getElementById('sys-status');
-      
-      if(sysEl && data.system_status) {
-          if(data.system_status === "OFFLINE") {
-              // OFFLINE İSE:
-              sysEl.setAttribute('data-k', 'sys_off'); // Çeviri anahtarını 'sys_off' yap
-              
-              // Stil: Sönük yap
-              sysEl.style.color = "#888"; 
-              sysEl.style.textShadow = "none";
-              sysEl.style.animation = "none"; 
-          } else {
-              // ONLINE İSE:
-              sysEl.setAttribute('data-k', 'sys'); // Çeviri anahtarını 'sys' yap
-              
-              // Stil: Parlak yap (CSS'e dönsün)
-              sysEl.style.color = ""; 
-              sysEl.style.textShadow = "";
-              sysEl.style.animation = "";
-          }
-          
-          // DİL GÜNCELLEMESİNİ TETİKLE
-          // Bu komut, az önce değiştirdiğimiz data-k'yı okuyup o anki dilde yazıyı basar.
-          setLang(activeLang);
-      }
+            gsap.to(terminal, {
+                opacity: 0, duration: 0.3, onComplete: () => {
+                    terminal.style.display = 'none';
+                    success.style.display = 'flex';
+                    gsap.set(success, { opacity: 0, scale: 0.95 });
+                    gsap.to(success, { opacity: 1, scale: 1, duration: 0.4 });
 
-      console.log("HaKING Core: Status Synced.");
-  })
-  .catch(err => console.log('Data error:', err));
+                    const output = document.getElementById('terminal-console-output');
+                    output.innerHTML = `> INITIATING SECURE HANDSHAKE...<br>`;
+
+                    setTimeout(() => {
+                        output.innerHTML += `> ENCRYPTING PACKET USING AES-256... DONE<br>`;
+                        sfxClick();
+                    }, 300);
+
+                    setTimeout(() => {
+                        output.innerHTML += `> BACKUP COPIED TO CLIPBOARD CACHE... DONE<br>`;
+                        sfxClick();
+                    }, 700);
+
+                    setTimeout(() => {
+                        output.innerHTML += `> ROUTING TO SYSTEM SMTP AGENT... DONE<br>`;
+                        sfxClick();
+                        window.location.href = `mailto:halitguns06@gmail.com?subject=HaKING Contact - ${encodeURIComponent(name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
+                    }, 1100);
+                }
+            });
+        }
+
+        function resetContactForm() {
+            sfxClick();
+            const terminal = document.getElementById('contact-terminal');
+            const success = document.getElementById('contact-success');
+
+            document.getElementById('contact-form').reset();
+
+            gsap.to(success, {
+                opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => {
+                    success.style.display = 'none';
+                    terminal.style.display = 'block';
+                    gsap.set(terminal, { opacity: 0 });
+                    gsap.to(terminal, { opacity: 1, duration: 0.4 });
+                }
+            });
+        }
+
+        /* ======================================= */
+        /* SYNCHRONIZED BOOT SEQUENCE */
+        /* ======================================= */
+        async function runBootLoader() {
+            const fill = document.querySelector('.load-fill');
+            const logText = document.getElementById('ltxt');
+
+            const bootSfx = new Howl({
+                src: ['https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.m4a'],
+                volume: 0.25
+            });
+
+            const bootLogs = {
+                tr: {
+                    init: "SİSTEM BİLEŞENLERİ YÜKLENİYOR...",
+                    pointer: "GİRİŞ AYGITLARI BAĞLANIYOR...",
+                    steam: "STEAM VERİLERİ SENKRONİZE EDİLİYOR...",
+                    cache: "GÖRSEL ÖĞELER PRELOAD EDİLİYOR...",
+                    ready: "SİSTEM HAZIR, GİRİŞ YAPILIYOR..."
+                },
+                en: {
+                    init: "LOADING SYSTEM COMPONENTS...",
+                    pointer: "CONNECTING POINTER INTERFACE...",
+                    steam: "SYNCING STEAM DATA PACKETS...",
+                    cache: "PRELOADING GRAPHICAL ASSETS...",
+                    ready: "SYSTEM READY, LAUNCHING..."
+                }
+            };
+            const logs = bootLogs[activeLang] || bootLogs['en'];
+
+            const updateProgress = (pct, labelText) => {
+                gsap.to(fill, { width: pct + '%', duration: 0.3, ease: 'power1.out' });
+                if (logText) logText.innerText = labelText;
+            };
+
+            try {
+                // Phase 1: Initialize components
+                updateProgress(20, logs.init);
+                initThree();
+                await new Promise(r => setTimeout(r, 600));
+
+                // Phase 2: Pointer tracking
+                updateProgress(40, logs.pointer);
+                initCur();
+                await new Promise(r => setTimeout(r, 500));
+
+                // Phase 3: Fetching stats from JSON file
+                updateProgress(70, logs.steam);
+
+                const response = await fetch('./steam_data.json');
+                const data = await response.json();
+
+                if (document.getElementById('total-hours')) document.getElementById('total-hours').innerText = data.total_hours;
+                if (document.getElementById('total-games')) document.getElementById('total-games').innerText = data.total_games;
+
+                if (data.games_playtime) {
+                    if (data.games_playtime.fc25 && document.getElementById('time-fc25'))
+                        document.getElementById('time-fc25').innerText = data.games_playtime.fc25;
+                    if (data.games_playtime.bannerlord && document.getElementById('time-bannerlord'))
+                        document.getElementById('time-bannerlord').innerText = data.games_playtime.bannerlord;
+                    if (data.games_playtime.witcher3 && document.getElementById('time-witcher3'))
+                        document.getElementById('time-witcher3').innerText = data.games_playtime.witcher3;
+                    if (data.games_playtime.godofwar && document.getElementById('time-godofwar'))
+                        document.getElementById('time-godofwar').innerText = data.games_playtime.godofwar;
+                    if (data.games_playtime.odyssey && document.getElementById('time-odyssey'))
+                        document.getElementById('time-odyssey').innerText = data.games_playtime.odyssey;
+                    if (data.games_playtime.cyberpunk && document.getElementById('time-cyberpunk'))
+                        document.getElementById('time-cyberpunk').innerText = data.games_playtime.cyberpunk;
+                }
+
+                const sysEl = document.getElementById('sys-status');
+                if (sysEl && data.system_status) {
+                    if (data.system_status === "OFFLINE") {
+                        sysEl.setAttribute('data-k', 'sys_off');
+                        sysEl.style.color = "#888";
+                        sysEl.style.textShadow = "none";
+                        sysEl.style.animation = "none";
+                    } else {
+                        sysEl.setAttribute('data-k', 'sys');
+                        sysEl.style.color = "";
+                        sysEl.style.textShadow = "";
+                        sysEl.style.animation = "";
+                    }
+                    setLang(activeLang);
+                }
+                await new Promise(r => setTimeout(r, 600));
+
+                // Phase 4: Cache graphics
+                updateProgress(90, logs.cache);
+                await new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = "image/HaKING2.png";
+                    img.onload = () => resolve();
+                    img.onerror = () => resolve();
+                });
+                await new Promise(r => setTimeout(r, 500));
+
+                // Phase 5: Connection ready
+                updateProgress(100, logs.ready);
+                await new Promise(r => setTimeout(r, 600));
+
+                bootSfx.play();
+
+                gsap.to('#loader', {
+                    opacity: 0,
+                    duration: 0.5,
+                    onComplete: () => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('app').style.opacity = 1;
+                        document.getElementById('app').style.pointerEvents = 'all';
+
+                        setTimeout(checkAndShowModalWithTimer, 800);
+                    }
+                });
+
+            } catch (err) {
+                console.error("Bootloader Exception:", err);
+                updateProgress(100, "SYSTEM RUNNING");
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('app').style.opacity = 1;
+                    document.getElementById('app').style.pointerEvents = 'all';
+                }, 800);
+            }
+        }
 
     </script>
 </body>
+
 </html>
