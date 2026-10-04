@@ -1397,53 +1397,30 @@
 
 
     <div id="first-time-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close-btn" id="modal-close"><i data-lucide="x"
-                    style="width: 14px; height: 14px;"></i></span>
-
-            <div class="modal-tabs"
-                style="display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.6);">
-                <button class="modal-tab active" onclick="switchModalTab(event, 'banner')"
-                    style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--gold); font-family: var(--f-code); font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <i data-lucide="image" style="width: 13px; height: 13px;"></i>BANNER
-                </button>
-                <button class="modal-tab" onclick="switchModalTab(event, 'trailer')"
-                    style="flex: 1; padding: 14px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted); font-family: var(--f-code); font-size: 11px; letter-spacing: 1px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <i data-lucide="play" style="width: 13px; height: 13px;"></i>TRAILER
-                </button>
+    <div class="modal-content">
+        <span class="modal-close-btn">&times;</span>
+        
+        <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-image-link">
+            <div class="modal-image-container">
+                <img src="add/SOL.png" alt="Popup Görseli" class="modal-image-full">
             </div>
+        </a>
 
-            <div class="modal-body" style="position: relative;">
-                <!-- Banner Tab -->
-                <a href="https://casehug.com/r/HAK06" target="_blank" id="modal-tab-banner"
-                    class="modal-tab-content modal-image-link" style="display: block;">
-                    <div class="modal-image-container"
-                        style="padding-top: 120%; position: relative; overflow: hidden; background: #000;">
-                        <img src="add/SOL.png" alt="Popup Görseli" class="modal-image-full"
-                            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
-                    </div>
-                </a>
-
-                <!-- Trailer Tab -->
-                <div id="modal-tab-trailer" class="modal-tab-content modal-video-link" style="display: none;">
-                    <div class="modal-video-container"
-                        style="padding-top: 56.25%; position: relative; overflow: hidden; background: #000;">
-                        <video id="modal-video" muted loop playsinline class="modal-video-responsive"
-                            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;">
-                            <source
-                                src="https://casehug.com/ch-static/creator-banner-v7.webm"
-                                type="video/webm">
-                            Tarayıcınız video etiketini desteklemiyor.
-                        </video>
-                        <a href="https://casehug.com/r/HAK06" target="_blank"
-                            style="position: absolute; bottom: 15px; right: 15px; background: rgba(10,5,5,0.9); border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 4px; font-family: var(--f-code); font-size: 11px; text-decoration: none; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.8); z-index: 100;">
-                            VISIT UPLINK <i data-lucide="external-link" style="width: 12px; height: 12px;"></i>
-                        </a>
-                    </div>
-                </div>
+        <a href="https://kd.link/?code=HAK06" target="_blank" class="modal-video-link">
+            <div class="modal-video-container">
+                <video id="modal-video" autoplay muted loop playsinline class="modal-video-responsive">
+                    <source src="https://fadmoxedziq5rcev.public.blob.vercel-storage.com/silent-night-z01gJElXIRxRuk581NHC0zuC6YDUez.mp4" type="video/mp4">
+                    Tarayıcınız video etiketini desteklemiyor.
+                </video>
             </div>
-        </div>
+        </a>
     </div>
+</div>
+
+
+
+
+
 
     <div id="canvas"></div>
     <div class="scanlines"></div>
