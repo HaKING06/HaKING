@@ -9,16 +9,12 @@ export const LANG_DATA = {
                 quick_machine_desc: "Inspect the hardware behind the setup.",
                 quick_museum_desc: "Return to saved moments from the games.",
                 featured_game_kicker: "MOST PLAYED ON STEAM",
-                library_eyebrow: "STEAM ARCHIVE / 01",
-                library_heading: "The complete collection",
-                library_description: "A live index of every game returned by Steam, sorted by playtime.",
                 library_count_label: "GAMES INDEXED",
                 library_hours_label: "TOTAL PLAYTIME",
                 featured_game_hours_label: "total playtime",
                 featured_game_cta: "OPEN GAME LIBRARY",
                 library_search_label: "Search the full Steam library",
                 library_search: "Search your Steam library...",
-                library_note: "All games returned by Steam, sorted by playtime.",
                 steam_sync_wait: "Waiting for the first automatic Steam sync",
                 steam_sync_last: "DATA LAST UPDATED",
                 steam_sync_unavailable: "Saved Steam data could not be loaded",
@@ -68,16 +64,12 @@ export const LANG_DATA = {
                 quick_machine_desc: "Sistemin donanım bileşenlerini incele.",
                 quick_museum_desc: "Oyunlardan kaydedilmiş anılara dön.",
                 featured_game_kicker: "STEAM'DE EN ÇOK OYNANAN",
-                library_eyebrow: "STEAM ARŞİVİ / 01",
-                library_heading: "Oyun kütüphanesinin tamamı",
-                library_description: "Steam API'den alınan oyunlar oynama süresine göre sıralanır ve otomatik yenilenir.",
                 library_count_label: "KÜTÜPHANEDEKİ OYUN",
                 library_hours_label: "TOPLAM OYNAMA",
                 featured_game_hours_label: "toplam oynama süresi",
                 featured_game_cta: "TÜM KÜTÜPHANEYİ AÇ",
                 library_search_label: "Tüm Steam kütüphanesinde ara",
                 library_search: "Steam oyunlarında ara...",
-                library_note: "Steam'in döndürdüğü tüm oyunlar, oynama süresine göre sıralı.",
                 steam_sync_wait: "İlk otomatik Steam eşitlemesi bekleniyor",
                 steam_sync_last: "SON VERİ GÜNCELLEMESİ",
                 steam_sync_unavailable: "Kaydedilmiş Steam verisi yüklenemedi",
@@ -894,6 +886,221 @@ export const LANG_DATA = {
                 sanctum_support_btn: "ลิงก์ที่ปลอดภัย"
             }
         };
+
+        const interfaceTranslations = {
+            tr: {
+                featured_game_cta: "TÜM OYUNLARI GÖR", sub_armory: "TÜM OYUNLAR", library_stats_label: "Oyun kütüphanesi istatistikleri",
+                library_count_label: "OYUN", library_hours_label: "TOPLAM OYNAMA", library_search_label: "Tüm kütüphanede ara",
+                library_search: "Oyunlarda ara...", library_sort: "SIRALA", sort_hours: "En çok oynanan", sort_name: "Oyun adına göre",
+                library_empty: "Sonuç bulunamadı.", library_result_one: "OYUN", library_result_many: "OYUN", hours_short: "sa",
+                boot_loading: "YÜKLENİYOR...", boot_init: "SİSTEM HAZIRLANIYOR...", boot_pointer: "ARAYÜZ AÇILIYOR...",
+                boot_steam: "OYUNLAR YÜKLENİYOR...", boot_cache: "GÖRSELLER HAZIRLANIYOR...", boot_ready: "HAZIR"
+            },
+            en: {
+                featured_game_cta: "VIEW ALL GAMES", sub_armory: "ALL GAMES", library_stats_label: "Game library statistics",
+                library_count_label: "GAMES", library_hours_label: "TOTAL PLAYTIME", library_search_label: "Search the full library",
+                library_search: "Search games...", library_sort: "SORT BY", sort_hours: "Most played", sort_name: "Game name",
+                library_empty: "No games found.", library_result_one: "GAME", library_result_many: "GAMES", hours_short: "h",
+                boot_loading: "LOADING...", boot_init: "PREPARING THE EXPERIENCE...", boot_pointer: "OPENING THE INTERFACE...",
+                boot_steam: "LOADING THE COLLECTION...", boot_cache: "PREPARING THE VISUALS...", boot_ready: "READY"
+            },
+            es: {
+                featured_game_cta: "VER TODOS LOS JUEGOS", sub_armory: "TODOS LOS JUEGOS", library_stats_label: "Estadísticas de la biblioteca",
+                library_count_label: "JUEGOS", library_hours_label: "TIEMPO TOTAL", library_search_label: "Buscar en toda la biblioteca",
+                library_search: "Buscar juegos...", library_sort: "ORDENAR", sort_hours: "Más jugados", sort_name: "Nombre",
+                library_empty: "No se encontraron juegos.", library_result_one: "JUEGO", library_result_many: "JUEGOS", hours_short: "h",
+                boot_loading: "CARGANDO...", boot_init: "PREPARANDO LA EXPERIENCIA...", boot_pointer: "ABRIENDO LA INTERFAZ...",
+                boot_steam: "CARGANDO LA COLECCIÓN...", boot_cache: "PREPARANDO LOS VISUALES...", boot_ready: "LISTO"
+            },
+            ru: {
+                featured_game_cta: "ВСЕ ИГРЫ", sub_armory: "ВСЕ ИГРЫ", library_stats_label: "Статистика игровой библиотеки",
+                library_count_label: "ИГРЫ", library_hours_label: "ВСЕГО ВРЕМЕНИ", library_search_label: "Поиск по всей библиотеке",
+                library_search: "Поиск игр...", library_sort: "СОРТИРОВКА", sort_hours: "По времени игры", sort_name: "По названию",
+                library_empty: "Игры не найдены.", library_result_one: "ИГРА", library_result_many: "ИГР", hours_short: "ч",
+                boot_loading: "ЗАГРУЗКА...", boot_init: "ПОДГОТОВКА...", boot_pointer: "ЗАПУСК ИНТЕРФЕЙСА...",
+                boot_steam: "ЗАГРУЗКА КОЛЛЕКЦИИ...", boot_cache: "ПОДГОТОВКА ГРАФИКИ...", boot_ready: "ГОТОВО"
+            },
+            de: {
+                featured_game_cta: "ALLE SPIELE", sub_armory: "ALLE SPIELE", library_stats_label: "Statistik der Spielebibliothek",
+                library_count_label: "SPIELE", library_hours_label: "GESAMTSPIELZEIT", library_search_label: "Gesamte Bibliothek durchsuchen",
+                library_search: "Spiele suchen...", library_sort: "SORTIEREN", sort_hours: "Meistgespielt", sort_name: "Spielname",
+                library_empty: "Keine Spiele gefunden.", library_result_one: "SPIEL", library_result_many: "SPIELE", hours_short: "Std.",
+                boot_loading: "WIRD GELADEN...", boot_init: "ERLEBNIS WIRD VORBEREITET...", boot_pointer: "OBERFLÄCHE WIRD GEÖFFNET...",
+                boot_steam: "SAMMLUNG WIRD GELADEN...", boot_cache: "GRAFIK WIRD VORBEREITET...", boot_ready: "BEREIT"
+            },
+            fr: {
+                featured_game_cta: "TOUS LES JEUX", sub_armory: "TOUS LES JEUX", library_stats_label: "Statistiques de la ludothèque",
+                library_count_label: "JEUX", library_hours_label: "TEMPS DE JEU", library_search_label: "Rechercher dans toute la bibliothèque",
+                library_search: "Rechercher un jeu...", library_sort: "TRIER", sort_hours: "Les plus joués", sort_name: "Nom du jeu",
+                library_empty: "Aucun jeu trouvé.", library_result_one: "JEU", library_result_many: "JEUX", hours_short: "h",
+                boot_loading: "CHARGEMENT...", boot_init: "PRÉPARATION DE L’EXPÉRIENCE...", boot_pointer: "OUVERTURE DE L’INTERFACE...",
+                boot_steam: "CHARGEMENT DE LA COLLECTION...", boot_cache: "PRÉPARATION DES VISUELS...", boot_ready: "PRÊT"
+            },
+            jp: {
+                featured_game_cta: "すべてのゲーム", sub_armory: "すべてのゲーム", library_stats_label: "ゲームライブラリの統計",
+                library_count_label: "ゲーム", library_hours_label: "合計プレイ時間", library_search_label: "ライブラリ全体を検索",
+                library_search: "ゲームを検索...", library_sort: "並べ替え", sort_hours: "プレイ時間順", sort_name: "名前順",
+                library_empty: "ゲームが見つかりません。", library_result_one: "ゲーム", library_result_many: "ゲーム", hours_short: "時間",
+                boot_loading: "読み込み中...", boot_init: "体験を準備しています...", boot_pointer: "インターフェースを起動中...",
+                boot_steam: "コレクションを読み込み中...", boot_cache: "ビジュアルを準備中...", boot_ready: "準備完了"
+            },
+            cn: {
+                featured_game_cta: "查看全部游戏", sub_armory: "全部游戏", library_stats_label: "游戏库统计",
+                library_count_label: "游戏", library_hours_label: "总游戏时长", library_search_label: "搜索整个游戏库",
+                library_search: "搜索游戏...", library_sort: "排序", sort_hours: "游玩时间最多", sort_name: "游戏名称",
+                library_empty: "未找到游戏。", library_result_one: "款游戏", library_result_many: "款游戏", hours_short: "小时",
+                boot_loading: "正在加载...", boot_init: "正在准备体验...", boot_pointer: "正在打开界面...",
+                boot_steam: "正在加载游戏库...", boot_cache: "正在准备视觉效果...", boot_ready: "准备就绪"
+            },
+            pt: {
+                featured_game_cta: "VER TODOS OS JOGOS", sub_armory: "TODOS OS JOGOS", library_stats_label: "Estatísticas da biblioteca",
+                library_count_label: "JOGOS", library_hours_label: "TEMPO TOTAL", library_search_label: "Pesquisar em toda a biblioteca",
+                library_search: "Pesquisar jogos...", library_sort: "ORDENAR", sort_hours: "Mais jogados", sort_name: "Nome do jogo",
+                library_empty: "Nenhum jogo encontrado.", library_result_one: "JOGO", library_result_many: "JOGOS", hours_short: "h",
+                boot_loading: "A CARREGAR...", boot_init: "A PREPARAR A EXPERIÊNCIA...", boot_pointer: "A ABRIR A INTERFACE...",
+                boot_steam: "A CARREGAR A COLEÇÃO...", boot_cache: "A PREPARAR OS ELEMENTOS VISUAIS...", boot_ready: "PRONTO"
+            },
+            it: {
+                featured_game_cta: "TUTTI I GIOCHI", sub_armory: "TUTTI I GIOCHI", library_stats_label: "Statistiche della libreria",
+                library_count_label: "GIOCHI", library_hours_label: "TEMPO TOTALE", library_search_label: "Cerca nell’intera libreria",
+                library_search: "Cerca giochi...", library_sort: "ORDINA", sort_hours: "Più giocati", sort_name: "Nome del gioco",
+                library_empty: "Nessun gioco trovato.", library_result_one: "GIOCO", library_result_many: "GIOCHI", hours_short: "ore",
+                boot_loading: "CARICAMENTO...", boot_init: "PREPARAZIONE DELL’ESPERIENZA...", boot_pointer: "APERTURA DELL’INTERFACCIA...",
+                boot_steam: "CARICAMENTO DELLA COLLEZIONE...", boot_cache: "PREPARAZIONE DELLE IMMAGINI...", boot_ready: "PRONTO"
+            },
+            kr: {
+                featured_game_cta: "모든 게임 보기", sub_armory: "모든 게임", library_stats_label: "게임 라이브러리 통계",
+                library_count_label: "게임", library_hours_label: "총 플레이 시간", library_search_label: "전체 라이브러리 검색",
+                library_search: "게임 검색...", library_sort: "정렬", sort_hours: "플레이 시간순", sort_name: "게임 이름순",
+                library_empty: "게임을 찾을 수 없습니다.", library_result_one: "게임", library_result_many: "게임", hours_short: "시간",
+                boot_loading: "불러오는 중...", boot_init: "화면을 준비하는 중...", boot_pointer: "인터페이스를 여는 중...",
+                boot_steam: "컬렉션을 불러오는 중...", boot_cache: "화면 효과를 준비하는 중...", boot_ready: "준비 완료"
+            },
+            ar: {
+                featured_game_cta: "عرض كل الألعاب", sub_armory: "كل الألعاب", library_stats_label: "إحصاءات مكتبة الألعاب",
+                library_count_label: "الألعاب", library_hours_label: "إجمالي وقت اللعب", library_search_label: "البحث في المكتبة كاملة",
+                library_search: "ابحث عن لعبة...", library_sort: "ترتيب", sort_hours: "الأكثر لعبًا", sort_name: "اسم اللعبة",
+                library_empty: "لم يتم العثور على ألعاب.", library_result_one: "لعبة", library_result_many: "ألعاب", hours_short: "س",
+                boot_loading: "جارٍ التحميل...", boot_init: "جارٍ تجهيز التجربة...", boot_pointer: "جارٍ فتح الواجهة...",
+                boot_steam: "جارٍ تحميل المجموعة...", boot_cache: "جارٍ تجهيز الصور...", boot_ready: "جاهز"
+            },
+            hi: {
+                featured_game_cta: "सभी गेम देखें", sub_armory: "सभी गेम", library_stats_label: "गेम लाइब्रेरी के आँकड़े",
+                library_count_label: "गेम", library_hours_label: "कुल खेलने का समय", library_search_label: "पूरी लाइब्रेरी में खोजें",
+                library_search: "गेम खोजें...", library_sort: "क्रमबद्ध करें", sort_hours: "सबसे अधिक खेले गए", sort_name: "गेम का नाम",
+                library_empty: "कोई गेम नहीं मिला।", library_result_one: "गेम", library_result_many: "गेम", hours_short: "घं",
+                boot_loading: "लोड हो रहा है...", boot_init: "अनुभव तैयार हो रहा है...", boot_pointer: "इंटरफ़ेस खुल रहा है...",
+                boot_steam: "गेम लाइब्रेरी लोड हो रही है...", boot_cache: "दृश्य तैयार हो रहे हैं...", boot_ready: "तैयार"
+            },
+            bn: {
+                featured_game_cta: "সব গেম দেখুন", sub_armory: "সব গেম", library_stats_label: "গেম লাইব্রেরির পরিসংখ্যান",
+                library_count_label: "গেম", library_hours_label: "মোট খেলার সময়", library_search_label: "সম্পূর্ণ লাইব্রেরিতে খুঁজুন",
+                library_search: "গেম খুঁজুন...", library_sort: "সাজান", sort_hours: "সবচেয়ে বেশি খেলা", sort_name: "গেমের নাম",
+                library_empty: "কোনো গেম পাওয়া যায়নি।", library_result_one: "গেম", library_result_many: "গেম", hours_short: "ঘ",
+                boot_loading: "লোড হচ্ছে...", boot_init: "অভিজ্ঞতা প্রস্তুত হচ্ছে...", boot_pointer: "ইন্টারফেস খোলা হচ্ছে...",
+                boot_steam: "গেম সংগ্রহ লোড হচ্ছে...", boot_cache: "দৃশ্য প্রস্তুত হচ্ছে...", boot_ready: "প্রস্তুত"
+            },
+            nl: {
+                featured_game_cta: "ALLE GAMES", sub_armory: "ALLE GAMES", library_stats_label: "Statistieken van de gamebibliotheek",
+                library_count_label: "GAMES", library_hours_label: "TOTALE SPEELTIJD", library_search_label: "Zoek in de hele bibliotheek",
+                library_search: "Games zoeken...", library_sort: "SORTEREN", sort_hours: "Meest gespeeld", sort_name: "Game naam",
+                library_empty: "Geen games gevonden.", library_result_one: "GAME", library_result_many: "GAMES", hours_short: "u",
+                boot_loading: "LADEN...", boot_init: "ERVARING WORDT VOORBEREID...", boot_pointer: "INTERFACE WORDT GEOPEND...",
+                boot_steam: "COLLECTIE WORDT GELADEN...", boot_cache: "BEELDEN WORDEN VOORBEREID...", boot_ready: "KLAAR"
+            },
+            pl: {
+                featured_game_cta: "ZOBACZ WSZYSTKIE GRY", sub_armory: "WSZYSTKIE GRY", library_stats_label: "Statystyki biblioteki gier",
+                library_count_label: "GRY", library_hours_label: "ŁĄCZNY CZAS GRY", library_search_label: "Szukaj w całej bibliotece",
+                library_search: "Szukaj gier...", library_sort: "SORTUJ", sort_hours: "Najczęściej grane", sort_name: "Nazwa gry",
+                library_empty: "Nie znaleziono gier.", library_result_one: "GRA", library_result_many: "GIER", hours_short: "godz.",
+                boot_loading: "ŁADOWANIE...", boot_init: "PRZYGOTOWYWANIE WRAŻEŃ...", boot_pointer: "OTWIERANIE INTERFEJSU...",
+                boot_steam: "ŁADOWANIE KOLEKCJI...", boot_cache: "PRZYGOTOWYWANIE GRAFIKI...", boot_ready: "GOTOWE"
+            },
+            sv: {
+                featured_game_cta: "VISA ALLA SPEL", sub_armory: "ALLA SPEL", library_stats_label: "Spelbibliotekets statistik",
+                library_count_label: "SPEL", library_hours_label: "TOTAL SPELTID", library_search_label: "Sök i hela biblioteket",
+                library_search: "Sök spel...", library_sort: "SORTERA", sort_hours: "Mest spelade", sort_name: "Spelnamn",
+                library_empty: "Inga spel hittades.", library_result_one: "SPEL", library_result_many: "SPEL", hours_short: "tim",
+                boot_loading: "LADDAR...", boot_init: "FÖRBEREDER UPPLEVELSEN...", boot_pointer: "ÖPPNAR GRÄNSSNITTET...",
+                boot_steam: "LADDAR SAMLINGEN...", boot_cache: "FÖRBEREDER BILDER...", boot_ready: "KLART"
+            },
+            vi: {
+                featured_game_cta: "XEM TẤT CẢ TRÒ CHƠI", sub_armory: "TẤT CẢ TRÒ CHƠI", library_stats_label: "Thống kê thư viện trò chơi",
+                library_count_label: "TRÒ CHƠI", library_hours_label: "TỔNG THỜI GIAN CHƠI", library_search_label: "Tìm trong toàn bộ thư viện",
+                library_search: "Tìm trò chơi...", library_sort: "SẮP XẾP", sort_hours: "Chơi nhiều nhất", sort_name: "Tên trò chơi",
+                library_empty: "Không tìm thấy trò chơi.", library_result_one: "TRÒ CHƠI", library_result_many: "TRÒ CHƠI", hours_short: "giờ",
+                boot_loading: "ĐANG TẢI...", boot_init: "ĐANG CHUẨN BỊ TRẢI NGHIỆM...", boot_pointer: "ĐANG MỞ GIAO DIỆN...",
+                boot_steam: "ĐANG TẢI BỘ SƯU TẬP...", boot_cache: "ĐANG CHUẨN BỊ HÌNH ẢNH...", boot_ready: "SẴN SÀNG"
+            },
+            el: {
+                featured_game_cta: "ΟΛΑ ΤΑ ΠΑΙΧΝΙΔΙΑ", sub_armory: "ΟΛΑ ΤΑ ΠΑΙΧΝΙΔΙΑ", library_stats_label: "Στατιστικά βιβλιοθήκης παιχνιδιών",
+                library_count_label: "ΠΑΙΧΝΙΔΙΑ", library_hours_label: "ΣΥΝΟΛΙΚΟΣ ΧΡΟΝΟΣ", library_search_label: "Αναζήτηση σε όλη τη βιβλιοθήκη",
+                library_search: "Αναζήτηση παιχνιδιών...", library_sort: "ΤΑΞΙΝΟΜΗΣΗ", sort_hours: "Περισσότερος χρόνος", sort_name: "Όνομα παιχνιδιού",
+                library_empty: "Δεν βρέθηκαν παιχνίδια.", library_result_one: "ΠΑΙΧΝΙΔΙ", library_result_many: "ΠΑΙΧΝΙΔΙΑ", hours_short: "ώρ.",
+                boot_loading: "ΦΟΡΤΩΣΗ...", boot_init: "ΠΡΟΕΤΟΙΜΑΣΙΑ ΕΜΠΕΙΡΙΑΣ...", boot_pointer: "ΑΝΟΙΓΜΑ ΔΙΕΠΑΦΗΣ...",
+                boot_steam: "ΦΟΡΤΩΣΗ ΣΥΛΛΟΓΗΣ...", boot_cache: "ΠΡΟΕΤΟΙΜΑΣΙΑ ΓΡΑΦΙΚΩΝ...", boot_ready: "ΕΤΟΙΜΟ"
+            },
+            th: {
+                featured_game_cta: "ดูเกมทั้งหมด", sub_armory: "เกมทั้งหมด", library_stats_label: "สถิติคลังเกม",
+                library_count_label: "เกม", library_hours_label: "เวลาเล่นรวม", library_search_label: "ค้นหาทั้งคลังเกม",
+                library_search: "ค้นหาเกม...", library_sort: "เรียงตาม", sort_hours: "เล่นมากที่สุด", sort_name: "ชื่อเกม",
+                library_empty: "ไม่พบเกม", library_result_one: "เกม", library_result_many: "เกม", hours_short: "ชม.",
+                boot_loading: "กำลังโหลด...", boot_init: "กำลังเตรียมประสบการณ์...", boot_pointer: "กำลังเปิดอินเทอร์เฟซ...",
+                boot_steam: "กำลังโหลดคลังเกม...", boot_cache: "กำลังเตรียมภาพ...", boot_ready: "พร้อม"
+            }
+        };
+
+        const homeTranslations = {
+            tr: { profile_kicker: "OYUNCU PROFİLİ / 001", hero_cta_games: "OYUN KOLEKSİYONUNU KEŞFET", hero_cta_setup: "SİSTEMİ GÖR", featured_game_kicker: "EN ÇOK OYNANAN OYUN", featured_game_hours_label: "toplam oynama süresi", quick_access: "HIZLI ERİŞİM", quick_access_note: "Üssü keşfet", quick_armory_desc: "Oyun koleksiyonuna göz at.", quick_machine_desc: "Bilgisayar donanımını görüntüle.", quick_museum_desc: "Oyunlardan kareleri yeniden keşfet.", contact_draft_title: "E-POSTA TASLAĞI HAZIR" },
+            en: { profile_kicker: "PLAYER PROFILE / 001", hero_cta_games: "EXPLORE MY GAME LIBRARY", hero_cta_setup: "VIEW MY SETUP", featured_game_kicker: "MOST PLAYED GAME", featured_game_hours_label: "total playtime", quick_access: "QUICK ACCESS", quick_access_note: "Explore the site", quick_armory_desc: "Browse my game library.", quick_machine_desc: "See the hardware behind my setup.", quick_museum_desc: "Revisit moments from my games.", contact_draft_title: "EMAIL DRAFT READY" },
+            es: { profile_kicker: "PERFIL DE JUGADOR / 001", hero_cta_games: "EXPLORAR MI COLECCIÓN", hero_cta_setup: "VER MI EQUIPO", featured_game_kicker: "JUEGO MÁS JUGADO", featured_game_hours_label: "tiempo total de juego", quick_access: "ACCESO RÁPIDO", quick_access_note: "Explora el sitio", quick_armory_desc: "Explora mi colección de juegos.", quick_machine_desc: "Conoce el hardware de mi equipo.", quick_museum_desc: "Revive momentos de mis juegos.", contact_draft_title: "BORRADOR DE CORREO LISTO" },
+            ru: { profile_kicker: "ПРОФИЛЬ ИГРОКА / 001", hero_cta_games: "МОЯ КОЛЛЕКЦИЯ ИГР", hero_cta_setup: "МОЯ СИСТЕМА", featured_game_kicker: "САМАЯ ПОПУЛЯРНАЯ ИГРА", featured_game_hours_label: "всего времени в игре", quick_access: "БЫСТРЫЙ ДОСТУП", quick_access_note: "Исследуйте сайт", quick_armory_desc: "Посмотрите мою коллекцию игр.", quick_machine_desc: "Узнайте о комплектующих моего ПК.", quick_museum_desc: "Вспомните игровые моменты.", contact_draft_title: "ЧЕРНОВИК ПИСЬМА ГОТОВ" },
+            de: { profile_kicker: "SPIELERPROFIL / 001", hero_cta_games: "MEINE SPIELESAMMLUNG", hero_cta_setup: "MEIN SETUP ANSEHEN", featured_game_kicker: "MEISTGESPIELTES SPIEL", featured_game_hours_label: "gesamte Spielzeit", quick_access: "SCHNELLZUGRIFF", quick_access_note: "Entdecke die Seite", quick_armory_desc: "Sieh dir meine Spielesammlung an.", quick_machine_desc: "Entdecke die Hardware meines PCs.", quick_museum_desc: "Erlebe Spielmomente noch einmal.", contact_draft_title: "E-MAIL-ENTWURF BEREIT" },
+            fr: { profile_kicker: "PROFIL DE JOUEUR / 001", hero_cta_games: "DÉCOUVRIR MA COLLECTION", hero_cta_setup: "VOIR MA CONFIGURATION", featured_game_kicker: "JEU LE PLUS JOUÉ", featured_game_hours_label: "temps de jeu total", quick_access: "ACCÈS RAPIDE", quick_access_note: "Explorez le site", quick_armory_desc: "Parcourez ma collection de jeux.", quick_machine_desc: "Découvrez les composants de mon PC.", quick_museum_desc: "Revivez mes meilleurs moments de jeu.", contact_draft_title: "BROUILLON D’E-MAIL PRÊT" },
+            jp: { profile_kicker: "プレイヤープロフィール / 001", hero_cta_games: "ゲームコレクションを見る", hero_cta_setup: "PC環境を見る", featured_game_kicker: "最もプレイしたゲーム", featured_game_hours_label: "総プレイ時間", quick_access: "クイックアクセス", quick_access_note: "サイトを探索", quick_armory_desc: "ゲームコレクションを見る。", quick_machine_desc: "PCのハードウェアを見る。", quick_museum_desc: "ゲームの思い出を振り返る。", contact_draft_title: "メールの下書きができました" },
+            cn: { profile_kicker: "玩家档案 / 001", hero_cta_games: "探索我的游戏收藏", hero_cta_setup: "查看我的设备", featured_game_kicker: "游玩时间最多的游戏", featured_game_hours_label: "总游戏时长", quick_access: "快速访问", quick_access_note: "探索网站", quick_armory_desc: "浏览我的游戏收藏。", quick_machine_desc: "了解我的电脑硬件。", quick_museum_desc: "重温游戏中的精彩瞬间。", contact_draft_title: "邮件草稿已准备好" },
+            pt: { profile_kicker: "PERFIL DE JOGADOR / 001", hero_cta_games: "EXPLORAR MINHA COLEÇÃO", hero_cta_setup: "VER MEU SETUP", featured_game_kicker: "JOGO MAIS JOGADO", featured_game_hours_label: "tempo total de jogo", quick_access: "ACESSO RÁPIDO", quick_access_note: "Explore o site", quick_armory_desc: "Veja minha coleção de jogos.", quick_machine_desc: "Conheça o hardware do meu PC.", quick_museum_desc: "Reviva momentos dos meus jogos.", contact_draft_title: "RASCUNHO DE E-MAIL PRONTO" },
+            it: { profile_kicker: "PROFILO GIOCATORE / 001", hero_cta_games: "ESPLORA LA MIA COLLEZIONE", hero_cta_setup: "VEDI IL MIO SETUP", featured_game_kicker: "GIOCO PIÙ GIOCATO", featured_game_hours_label: "tempo di gioco totale", quick_access: "ACCESSO RAPIDO", quick_access_note: "Esplora il sito", quick_armory_desc: "Sfoglia la mia collezione di giochi.", quick_machine_desc: "Scopri i componenti del mio PC.", quick_museum_desc: "Rivivi i momenti dei miei giochi.", contact_draft_title: "BOZZA E-MAIL PRONTA" },
+            kr: { profile_kicker: "플레이어 프로필 / 001", hero_cta_games: "게임 컬렉션 둘러보기", hero_cta_setup: "내 PC 사양 보기", featured_game_kicker: "가장 많이 플레이한 게임", featured_game_hours_label: "총 플레이 시간", quick_access: "빠른 메뉴", quick_access_note: "사이트 둘러보기", quick_armory_desc: "내 게임 컬렉션을 확인하세요.", quick_machine_desc: "내 PC 하드웨어를 살펴보세요.", quick_museum_desc: "게임 속 추억을 다시 만나보세요.", contact_draft_title: "이메일 초안이 준비되었습니다" },
+            ar: { profile_kicker: "ملف اللاعب / 001", hero_cta_games: "استكشف مجموعة ألعابي", hero_cta_setup: "اعرض جهازي", featured_game_kicker: "اللعبة الأكثر لعبًا", featured_game_hours_label: "إجمالي وقت اللعب", quick_access: "وصول سريع", quick_access_note: "استكشف الموقع", quick_armory_desc: "تصفح مجموعة ألعابي.", quick_machine_desc: "تعرّف على مكونات جهازي.", quick_museum_desc: "استعد لحظات من ألعابي.", contact_draft_title: "مسودة البريد جاهزة" },
+            hi: { profile_kicker: "खिलाड़ी प्रोफ़ाइल / 001", hero_cta_games: "मेरी गेम लाइब्रेरी देखें", hero_cta_setup: "मेरा सेटअप देखें", featured_game_kicker: "सबसे ज़्यादा खेला गया गेम", featured_game_hours_label: "कुल खेलने का समय", quick_access: "त्वरित पहुँच", quick_access_note: "साइट देखें", quick_armory_desc: "मेरी गेम लाइब्रेरी देखें।", quick_machine_desc: "मेरे पीसी के हार्डवेयर को जानें।", quick_museum_desc: "गेम के यादगार पल फिर देखें।", contact_draft_title: "ईमेल ड्राफ़्ट तैयार है" },
+            bn: { profile_kicker: "খেলোয়াড়ের প্রোফাইল / ০০১", hero_cta_games: "আমার গেম সংগ্রহ দেখুন", hero_cta_setup: "আমার সেটআপ দেখুন", featured_game_kicker: "সবচেয়ে বেশি খেলা গেম", featured_game_hours_label: "মোট খেলার সময়", quick_access: "দ্রুত প্রবেশ", quick_access_note: "সাইট ঘুরে দেখুন", quick_armory_desc: "আমার গেম সংগ্রহ দেখুন।", quick_machine_desc: "আমার পিসির হার্ডওয়্যার জানুন।", quick_museum_desc: "গেমের স্মরণীয় মুহূর্ত ফিরে দেখুন।", contact_draft_title: "ইমেইল খসড়া প্রস্তুত" },
+            nl: { profile_kicker: "SPELERSPROFIEL / 001", hero_cta_games: "ONTDEK MIJN GAMECOLLECTIE", hero_cta_setup: "BEKIJK MIJN SETUP", featured_game_kicker: "MEEST GESPEELDE GAME", featured_game_hours_label: "totale speeltijd", quick_access: "SNELLE TOEGANG", quick_access_note: "Ontdek de site", quick_armory_desc: "Bekijk mijn gamecollectie.", quick_machine_desc: "Ontdek de hardware van mijn pc.", quick_museum_desc: "Beleef gamemomenten opnieuw.", contact_draft_title: "E-MAILCONCEPT KLAAR" },
+            pl: { profile_kicker: "PROFIL GRACZA / 001", hero_cta_games: "ODKRYJ MOJĄ KOLEKCJĘ GIER", hero_cta_setup: "ZOBACZ MÓJ SPRZĘT", featured_game_kicker: "NAJCZĘŚCIEJ OGRYWANA GRA", featured_game_hours_label: "łączny czas gry", quick_access: "SZYBKI DOSTĘP", quick_access_note: "Odkryj stronę", quick_armory_desc: "Zobacz moją kolekcję gier.", quick_machine_desc: "Poznaj podzespoły mojego komputera.", quick_museum_desc: "Wróć do chwil z gier.", contact_draft_title: "SZKIC E-MAILA GOTOWY" },
+            sv: { profile_kicker: "SPELARPROFIL / 001", hero_cta_games: "UTFORSKA MIN SPELSAMLING", hero_cta_setup: "SE MIN DATOR", featured_game_kicker: "MEST SPELADE SPEL", featured_game_hours_label: "total speltid", quick_access: "SNABBÅTKOMST", quick_access_note: "Utforska sidan", quick_armory_desc: "Bläddra bland mina spel.", quick_machine_desc: "Se komponenterna i min dator.", quick_museum_desc: "Återupplev spelminnen.", contact_draft_title: "E-POSTUTKAST KLART" },
+            vi: { profile_kicker: "HỒ SƠ NGƯỜI CHƠI / 001", hero_cta_games: "KHÁM PHÁ BỘ SƯU TẬP GAME", hero_cta_setup: "XEM CẤU HÌNH", featured_game_kicker: "GAME ĐƯỢC CHƠI NHIỀU NHẤT", featured_game_hours_label: "tổng thời gian chơi", quick_access: "TRUY CẬP NHANH", quick_access_note: "Khám phá trang web", quick_armory_desc: "Xem bộ sưu tập game của tôi.", quick_machine_desc: "Tìm hiểu phần cứng máy tính của tôi.", quick_museum_desc: "Xem lại những khoảnh khắc trong game.", contact_draft_title: "ĐÃ SẴN SÀNG BẢN NHÁP EMAIL" },
+            el: { profile_kicker: "ΠΡΟΦΙΛ ΠΑΙΚΤΗ / 001", hero_cta_games: "ΕΞΕΡΕΥΝΗΣΤΕ ΤΗ ΣΥΛΛΟΓΗ ΜΟΥ", hero_cta_setup: "ΔΕΙΤΕ ΤΟΝ ΥΠΟΛΟΓΙΣΤΗ ΜΟΥ", featured_game_kicker: "ΠΑΙΧΝΙΔΙ ΜΕ ΤΙΣ ΠΕΡΙΣΣΟΤΕΡΕΣ ΩΡΕΣ", featured_game_hours_label: "συνολικός χρόνος παιχνιδιού", quick_access: "ΓΡΗΓΟΡΗ ΠΡΟΣΒΑΣΗ", quick_access_note: "Εξερευνήστε τον ιστότοπο", quick_armory_desc: "Δείτε τη συλλογή παιχνιδιών μου.", quick_machine_desc: "Γνωρίστε το υλικό του υπολογιστή μου.", quick_museum_desc: "Θυμηθείτε στιγμές από τα παιχνίδια.", contact_draft_title: "ΤΟ ΠΡΟΣΧΕΔΙΟ EMAIL ΕΙΝΑΙ ΕΤΟΙΜΟ" },
+            th: { profile_kicker: "โปรไฟล์ผู้เล่น / 001", hero_cta_games: "สำรวจคลังเกมของฉัน", hero_cta_setup: "ดูอุปกรณ์ของฉัน", featured_game_kicker: "เกมที่เล่นมากที่สุด", featured_game_hours_label: "เวลาเล่นทั้งหมด", quick_access: "ทางลัด", quick_access_note: "สำรวจเว็บไซต์", quick_armory_desc: "ดูคลังเกมของฉัน", quick_machine_desc: "ดูฮาร์ดแวร์พีซีของฉัน", quick_museum_desc: "ย้อนชมช่วงเวลาจากเกม", contact_draft_title: "เตรียมร่างอีเมลแล้ว" }
+        };
+        Object.keys(homeTranslations).forEach(lang => Object.assign(interfaceTranslations[lang], homeTranslations[lang]));
+
+        const libraryTranslations = {
+            tr: { library_overline: "KİŞİSEL OYUN ARŞİVİ", library_heading: "Her oyun başka bir dünya.", library_description: "En çok oynadığım oyunlardan koleksiyonun tamamına göz at.", library_longplay_label: "oyun 100+ saati aştı" },
+            en: { library_overline: "MY GAME COLLECTION", library_heading: "A world in every game.", library_description: "Explore the games I return to most, then browse the full collection.", library_longplay_label: "games with 100+ hours" },
+            es: { library_overline: "MI COLECCIÓN DE JUEGOS", library_heading: "Cada juego es un mundo.", library_description: "Empieza por mis favoritos y explora toda la colección.", library_longplay_label: "juegos con más de 100 h" },
+            ru: { library_overline: "МОЯ ИГРОВАЯ КОЛЛЕКЦИЯ", library_heading: "В каждой игре — новый мир.", library_description: "Начните с моих любимых игр и изучите всю коллекцию.", library_longplay_label: "игры с 100+ часами" },
+            de: { library_overline: "MEINE SPIELESAMMLUNG", library_heading: "Jedes Spiel ist eine eigene Welt.", library_description: "Entdecke zuerst meine meistgespielten Titel und danach die ganze Sammlung.", library_longplay_label: "Spiele mit 100+ Stunden" },
+            fr: { library_overline: "MA COLLECTION DE JEUX", library_heading: "Chaque jeu ouvre un monde.", library_description: "Découvrez mes jeux favoris, puis parcourez toute ma collection.", library_longplay_label: "jeux avec plus de 100 h" },
+            jp: { library_overline: "ゲームコレクション", library_heading: "ゲームごとに広がる世界。", library_description: "お気に入りのゲームから、コレクション全体をご覧ください。", library_longplay_label: "100時間以上のゲーム" },
+            cn: { library_overline: "我的游戏收藏", library_heading: "每款游戏都是一个世界。", library_description: "从我最常玩的游戏开始，探索完整收藏。", library_longplay_label: "款游戏超过100小时" },
+            pt: { library_overline: "MINHA COLEÇÃO DE JOGOS", library_heading: "Cada jogo é um mundo.", library_description: "Comece pelos meus favoritos e explore a coleção completa.", library_longplay_label: "jogos com mais de 100 h" },
+            it: { library_overline: "LA MIA COLLEZIONE", library_heading: "Ogni gioco è un mondo.", library_description: "Scopri prima i miei giochi preferiti, poi tutta la collezione.", library_longplay_label: "giochi con oltre 100 ore" },
+            kr: { library_overline: "내 게임 컬렉션", library_heading: "게임마다 새로운 세계가 펼쳐집니다.", library_description: "가장 많이 플레이한 게임부터 전체 컬렉션까지 둘러보세요.", library_longplay_label: "개 게임, 100시간 이상" },
+            ar: { library_overline: "مجموعة ألعابي", library_heading: "كل لعبة عالم مختلف.", library_description: "ابدأ بألعابي المفضلة ثم استكشف المجموعة كاملة.", library_longplay_label: "ألعاب تجاوزت 100 ساعة" },
+            hi: { library_overline: "मेरी गेम लाइब्रेरी", library_heading: "हर गेम एक नई दुनिया है।", library_description: "मेरे पसंदीदा गेम से शुरू करें और पूरी लाइब्रेरी देखें।", library_longplay_label: "गेम 100+ घंटे खेले" },
+            bn: { library_overline: "আমার গেম সংগ্রহ", library_heading: "প্রতিটি গেমই একেকটি জগৎ।", library_description: "আমার পছন্দের গেম থেকে শুরু করে পুরো সংগ্রহ ঘুরে দেখুন।", library_longplay_label: "টি গেম ১০০+ ঘণ্টা খেলা" },
+            nl: { library_overline: "MIJN GAMECOLLECTIE", library_heading: "Elke game is een eigen wereld.", library_description: "Ontdek eerst mijn favorieten en bekijk daarna de hele collectie.", library_longplay_label: "games met 100+ uur" },
+            pl: { library_overline: "MOJA KOLEKCJA GIER", library_heading: "Każda gra to nowy świat.", library_description: "Zacznij od moich ulubionych gier i poznaj całą kolekcję.", library_longplay_label: "gier z ponad 100 godz." },
+            sv: { library_overline: "MIN SPELSAMLING", library_heading: "Varje spel öppnar en ny värld.", library_description: "Börja med mina favoriter och utforska hela samlingen.", library_longplay_label: "spel med över 100 timmar" },
+            vi: { library_overline: "BỘ SƯU TẬP GAME", library_heading: "Mỗi trò chơi là một thế giới.", library_description: "Khám phá những game tôi chơi nhiều nhất và toàn bộ bộ sưu tập.", library_longplay_label: "game đã chơi hơn 100 giờ" },
+            el: { library_overline: "Η ΣΥΛΛΟΓΗ ΜΟΥ", library_heading: "Κάθε παιχνίδι κι ένας κόσμος.", library_description: "Ανακαλύψτε πρώτα τα αγαπημένα μου και μετά όλη τη συλλογή.", library_longplay_label: "παιχνίδια με 100+ ώρες" },
+            th: { library_overline: "คลังเกมของฉัน", library_heading: "ทุกเกมคือโลกใบใหม่", library_description: "เริ่มจากเกมโปรดของฉัน แล้วสำรวจคลังเกมทั้งหมด", library_longplay_label: "เกมที่เล่นเกิน 100 ชั่วโมง" }
+        };
+        Object.keys(libraryTranslations).forEach(lang => Object.assign(interfaceTranslations[lang], libraryTranslations[lang]));
+
+        Object.keys(interfaceTranslations).forEach(lang => {
+            if (LANG_DATA[lang]) Object.assign(LANG_DATA[lang], interfaceTranslations[lang]);
+        });
 
         // Merge extra translations
         Object.keys(extraTranslations).forEach(lang => {

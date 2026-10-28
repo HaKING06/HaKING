@@ -4,6 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>
+        (() => {
+            const supported = ['tr', 'en', 'es', 'ru', 'de', 'fr', 'jp', 'cn', 'pt', 'it', 'kr', 'ar', 'hi', 'bn', 'nl', 'pl', 'sv', 'vi', 'el', 'th'];
+            const aliases = { ja: 'jp', zh: 'cn', ko: 'kr' };
+            const byTimezone = {
+                'Europe/Istanbul': 'tr', 'Asia/Tokyo': 'jp', 'Asia/Shanghai': 'cn', 'Asia/Hong_Kong': 'cn',
+                'Asia/Seoul': 'kr', 'Europe/Madrid': 'es', 'America/Mexico_City': 'es', 'America/Bogota': 'es',
+                'Europe/Moscow': 'ru', 'Asia/Dubai': 'ar', 'Asia/Riyadh': 'ar', 'Africa/Cairo': 'ar',
+                'Europe/Paris': 'fr', 'Europe/Berlin': 'de', 'Europe/Rome': 'it', 'Europe/Lisbon': 'pt',
+                'America/Sao_Paulo': 'pt', 'Asia/Kolkata': 'hi', 'Asia/Dhaka': 'bn', 'Europe/Amsterdam': 'nl',
+                'Europe/Warsaw': 'pl', 'Europe/Stockholm': 'sv', 'Asia/Ho_Chi_Minh': 'vi',
+                'Europe/Athens': 'el', 'Asia/Bangkok': 'th'
+            };
+            const normalize = value => {
+                const primary = String(value || '').toLowerCase().split('-')[0];
+                const code = aliases[primary] || primary;
+                return supported.includes(code) ? code : null;
+            };
+            let saved = null;
+            try { saved = normalize(localStorage.getItem('haking.language')); } catch (_) {}
+            const preferred = (Array.isArray(navigator.languages) ? navigator.languages : [])
+                .concat(navigator.language || [])
+                .map(normalize)
+                .find(Boolean);
+            let timezone = '';
+            try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (_) {}
+            const language = saved || preferred || byTimezone[timezone] || 'en';
+            document.documentElement.dataset.initialLang = language;
+            document.documentElement.lang = ({ jp: 'ja', cn: 'zh-CN', kr: 'ko' })[language] || language;
+            document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+        })();
+    </script>
     <title>HaKING | Halit Güneş – Oyun Profili ve Dijital Arşiv</title>
     <meta name="description" content="Halit Güneş'in oyun profili, sistem özellikleri, ekran görüntüleri ve dijital bağlantıları.">
     <meta name="theme-color" content="#020101">
@@ -93,7 +125,7 @@
             </svg>
             <div class="seal-text">H</div>
         </div>
-        <div class="load-txt" id="ltxt">YÜKLENİYOR...</div>
+        <div class="load-txt" id="ltxt" data-k="boot_loading">YÜKLENİYOR...</div>
         <div class="load-bar">
             <div class="load-fill"></div>
         </div>
@@ -158,9 +190,10 @@
                                 onerror="this.src='https://avatars.akamai.steamstatic.com/b5bd56c1aa4644a474a298e131597431c4897244_full.jpg'">
                         </div>
                         <div class="p-info">
+                            <span class="profile-kicker" data-k="profile_kicker">PLAYER PROFILE / 001</span>
                             <h2>Halit Güneş</h2>
-                            <p>// <span data-k="profile_desc">FULL-STACK DEV & GAMER</span><br>// ID: halitguns06.dev
-                            </p> <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank">
+                            <p data-k="profile_desc">FULL-STACK DEV & GAMER</p>
+                            <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" rel="noopener noreferrer">
                                 <div class="badge"><i data-lucide="shield" size="16"></i>STEAM LEVEL 31</div>
                             </a>
                             <div class="hero-actions">
@@ -260,19 +293,24 @@
                         <h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">MOST PLAYED ON STEAM</span>
                     </div>
                 </div>
-                <div class="library-overview">
+                <div class="library-overview" data-aria-k="library_stats_label">
                     <div class="library-overview-copy">
-                        <span class="library-overline" data-k="library_eyebrow">STEAM ARCHIVE / 01</span>
-                        <h2 data-k="library_heading">The complete collection</h2>
-                        <p data-k="library_description">A live index of every game returned by Steam, sorted by playtime.</p>
+                        <span class="library-overline" data-k="library_overline">KİŞİSEL OYUN ARŞİVİ</span>
+                        <h2 data-k="library_heading">Her oyun başka bir dünya.</h2>
+                        <p data-k="library_description">En çok oynadığım oyunlardan koleksiyonun tamamına göz at.</p>
+                        <div class="library-insight">
+                            <i data-lucide="clock-3" aria-hidden="true"></i>
+                            <strong id="library-longplay-count">0</strong>
+                            <span data-k="library_longplay_label">100+ saat oynanan</span>
+                        </div>
                     </div>
                     <div class="library-overview-stats">
                         <div class="library-overview-stat">
-                            <span data-k="library_count_label">GAMES INDEXED</span>
+                            <span data-k="library_count_label">OYUN</span>
                             <strong id="library-game-count">—</strong>
                         </div>
                         <div class="library-overview-stat">
-                            <span data-k="library_hours_label">TOTAL PLAYTIME</span>
+                            <span data-k="library_hours_label">TOPLAM SÜRE</span>
                             <strong id="library-total-hours">—</strong>
                         </div>
                     </div>
@@ -292,10 +330,6 @@
                         </select>
                     </label>
                     <p id="game-results" class="collection-results" aria-live="polite"></p>
-                </div>
-                <div class="collection-meta">
-                    <span data-k="library_note">Steam oyun arşivi • oynama süresine göre sıralı</span>
-                    <span id="steam-sync" class="collection-sync" aria-live="polite" data-k="steam_sync_wait">İlk otomatik eşitleme bekleniyor</span>
                 </div>
                 <div class="grid">
                     <a class="game" data-appid="2669320" data-playtime-minutes="13578" href="https://store.steampowered.com/app/2669320/" target="_blank" rel="noopener noreferrer" aria-label="EA SPORTS FC 25 — 226.3h">

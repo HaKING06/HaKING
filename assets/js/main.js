@@ -1,8 +1,13 @@
 import { LANG_DATA, LANG_OPTIONS } from './translations.js';
 
-let activeLang = 'tr';
+let activeLang = LANG_DATA[document.documentElement.dataset.initialLang] ? document.documentElement.dataset.initialLang : 'en';
 let steamStats = null;
 const htmlLangTags = { jp: 'ja', cn: 'zh-CN', kr: 'ko' };
+const numberLocales = {
+    tr: 'tr-TR', en: 'en-US', es: 'es-ES', ru: 'ru-RU', de: 'de-DE', fr: 'fr-FR', jp: 'ja-JP',
+    cn: 'zh-CN', pt: 'pt-BR', it: 'it-IT', kr: 'ko-KR', ar: 'ar', hi: 'hi-IN', bn: 'bn-BD',
+    nl: 'nl-NL', pl: 'pl-PL', sv: 'sv-SE', vi: 'vi-VN', el: 'el-GR', th: 'th-TH'
+};
 
 // Keep the site usable when optional animation or audio CDNs are unavailable.
 const fallbackGsap = {
@@ -27,10 +32,14 @@ const fallbackGsap = {
 const gsap = window.gsap || fallbackGsap;
 const HowlClass = window.Howl || class { play() {} pause() {} };
 
-function setLang(c) {
-            activeLang = c; // Seçili dili hafızaya al
-            document.documentElement.lang = htmlLangTags[c] || c;
-            let t = LANG_DATA[c] || LANG_DATA['en'];
+function setLang(c, remember = false) {
+            activeLang = LANG_DATA[c] ? c : 'en';
+            document.documentElement.lang = htmlLangTags[activeLang] || activeLang;
+            document.documentElement.dir = activeLang === 'ar' ? 'rtl' : 'ltr';
+            if (remember) {
+                try { localStorage.setItem('haking.language', activeLang); } catch (_) {}
+            }
+            let t = LANG_DATA[activeLang] || LANG_DATA['en'];
             let fallback = LANG_DATA['en'];
             document.querySelectorAll('[data-k]').forEach(e => {
                 const key = e.getAttribute('data-k');
@@ -49,14 +58,14 @@ function setLang(c) {
                 e.setAttribute('aria-label', t[key] || fallback[key] || key);
             });
             document.querySelectorAll('.lang-opt').forEach(option => {
-                option.setAttribute('aria-pressed', String(option.dataset.language === c));
+                option.setAttribute('aria-pressed', String(option.dataset.language === activeLang));
             });
-            document.getElementById('curr-lang').innerText = c.toUpperCase();
+            document.getElementById('curr-lang').innerText = activeLang.toUpperCase();
             document.getElementById('lang-menu').classList.remove('show');
             if (steamStats) {
+                updateLibrarySummary(steamStats);
                 renderGameLibrary(steamStats.games?.length ? steamStats.games : steamStats.top_games);
                 updateFeaturedGame(steamStats.top_games?.[0] || steamStats.games?.[0]);
-                updateSteamSync(steamStats.updated_at);
             }
         }
 
@@ -80,11 +89,11 @@ function setLang(c) {
                 d.className = 'lang-opt';
                 d.dataset.language = l.c;
                 d.innerText = l.n;
-                d.addEventListener('click', () => setLang(l.c));
+                d.addEventListener('click', () => setLang(l.c, true));
                 m.appendChild(d);
             });
 
-            setLang('tr'); // Default to TR
+            setLang(activeLang); // Browser preference, timezone fallback, or saved choice
             document.querySelectorAll('.section').forEach(section => {
                 const isActive = section.classList.contains('active');
                 section.inert = !isActive;
@@ -184,10 +193,44 @@ function setLang(c) {
 
         function formatSteamHours(minutes) {
             const hours = Math.max(0, Number(minutes) || 0) / 60;
-            const locale = activeLang === 'tr' ? 'tr-TR' : 'en-US';
+            const locale = numberLocales[activeLang] || 'en-US';
             const labels = LANG_DATA[activeLang] || LANG_DATA.en;
             const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(hours);
             return `${formatted} ${labels.hours_short || 'h'}`;
+        }
+
+        function formatLocalizedNumber(value) {
+            const number = Number(value);
+            return Number.isFinite(number)
+                ? new Intl.NumberFormat(numberLocales[activeLang] || 'en-US', { maximumFractionDigits: 0 }).format(number)
+                : '—';
+        }
+
+        function formatTotalHours(value) {
+            const hours = Number(String(value ?? '').replace(/[^\d]/g, ''));
+            if (!Number.isFinite(hours)) return '—';
+            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+            return `${formatLocalizedNumber(hours)} ${labels.hours_short || 'h'}`;
+        }
+
+        function updateLibrarySummary(data) {
+            const totalGames = Number(data.total_games);
+            const totalHours = formatTotalHours(data.total_hours);
+            const games = Array.isArray(data.games) ? data.games : (data.top_games || []);
+            const longplayCount = games.filter(game => Number(game.playtime_minutes) >= 6000).length;
+            const gameText = formatLocalizedNumber(data.total_games);
+            const longplayText = formatLocalizedNumber(longplayCount);
+
+            const homeHours = document.getElementById('total-hours');
+            const homeGames = document.getElementById('total-games');
+            const libraryGames = document.getElementById('library-game-count');
+            const libraryHours = document.getElementById('library-total-hours');
+            const libraryLongplay = document.getElementById('library-longplay-count');
+            if (homeHours && data.total_hours) homeHours.textContent = totalHours;
+            if (homeGames && Number.isFinite(totalGames)) homeGames.textContent = gameText;
+            if (libraryGames && Number.isFinite(totalGames)) libraryGames.textContent = gameText;
+            if (libraryHours && data.total_hours) libraryHours.textContent = totalHours;
+            if (libraryLongplay) libraryLongplay.textContent = longplayText;
         }
 
         function steamImageCandidates(game) {
@@ -274,25 +317,6 @@ function setLang(c) {
             setSteamCover(cover, game);
         }
 
-        function updateSteamSync(updatedAt) {
-            const syncLabel = document.getElementById('steam-sync');
-            if (!syncLabel) return;
-            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            if (!updatedAt) {
-                syncLabel.textContent = labels.steam_sync_wait || LANG_DATA.en.steam_sync_wait;
-                return;
-            }
-
-            const date = new Date(updatedAt);
-            if (Number.isNaN(date.getTime())) {
-                syncLabel.textContent = labels.steam_sync_wait || LANG_DATA.en.steam_sync_wait;
-                return;
-            }
-            const locale = activeLang === 'tr' ? 'tr-TR' : 'en-US';
-            const formattedDate = new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(date);
-            syncLabel.textContent = `${labels.steam_sync_last || LANG_DATA.en.steam_sync_last} · ${formattedDate}`;
-        }
-
         function renderGameLibrary(games) {
             const grid = document.querySelector('#armory .grid');
             if (!grid || !Array.isArray(games) || games.length === 0) return;
@@ -351,16 +375,7 @@ function setLang(c) {
 
         function applySteamStats(data) {
             steamStats = data;
-            const totalHours = document.getElementById('total-hours');
-            const totalGames = document.getElementById('total-games');
-            if (totalHours && data.total_hours) totalHours.textContent = data.total_hours;
-            if (totalGames && Number.isFinite(Number(data.total_games))) totalGames.textContent = String(data.total_games);
-            const libraryGameCount = document.getElementById('library-game-count');
-            const libraryHours = document.getElementById('library-total-hours');
-            if (libraryGameCount && Number.isFinite(Number(data.total_games))) {
-                libraryGameCount.textContent = new Intl.NumberFormat(activeLang === 'tr' ? 'tr-TR' : 'en-US').format(Number(data.total_games));
-            }
-            if (libraryHours && data.total_hours) libraryHours.textContent = data.total_hours;
+            updateLibrarySummary(data);
 
             const sysEl = document.getElementById('sys-status');
             const statusKey = { ONLINE: 'sys', OFFLINE: 'sys_off', UNKNOWN: 'sys_unknown' }[data.system_status] || 'sys_unknown';
@@ -411,7 +426,9 @@ function setLang(c) {
         }
 
         function initCur() {
-            let c = document.getElementById('cursor');
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            const c = document.getElementById('cursor');
+            if (!c) return;
             document.addEventListener('mousemove', event => {
                 c.style.left = `${event.clientX}px`;
                 c.style.top = `${event.clientY}px`;
@@ -429,32 +446,120 @@ function setLang(c) {
 
         function initThree() {
             const THREE = window.THREE;
-            if (!THREE) return;
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const canvasHost = document.getElementById('canvas');
+            if (!THREE || !canvasHost || canvasHost.dataset.initialized === 'true') return;
+            canvasHost.dataset.initialized = 'true';
 
-            const c = document.getElementById('canvas');
-            const s = new THREE.Scene();
-            const cam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const r = new THREE.WebGLRenderer({ alpha: true });
-            r.setSize(window.innerWidth, window.innerHeight);
-            c.appendChild(r.domElement);
-            const g = new THREE.BufferGeometry();
-            const pos = new Float32Array(2000 * 3);
-            for (let i = 0; i < 4500; i++)pos[i] = (Math.random() - 0.5) * 200;
-            g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-            const m = new THREE.PointsMaterial({ size: 0.15, color: 0xff0000, transparent: true, opacity: 0.5 });
-            const mesh = new THREE.Points(g, m); s.add(mesh); cam.position.z = 50;
-            if (prefersReducedMotion) {
-                r.render(s, cam);
-            } else {
-                function a() { requestAnimationFrame(a); mesh.rotation.y += 0.001; r.render(s, cam); }
-                a();
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const compactScreen = window.matchMedia('(max-width: 768px)').matches;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.1, 300);
+            camera.position.z = 54;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, compactScreen ? 1 : 1.4));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.domElement.setAttribute('aria-hidden', 'true');
+            canvasHost.appendChild(renderer.domElement);
+
+            const pointCount = compactScreen ? 260 : 1450;
+            const positions = new Float32Array(pointCount * 3);
+            const aspect = window.innerWidth / Math.max(window.innerHeight, 1);
+            for (let index = 0; index < pointCount; index += 1) {
+                const offset = index * 3;
+                positions[offset] = (Math.random() - 0.5) * 92 * aspect;
+                positions[offset + 1] = (Math.random() - 0.5) * 86;
+                positions[offset + 2] = -Math.random() * 125;
             }
-            window.addEventListener('resize', () => {
-                cam.aspect = window.innerWidth / window.innerHeight;
-                cam.updateProjectionMatrix();
-                r.setSize(window.innerWidth, window.innerHeight);
+
+            const stars = new THREE.BufferGeometry();
+            stars.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xf3bd63,
+                size: compactScreen ? 0.1 : 0.16,
+                transparent: true,
+                opacity: compactScreen ? 0.32 : 0.58,
+                sizeAttenuation: true,
+                depthWrite: false
             });
+            const field = new THREE.Points(stars, starMaterial);
+            scene.add(field);
+
+            const emberCount = compactScreen ? 65 : 340;
+            const emberPositions = new Float32Array(emberCount * 3);
+            for (let index = 0; index < emberCount; index += 1) {
+                const offset = index * 3;
+                emberPositions[offset] = (Math.random() - 0.5) * 86 * aspect;
+                emberPositions[offset + 1] = (Math.random() - 0.5) * 42;
+                emberPositions[offset + 2] = -Math.random() * 72;
+            }
+            const embers = new THREE.BufferGeometry();
+            embers.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3));
+            const emberField = new THREE.Points(embers, new THREE.PointsMaterial({
+                color: 0xff493f,
+                size: compactScreen ? 0.08 : 0.12,
+                transparent: true,
+                opacity: 0.3,
+                depthWrite: false
+            }));
+            scene.add(emberField);
+
+            const orbitMaterial = new THREE.MeshBasicMaterial({
+                color: 0xc58c50,
+                transparent: true,
+                opacity: compactScreen ? 0.08 : 0.16,
+                wireframe: true,
+                depthWrite: false
+            });
+            const orbit = new THREE.Mesh(new THREE.TorusGeometry(14, 0.018, 4, 180), orbitMaterial);
+            orbit.position.set(18, 3, -38);
+            orbit.rotation.set(0.7, 0.22, -0.28);
+            scene.add(orbit);
+
+            let targetX = 0;
+            let targetY = 0;
+            if (!compactScreen) {
+                window.addEventListener('pointermove', event => {
+                    targetX = (event.clientX / window.innerWidth - 0.5) * 2;
+                    targetY = (event.clientY / window.innerHeight - 0.5) * 2;
+                }, { passive: true });
+            }
+
+            const resize = () => {
+                camera.aspect = window.innerWidth / Math.max(window.innerHeight, 1);
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+            window.addEventListener('resize', resize, { passive: true });
+
+            let frame = 0;
+            const draw = () => {
+                if (document.hidden) {
+                    frame = 0;
+                    return;
+                }
+                camera.position.x += (targetX * 2.2 - camera.position.x) * 0.018;
+                camera.position.y += (-targetY * 1.4 - camera.position.y) * 0.018;
+                field.rotation.y += compactScreen ? 0.00008 : 0.00016;
+                field.rotation.x += 0.000025;
+                emberField.rotation.y -= 0.00011;
+                orbit.rotation.z += 0.00016;
+                renderer.render(scene, camera);
+                frame = window.requestAnimationFrame(draw);
+            };
+            const resume = () => {
+                if (document.hidden) {
+                    if (frame) window.cancelAnimationFrame(frame);
+                    frame = 0;
+                } else if (!reducedMotion && !compactScreen && !frame) {
+                    frame = window.requestAnimationFrame(draw);
+                } else {
+                    renderer.render(scene, camera);
+                }
+            };
+            document.addEventListener('visibilitychange', resume);
+            if (reducedMotion || compactScreen) renderer.render(scene, camera);
+            else resume();
         }
 
         /* ======================================= */
@@ -565,6 +670,15 @@ function setLang(c) {
             loader.style.display = 'none';
             app.style.opacity = 1;
             app.style.pointerEvents = 'all';
+            app.classList.add('is-ready');
+            if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const heroItems = Array.from(document.querySelectorAll('#sanctum .home-overview > *'));
+                if (heroItems.length) {
+                    window.gsap.fromTo(heroItems, { opacity: 0, y: 24 }, {
+                        opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power3.out', delay: 0.08
+                    });
+                }
+            }
         }
 
         async function runBootLoader() {
@@ -578,23 +692,14 @@ function setLang(c) {
                 volume: 0.25
             });
 
-            const bootLogs = {
-                tr: {
-                    init: "SİSTEM BİLEŞENLERİ YÜKLENİYOR...",
-                    pointer: "GİRİŞ AYGITLARI BAĞLANIYOR...",
-                    steam: "STEAM VERİLERİ SENKRONİZE EDİLİYOR...",
-                    cache: "GÖRSEL ÖĞELER PRELOAD EDİLİYOR...",
-                    ready: "SİSTEM HAZIR, GİRİŞ YAPILIYOR..."
-                },
-                en: {
-                    init: "LOADING SYSTEM COMPONENTS...",
-                    pointer: "CONNECTING POINTER INTERFACE...",
-                    steam: "SYNCING STEAM DATA PACKETS...",
-                    cache: "PRELOADING GRAPHICAL ASSETS...",
-                    ready: "SYSTEM READY, LAUNCHING..."
-                }
+            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+            const logs = {
+                init: labels.boot_init || LANG_DATA.en.boot_init,
+                pointer: labels.boot_pointer || LANG_DATA.en.boot_pointer,
+                steam: labels.boot_steam || LANG_DATA.en.boot_steam,
+                cache: labels.boot_cache || LANG_DATA.en.boot_cache,
+                ready: labels.boot_ready || LANG_DATA.en.boot_ready
             };
-            const logs = bootLogs[activeLang] || bootLogs['en'];
 
             const updateProgress = (pct, labelText) => {
                 gsap.to(fill, { width: pct + '%', duration: 0.3, ease: 'power1.out' });
@@ -640,8 +745,6 @@ function setLang(c) {
                             const value = document.getElementById(id);
                             if (value?.textContent === 'Loading...') value.textContent = '—';
                         });
-                        const syncLabel = document.getElementById('steam-sync');
-                        if (syncLabel) syncLabel.textContent = (LANG_DATA[activeLang] || LANG_DATA.en).steam_sync_unavailable;
                         const status = document.getElementById('sys-status');
                         if (status) {
                             status.setAttribute('data-k', 'sys_unknown');

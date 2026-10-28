@@ -2011,8 +2011,7 @@
 
         .p-info { position: relative; z-index: 1; }
 
-        .p-info::before {
-            content: 'PLAYER PROFILE  /  001';
+        .profile-kicker {
             display: block;
             margin-bottom: 14px;
             color: var(--gold);
@@ -2784,7 +2783,7 @@
         #armory .collection-empty { max-width: none; margin: 0 0 32px; }
         #armory .collection-meta > span:first-child { letter-spacing: 0.035em; }
 
-        @media (min-width: 769px) and (max-width: 1199px) {
+        @media (min-width: 769px) and (max-width: 1279px) {
             #sanctum .home-overview { grid-template-columns: minmax(0, 1fr); }
             #sanctum .profile { min-height: 315px; padding: clamp(24px, 4vw, 48px); gap: clamp(24px, 4vw, 50px); }
             #sanctum .avi-w { width: clamp(175px, 22vw, 230px); height: clamp(175px, 22vw, 230px); }
@@ -2835,4 +2834,308 @@
             #armory .collection-meta { gap: 5px; }
             #armory .collection-meta > span:first-child { font-size: 0.49rem; }
             #armory .collection-sync { font-size: 0.48rem; }
+        }
+
+
+        /* Cinematic desktop direction */
+        #canvas { opacity: 0.34; }
+        .stage { background-size: 64px 64px; }
+        .stage::after {
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 78% 28%, rgba(181, 105, 43, 0.11), transparent 38%),
+                radial-gradient(ellipse at 28% 76%, rgba(128, 37, 32, 0.12), transparent 44%),
+                linear-gradient(90deg, rgba(2, 3, 5, 0.18), transparent 36%, rgba(3, 4, 7, 0.12));
+            content: '';
+            pointer-events: none;
+        }
+        .section { z-index: 1; }
+        .section.active { z-index: 2; }
+        #app.is-ready #sanctum .home-overview > * { will-change: transform, opacity; }
+
+        #sanctum.section {
+            padding: clamp(30px, 3.2vw, 58px) clamp(28px, 4.2vw, 92px) 64px;
+        }
+        #sanctum > .head,
+        #sanctum > .grid,
+        .section > .head,
+        .section > .grid {
+            max-width: 1760px;
+        }
+        #sanctum > .head {
+            align-items: flex-end;
+            margin-bottom: clamp(24px, 3.6vw, 48px);
+            padding-bottom: 20px;
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+        #sanctum .h-tit {
+            font-size: clamp(4rem, 7.3vw, 7.4rem);
+            letter-spacing: -0.055em;
+            line-height: 0.9;
+            text-shadow: 0 14px 70px rgba(243, 189, 99, 0.1);
+        }
+        #sanctum .h-sub { margin-top: 14px; letter-spacing: 0.28em; }
+        #sanctum .h-stat { padding: 11px 15px; border: 1px solid rgba(132, 207, 169, 0.2); border-radius: 999px; background: rgba(11, 22, 18, 0.64); }
+        #sanctum .grid { gap: clamp(18px, 1.7vw, 30px); padding-bottom: 90px; }
+
+        #sanctum .home-overview {
+            grid-template-columns: minmax(0, 1.08fr) minmax(430px, 0.92fr);
+            min-height: clamp(520px, 68vh, 790px);
+            gap: clamp(18px, 2vw, 34px);
+            isolation: isolate;
+        }
+        #sanctum .home-overview::before {
+            position: absolute;
+            z-index: -1;
+            inset: -10% -5% -8% 35%;
+            background:
+                radial-gradient(ellipse at 55% 42%, rgba(201, 130, 61, 0.13), transparent 52%),
+                linear-gradient(110deg, transparent 24%, rgba(243, 189, 99, 0.025), transparent 70%);
+            content: '';
+            pointer-events: none;
+        }
+        #sanctum .profile {
+            min-height: 100%;
+            gap: clamp(28px, 4vw, 72px);
+            padding: clamp(32px, 5vw, 82px);
+            border-color: rgba(243, 189, 99, 0.23);
+            border-radius: 30px;
+            background:
+                radial-gradient(ellipse at 14% 48%, rgba(243, 189, 99, 0.14), transparent 48%),
+                linear-gradient(120deg, rgba(20, 19, 19, 0.95), rgba(8, 9, 12, 0.82) 72%);
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.065), 0 40px 110px rgba(0, 0, 0, 0.36);
+            backdrop-filter: blur(12px);
+        }
+        #sanctum .avi-w { width: clamp(220px, 20vw, 340px); height: clamp(220px, 20vw, 340px); }
+        #sanctum .avi-img { filter: contrast(1.06) saturate(0.92); transition: transform 800ms cubic-bezier(0.2, 0.7, 0.1, 1), filter 450ms ease; }
+        #sanctum .profile:hover .avi-img { transform: scale(1.035); filter: contrast(1.08) saturate(1.08); }
+        #sanctum .p-info h2 { font-size: clamp(3.3rem, 5vw, 6.2rem); letter-spacing: -0.035em; }
+        #sanctum .p-info p { max-width: 540px; margin-block: 20px 28px; font-size: clamp(0.88rem, 1.08vw, 1.08rem); }
+        #sanctum .hero-actions { flex-wrap: wrap; gap: 11px; }
+        #sanctum .hero-action { min-height: 48px; padding-inline: 18px; border-radius: 12px; font-size: 0.68rem; }
+        #sanctum .home-dashboard-rail { grid-template-rows: auto minmax(0, 1fr); gap: 16px; }
+        #sanctum .home-stats { gap: 13px; }
+        #sanctum .home-stats .stat { min-height: 126px; padding: 23px clamp(14px, 1.65vw, 26px); border-radius: 20px; }
+        #sanctum .home-stats .stat h3 { font-size: 0.65rem; letter-spacing: 0.18em; }
+        #sanctum .home-stats .stat-val { font-size: clamp(1.55rem, 2vw, 2.3rem); }
+        #sanctum .home-top-game {
+            min-height: 100%;
+            border-radius: 25px;
+            border-color: rgba(243, 189, 99, 0.2);
+            background: linear-gradient(130deg, rgba(17, 18, 22, 0.87), rgba(8, 9, 12, 0.95));
+            box-shadow: 0 32px 88px rgba(0, 0, 0, 0.36), inset 0 1px rgba(255, 255, 255, 0.04);
+        }
+        #sanctum .home-top-cover { width: 100%; opacity: 0.58; filter: saturate(0.8); mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.7) 46%, transparent 100%); }
+        #sanctum .home-top-game::after { background: linear-gradient(180deg, rgba(8,9,12,.08), rgba(8,9,12,.36) 45%, #08090c 100%); }
+        #sanctum .home-top-game-copy {
+            width: min(100%, 680px);
+            align-content: end;
+            margin: 0;
+            padding: clamp(28px, 3vw, 48px);
+        }
+        #sanctum .home-top-game-copy h2 { max-width: 560px; font-size: clamp(1.8rem, 2.75vw, 3.15rem); }
+        #sanctum .home-top-game-copy p strong { font-size: 1.35rem; }
+        #sanctum .home-top-rank { top: 28px; right: 28px; font-size: 0.72rem; }
+        #sanctum .home-explorer { padding-top: clamp(24px, 3vw, 48px); }
+        #sanctum .home-explorer-head { margin-bottom: 23px; }
+        #sanctum .home-route { min-height: 220px; padding: 24px; border-radius: 21px; }
+        #sanctum .route-title { font-size: 1.02rem; }
+        #sanctum .route-description { max-width: 230px; font-size: 0.72rem; line-height: 1.7; }
+
+        #armory.section { padding: clamp(30px, 3.2vw, 58px) clamp(28px, 4.2vw, 92px) 64px; }
+        #armory > .head { padding-bottom: 22px; }
+        #armory .h-tit { font-size: clamp(3.6rem, 7vw, 7rem); letter-spacing: -0.055em; }
+        #armory .h-sub { letter-spacing: 0.24em; }
+        #armory .library-overview {
+            min-height: 112px;
+            justify-content: flex-end;
+            gap: clamp(30px, 6vw, 90px);
+            margin-bottom: 16px;
+            padding: 10px clamp(20px, 3vw, 44px);
+            border: 1px solid rgba(255, 255, 255, 0.075);
+            border-radius: 17px;
+            background: linear-gradient(100deg, rgba(15,16,19,.72), rgba(23,20,18,.7));
+            box-shadow: inset 0 1px rgba(255,255,255,.035);
+        }
+        #armory .library-overview-stat { min-width: 160px; gap: 9px; }
+        #armory .library-overview-stat + .library-overview-stat { padding-left: clamp(30px, 4vw, 64px); border-left-color: rgba(243, 189, 99, 0.2); }
+        #armory .library-overview-stat span { font-size: 0.58rem; letter-spacing: 0.17em; }
+        #armory .library-overview-stat strong { font-size: clamp(1.8rem, 2.7vw, 2.8rem); }
+        #armory .collection-tools { gap: 20px; padding: 13px; border-radius: 16px; }
+        #armory .collection-search { height: 58px; }
+        #armory .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: clamp(14px, 1.5vw, 24px); }
+        #armory .game { height: clamp(215px, 16.5vw, 320px); border-radius: 18px; }
+        #armory .game-ov { padding: 18px 20px; gap: 10px 14px; }
+        #armory .g-tit { font-size: clamp(0.95rem, 1.15vw, 1.2rem); }
+        #armory .g-time { font-size: 0.74rem; }
+        #armory .collection-empty { font-size: 0.9rem; }
+
+        @media (min-width: 769px) and (max-width: 1279px) {
+            #sanctum.section, #armory.section { padding-inline: clamp(24px, 3.4vw, 48px); }
+            #sanctum .home-overview { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+            #sanctum .profile { min-height: 315px; }
+            #sanctum .avi-w { width: clamp(175px, 22vw, 230px); height: clamp(175px, 22vw, 230px); }
+            #sanctum .p-info h2 { font-size: clamp(2.8rem, 5vw, 4.4rem); }
+            #sanctum .home-top-game { min-height: 340px; }
+        }
+        @media (min-width: 1440px) {
+            #sanctum .home-overview { grid-template-columns: minmax(0, 1.14fr) minmax(420px, 0.86fr); }
+            #sanctum .home-top-game-copy { padding: clamp(38px, 4vw, 70px); }
+            #armory .grid { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            #canvas { opacity: 0.12; }
+            .stage::after { background: linear-gradient(180deg, rgba(2,3,5,.14), rgba(2,3,5,.5)); }
+            #sanctum.section, #armory.section { padding: 50px 17px calc(30px + env(safe-area-inset-bottom, 0px)); }
+            #sanctum > .head { margin-bottom: 22px; padding-bottom: 14px; }
+            #sanctum .h-tit { font-size: clamp(2.45rem, 10vw, 4rem); }
+            #sanctum .home-overview { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+            #sanctum .profile { min-height: 0; padding: 22px 18px; border-radius: 20px; }
+            #sanctum .avi-w { width: clamp(108px, 30vw, 150px); height: clamp(108px, 30vw, 150px); }
+            #sanctum .p-info h2 { font-size: clamp(1.65rem, 7.2vw, 2.6rem); }
+            #sanctum .home-top-game { min-height: 230px; }
+            #sanctum .home-top-game-copy { width: 88%; padding: 21px; }
+            #sanctum .home-top-game-copy h2 { font-size: clamp(1.4rem, 6vw, 2rem); }
+            #sanctum .home-stats .stat { min-height: 96px; }
+            #sanctum .home-route { min-height: 166px; padding: 15px; }
+            #armory .library-overview { min-height: 84px; gap: clamp(18px, 6vw, 32px); padding-inline: 16px; }
+            #armory .library-overview-stat { min-width: 0; gap: 7px; }
+            #armory .library-overview-stat + .library-overview-stat { padding-left: clamp(16px, 5vw, 27px); }
+            #armory .library-overview-stat span { font-size: 0.49rem; letter-spacing: 0.1em; }
+            #armory .library-overview-stat strong { font-size: clamp(1.3rem, 6vw, 1.8rem); }
+            #armory .collection-tools { gap: 9px; }
+            #armory .game { height: clamp(160px, 44vw, 235px); }
+        }
+        @media (max-width: 390px) {
+            #sanctum .profile { gap: 14px; padding-inline: 13px; }
+            #sanctum .hero-actions { display: grid; grid-template-columns: 1fr; }
+            #armory .collection-sort select { min-width: 120px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #sanctum .profile:hover .avi-img,
+            #sanctum .home-top-cover,
+            #armory .game-bg,
+            #armory .game-art { transition: none !important; }
+        }
+
+        /* Final responsive fit: keep profile copy and actions inside the card. */
+        #sanctum .profile {
+            display: grid;
+            grid-template-columns: minmax(0, clamp(176px, 18vw, 280px)) minmax(0, 1fr);
+            align-items: center;
+            gap: clamp(22px, 3.2vw, 48px);
+            min-width: 0;
+            padding: clamp(24px, 3.2vw, 54px);
+        }
+        #sanctum .avi-w {
+            width: clamp(176px, 18vw, 280px);
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+            justify-self: center;
+        }
+        #sanctum .p-info { width: 100%; min-width: 0; max-width: 100%; }
+        #sanctum .profile-kicker { max-width: 100%; font-size: clamp(0.52rem, 0.66vw, 0.68rem); line-height: 1.5; overflow-wrap: anywhere; }
+        #sanctum .p-info h2 {
+            max-width: 100%;
+            font-size: clamp(2.55rem, 4.1vw, 5rem);
+            line-height: 0.98;
+            overflow-wrap: anywhere;
+        }
+        #sanctum .p-info p { max-width: 100%; margin-block: 16px 20px; overflow-wrap: anywhere; }
+        #sanctum .p-info > a { display: inline-flex; max-width: 100%; color: inherit; text-decoration: none; }
+        #sanctum .badge { max-width: 100%; flex-wrap: wrap; }
+        #sanctum .hero-actions {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            width: min(100%, 25rem);
+            gap: 9px;
+        }
+        #sanctum .hero-action {
+            width: 100%;
+            min-width: 0;
+            min-height: 48px;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 14px;
+            line-height: 1.35;
+            white-space: normal;
+            text-align: left;
+        }
+        #sanctum .hero-action span { min-width: 0; overflow-wrap: anywhere; }
+        #sanctum .hero-action i { flex: 0 0 16px; }
+
+        #armory .library-overview {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            justify-content: space-between;
+            gap: clamp(24px, 5vw, 80px);
+            min-height: 196px;
+            padding: clamp(26px, 3.4vw, 54px);
+            background:
+                radial-gradient(ellipse at 4% 100%, rgba(243, 189, 99, 0.14), transparent 48%),
+                linear-gradient(115deg, rgba(24, 23, 22, 0.97), rgba(12, 13, 16, 0.98) 72%);
+        }
+        #armory .library-overview-copy { min-width: 0; max-width: 740px; }
+        #armory .library-overview-copy h2 {
+            margin: 9px 0 8px;
+            font-size: clamp(1.8rem, 3vw, 3rem);
+            line-height: 1.08;
+            text-wrap: balance;
+        }
+        #armory .library-overview-copy p { max-width: 54ch; font-size: clamp(0.68rem, 0.8vw, 0.78rem); line-height: 1.75; }
+        #armory .library-insight {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 17px;
+            padding: 9px 12px;
+            border: 1px solid rgba(243, 189, 99, 0.2);
+            border-radius: 999px;
+            background: rgba(243, 189, 99, 0.055);
+            color: #c9c0b2;
+            font: 0.59rem var(--f-code);
+            letter-spacing: 0.06em;
+        }
+        #armory .library-insight i { width: 14px; height: 14px; color: var(--gold); }
+        #armory .library-insight strong { color: var(--gold); font-size: 0.72rem; }
+        #armory .library-overview-stats { display: flex; flex: none; gap: clamp(18px, 3vw, 46px); }
+        #armory .library-overview-stat { min-width: clamp(102px, 9vw, 152px); }
+        #armory .library-overview-stat + .library-overview-stat { padding-inline-start: clamp(18px, 2.6vw, 40px); }
+
+        @media (min-width: 769px) and (max-width: 1279px) {
+            #sanctum .profile { grid-template-columns: minmax(0, 230px) minmax(0, 1fr); }
+            #sanctum .avi-w { width: clamp(176px, 20vw, 230px); }
+            #sanctum .p-info h2 { font-size: clamp(2.5rem, 4.5vw, 4.2rem); }
+            #armory .library-overview { grid-template-columns: minmax(0, 1fr) auto; gap: 28px; }
+            #armory .library-overview-stats { gap: 14px; }
+            #armory .library-overview-stat { min-width: 95px; }
+        }
+        @media (max-width: 768px) {
+            #sanctum .profile { grid-template-columns: minmax(96px, clamp(100px, 28vw, 142px)) minmax(0, 1fr); gap: 16px; padding: 22px 18px; }
+            #sanctum .avi-w { width: 100%; }
+            #sanctum .p-info h2 { font-size: clamp(1.55rem, 6.6vw, 2.45rem); }
+            #sanctum .p-info p { margin-block: 11px 14px; font-size: 0.75rem; }
+            #sanctum .hero-actions { width: 100%; margin-top: 14px; }
+            #sanctum .hero-action { min-height: 42px; padding: 8px 10px; font-size: 0.58rem; }
+            #armory .library-overview { grid-template-columns: minmax(0, 1fr); gap: 22px; min-height: 0; padding: 22px 19px; }
+            #armory .library-overview-copy h2 { font-size: clamp(1.55rem, 6.3vw, 2.25rem); }
+            #armory .library-overview-stats { width: 100%; justify-content: space-between; gap: 12px; }
+            #armory .library-overview-stat { min-width: 0; }
+            #armory .library-overview-stat + .library-overview-stat { padding-inline-start: 18px; }
+            #armory .library-overview-stat span { white-space: normal; }
+        }
+        @media (max-width: 390px) {
+            #sanctum .profile { grid-template-columns: 92px minmax(0, 1fr); gap: 13px; padding: 17px 13px; }
+            #sanctum .avi-w { width: 92px; }
+            #sanctum .p-info h2 { font-size: clamp(1.42rem, 7vw, 1.8rem); }
+            #sanctum .profile-kicker { font-size: 0.47rem; letter-spacing: 0.08em; }
+            #sanctum .badge { padding: 8px 10px; font-size: 0.56rem; }
+            #sanctum .hero-action { font-size: 0.54rem; }
+            #armory .library-overview-stats { gap: 8px; }
+            #armory .library-overview-stat + .library-overview-stat { padding-inline-start: 12px; }
+            #armory .library-insight { font-size: 0.52rem; }
         }
