@@ -1,39 +1,39 @@
 {
   "schema_version": 2,
-  "updated_at": null,
-  "total_games": 191,
-  "total_hours": "1,783h",
+  "total_games": 248,
+  "total_hours": "2,167h",
   "top_games": [
     {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "playtime_minutes": 17817
+    },
+    {
       "appid": 2669320,
-      "name": "EA SPORTS FC 25",
+      "name": "EA SPORTS FC™ 25",
       "playtime_minutes": 13578
     },
     {
       "appid": 261550,
       "name": "Mount & Blade II: Bannerlord",
-      "playtime_minutes": 9882
+      "playtime_minutes": 10816
+    },
+    {
+      "appid": 3405690,
+      "name": "EA SPORTS FC™ 26",
+      "playtime_minutes": 5629
     },
     {
       "appid": 292030,
-      "name": "The Witcher 3: Wild Hunt",
-      "playtime_minutes": 5484
+      "name": "The Witcher 3: Wild Hunt — Remastered",
+      "playtime_minutes": 5486
     },
     {
       "appid": 812140,
       "name": "Assassin's Creed Odyssey",
-      "playtime_minutes": 5160
-    },
-    {
-      "appid": 1091500,
-      "name": "Cyberpunk 2077",
-      "playtime_minutes": 4764
-    },
-    {
-      "appid": 2322010,
-      "name": "God of War",
-      "playtime_minutes": 4422
+      "playtime_minutes": 5159
     }
   ],
-  "system_status": "ONLINE"
+  "system_status": "ONLINE",
+  "updated_at": "2026-10-28T15:35:39Z"
 }
