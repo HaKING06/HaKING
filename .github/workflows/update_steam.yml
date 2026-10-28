@@ -30,8 +30,12 @@ jobs:
 
       - name: Değişiklikleri Kaydet
         run: |
-          git config --global user.name 'HaKING Bot'
-          git config --global user.email 'bot@haking.dev'
-          git add steam_data.json
-          git commit -m "Steam verileri güncellendi" || exit 0
+          git config user.name 'HaKING Bot'
+          git config user.email 'bot@haking.dev'
+          git add data/steam_stats.json
+          if git diff --cached --quiet; then
+            echo "Steam verilerinde değişiklik yok."
+            exit 0
+          fi
+          git commit -m "Steam verileri güncellendi"
           git push
