@@ -2587,3 +2587,252 @@
             .modal-content { width: calc(100% - 24px); margin: 12px auto; border-radius: 18px; }
             .modal-body { max-height: calc(100dvh - 90px); }
         }
+
+
+        /* Desktop-first home dashboard and complete Steam library */
+        #sanctum .home-overview {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.12fr) minmax(390px, 0.88fr);
+            align-items: stretch;
+            gap: clamp(16px, 1.6vw, 26px);
+        }
+
+        #sanctum .profile {
+            grid-column: auto;
+            min-height: 430px;
+            gap: clamp(28px, 3.8vw, 60px);
+            padding: clamp(30px, 4vw, 64px);
+            border-radius: 26px;
+            background:
+                radial-gradient(ellipse at 18% 50%, rgba(243, 189, 99, 0.09), transparent 55%),
+                linear-gradient(135deg, rgba(20, 18, 17, 0.98), rgba(8, 9, 12, 0.98));
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.05), 0 28px 70px rgba(0, 0, 0, 0.28);
+        }
+
+        #sanctum .avi-w { width: clamp(190px, 17vw, 260px); height: clamp(190px, 17vw, 260px); }
+        #sanctum .p-info h2 { font-size: clamp(3rem, 4.6vw, 5rem); }
+        #sanctum .p-info p { font-size: clamp(0.82rem, 1vw, 1.02rem); line-height: 1.85; }
+
+        .home-dashboard-rail {
+            display: grid;
+            min-width: 0;
+            grid-template-rows: auto minmax(0, 1fr);
+            gap: 14px;
+        }
+
+        .home-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        #sanctum .home-stats .stat {
+            min-width: 0;
+            min-height: 105px;
+            grid-column: auto;
+            gap: 7px;
+            padding: 18px clamp(12px, 1.35vw, 20px);
+            border-radius: 17px;
+            background: linear-gradient(145deg, rgba(25, 25, 29, 0.93), rgba(13, 14, 17, 0.96));
+        }
+
+        #sanctum .home-stats .stat h3 { margin: 0; font-size: 0.6rem; }
+        #sanctum .home-stats .stat-val { overflow-wrap: anywhere; font-size: clamp(1.35rem, 1.7vw, 2rem); }
+
+        #sanctum .home-top-game {
+            min-height: 0;
+            grid-column: auto;
+            border-radius: 20px;
+        }
+
+        #sanctum .home-top-game-copy { width: min(70%, 450px); padding-right: clamp(20px, 3vw, 40px); }
+        #sanctum .home-top-game-copy h2 { font-size: clamp(1.35rem, 1.9vw, 2rem); }
+        #sanctum .home-explorer { padding-top: 20px; }
+        #sanctum .home-route { min-height: 190px; }
+
+        #armory.section { padding-inline: clamp(24px, 4vw, 72px); }
+        #armory .head { margin-bottom: clamp(24px, 3vw, 38px); }
+        #armory .h-tit { font-size: clamp(3rem, 5vw, 5.4rem); letter-spacing: -0.035em; }
+        #armory .h-sub { margin-top: 8px; font-size: 0.72rem; letter-spacing: 0.2em; }
+
+        .library-overview {
+            display: flex;
+            min-height: 172px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            margin: 0 0 18px;
+            padding: clamp(24px, 3vw, 42px);
+            overflow: hidden;
+            border: 1px solid rgba(243, 189, 99, 0.19);
+            border-radius: 23px;
+            background:
+                radial-gradient(ellipse at 8% 110%, rgba(243, 189, 99, 0.1), transparent 48%),
+                linear-gradient(115deg, rgba(24, 23, 22, 0.96), rgba(12, 13, 16, 0.98) 68%);
+            box-shadow: 0 24px 58px rgba(0, 0, 0, 0.22), inset 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        .library-overview-copy { min-width: 0; }
+        .library-overline { color: var(--gold); font: 0.62rem var(--f-code); letter-spacing: 0.2em; }
+        .library-overview-copy h2 {
+            margin: 10px 0 7px;
+            color: var(--text);
+            font: 700 clamp(1.65rem, 2.7vw, 2.55rem)/1.1 var(--f-head);
+            letter-spacing: -0.025em;
+        }
+        .library-overview-copy p { max-width: 670px; margin: 0; color: #a6a09b; font: 0.75rem/1.7 var(--f-code); }
+        .library-overview-stats { display: flex; flex: none; gap: clamp(22px, 4vw, 58px); }
+        .library-overview-stat { display: grid; align-content: center; gap: 8px; }
+        .library-overview-stat + .library-overview-stat { padding-left: clamp(20px, 3vw, 42px); border-left: 1px solid rgba(255, 255, 255, 0.11); }
+        .library-overview-stat span { color: #8b8580; font: 0.56rem var(--f-code); letter-spacing: 0.14em; white-space: nowrap; }
+        .library-overview-stat strong { color: var(--gold); font: 600 clamp(1.55rem, 2.4vw, 2.25rem)/1 var(--f-code); white-space: nowrap; }
+
+        .collection-tools {
+            max-width: none;
+            gap: 20px;
+            margin-bottom: 18px;
+            padding: 14px;
+            border-color: rgba(255, 255, 255, 0.09);
+            border-radius: 17px;
+            background: rgba(16, 17, 21, 0.88);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.19);
+        }
+
+        .collection-search { height: 54px; padding-inline: 18px; border-radius: 12px; }
+        .collection-search input { font-size: 0.78rem; }
+        .collection-sort { padding-inline: 6px; }
+        .collection-sort select { min-width: 172px; }
+        .collection-results { min-width: 118px; padding-inline: 8px; font-size: 0.62rem; white-space: nowrap; }
+        .collection-meta { max-width: none; margin: 0 4px 17px; font-size: 0.58rem; }
+        #armory .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: clamp(14px, 1.35vw, 22px);
+            padding-bottom: 32px;
+        }
+        #armory .game {
+            grid-column: auto;
+            height: clamp(205px, 17vw, 282px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 17px;
+            background: #111216;
+            box-shadow: 0 13px 30px rgba(0, 0, 0, 0.25);
+            isolation: isolate;
+        }
+        #armory .game[hidden] { display: none; }
+        #armory .game-bg {
+            display: block;
+            filter: none;
+            background-color: #111216;
+            transition: transform 500ms cubic-bezier(0.2, 0.7, 0.1, 1);
+        }
+        #armory .game-bg::after {
+            position: absolute;
+            z-index: 1;
+            inset: 24% 0 0;
+            background: linear-gradient(180deg, transparent, rgba(7, 8, 10, 0.15) 35%, rgba(7, 8, 10, 0.82));
+            content: '';
+            pointer-events: none;
+        }
+        .game-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: saturate(0.82) brightness(0.82);
+            transition: filter 350ms ease, transform 650ms cubic-bezier(0.2, 0.7, 0.1, 1);
+        }
+        .game-art.is-missing { display: none; }
+        .game-art-fallback {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: rgba(243, 189, 99, 0.72);
+            font: 600 clamp(2.8rem, 5vw, 5rem)/1 var(--f-head);
+            letter-spacing: 0.04em;
+            text-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+        }
+        #armory .game:hover { transform: translateY(-4px); border-color: rgba(243, 189, 99, 0.48); }
+        #armory .game:hover .game-bg { transform: scale(1.035); }
+        #armory .game:hover .game-art { filter: saturate(1.04) brightness(0.96); transform: scale(1.045); }
+        #armory .game-ov {
+            z-index: 2;
+            display: grid;
+            min-height: 0;
+            grid-template-columns: 1fr auto;
+            grid-template-areas: "rank time" "title title";
+            align-content: end;
+            gap: 9px 12px;
+            padding: 15px 17px;
+            transform: none;
+            border-top: 1px solid rgba(243, 189, 99, 0.32);
+            background: linear-gradient(180deg, rgba(7, 8, 10, 0.35), rgba(7, 8, 10, 0.91) 34%, #08090c);
+        }
+        #armory .game-rank { grid-area: rank; color: #aca59d; font: 0.55rem var(--f-code); letter-spacing: 0.13em; }
+        #armory .g-tit {
+            grid-area: title;
+            margin: 0;
+            color: #f5f2ed;
+            font: 700 clamp(0.88rem, 1.05vw, 1.05rem)/1.25 var(--f-head);
+            letter-spacing: 0.015em;
+        }
+        #armory .g-time { grid-area: time; color: var(--gold); font: 0.68rem var(--f-code); white-space: nowrap; }
+        #armory .collection-empty { max-width: none; margin: 0 0 32px; }
+        #armory .collection-meta > span:first-child { letter-spacing: 0.035em; }
+
+        @media (min-width: 769px) and (max-width: 1199px) {
+            #sanctum .home-overview { grid-template-columns: minmax(0, 1fr); }
+            #sanctum .profile { min-height: 315px; padding: clamp(24px, 4vw, 48px); gap: clamp(24px, 4vw, 50px); }
+            #sanctum .avi-w { width: clamp(175px, 22vw, 230px); height: clamp(175px, 22vw, 230px); }
+            .home-dashboard-rail { grid-template-rows: auto minmax(210px, auto); }
+            #armory .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            #armory .game { height: clamp(200px, 24vw, 270px); }
+            .library-overview { min-height: 150px; }
+        }
+
+        @media (max-width: 768px) {
+            #sanctum .home-overview { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+            #sanctum .profile { min-height: 0; grid-column: auto; }
+            .home-dashboard-rail { grid-template-rows: auto auto; gap: 10px; }
+            .home-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+            #sanctum .home-stats .stat { min-height: 96px; padding: 13px; }
+            #sanctum .home-stats .stat:nth-child(3) { grid-column: 1 / -1; }
+            #sanctum .home-top-game { min-height: 150px; grid-column: auto; }
+            #sanctum .home-top-game-copy { width: 72%; }
+            #armory.section { padding-inline: 17px; }
+            #armory .head { margin-bottom: 18px; }
+            #armory .h-tit { font-size: clamp(2rem, 8vw, 3.1rem); }
+            .library-overview {
+                display: grid;
+                min-height: 0;
+                gap: 20px;
+                margin-bottom: 12px;
+                padding: 20px 18px;
+                border-radius: 17px;
+            }
+            .library-overview-copy h2 { margin-top: 8px; font-size: clamp(1.35rem, 5.6vw, 1.8rem); }
+            .library-overview-copy p { font-size: 0.62rem; }
+            .library-overview-stats { justify-content: flex-start; gap: 22px; }
+            .library-overview-stat + .library-overview-stat { padding-left: 22px; }
+            .library-overview-stat span { font-size: 0.48rem; }
+            .library-overview-stat strong { font-size: 1.4rem; }
+            .collection-tools { margin-bottom: 13px; }
+            #armory .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+            #armory .game { height: clamp(158px, 43vw, 220px); border-radius: 13px; }
+            #armory .game-ov { min-height: 76px; gap: 6px 8px; padding: 10px; }
+            #armory .game-rank { font-size: 0.48rem; }
+            #armory .g-tit { font-size: clamp(0.72rem, 3vw, 0.92rem); }
+            #armory .g-time { font-size: 0.58rem; }
+            .game-art-fallback { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            #sanctum .home-stats .stat-val { font-size: 1.45rem; }
+            #armory .collection-meta { gap: 5px; }
+            #armory .collection-meta > span:first-child { font-size: 0.49rem; }
+            #armory .collection-sync { font-size: 0.48rem; }
+        }

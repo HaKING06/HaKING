@@ -1,6 +1,10 @@
 name: Update Steam Stats
 
 on:
+  push:
+    paths:
+      - update_stats.py
+      - .github/workflows/update_steam.yml
   schedule:
     - cron: '*/30 * * * *' # Her 30 dakikada bir çalış
   workflow_dispatch: # İstediğin zaman elle çalıştırmak için
@@ -37,5 +41,5 @@ jobs:
             echo "Steam verilerinde değişiklik yok."
             exit 0
           fi
-          git commit -m "Steam verileri güncellendi"
+          git commit -m "Steam kütüphanesi güncellendi"
           git push

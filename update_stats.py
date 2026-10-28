@@ -8,6 +8,7 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 
@@ -41,8 +42,35 @@ def steam_get(endpoint, api_key, **extra_params):
     return payload
 
 
+def get_store_cover_url(appid):
+    """Resolve Steam's current, versioned store artwork URL for a game."""
+    try:
+        response = requests.get(
+            "https://store.steampowered.com/api/appdetails",
+            params={"appids": appid, "l": "english"},
+            timeout=8,
+        )
+        if not response.ok:
+            return ""
+        payload = response.json()
+    except (requests.RequestException, ValueError):
+        return ""
+
+    details = payload.get(str(appid), {}) if isinstance(payload, dict) else {}
+    game_data = details.get("data", {}) if isinstance(details, dict) else {}
+    cover_url = game_data.get("header_image", "") if isinstance(game_data, dict) else ""
+    if not isinstance(cover_url, str):
+        return ""
+
+    parsed = urlparse(cover_url)
+    allowed_hosts = {"shared.akamai.steamstatic.com", "shared.cloudflare.steamstatic.com"}
+    if parsed.scheme != "https" or parsed.hostname not in allowed_hosts:
+        return ""
+    return cover_url
+
+
 def get_steam_data(api_key):
-    """Return current account totals and the six most-played owned games."""
+    """Return account totals, the full Steam library, and its six top games."""
     games_data = steam_get(
         "IPlayerService/GetOwnedGames/v1/",
         api_key,
@@ -60,37 +88,43 @@ def get_steam_data(api_key):
             "Steam oyun listesi alınamadı. Profilde oyun ayrıntılarının herkese açık olduğunu kontrol edin."
         )
 
-    games_with_playtime = []
+    library_games = []
     total_minutes = 0
     for game in games:
-        appid = game.get("appid")
-        minutes = game.get("playtime_forever", 0)
-        try:
-            appid = int(appid)
-            minutes = max(0, int(minutes))
-        except (TypeError, ValueError):
+        if not isinstance(game, dict):
             continue
 
-        total_minutes += minutes
-        if minutes <= 0:
+        try:
+            appid = int(game.get("appid"))
+            minutes = max(0, int(game.get("playtime_forever", 0)))
+        except (TypeError, ValueError):
             continue
 
         name = game.get("name")
         if not isinstance(name, str) or not name.strip():
             name = f"Steam oyunu {appid}"
+        icon_hash = game.get("img_icon_url", "")
+        if not isinstance(icon_hash, str):
+            icon_hash = ""
 
-        games_with_playtime.append(
+        total_minutes += minutes
+        library_games.append(
             {
                 "appid": appid,
                 "name": name.strip(),
                 "playtime_minutes": minutes,
+                "icon_hash": icon_hash,
             }
         )
 
-    games_with_playtime.sort(
+    library_games.sort(
         key=lambda game: (-game["playtime_minutes"], game["name"].casefold(), game["appid"])
     )
-    top_games = games_with_playtime[:TOP_GAME_LIMIT]
+    top_games = [game for game in library_games if game["playtime_minutes"] > 0][:TOP_GAME_LIMIT]
+    for game in top_games:
+        cover_url = get_store_cover_url(game["appid"])
+        if cover_url:
+            game["cover_url"] = cover_url
     if not top_games:
         raise RuntimeError("Steam hesabında oynama süresi bulunan oyun yok.")
 
@@ -106,9 +140,10 @@ def get_steam_data(api_key):
         pass
 
     return {
-        "schema_version": 2,
-        "total_games": int(games_response.get("game_count") or len(games)),
+        "schema_version": 3,
+        "total_games": int(games_response.get("game_count") or len(library_games)),
         "total_hours": f"{total_minutes // 60:,}h",
+        "games": library_games,
         "top_games": top_games,
         "system_status": system_status,
     }
@@ -146,7 +181,7 @@ def main():
 
     stats = get_steam_data(api_key)
     if write_if_changed(stats):
-        print("Steam profili ve en çok oynanan altı oyun güncellendi.")
+        print("Steam profili, tam oyun kütüphanesi ve ilk altı oyun güncellendi.")
     else:
         print("Steam verilerinde değişiklik yok; yeni dağıtım tetiklenmedi.")
 

@@ -147,6 +147,7 @@
                     <div class="h-stat" id="sys-status" data-k="sys">SYSTEM ONLINE</div>
                 </div>
                 <div class="grid">
+                    <div class="home-overview">
                     <div class="profile">
                         <div class="avi-w">
                             <div class="frame-corner fc-tl"></div>
@@ -172,6 +173,8 @@
                             </div>
                         </div>
                     </div>
+                    <div class="home-dashboard-rail">
+                    <div class="home-stats">
                     <div class="panel stat">
                         <h3 data-k="playtime">TIME</h3>
                         <div class="stat-val" id="total-hours">Loading...</div>
@@ -185,6 +188,7 @@
                         <div class="stat-val" id="total-games">Loading...</div>
                     </div>
 
+                    </div>
                     <article class="home-top-game panel" aria-labelledby="featured-game-title">
                         <div class="home-top-cover" id="featured-game-cover" aria-hidden="true"></div>
                         <div class="home-top-game-copy">
@@ -197,6 +201,9 @@
                         </div>
                         <span class="home-top-rank" aria-hidden="true">№ 01</span>
                     </article>
+
+                    </div>
+                    </div>
 
                     <div class="home-explorer">
                         <div class="home-explorer-head">
@@ -253,11 +260,28 @@
                         <h1 class="h-tit" data-k="nav_armory">ARMORY</h1><span class="h-sub" data-k="sub_armory">MOST PLAYED ON STEAM</span>
                     </div>
                 </div>
+                <div class="library-overview">
+                    <div class="library-overview-copy">
+                        <span class="library-overline" data-k="library_eyebrow">STEAM ARCHIVE / 01</span>
+                        <h2 data-k="library_heading">The complete collection</h2>
+                        <p data-k="library_description">A live index of every game returned by Steam, sorted by playtime.</p>
+                    </div>
+                    <div class="library-overview-stats">
+                        <div class="library-overview-stat">
+                            <span data-k="library_count_label">GAMES INDEXED</span>
+                            <strong id="library-game-count">—</strong>
+                        </div>
+                        <div class="library-overview-stat">
+                            <span data-k="library_hours_label">TOTAL PLAYTIME</span>
+                            <strong id="library-total-hours">—</strong>
+                        </div>
+                    </div>
+                </div>
                 <div class="collection-tools">
                     <label class="collection-search">
                         <i data-lucide="search" aria-hidden="true"></i>
-                        <span class="visually-hidden" data-k="library_search_label">Search the six most-played games</span>
-                        <input id="game-search" type="search" data-p="library_search" placeholder="En çok oynadığın 6 oyunda ara..." autocomplete="off" aria-keyshortcuts="/">
+                        <span class="visually-hidden" data-k="library_search_label">Search the full Steam library</span>
+                        <input id="game-search" type="search" data-p="library_search" placeholder="Tüm Steam kütüphanesinde ara..." autocomplete="off" aria-keyshortcuts="/">
                         <kbd>/</kbd>
                     </label>
                     <label class="collection-sort">
@@ -270,7 +294,7 @@
                     <p id="game-results" class="collection-results" aria-live="polite"></p>
                 </div>
                 <div class="collection-meta">
-                    <span data-k="library_note">Steam'de en çok oynanan 6 oyun • otomatik güncellenir</span>
+                    <span data-k="library_note">Steam oyun arşivi • oynama süresine göre sıralı</span>
                     <span id="steam-sync" class="collection-sync" aria-live="polite" data-k="steam_sync_wait">İlk otomatik eşitleme bekleniyor</span>
                 </div>
                 <div class="grid">
@@ -316,9 +340,7 @@
                             <div class="g-tit">God of War Ragnarök</div><span class="g-time">73.7h</span>
                         </div>
                     </a>
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/games/?tab=all" target="_blank"
-                        class="btn-view" data-k="view_all">VIEW FULL COLLECTION</a>
-                </div>
+</div>
                 <p id="game-empty" class="collection-empty" hidden data-k="library_empty">Bu aramayla eşleşen oyun yok.</p>
             </section>
 

@@ -54,8 +54,8 @@ function setLang(c) {
             document.getElementById('curr-lang').innerText = c.toUpperCase();
             document.getElementById('lang-menu').classList.remove('show');
             if (steamStats) {
-                renderTopGames(steamStats.top_games);
-                updateFeaturedGame(steamStats.top_games?.[0]);
+                renderGameLibrary(steamStats.games?.length ? steamStats.games : steamStats.top_games);
+                updateFeaturedGame(steamStats.top_games?.[0] || steamStats.games?.[0]);
                 updateSteamSync(steamStats.updated_at);
             }
         }
@@ -190,11 +190,78 @@ function setLang(c) {
             return `${formatted} ${labels.hours_short || 'h'}`;
         }
 
-        function setSteamCover(element, appid) {
-            const safeAppId = Number(appid);
-            if (!element || !Number.isSafeInteger(safeAppId) || safeAppId <= 0) return;
-            const imageUrl = `https://cdn.cloudflare.steamstatic.com/steam/apps/${safeAppId}/header.jpg`;
-            element.style.backgroundImage = `linear-gradient(0deg, rgba(5, 6, 9, 0.94), rgba(5, 6, 9, 0.08) 76%), url("${imageUrl}")`;
+        function steamImageCandidates(game) {
+            const appid = Number(game?.appid);
+            if (!Number.isSafeInteger(appid) || appid <= 0) return [];
+
+            const base = 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/' + appid;
+            const candidates = [];
+            if (typeof game.cover_url === 'string' && game.cover_url.startsWith('https://')) {
+                candidates.push(game.cover_url);
+            }
+            candidates.push(
+                base + '/header.jpg',
+                base + '/capsule_616x353.jpg',
+                'https://cdn.akamai.steamstatic.com/steam/apps/' + appid + '/header.jpg',
+                'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appid + '/header.jpg'
+            );
+            const iconHash = typeof game.icon_hash === 'string' ? game.icon_hash.trim() : '';
+            if (/^[a-f0-9]{32}$/i.test(iconHash)) {
+                candidates.push('https://media.steampowered.com/steamcommunity/public/images/apps/' + appid + '/' + iconHash + '.jpg');
+            }
+            return [...new Set(candidates)];
+        }
+
+        function gameMonogram(name) {
+            return String(name || 'Steam')
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map(word => Array.from(word)[0] || '')
+                .join('')
+                .toLocaleUpperCase('en');
+        }
+
+        function setSteamCover(element, game) {
+            if (!element || !game) return;
+            const candidates = steamImageCandidates(game);
+            if (!candidates.length) return;
+
+            if (element instanceof HTMLImageElement) {
+                let candidateIndex = 0;
+                element.onerror = () => {
+                    candidateIndex += 1;
+                    if (candidateIndex < candidates.length) {
+                        element.src = candidates[candidateIndex];
+                    } else {
+                        element.classList.add('is-missing');
+                        element.removeAttribute('src');
+                    }
+                };
+                element.src = candidates[0];
+                return;
+            }
+
+            let candidateIndex = 0;
+            const tryNextImage = () => {
+                if (candidateIndex >= candidates.length) {
+                    element.classList.add('is-missing');
+                    element.style.backgroundImage = 'linear-gradient(135deg, rgba(243, 189, 99, 0.11), transparent 58%), linear-gradient(145deg, #1c1a19, #090a0c)';
+                    return;
+                }
+                const image = new Image();
+                const imageUrl = candidates[candidateIndex];
+                image.onload = () => {
+                    element.classList.remove('is-missing');
+                    element.style.backgroundImage = 'linear-gradient(0deg, rgba(5, 6, 9, 0.94), rgba(5, 6, 9, 0.08) 76%), url("' + imageUrl + '")';
+                };
+                image.onerror = () => {
+                    candidateIndex += 1;
+                    tryNextImage();
+                };
+                image.src = imageUrl;
+            };
+            tryNextImage();
         }
 
         function updateFeaturedGame(game) {
@@ -204,7 +271,7 @@ function setLang(c) {
             const cover = document.getElementById('featured-game-cover');
             if (title) title.textContent = game.name || 'Steam';
             if (hours) hours.textContent = formatSteamHours(game.playtime_minutes);
-            setSteamCover(cover, game.appid);
+            setSteamCover(cover, game);
         }
 
         function updateSteamSync(updatedAt) {
@@ -226,17 +293,15 @@ function setLang(c) {
             syncLabel.textContent = `${labels.steam_sync_last || LANG_DATA.en.steam_sync_last} · ${formattedDate}`;
         }
 
-        function renderTopGames(games) {
+        function renderGameLibrary(games) {
             const grid = document.querySelector('#armory .grid');
             if (!grid || !Array.isArray(games) || games.length === 0) return;
 
             const validGames = games
                 .filter(game => Number.isSafeInteger(Number(game.appid)) && Number(game.appid) > 0 && typeof game.name === 'string')
-                .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes))
-                .slice(0, 6);
+                .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes));
             if (!validGames.length) return;
 
-            const viewAll = grid.querySelector('.btn-view');
             const fragment = document.createDocumentFragment();
             validGames.forEach(game => {
                 const appid = Number(game.appid);
@@ -246,31 +311,41 @@ function setLang(c) {
                 card.className = 'game';
                 card.dataset.appid = String(appid);
                 card.dataset.playtimeMinutes = String(minutes);
-                card.href = `https://store.steampowered.com/app/${appid}/`;
+                card.href = 'https://store.steampowered.com/app/' + appid + '/';
                 card.target = '_blank';
                 card.rel = 'noopener noreferrer';
-                card.setAttribute('aria-label', `${game.name} — ${playtime}`);
+                card.setAttribute('aria-label', game.name + ' — ' + playtime);
 
                 const cover = document.createElement('div');
                 cover.className = 'game-bg';
                 cover.setAttribute('aria-hidden', 'true');
-                setSteamCover(cover, appid);
+                const fallback = document.createElement('span');
+                fallback.className = 'game-art-fallback';
+                fallback.textContent = gameMonogram(game.name);
+                const art = document.createElement('img');
+                art.className = 'game-art';
+                art.alt = '';
+                art.loading = 'lazy';
+                art.decoding = 'async';
+                setSteamCover(art, game);
+                cover.append(fallback, art);
 
                 const overlay = document.createElement('div');
                 overlay.className = 'game-ov';
+                const rank = document.createElement('span');
+                rank.className = 'game-rank';
                 const title = document.createElement('div');
                 title.className = 'g-tit';
                 title.textContent = game.name;
                 const time = document.createElement('span');
                 time.className = 'g-time';
                 time.textContent = playtime;
-                overlay.append(title, time);
+                overlay.append(rank, title, time);
                 card.append(cover, overlay);
                 fragment.append(card);
             });
 
-            if (viewAll) grid.replaceChildren(fragment, viewAll);
-            else grid.replaceChildren(fragment);
+            grid.replaceChildren(fragment);
             refreshGameCollection();
         }
 
@@ -280,6 +355,12 @@ function setLang(c) {
             const totalGames = document.getElementById('total-games');
             if (totalHours && data.total_hours) totalHours.textContent = data.total_hours;
             if (totalGames && Number.isFinite(Number(data.total_games))) totalGames.textContent = String(data.total_games);
+            const libraryGameCount = document.getElementById('library-game-count');
+            const libraryHours = document.getElementById('library-total-hours');
+            if (libraryGameCount && Number.isFinite(Number(data.total_games))) {
+                libraryGameCount.textContent = new Intl.NumberFormat(activeLang === 'tr' ? 'tr-TR' : 'en-US').format(Number(data.total_games));
+            }
+            if (libraryHours && data.total_hours) libraryHours.textContent = data.total_hours;
 
             const sysEl = document.getElementById('sys-status');
             const statusKey = { ONLINE: 'sys', OFFLINE: 'sys_off', UNKNOWN: 'sys_unknown' }[data.system_status] || 'sys_unknown';
@@ -300,33 +381,33 @@ function setLang(c) {
             if (!grid || !search || !sort) return;
 
             const games = [...grid.querySelectorAll('.game')];
-            // Game titles are mostly English; locale-insensitive matching avoids Turkish I/ı surprises.
             const query = search.value.trim().toLocaleLowerCase('en');
             const sortMode = sort.value;
-            const viewAll = grid.querySelector('.btn-view');
-
             games.sort((a, b) => {
                 if (sortMode === 'name') {
                     return a.querySelector('.g-tit').textContent.localeCompare(b.querySelector('.g-tit').textContent, document.documentElement.lang);
                 }
-                const playtime = card => Number(card.dataset.playtimeMinutes) || 0;
-                return playtime(b) - playtime(a);
+                return (Number(b.dataset.playtimeMinutes) || 0) - (Number(a.dataset.playtimeMinutes) || 0);
             });
 
             let visibleCount = 0;
             games.forEach(game => {
                 const matches = game.querySelector('.g-tit').textContent.toLocaleLowerCase('en').includes(query);
                 game.hidden = !matches;
-                if (matches) visibleCount += 1;
-                grid.insertBefore(game, viewAll);
+                if (matches) {
+                    visibleCount += 1;
+                    const rank = game.querySelector('.game-rank');
+                    if (rank) rank.textContent = String(visibleCount).padStart(2, '0');
+                }
+                grid.append(game);
             });
 
             const resultCount = document.getElementById('game-results');
             const emptyState = document.getElementById('game-empty');
             const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            resultCount.textContent = `${visibleCount} / ${games.length} ${visibleCount === 1 ? labels.library_result_one : labels.library_result_many}`;
+            const indexedCount = Math.max(games.length, Number(steamStats?.total_games) || 0);
+            resultCount.textContent = visibleCount + ' / ' + indexedCount + ' ' + (indexedCount === 1 ? labels.library_result_one : labels.library_result_many);
             emptyState.hidden = visibleCount > 0;
-            if (viewAll) viewAll.hidden = visibleCount === 0;
         }
 
         function initCur() {
