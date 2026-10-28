@@ -1,39 +1,1547 @@
 {
-  "schema_version": 2,
-  "updated_at": null,
-  "total_games": 191,
-  "total_hours": "1,783h",
-  "top_games": [
+  "schema_version": 3,
+  "total_games": 248,
+  "total_hours": "2,167h",
+  "games": [
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "playtime_minutes": 17817,
+      "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
+    },
     {
       "appid": 2669320,
-      "name": "EA SPORTS FC 25",
-      "playtime_minutes": 13578
+      "name": "EA SPORTS FC™ 25",
+      "playtime_minutes": 13578,
+      "icon_hash": "f6c4988f3e7b965451a3d9fca34014585d1754e2",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2669320/ec3fb7747fd8080ef53d7686e0d98c5abe1f51f1/header.jpg?t=1788548615"
     },
     {
       "appid": 261550,
       "name": "Mount & Blade II: Bannerlord",
-      "playtime_minutes": 9882
+      "playtime_minutes": 10816,
+      "icon_hash": "896d5f4214e4e185a20af51b46d9dea2e6f4aaad",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/261550/header.jpg?t=1764252300"
+    },
+    {
+      "appid": 3405690,
+      "name": "EA SPORTS FC™ 26",
+      "playtime_minutes": 5629,
+      "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
     {
       "appid": 292030,
-      "name": "The Witcher 3: Wild Hunt",
-      "playtime_minutes": 5484
+      "name": "The Witcher 3: Wild Hunt — Remastered",
+      "playtime_minutes": 5486,
+      "icon_hash": "7b52d11edee478d652ef4e7103e00644bed2c74c",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/e8afc4252e3fee8ed2525ab2fd7675cca39aa38d/header_alt_assets_1.jpg?t=1790845156"
     },
     {
       "appid": 812140,
       "name": "Assassin's Creed Odyssey",
-      "playtime_minutes": 5160
+      "playtime_minutes": 5159,
+      "icon_hash": "4b6cf0715b30669411bf204bce7ed99a9c84671b",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1792778552"
     },
     {
       "appid": 1091500,
       "name": "Cyberpunk 2077",
-      "playtime_minutes": 4764
+      "playtime_minutes": 4762,
+      "icon_hash": "6897c3848f3e0350d512f59d5bae174a1e3739f9"
     },
     {
       "appid": 2322010,
+      "name": "God of War Ragnarök",
+      "playtime_minutes": 4424,
+      "icon_hash": "1e04d2b41906d6851f21c8d20c9db63f7eb10e64"
+    },
+    {
+      "appid": 379430,
+      "name": "Kingdom Come: Deliverance",
+      "playtime_minutes": 4251,
+      "icon_hash": "915ec515c36645855abed0476b5b0891d8a4e47a"
+    },
+    {
+      "appid": 1325200,
+      "name": "Nioh 2 – The Complete Edition",
+      "playtime_minutes": 3556,
+      "icon_hash": "3c0fa7884573c619e65a173f00aaa6c0f499d2ec"
+    },
+    {
+      "appid": 12210,
+      "name": "Grand Theft Auto IV: The Complete Edition",
+      "playtime_minutes": 3484,
+      "icon_hash": "a3cf6a64c73f991898a9e34681d0db8226eaa191"
+    },
+    {
+      "appid": 447040,
+      "name": "Watch_Dogs 2",
+      "playtime_minutes": 3321,
+      "icon_hash": "49dc5c3e4053e40159ffa73d2121daadbc467fe2"
+    },
+    {
+      "appid": 1449690,
+      "name": "The Walking Dead: The Telltale Definitive Series",
+      "playtime_minutes": 3225,
+      "icon_hash": "bd1fd090e72bc6584f1b271341a1be6d7fe6881e"
+    },
+    {
+      "appid": 582160,
+      "name": "Assassin's Creed Origins",
+      "playtime_minutes": 3108,
+      "icon_hash": "dff3a53f93d39f1e0432ec4f22d31c12aeefa36f"
+    },
+    {
+      "appid": 990080,
+      "name": "Hogwarts Legacy",
+      "playtime_minutes": 3084,
+      "icon_hash": "a9ecb94f249768d0ee5ccecbffe8d8c06d9bed59"
+    },
+    {
+      "appid": 1551360,
+      "name": "Forza Horizon 5",
+      "playtime_minutes": 3075,
+      "icon_hash": "6c1d20c62c4613263548323052c62cece488876b"
+    },
+    {
+      "appid": 356190,
+      "name": "Middle-earth™: Shadow of War™",
+      "playtime_minutes": 2396,
+      "icon_hash": "316c479e5d51d21e15eb8f82338fce82c42c4115"
+    },
+    {
+      "appid": 1817070,
+      "name": "Marvel’s Spider-Man Remastered",
+      "playtime_minutes": 2126,
+      "icon_hash": "346333cb340139ad8b697005e5c79a3162c387b0"
+    },
+    {
+      "appid": 1222140,
+      "name": "Detroit: Become Human",
+      "playtime_minutes": 1920,
+      "icon_hash": "3d9f5bc971d44398aef740c0d8e79a358be2e800"
+    },
+    {
+      "appid": 20900,
+      "name": "The Witcher: Enhanced Edition",
+      "playtime_minutes": 1841,
+      "icon_hash": "746d1cd48fb2e57d579b05b6e9eccba95859e549"
+    },
+    {
+      "appid": 2531310,
+      "name": "The Last of Us™ Part II Remastered",
+      "playtime_minutes": 1836,
+      "icon_hash": "e04b9ac7c860fb6c60d9ad26e6779f324a7bcb70"
+    },
+    {
+      "appid": 1659420,
+      "name": "UNCHARTED™: Legacy of Thieves Collection",
+      "playtime_minutes": 1801,
+      "icon_hash": "b566a403067d6abf75136a3c19f9ed0d2e4fb5b1"
+    },
+    {
+      "appid": 241930,
+      "name": "Middle-earth™: Shadow of Mordor™",
+      "playtime_minutes": 1781,
+      "icon_hash": "161afab3c9f725f593635723cc64a7fbeb324ead"
+    },
+    {
+      "appid": 1593500,
       "name": "God of War",
-      "playtime_minutes": 4422
+      "playtime_minutes": 1565,
+      "icon_hash": "8aa5e7e0e55cad682c7f2e65e075c3bc04dfc1cb"
+    },
+    {
+      "appid": 220240,
+      "name": "Far Cry® 3",
+      "playtime_minutes": 1514,
+      "icon_hash": "8231f43d3dd47fb4b4111fd6bd4a849e73eb0520"
+    },
+    {
+      "appid": 1888930,
+      "name": "The Last of Us™ Part I",
+      "playtime_minutes": 1389,
+      "icon_hash": "6991d13038a61e35bade3aabea400c74bbbf966d"
+    },
+    {
+      "appid": 20920,
+      "name": "The Witcher 2: Assassins of Kings Enhanced Edition",
+      "playtime_minutes": 1337,
+      "icon_hash": "62dd5c627664df1bcabc47727c7dcd7ccab353e9"
+    },
+    {
+      "appid": 1665460,
+      "name": "eFootball™",
+      "playtime_minutes": 1050,
+      "icon_hash": "f6a576dc2d56a335da96b6a9525975ed397a15bb"
+    },
+    {
+      "appid": 3678970,
+      "name": "TBH: Task Bar Hero",
+      "playtime_minutes": 900,
+      "icon_hash": "293a05477b85149969a15de321eb0ed066187f51"
+    },
+    {
+      "appid": 1163550,
+      "name": "Captain Tsubasa - Rise of New Champions",
+      "playtime_minutes": 726,
+      "icon_hash": "13958db39ef103148d25d9cb01fe639f681e1f92"
+    },
+    {
+      "appid": 2923300,
+      "name": "Banana",
+      "playtime_minutes": 658,
+      "icon_hash": "95e84fe8416438b23f3ddf850f85f3a2ca7eba83"
+    },
+    {
+      "appid": 1238840,
+      "name": "Battlefield™ 1",
+      "playtime_minutes": 648,
+      "icon_hash": "325c78f6940b57a43b65468d2dc10e22601b0ec5"
+    },
+    {
+      "appid": 3240220,
+      "name": "Grand Theft Auto V Enhanced",
+      "playtime_minutes": 623,
+      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
+    },
+    {
+      "appid": 1817190,
+      "name": "Marvel's Spider-Man: Miles Morales",
+      "playtime_minutes": 612,
+      "icon_hash": "fac57db36817793f8b53b220dfe76c692f502a8f"
+    },
+    {
+      "appid": 1850570,
+      "name": "DEATH STRANDING DIRECTOR'S CUT",
+      "playtime_minutes": 509,
+      "icon_hash": "dd1abd2566c95d1e89408570719657a663591f8f"
+    },
+    {
+      "appid": 960910,
+      "name": "Heavy Rain",
+      "playtime_minutes": 506,
+      "icon_hash": "ddc1b819a9c00d9642d290fc521e48d708af7329"
+    },
+    {
+      "appid": 1222700,
+      "name": "A Way Out",
+      "playtime_minutes": 466,
+      "icon_hash": "ac36b7d06c117d34c204166c3120e15910ef2b8b"
+    },
+    {
+      "appid": 239140,
+      "name": "Dying Light",
+      "playtime_minutes": 464,
+      "icon_hash": "d575b4ba3480fe20aaeda8e8f498c3e47033069d"
+    },
+    {
+      "appid": 431960,
+      "name": "Wallpaper Engine",
+      "playtime_minutes": 456,
+      "icon_hash": "72edaed9d748c6cf7397ffb1c83f0b837b9ebd9d"
+    },
+    {
+      "appid": 704850,
+      "name": "Thief Simulator",
+      "playtime_minutes": 453,
+      "icon_hash": "351a94d88850d4e0495e8a880f87af4a881f7d78"
+    },
+    {
+      "appid": 3948120,
+      "name": "Scritchy Scratchy",
+      "playtime_minutes": 444,
+      "icon_hash": "dbc0f0af8d59826ff370f613098192e11609e8f4"
+    },
+    {
+      "appid": 2784470,
+      "name": "9 Kings",
+      "playtime_minutes": 431,
+      "icon_hash": "d1d0c590e82d977b24e1070a9ec1aeea9e4cd9f4"
+    },
+    {
+      "appid": 252490,
+      "name": "Rust",
+      "playtime_minutes": 427,
+      "icon_hash": "820be4782639f9c4b64fa3ca7e6c26a95ae4fd1c"
+    },
+    {
+      "appid": 213670,
+      "name": "South Park™: The Stick of Truth™",
+      "playtime_minutes": 371,
+      "icon_hash": "afad8295902080fb2aedd9aaabb3e21c10eecc85"
+    },
+    {
+      "appid": 12200,
+      "name": "Bully: Scholarship Edition",
+      "playtime_minutes": 343,
+      "icon_hash": "791f13dd4ea6c4cdf171670cc576682171c1eae5"
+    },
+    {
+      "appid": 4656000,
+      "name": "BOMBANANA!",
+      "playtime_minutes": 337,
+      "icon_hash": "baf7df3f7ee5a54c02a4ee4092b13c84f36e769f"
+    },
+    {
+      "appid": 477160,
+      "name": "Human Fall Flat",
+      "playtime_minutes": 334,
+      "icon_hash": "15c6f6a4d69633a63ee410b24a2417f16d803b06"
+    },
+    {
+      "appid": 1568590,
+      "name": "Goose Goose Duck",
+      "playtime_minutes": 325,
+      "icon_hash": "3b802d5010d6d5d72c93a8565b260c6042cc9390"
+    },
+    {
+      "appid": 911400,
+      "name": "Assassin's Creed III Remastered",
+      "playtime_minutes": 307,
+      "icon_hash": "68e5640754e5ddf29aadff49062fa68cc8c8f4a5"
+    },
+    {
+      "appid": 233270,
+      "name": "Far Cry® 3 Blood Dragon",
+      "playtime_minutes": 296,
+      "icon_hash": "37ea239abeef5c5b2a90a2f821aaab745633972a"
+    },
+    {
+      "appid": 2567870,
+      "name": "Chained Together",
+      "playtime_minutes": 295,
+      "icon_hash": "231b8f624ff26721431fe5749fa5ab5bccd75ff4"
+    },
+    {
+      "appid": 1353270,
+      "name": "Five Dates",
+      "playtime_minutes": 294,
+      "icon_hash": "37e37cbc3c3caed0ecc9b371de0a46acdf3a2acb"
+    },
+    {
+      "appid": 391720,
+      "name": "Layers of Fear (2016)",
+      "playtime_minutes": 290,
+      "icon_hash": "0fc90b925c7bbdcc95df6599a01b80dff18e6bbb"
+    },
+    {
+      "appid": 3527290,
+      "name": "PEAK",
+      "playtime_minutes": 269,
+      "icon_hash": "b3a992fd5991bd2f4c956d58e062b0ce2988d6cd"
+    },
+    {
+      "appid": 475550,
+      "name": "Beholder",
+      "playtime_minutes": 268,
+      "icon_hash": "1025e7d1606b1e7a7f17048532039d78241e9f5d"
+    },
+    {
+      "appid": 381210,
+      "name": "Dead by Daylight",
+      "playtime_minutes": 224,
+      "icon_hash": "aa152097a700fd6f4707397ce41794ea30874790"
+    },
+    {
+      "appid": 2529170,
+      "name": "Storage Hustle",
+      "playtime_minutes": 217,
+      "icon_hash": "460809fbcb3db24ea377a172cbd969f4836e9f31"
+    },
+    {
+      "appid": 550,
+      "name": "Left 4 Dead 2",
+      "playtime_minutes": 191,
+      "icon_hash": "7d5a243f9500d2f8467312822f8af2a2928777ed"
+    },
+    {
+      "appid": 976310,
+      "name": "Mortal Kombat 11",
+      "playtime_minutes": 190,
+      "icon_hash": "315c46ce25bcb6afa47473588b5fd8edeb3afdfa"
+    },
+    {
+      "appid": 48000,
+      "name": "LIMBO",
+      "playtime_minutes": 180,
+      "icon_hash": "463f57855017564301b17050fba73804b3bd86d6"
+    },
+    {
+      "appid": 1200230,
+      "name": "Ludus",
+      "playtime_minutes": 177,
+      "icon_hash": "7593fdd22d2c32295bd2a30f8dc96fffa6c1f011"
+    },
+    {
+      "appid": 2709570,
+      "name": "Supermarket Together",
+      "playtime_minutes": 124,
+      "icon_hash": "df024275a7ba53c79008b45c0d74b4a2e6a2069b"
+    },
+    {
+      "appid": 1218900,
+      "name": "Zup! Z",
+      "playtime_minutes": 120,
+      "icon_hash": "0c1b5049635c72f62f82c5775d67886461e2eadc"
+    },
+    {
+      "appid": 1715130,
+      "name": "Crysis Remastered",
+      "playtime_minutes": 108,
+      "icon_hash": "c94e91cdf9ec7a73fde8090d96a8674386a1a0e3"
+    },
+    {
+      "appid": 397900,
+      "name": "Business Tour - Online Multiplayer Board Game",
+      "playtime_minutes": 106,
+      "icon_hash": "b6ce52a576e99f54c5d18f675540b9c3ee70ed47"
+    },
+    {
+      "appid": 2807960,
+      "name": "Battlefield™ 6",
+      "playtime_minutes": 90,
+      "icon_hash": "3059e94fb89816fe1929a238ac2b55e8be348408"
+    },
+    {
+      "appid": 1659040,
+      "name": "HITMAN World of Assassination",
+      "playtime_minutes": 75,
+      "icon_hash": "552be1d38866afd1c33f682323d325130e7d0ce6"
+    },
+    {
+      "appid": 1119730,
+      "name": "Ranch Simulator",
+      "playtime_minutes": 72,
+      "icon_hash": "183b5e569eb811efa38f43245c9eb66e4e5b7d51"
+    },
+    {
+      "appid": 1158940,
+      "name": "Blazing Sails",
+      "playtime_minutes": 70,
+      "icon_hash": "5eb807c2f664fe4ea2784ccc4ea5dded625d79b2"
+    },
+    {
+      "appid": 1359980,
+      "name": "POSTAL: Brain Damaged",
+      "playtime_minutes": 68,
+      "icon_hash": "5ed2e481cb3c3efd85cbb29739bed8a172fb9b39"
+    },
+    {
+      "appid": 305620,
+      "name": "The Long Dark",
+      "playtime_minutes": 65,
+      "icon_hash": "e26b78087b75d5e002e92f2bdd73ce6fc4861e56"
+    },
+    {
+      "appid": 2835570,
+      "name": "Buckshot Roulette",
+      "playtime_minutes": 61,
+      "icon_hash": "81779afdc4209795d9ccf7948514b9a227acf601"
+    },
+    {
+      "appid": 1137300,
+      "name": "Sherlock Holmes Chapter One",
+      "playtime_minutes": 59,
+      "icon_hash": "038c59dc4a1bc39b59b2fc69a8648fe7412ad5c1"
+    },
+    {
+      "appid": 629520,
+      "name": "Soundpad",
+      "playtime_minutes": 48,
+      "icon_hash": "f261c8f5948de73428a1dbed573ec964fcbecb67"
+    },
+    {
+      "appid": 3564740,
+      "name": "Where Winds Meet",
+      "playtime_minutes": 48,
+      "icon_hash": "531ce29af277670c3aedc30d3b0bef92ee1b18c4"
+    },
+    {
+      "appid": 1225570,
+      "name": "Unravel Two",
+      "playtime_minutes": 44,
+      "icon_hash": "e47fb3108c7590af816e13f216500036ca32203f"
+    },
+    {
+      "appid": 418670,
+      "name": "Pankapu",
+      "playtime_minutes": 38,
+      "icon_hash": "646b618afcddf400428cb3e77034be3eb1bbbf80"
+    },
+    {
+      "appid": 2440510,
+      "name": "Forza Motorsport",
+      "playtime_minutes": 33,
+      "icon_hash": "ce4d35b2ffffdb419ebf048f479e377779f21b0b"
+    },
+    {
+      "appid": 2292650,
+      "name": "Escape From Mystwood Mansion",
+      "playtime_minutes": 29,
+      "icon_hash": "e62834385db65b3d86ffee9d8adfc8f408c49c3a"
+    },
+    {
+      "appid": 1422450,
+      "name": "Deadlock",
+      "playtime_minutes": 23,
+      "icon_hash": "f6da1420a173324d49bcd470fa3eee781ad0fa5e"
+    },
+    {
+      "appid": 1721470,
+      "name": "Poppy Playtime",
+      "playtime_minutes": 23,
+      "icon_hash": "27f36a784998ad117bb076c0e249f449f6ae8ce6"
+    },
+    {
+      "appid": 298110,
+      "name": "Far Cry 4",
+      "playtime_minutes": 21,
+      "icon_hash": "be1366a047a515ed2275aa500a36a50de587b7a7"
+    },
+    {
+      "appid": 1334000,
+      "name": "Wordle",
+      "playtime_minutes": 20,
+      "icon_hash": "609032492a1358909a24a9985c6d956e06449bd6"
+    },
+    {
+      "appid": 889910,
+      "name": "Hell Pie",
+      "playtime_minutes": 16,
+      "icon_hash": "d714952f11d73ba3f446d350143afd3783b59dc9"
+    },
+    {
+      "appid": 761620,
+      "name": "Beholder 2",
+      "playtime_minutes": 15,
+      "icon_hash": "04ef5b7192f02400ea32331b3ac6b2ae322d9f93"
+    },
+    {
+      "appid": 368760,
+      "name": "Playing History 3 - Vikings",
+      "playtime_minutes": 13,
+      "icon_hash": "ccfaaa7c4332643a91cbfcfce84756ec4705be0d"
+    },
+    {
+      "appid": 242760,
+      "name": "The Forest",
+      "playtime_minutes": 12,
+      "icon_hash": "3a6847f6ac5879e48531db52261771d5e22904ac"
+    },
+    {
+      "appid": 787480,
+      "name": "Phoenix Wright: Ace Attorney Trilogy",
+      "playtime_minutes": 10,
+      "icon_hash": "fbacf38826f9e6fbbd65535496847def4fe54229"
+    },
+    {
+      "appid": 578080,
+      "name": "PUBG: BATTLEGROUNDS",
+      "playtime_minutes": 10,
+      "icon_hash": "609f27278aa70697c13bf99f32c5a0248c381f9d"
+    },
+    {
+      "appid": 1238810,
+      "name": "Battlefield™ V",
+      "playtime_minutes": 9,
+      "icon_hash": "23ded6a957b5ec7525679c2e7bdac90c0653dbc8"
+    },
+    {
+      "appid": 12150,
+      "name": "Max Payne 2: The Fall of Max Payne",
+      "playtime_minutes": 7,
+      "icon_hash": "4eba5db8324e043569742f7b1d50a8975b88bf52"
+    },
+    {
+      "appid": 1943950,
+      "name": "Escape the Backrooms",
+      "playtime_minutes": 5,
+      "icon_hash": "2bd4431dd3b71ea7fd11cbcef9594f0d09e4079d"
+    },
+    {
+      "appid": 2500750,
+      "name": "Only Climb: Better Together",
+      "playtime_minutes": 5,
+      "icon_hash": "565812edf8b22ecb301b77df5d2e168727ab3cf6"
+    },
+    {
+      "appid": 418370,
+      "name": "Resident Evil 7 Biohazard",
+      "playtime_minutes": 4,
+      "icon_hash": "675cd2fbaae3c2a74a0c7e9eea71e969ff90d6bb"
+    },
+    {
+      "appid": 674940,
+      "name": "Stick Fight: The Game",
+      "playtime_minutes": 4,
+      "icon_hash": "28bc7ba8952d488e01e7136126cbbc3b42ee443a"
+    },
+    {
+      "appid": 3121110,
+      "name": "Zort",
+      "playtime_minutes": 4,
+      "icon_hash": "785d1d26402b58e537159093b604764aa69bc2fa"
+    },
+    {
+      "appid": 584980,
+      "name": "Late Shift",
+      "playtime_minutes": 3,
+      "icon_hash": "8a040e14b44da6e798b2c61a8cde1320da05c845"
+    },
+    {
+      "appid": 880940,
+      "name": "Pummel Party",
+      "playtime_minutes": 3,
+      "icon_hash": "0e2e222010d009ca46b575cc5c53a23250434341"
+    },
+    {
+      "appid": 1107790,
+      "name": "The Complex",
+      "playtime_minutes": 2,
+      "icon_hash": "33e6ef09319f7b7c68fa302871c2bbd083aeb4d4"
+    },
+    {
+      "appid": 1623940,
+      "name": "Bramble: The Mountain King",
+      "playtime_minutes": 1,
+      "icon_hash": "334e35ae8c0cbd295d82e72cf9a7d31b14291a9f"
+    },
+    {
+      "appid": 282070,
+      "name": "This War of Mine",
+      "playtime_minutes": 1,
+      "icon_hash": "38ad6fd10e2b89ab24e8013584ece7961bebe086"
+    },
+    {
+      "appid": 282800,
+      "name": "100% Orange Juice",
+      "playtime_minutes": 0,
+      "icon_hash": "baaf4be38deeb8a631567ee6c651ca23b65c834a"
+    },
+    {
+      "appid": 410110,
+      "name": "12 is Better Than 6",
+      "playtime_minutes": 0,
+      "icon_hash": "44d90be23a56866578e405250e6658f6270ba6d7"
+    },
+    {
+      "appid": 2835590,
+      "name": "8AM",
+      "playtime_minutes": 0,
+      "icon_hash": "44bd7fad168e4390dcf06499d890c1bcdf057aa5"
+    },
+    {
+      "appid": 503560,
+      "name": "911 Operator",
+      "playtime_minutes": 0,
+      "icon_hash": "823158b3e81e69f1fb9c355c86f05655575e6317"
+    },
+    {
+      "appid": 699160,
+      "name": "A Plot Story",
+      "playtime_minutes": 0,
+      "icon_hash": "15034aa609fe6ff8d8b1cef17f0e74afa294e98a"
+    },
+    {
+      "appid": 1802340,
+      "name": "Adult Puzzles - Fantasy Ladies 2",
+      "playtime_minutes": 0,
+      "icon_hash": "e15875ce5230886ff6060b1365d89ad283cf0f3f"
+    },
+    {
+      "appid": 108710,
+      "name": "Alan Wake",
+      "playtime_minutes": 0,
+      "icon_hash": "ec7953511aaaf5a2c2093b872b5b43c6cab56462"
+    },
+    {
+      "appid": 202750,
+      "name": "Alan Wake's American Nightmare",
+      "playtime_minutes": 0,
+      "icon_hash": "313aabf37ed0b521ad969d3fe21768d31300f1ca"
+    },
+    {
+      "appid": 1356040,
+      "name": "Ampersat",
+      "playtime_minutes": 0,
+      "icon_hash": "82967694d0c9a66be7e0675550b68c74f1c34ffa"
+    },
+    {
+      "appid": 513720,
+      "name": "Archipelago",
+      "playtime_minutes": 0,
+      "icon_hash": "4cc1c1c36aaee437b2e5dfbed3d15de8a484da41"
+    },
+    {
+      "appid": 2208920,
+      "name": "Assassin's Creed Valhalla",
+      "playtime_minutes": 0,
+      "icon_hash": "3946f91cf6beb0d384a85fc32d71616313dc362e"
+    },
+    {
+      "appid": 562520,
+      "name": "Attempt[42]",
+      "playtime_minutes": 0,
+      "icon_hash": "8d82dfc4f5c87178be52cdce5adb7a093a0e5909"
+    },
+    {
+      "appid": 924970,
+      "name": "Back 4 Blood",
+      "playtime_minutes": 0,
+      "icon_hash": "4a2e853e7098bb0ebe637107e8180084a3117184"
+    },
+    {
+      "appid": 1990740,
+      "name": "Barro GT",
+      "playtime_minutes": 0,
+      "icon_hash": "5bcb2a24d4a2bba21d4ce58a6c236efcd5a9492c"
+    },
+    {
+      "appid": 2623090,
+      "name": "Battle Simulator: Counter Stickman",
+      "playtime_minutes": 0,
+      "icon_hash": "befd7301ba5923037d643600a012ca7792cd89f8"
+    },
+    {
+      "appid": 544610,
+      "name": "Battlestar Galactica Deadlock",
+      "playtime_minutes": 0,
+      "icon_hash": "9f04e46ee137eac4bcd300c566c91c858abb3c55"
+    },
+    {
+      "appid": 3711710,
+      "name": "Beneath Playtest",
+      "playtime_minutes": 0,
+      "icon_hash": "e24eeda934c22bb60e7705663d6763ea0fffb00a"
+    },
+    {
+      "appid": 960990,
+      "name": "Beyond: Two Souls",
+      "playtime_minutes": 0,
+      "icon_hash": "651960ab55d9385730101dc2cef12dd8ac57d5a0"
+    },
+    {
+      "appid": 582660,
+      "name": "Black Desert",
+      "playtime_minutes": 0,
+      "icon_hash": "bf5ccace0a692720984827bf042143d0d4b28a42"
+    },
+    {
+      "appid": 362890,
+      "name": "Black Mesa",
+      "playtime_minutes": 0,
+      "icon_hash": "51182b6a74035eb913b353d5d60e596c3804daf6"
+    },
+    {
+      "appid": 49520,
+      "name": "Borderlands 2",
+      "playtime_minutes": 0,
+      "icon_hash": "a3f4945226e69b6196074df4c776e342d3e5a3be"
+    },
+    {
+      "appid": 738520,
+      "name": "Breathedge",
+      "playtime_minutes": 0,
+      "icon_hash": "be75f36a24abb31bfbbf1220e801c61ed477c03a"
+    },
+    {
+      "appid": 390290,
+      "name": "Bulb Boy",
+      "playtime_minutes": 0,
+      "icon_hash": "a0ccda9024776e5c193521da14f3eab555754f1b"
+    },
+    {
+      "appid": 797070,
+      "name": "Bunny adventure",
+      "playtime_minutes": 0,
+      "icon_hash": "ffdc5f3e71b683d3ddbd9f9470e41bc102f2dc3e"
+    },
+    {
+      "appid": 2218460,
+      "name": "Bunny Guys!",
+      "playtime_minutes": 0,
+      "icon_hash": "ccdf521a210177005f1af13603930b15df7ab1fe"
+    },
+    {
+      "appid": 645630,
+      "name": "Car Mechanic Simulator 2018",
+      "playtime_minutes": 0,
+      "icon_hash": "f793ad58cbe121b079a40f9e560ad6d957ede22d"
+    },
+    {
+      "appid": 1741160,
+      "name": "Catch Me!",
+      "playtime_minutes": 0,
+      "icon_hash": "caa9b7cf131612342cef31868eff35a7338964f0"
+    },
+    {
+      "appid": 462960,
+      "name": "Caveman World: Mountains of Unga Boonga",
+      "playtime_minutes": 0,
+      "icon_hash": "5130f6baae2836a2f6c1738c6998da9ddd481b53"
+    },
+    {
+      "appid": 1766740,
+      "name": "Choo-Choo Charles",
+      "playtime_minutes": 0,
+      "icon_hash": "09b5e30f2dce6099c2a1b81f824f9e220b4807d4"
+    },
+    {
+      "appid": 666960,
+      "name": "Cowboy's Adventure",
+      "playtime_minutes": 0,
+      "icon_hash": "a0808ae7e3d7bdd81177d3a6e71d4cc431e75a66"
+    },
+    {
+      "appid": 1269500,
+      "name": "Crowalt: Traces of the Lost Colony",
+      "playtime_minutes": 0,
+      "icon_hash": "6e8ee8b68546626ee4fa662adc5f83d6f4947827"
+    },
+    {
+      "appid": 527710,
+      "name": "Crown Champion: Legends of the Arena",
+      "playtime_minutes": 0,
+      "icon_hash": "287a61d68fa827578a6856d85107ee10b935b9c4"
+    },
+    {
+      "appid": 2096600,
+      "name": "Crysis 2 Remastered",
+      "playtime_minutes": 0,
+      "icon_hash": "cb25994d3d2d4ea9c605e785c1f5b3db265e2529"
+    },
+    {
+      "appid": 2096610,
+      "name": "Crysis 3 Remastered",
+      "playtime_minutes": 0,
+      "icon_hash": "0c3330f540a6fbce8123110357608e6a36fff1fb"
+    },
+    {
+      "appid": 447700,
+      "name": "Crystal Crisis",
+      "playtime_minutes": 0,
+      "icon_hash": "568c6e789a8387ae17a4aa3dc206ce05256d6b70"
+    },
+    {
+      "appid": 723830,
+      "name": "Cyborg Invasion Shooter",
+      "playtime_minutes": 0,
+      "icon_hash": "942acebfa2fdd9723cd2881dba8481e225e6aacf"
+    },
+    {
+      "appid": 779060,
+      "name": "Cyborg Invasion Shooter 2: Battle Of Earth",
+      "playtime_minutes": 0,
+      "icon_hash": "cf7c92642aa4d1453f8c0bc5d116c0d228dff6e8"
+    },
+    {
+      "appid": 384310,
+      "name": "Dead In Bermuda",
+      "playtime_minutes": 0,
+      "icon_hash": "477e57c98ce82c2be8efa35cbdc0ed8cf1c8437a"
+    },
+    {
+      "appid": 897630,
+      "name": "Death Fungeon",
+      "playtime_minutes": 0,
+      "icon_hash": "f199c52f4a581cf93260f0685cfeda358405d8d9"
+    },
+    {
+      "appid": 1987400,
+      "name": "Death Relives",
+      "playtime_minutes": 0,
+      "icon_hash": "4ad2586c4d10deb8910919188b74d0846d7c5731"
+    },
+    {
+      "appid": 214340,
+      "name": "Deponia",
+      "playtime_minutes": 0,
+      "icon_hash": "48a94d33cae6065b0bedf7eefd01bd5321c7c729"
+    },
+    {
+      "appid": 403640,
+      "name": "Dishonored 2",
+      "playtime_minutes": 0,
+      "icon_hash": "6d6bac950a234764a353c518607dcd01973f5b65"
+    },
+    {
+      "appid": 979310,
+      "name": "Disjunction",
+      "playtime_minutes": 0,
+      "icon_hash": "3603c14e0961ce011b0aa9ff1e1ab1707e71e77b"
+    },
+    {
+      "appid": 569610,
+      "name": "Distant Space",
+      "playtime_minutes": 0,
+      "icon_hash": "1cfe852a7e1054108d50d2a3b28219411b776bc4"
+    },
+    {
+      "appid": 2019300,
+      "name": "Dokimon",
+      "playtime_minutes": 0,
+      "icon_hash": "a3c08f83f59d8791eaa7c9a2c441aaa4f7395e49"
+    },
+    {
+      "appid": 379720,
+      "name": "DOOM",
+      "playtime_minutes": 0,
+      "icon_hash": "b6e72ff47d1990cb644700751eeeff14e0aba6dc"
+    },
+    {
+      "appid": 2280,
+      "name": "DOOM + DOOM II",
+      "playtime_minutes": 0,
+      "icon_hash": "3e5e70b1e0c4869dc3276b10b830f6ce9d341cf9"
+    },
+    {
+      "appid": 1070580,
+      "name": "Drift86",
+      "playtime_minutes": 0,
+      "icon_hash": "4a23c4e85e64d2d41d287bded0047b0762cf65e8"
+    },
+    {
+      "appid": 732670,
+      "name": "Dyana Moto",
+      "playtime_minutes": 0,
+      "icon_hash": "353514ebb3100bedca8e1257f15157da1565ba39"
+    },
+    {
+      "appid": 534380,
+      "name": "Dying Light 2: Reloaded Edition",
+      "playtime_minutes": 0,
+      "icon_hash": "4036cc941abaeeed5ee8bd433ca69388723f7f19"
+    },
+    {
+      "appid": 6100,
+      "name": "Eets",
+      "playtime_minutes": 0,
+      "icon_hash": "fbaf69a669637c8bd5cebdd9a8f06b4f37831235"
+    },
+    {
+      "appid": 1020470,
+      "name": "Evoland Legendary Edition",
+      "playtime_minutes": 0,
+      "icon_hash": "6b564bfe80bccfcadbb54881e21c3cdf582b1d1b"
+    },
+    {
+      "appid": 312840,
+      "name": "Fahrenheit: Indigo Prophecy Remastered",
+      "playtime_minutes": 0,
+      "icon_hash": "d232a53093cd49a04df465bdc72c36332da7d18f"
+    },
+    {
+      "appid": 1025440,
+      "name": "Fantasy General II",
+      "playtime_minutes": 0,
+      "icon_hash": "bd5ca49b57cdf52990701a4ca22036b0e1fdbbf5"
+    },
+    {
+      "appid": 1736310,
+      "name": "Fantasy Jigsaw Puzzle 3",
+      "playtime_minutes": 0,
+      "icon_hash": "f8fd5378b3983af074af1a6916fb19b9b4c1c159"
+    },
+    {
+      "appid": 552520,
+      "name": "Far Cry 5",
+      "playtime_minutes": 0,
+      "icon_hash": "928df2d32021f480499a97458068f62c45298e7a"
+    },
+    {
+      "appid": 2369390,
+      "name": "Far Cry 6",
+      "playtime_minutes": 0,
+      "icon_hash": "178c21f6ed3ea43c9e5b3c9ea2919e7bca63c7b0"
+    },
+    {
+      "appid": 1368870,
+      "name": "Field of Glory II: Medieval",
+      "playtime_minutes": 0,
+      "icon_hash": "3227ee83711ae4e2f24c62be289b9c35f43b5f18"
+    },
+    {
+      "appid": 2990600,
+      "name": "Fireside Feelings",
+      "playtime_minutes": 0,
+      "icon_hash": "4ffe7aca1c7f9cef20fca05795025c64eb14aa61"
+    },
+    {
+      "appid": 323190,
+      "name": "Frostpunk",
+      "playtime_minutes": 0,
+      "icon_hash": "0561084dfe24c469c905fe0681da82aa31102836"
+    },
+    {
+      "appid": 271590,
+      "name": "Grand Theft Auto V Legacy",
+      "playtime_minutes": 0,
+      "icon_hash": "1e72f87eb927fa1485e68aefaff23c7fd7178251"
+    },
+    {
+      "appid": 599140,
+      "name": "Graveyard Keeper",
+      "playtime_minutes": 0,
+      "icon_hash": "b37ef6d7eb243b4d9fc017dec7bc11b234f34cc2"
+    },
+    {
+      "appid": 858710,
+      "name": "Gravity Circuit",
+      "playtime_minutes": 0,
+      "icon_hash": "6d05b74030eea68e4816c3c4ca565131c378d338"
+    },
+    {
+      "appid": 2543510,
+      "name": "GUNTOUCHABLES",
+      "playtime_minutes": 0,
+      "icon_hash": "ea77a863d8b1c9aee54c2c1af30602c854097273"
+    },
+    {
+      "appid": 220,
+      "name": "Half-Life 2",
+      "playtime_minutes": 0,
+      "icon_hash": "fcfb366051782b8ebf2aa297f3b746395858cb62"
+    },
+    {
+      "appid": 320,
+      "name": "Half-Life 2: Deathmatch",
+      "playtime_minutes": 0,
+      "icon_hash": "795e85364189511f4990861b578084deef086cb1"
+    },
+    {
+      "appid": 360,
+      "name": "Half-Life Deathmatch: Source",
+      "playtime_minutes": 0,
+      "icon_hash": "40b8a62efff5a9ab356e5c56f5c8b0532c8e1aa3"
+    },
+    {
+      "appid": 1433340,
+      "name": "Happy's Humble Burger Farm",
+      "playtime_minutes": 0,
+      "icon_hash": "fce7f7d050591517802de41deff591e42d495601"
+    },
+    {
+      "appid": 1608450,
+      "name": "Hellslave",
+      "playtime_minutes": 0,
+      "icon_hash": "733a62d2f790189f9cecb01bebf8e014a231a86e"
+    },
+    {
+      "appid": 1683410,
+      "name": "Hentai Jigsaw Girls",
+      "playtime_minutes": 0,
+      "icon_hash": "97092977c215a0e58233d11190bbb7a316bbe5cc"
+    },
+    {
+      "appid": 203140,
+      "name": "Hitman: Absolution",
+      "playtime_minutes": 0,
+      "icon_hash": "fe5e36ac1548793eb48b6b25b701b37d86fb94a3"
+    },
+    {
+      "appid": 205930,
+      "name": "Hitman: Sniper Challenge",
+      "playtime_minutes": 0,
+      "icon_hash": "756d0ca797b4c8a1340dd73bf49b0bb0656a1802"
+    },
+    {
+      "appid": 613100,
+      "name": "House Flipper",
+      "playtime_minutes": 0,
+      "icon_hash": "4ab6e7c49f3f0c063dfe08ab85038c979301f6dd"
+    },
+    {
+      "appid": 321800,
+      "name": "Icewind Dale: Enhanced Edition",
+      "playtime_minutes": 0,
+      "icon_hash": "90b0786f313aa250ed9abee653a0c7d5e0e08c69"
+    },
+    {
+      "appid": 890720,
+      "name": "In Other Waters",
+      "playtime_minutes": 0,
+      "icon_hash": "26afdabdace348ab80f21d7a654bd665855d50b2"
+    },
+    {
+      "appid": 1511460,
+      "name": "InfraSpace",
+      "playtime_minutes": 0,
+      "icon_hash": "ce2346290b51c192ab237fd83ffb68309759c746"
+    },
+    {
+      "appid": 1456200,
+      "name": "Initial Drift Online",
+      "playtime_minutes": 0,
+      "icon_hash": "8cf914628b765f7e1c681e127f85dd96ee8224b8"
+    },
+    {
+      "appid": 627270,
+      "name": "Injustice™ 2",
+      "playtime_minutes": 0,
+      "icon_hash": "8ee01e7e4bc3a7f734dfa5fa5c1ebf2da3901556"
+    },
+    {
+      "appid": 816250,
+      "name": "JQ: dogs & cats",
+      "playtime_minutes": 0,
+      "icon_hash": "0e01bd6386abc2d9073216fc58aebe0febb15f8a"
+    },
+    {
+      "appid": 561770,
+      "name": "Just Ignore Them",
+      "playtime_minutes": 0,
+      "icon_hash": "b119c3d3d6d1d767a74f93f7968bdb866cab6216"
+    },
+    {
+      "appid": 3035190,
+      "name": "KARMA: The Dark World Demo",
+      "playtime_minutes": 0,
+      "icon_hash": "4f9c7b878067978aa9fdc06febbf20114af82878"
+    },
+    {
+      "appid": 845480,
+      "name": "Kinaman vs Gray Elephant",
+      "playtime_minutes": 0,
+      "icon_hash": "9395e53a7bda1f87985c8b4b783d1fac49b88a30"
+    },
+    {
+      "appid": 2955840,
+      "name": "Kitchen Wars",
+      "playtime_minutes": 0,
+      "icon_hash": "93c637e395897e6a681db87bd6ada2371772e4eb"
+    },
+    {
+      "appid": 750770,
+      "name": "Labyronia Elements",
+      "playtime_minutes": 0,
+      "icon_hash": "845257d58c0fb9db7888103d6bc90dee6e00b5e1"
+    },
+    {
+      "appid": 978520,
+      "name": "Legend of Keepers",
+      "playtime_minutes": 0,
+      "icon_hash": "84fc57d09dee3845456c83398034d1ded7f40658"
+    },
+    {
+      "appid": 532210,
+      "name": "Life is Strange 2",
+      "playtime_minutes": 0,
+      "icon_hash": "4bc11557267819da12bb45488ffd3f1fb3945279"
+    },
+    {
+      "appid": 1430160,
+      "name": "LineArt Jigsaw Puzzle - Erotica",
+      "playtime_minutes": 0,
+      "icon_hash": "f73efdf9d334bd357f1a4d0c7442b95b7c2ae928"
+    },
+    {
+      "appid": 204100,
+      "name": "Max Payne 3",
+      "playtime_minutes": 0,
+      "icon_hash": "96af86331719b56cefc55298b4fcb99c99f1cfee"
+    },
+    {
+      "appid": 286690,
+      "name": "Metro 2033 Redux",
+      "playtime_minutes": 0,
+      "icon_hash": "353ea01a045c084215bca95519808eaa7319ce0c"
+    },
+    {
+      "appid": 582010,
+      "name": "Monster Hunter: World",
+      "playtime_minutes": 0,
+      "icon_hash": "6ec147f2d423f435e15eb79b3d82f771913de634"
+    },
+    {
+      "appid": 606150,
+      "name": "Moonlighter",
+      "playtime_minutes": 0,
+      "icon_hash": "13ffc570ce5bbe6a5a0c0eec567b87dab07cae25"
+    },
+    {
+      "appid": 1035110,
+      "name": "Moonrise Fall",
+      "playtime_minutes": 0,
+      "icon_hash": "9161810111182af0fe5694d9090f25aa08ad998a"
+    },
+    {
+      "appid": 2812710,
+      "name": "Nested Lands Playtest",
+      "playtime_minutes": 0,
+      "icon_hash": "df3d94a90afde74f41a32ea6a52e4385f383907a"
+    },
+    {
+      "appid": 624690,
+      "name": "NEXT JUMP: Shmup Tactics",
+      "playtime_minutes": 0,
+      "icon_hash": "c31aa58c0d3f7ccfbf99bfd81918e4767641be82"
+    },
+    {
+      "appid": 1634080,
+      "name": "Nocturnal",
+      "playtime_minutes": 0,
+      "icon_hash": "e1e2321cd4b6c89c46ab3ba0d59bd9523fc89c1c"
+    },
+    {
+      "appid": 781880,
+      "name": "Object \"Cleaning\"",
+      "playtime_minutes": 0,
+      "icon_hash": "97138831a3899609c3e49bd0ae40f17d59994b27"
+    },
+    {
+      "appid": 1200580,
+      "name": "One Gun Guy",
+      "playtime_minutes": 0,
+      "icon_hash": "112744df8d62d560790e3bc3a64fb0d745bde331"
+    },
+    {
+      "appid": 862740,
+      "name": "OneShift",
+      "playtime_minutes": 0,
+      "icon_hash": "08a62a0091858d0f75489c3d420e6f7a22434ab9"
+    },
+    {
+      "appid": 414700,
+      "name": "Outlast 2",
+      "playtime_minutes": 0,
+      "icon_hash": "f336155a1714d0d413dea897f63ef19ee1f7cf21"
+    },
+    {
+      "appid": 2237970,
+      "name": "Outpath",
+      "playtime_minutes": 0,
+      "icon_hash": "6d92b4d2dee13389752974737347b7457e57b0f8"
+    },
+    {
+      "appid": 610570,
+      "name": "Paradox Soul",
+      "playtime_minutes": 0,
+      "icon_hash": "c6279c40ef6ab4e794eafd61e61be4f6f5f2f270"
+    },
+    {
+      "appid": 3017580,
+      "name": "Paragnosia",
+      "playtime_minutes": 0,
+      "icon_hash": "9df3af59ed011e66716c75adda6c0ef97513d3f5"
+    },
+    {
+      "appid": 2796010,
+      "name": "Party Club",
+      "playtime_minutes": 0,
+      "icon_hash": "a80c96dde162ef5ed25704384b6e312b6b6cddf9"
+    },
+    {
+      "appid": 1599600,
+      "name": "PlateUp!",
+      "playtime_minutes": 0,
+      "icon_hash": "c13221a2369c16d90681faf7786265a709586efe"
+    },
+    {
+      "appid": 405640,
+      "name": "Pony Island",
+      "playtime_minutes": 0,
+      "icon_hash": "cbfb87666914abca2e7c06231eeb59ab2a1883e8"
+    },
+    {
+      "appid": 1986840,
+      "name": "POPGOES Arcade",
+      "playtime_minutes": 0,
+      "icon_hash": "2c5c3a28957eee4cf23daf600f20fa85c3a02772"
+    },
+    {
+      "appid": 232770,
+      "name": "POSTAL",
+      "playtime_minutes": 0,
+      "icon_hash": "cc74f7112ea3820e6f08eb580a03d7b37325e51c"
+    },
+    {
+      "appid": 2814840,
+      "name": "Project ZETA Playtest",
+      "playtime_minutes": 0,
+      "icon_hash": "c56101b437b9391bfbb184a7ce0147486ce5e1d8"
+    },
+    {
+      "appid": 725280,
+      "name": "Psi Project",
+      "playtime_minutes": 0,
+      "icon_hash": "9aff4403024d38e6c9a681d9c1009fcfc55eea0a"
+    },
+    {
+      "appid": 753990,
+      "name": "Psi Project: Legacy",
+      "playtime_minutes": 0,
+      "icon_hash": "24403731a1a01f2672b7c965d752d351d5aa4d7b"
+    },
+    {
+      "appid": 740410,
+      "name": "Puzzle Chambers",
+      "playtime_minutes": 0,
+      "icon_hash": "23fb52b6f56bb51450467c5c689f980785d1920e"
+    },
+    {
+      "appid": 1174180,
+      "name": "Red Dead Redemption 2",
+      "playtime_minutes": 0,
+      "icon_hash": "5106abd9c1187a97f23295a0ba9470c94804ec6c"
+    },
+    {
+      "appid": 1799930,
+      "name": "Redout 2",
+      "playtime_minutes": 0,
+      "icon_hash": "f048130cc434edb7d97f1eedb877c0a079ea2dff"
+    },
+    {
+      "appid": 633360,
+      "name": "Remothered: Tormented Fathers",
+      "playtime_minutes": 0,
+      "icon_hash": "c3e2e34bccda6c2ec494c123739c19560dfc7298"
+    },
+    {
+      "appid": 287290,
+      "name": "Resident Evil Revelations 2",
+      "playtime_minutes": 0,
+      "icon_hash": "0ec692bbc91bbff0b455faef6cb2b8a37bbbca93"
+    },
+    {
+      "appid": 1196590,
+      "name": "Resident Evil Village",
+      "playtime_minutes": 0,
+      "icon_hash": "d97fb0681f9517c65a9d7ba9dd7e63f775375645"
+    },
+    {
+      "appid": 700580,
+      "name": "Rust - Staging Branch",
+      "playtime_minutes": 0,
+      "icon_hash": "820be4782639f9c4b64fa3ca7e6c26a95ae4fd1c"
+    },
+    {
+      "appid": 817160,
+      "name": "Scary defense",
+      "playtime_minutes": 0,
+      "icon_hash": "df79e17273f44393ceab1decc9028de5494fe05a"
+    },
+    {
+      "appid": 635850,
+      "name": "Sentience: The Android's Tale",
+      "playtime_minutes": 0,
+      "icon_hash": "33259f043955e57cbd736debcdd53935bea5d370"
+    },
+    {
+      "appid": 272060,
+      "name": "Serena",
+      "playtime_minutes": 0,
+      "icon_hash": "9d0c4e5c693f34f8f31d02fc4b06de6825c5f051"
+    },
+    {
+      "appid": 1949030,
+      "name": "Sherlock Holmes The Awakened",
+      "playtime_minutes": 0,
+      "icon_hash": "93f37f17367f2ced54abf8f9e8fdeb230f37f24d"
+    },
+    {
+      "appid": 1755300,
+      "name": "Smart Factory Tycoon",
+      "playtime_minutes": 0,
+      "icon_hash": "4db3100c3c29e2d949ef6d3d163864527921c063"
+    },
+    {
+      "appid": 740240,
+      "name": "Snake Eyes Dungeon",
+      "playtime_minutes": 0,
+      "icon_hash": "ce1c2c221950e310de7fd8425f573e4dced5c113"
+    },
+    {
+      "appid": 855850,
+      "name": "Space Elite Force",
+      "playtime_minutes": 0,
+      "icon_hash": "eee1647a888206de9aeaa12d5a29c279da203d30"
+    },
+    {
+      "appid": 431710,
+      "name": "Space Pilgrim Episode II: Epsilon Indi",
+      "playtime_minutes": 0,
+      "icon_hash": "0f522f5ab91944db924bfae08d0fa76bcea026de"
+    },
+    {
+      "appid": 439250,
+      "name": "Space Pilgrim Episode III: Delta Pavonis",
+      "playtime_minutes": 0,
+      "icon_hash": "d7436e0172010957caab6eeeaf016028f2f85f1c"
+    },
+    {
+      "appid": 796440,
+      "name": "Spaceguy",
+      "playtime_minutes": 0,
+      "icon_hash": "99cc5fe498cf72b083e91f50428cd78696066176"
+    },
+    {
+      "appid": 252410,
+      "name": "SteamWorld Dig",
+      "playtime_minutes": 0,
+      "icon_hash": "7757c90bbf65e312ea4871106250077e78007bc6"
+    },
+    {
+      "appid": 2792610,
+      "name": "Stickman Killing Zombie",
+      "playtime_minutes": 0,
+      "icon_hash": "50352563f217fdb321d4c2f72da144bf255ec334"
+    },
+    {
+      "appid": 420740,
+      "name": "The Deed",
+      "playtime_minutes": 0,
+      "icon_hash": "39d10c70200e26356e7ca7c5cd4ec9b9a7381200"
+    },
+    {
+      "appid": 460960,
+      "name": "The Deed: Dynasty",
+      "playtime_minutes": 0,
+      "icon_hash": "68d817a51a08c82a0afffa3008b33c38e5119ffe"
+    },
+    {
+      "appid": 1272160,
+      "name": "The Life and Suffering of Sir Brante",
+      "playtime_minutes": 0,
+      "icon_hash": "f1d803f7f299a4539e4c294e47bbf8782e01ffff"
+    },
+    {
+      "appid": 1304930,
+      "name": "The Outlast Trials",
+      "playtime_minutes": 0,
+      "icon_hash": "159a7d66ffd179c920eefe07392e6a261e899965"
+    },
+    {
+      "appid": 1053710,
+      "name": "The Red Lantern",
+      "playtime_minutes": 0,
+      "icon_hash": "0efc0c5e80b66389d33981aceaf67b7309b4baec"
+    },
+    {
+      "appid": 1012460,
+      "name": "Through Abandoned: The Refuge",
+      "playtime_minutes": 0,
+      "icon_hash": "2e48548c481bce7ffacd0cd94994c51a1a6bed3c"
+    },
+    {
+      "appid": 1510580,
+      "name": "Toy Tinker Simulator",
+      "playtime_minutes": 0,
+      "icon_hash": "7a7c69259b7d1f622d8f7c0d34f93a85683c8fa4"
+    },
+    {
+      "appid": 1035510,
+      "name": "Ultimate Zombie Defense",
+      "playtime_minutes": 0,
+      "icon_hash": "19ea5aca745585e84592011e0856661304167466"
+    },
+    {
+      "appid": 489630,
+      "name": "Warhammer 40,000: Gladius - Relics of War",
+      "playtime_minutes": 0,
+      "icon_hash": "ba6ea4fbeec62073763e103450e8aa7c5373d010"
+    },
+    {
+      "appid": 552500,
+      "name": "Warhammer: Vermintide 2",
+      "playtime_minutes": 0,
+      "icon_hash": "a671f2ddf7359beba9702ac097baf6d50cb07202"
+    },
+    {
+      "appid": 1390350,
+      "name": "Webbed",
+      "playtime_minutes": 0,
+      "icon_hash": "9e694623b3cdb92eb4cfc1fa41e2199ccb4a32ed"
+    },
+    {
+      "appid": 2752710,
+      "name": "WHAT THE PAK?!",
+      "playtime_minutes": 0,
+      "icon_hash": "bcc6b61bf63fe3ec675bb4da845006d979e6901a"
+    },
+    {
+      "appid": 1134700,
+      "name": "Wild Terra 2: New Lands",
+      "playtime_minutes": 0,
+      "icon_hash": "8594527d19edbfdb2ded666dd09573f4542c282f"
+    },
+    {
+      "appid": 3504830,
+      "name": "Wildgate Community Preview",
+      "playtime_minutes": 0,
+      "icon_hash": "547abb5d1caf9ac2c4b685a544248852b2dc01cc"
+    },
+    {
+      "appid": 640890,
+      "name": "Will Glow the Wisp",
+      "playtime_minutes": 0,
+      "icon_hash": "cda5fb3fc1f01275c79de4fa2cb1a5b03899c4c2"
+    },
+    {
+      "appid": 3098890,
+      "name": "World Crafter TD",
+      "playtime_minutes": 0,
+      "icon_hash": "e3e3b01e7cb04d499803542ce3c226e23725fd8b"
+    },
+    {
+      "appid": 674750,
+      "name": "Yet Another Zombie Defense HD",
+      "playtime_minutes": 0,
+      "icon_hash": "fe6e2e1baee2464bd3ed030a7299f3ffb76e1a4d"
+    },
+    {
+      "appid": 729720,
+      "name": "Zomborg",
+      "playtime_minutes": 0,
+      "icon_hash": "688f7515d75075f8e07b2bf7279bfccc1183cd57"
     }
   ],
-  "system_status": "ONLINE"
+  "top_games": [
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "playtime_minutes": 17817,
+      "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
+    },
+    {
+      "appid": 2669320,
+      "name": "EA SPORTS FC™ 25",
+      "playtime_minutes": 13578,
+      "icon_hash": "f6c4988f3e7b965451a3d9fca34014585d1754e2",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2669320/ec3fb7747fd8080ef53d7686e0d98c5abe1f51f1/header.jpg?t=1788548615"
+    },
+    {
+      "appid": 261550,
+      "name": "Mount & Blade II: Bannerlord",
+      "playtime_minutes": 10816,
+      "icon_hash": "896d5f4214e4e185a20af51b46d9dea2e6f4aaad",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/261550/header.jpg?t=1764252300"
+    },
+    {
+      "appid": 3405690,
+      "name": "EA SPORTS FC™ 26",
+      "playtime_minutes": 5629,
+      "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
+    },
+    {
+      "appid": 292030,
+      "name": "The Witcher 3: Wild Hunt — Remastered",
+      "playtime_minutes": 5486,
+      "icon_hash": "7b52d11edee478d652ef4e7103e00644bed2c74c",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/e8afc4252e3fee8ed2525ab2fd7675cca39aa38d/header_alt_assets_1.jpg?t=1790845156"
+    },
+    {
+      "appid": 812140,
+      "name": "Assassin's Creed Odyssey",
+      "playtime_minutes": 5159,
+      "icon_hash": "4b6cf0715b30669411bf204bce7ed99a9c84671b",
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1792778552"
+    }
+  ],
+  "system_status": "ONLINE",
+  "updated_at": "2026-10-28T16:04:38Z"
 }
