@@ -1,12 +1,12 @@
 {
   "schema_version": 3,
   "total_games": 248,
-  "total_hours": "2,167h",
+  "total_hours": "2,168h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 17817,
+      "playtime_minutes": 17907,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -439,7 +439,7 @@
       "appid": 2835570,
       "name": "Buckshot Roulette",
       "playtime_minutes": 61,
-      "icon_hash": "81779afdc4209795d9ccf7948514b9a227acf601"
+      "icon_hash": "b813298efcd6e936076f721365f20b192fbbe556"
     },
     {
       "appid": 1137300,
@@ -1502,7 +1502,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 17817,
+      "playtime_minutes": 17907,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1542,6 +1542,6 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1792778552"
     }
   ],
-  "system_status": "OFFLINE",
-  "updated_at": "2026-10-28T18:59:41Z"
+  "system_status": "ONLINE",
+  "updated_at": "2026-10-29T16:44:28Z"
 }
