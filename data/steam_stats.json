@@ -1,12 +1,12 @@
 {
   "schema_version": 3,
-  "total_games": 248,
-  "total_hours": "2,168h",
+  "total_games": 249,
+  "total_hours": "2,170h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 17907,
+      "playtime_minutes": 17982,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -256,16 +256,16 @@
       "icon_hash": "dbc0f0af8d59826ff370f613098192e11609e8f4"
     },
     {
+      "appid": 252490,
+      "name": "Rust",
+      "playtime_minutes": 440,
+      "icon_hash": "820be4782639f9c4b64fa3ca7e6c26a95ae4fd1c"
+    },
+    {
       "appid": 2784470,
       "name": "9 Kings",
       "playtime_minutes": 431,
       "icon_hash": "d1d0c590e82d977b24e1070a9ec1aeea9e4cd9f4"
-    },
-    {
-      "appid": 252490,
-      "name": "Rust",
-      "playtime_minutes": 427,
-      "icon_hash": "820be4782639f9c4b64fa3ca7e6c26a95ae4fd1c"
     },
     {
       "appid": 213670,
@@ -1036,6 +1036,12 @@
       "icon_hash": "97092977c215a0e58233d11190bbb7a316bbe5cc"
     },
     {
+      "appid": 785890,
+      "name": "Hexologic",
+      "playtime_minutes": 0,
+      "icon_hash": "7bedc0ef6e2d0fba292e2cad90d0166fb670319c"
+    },
+    {
       "appid": 203140,
       "name": "Hitman: Absolution",
       "playtime_minutes": 0,
@@ -1502,7 +1508,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 17907,
+      "playtime_minutes": 17982,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1543,5 +1549,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-10-29T16:44:28Z"
+  "updated_at": "2026-10-29T21:39:04Z"
 }
