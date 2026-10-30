@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "total_games": 249,
-  "total_hours": "2,170h",
+  "total_hours": "2,172h",
   "games": [
     {
       "appid": 730,
@@ -27,7 +27,7 @@
     {
       "appid": 3405690,
       "name": "EA SPORTS FC™ 26",
-      "playtime_minutes": 5629,
+      "playtime_minutes": 5734,
       "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
@@ -442,16 +442,16 @@
       "icon_hash": "b813298efcd6e936076f721365f20b192fbbe556"
     },
     {
+      "appid": 1422450,
+      "name": "Deadlock",
+      "playtime_minutes": 61,
+      "icon_hash": "f6da1420a173324d49bcd470fa3eee781ad0fa5e"
+    },
+    {
       "appid": 1137300,
       "name": "Sherlock Holmes Chapter One",
       "playtime_minutes": 59,
       "icon_hash": "038c59dc4a1bc39b59b2fc69a8648fe7412ad5c1"
-    },
-    {
-      "appid": 1422450,
-      "name": "Deadlock",
-      "playtime_minutes": 53,
-      "icon_hash": "f6da1420a173324d49bcd470fa3eee781ad0fa5e"
     },
     {
       "appid": 629520,
@@ -1529,7 +1529,7 @@
     {
       "appid": 3405690,
       "name": "EA SPORTS FC™ 26",
-      "playtime_minutes": 5629,
+      "playtime_minutes": 5734,
       "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
@@ -1549,5 +1549,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-10-30T15:12:05Z"
+  "updated_at": "2026-10-30T20:00:03Z"
 }
