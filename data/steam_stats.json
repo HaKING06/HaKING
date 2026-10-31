@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "total_games": 249,
-  "total_hours": "2,173h",
+  "total_hours": "2,176h",
   "games": [
     {
       "appid": 730,
@@ -400,10 +400,22 @@
       "icon_hash": "b6ce52a576e99f54c5d18f675540b9c3ee70ed47"
     },
     {
+      "appid": 1107790,
+      "name": "The Complex",
+      "playtime_minutes": 106,
+      "icon_hash": "33e6ef09319f7b7c68fa302871c2bbd083aeb4d4"
+    },
+    {
       "appid": 2807960,
       "name": "Battlefield™ 6",
       "playtime_minutes": 90,
       "icon_hash": "3059e94fb89816fe1929a238ac2b55e8be348408"
+    },
+    {
+      "appid": 584980,
+      "name": "Late Shift",
+      "playtime_minutes": 78,
+      "icon_hash": "8a040e14b44da6e798b2c61a8cde1320da05c845"
     },
     {
       "appid": 1659040,
@@ -586,34 +598,22 @@
       "icon_hash": "785d1d26402b58e537159093b604764aa69bc2fa"
     },
     {
-      "appid": 584980,
-      "name": "Late Shift",
-      "playtime_minutes": 3,
-      "icon_hash": "8a040e14b44da6e798b2c61a8cde1320da05c845"
-    },
-    {
       "appid": 880940,
       "name": "Pummel Party",
       "playtime_minutes": 3,
       "icon_hash": "0e2e222010d009ca46b575cc5c53a23250434341"
     },
     {
-      "appid": 1107790,
-      "name": "The Complex",
-      "playtime_minutes": 2,
-      "icon_hash": "33e6ef09319f7b7c68fa302871c2bbd083aeb4d4"
+      "appid": 282070,
+      "name": "This War of Mine",
+      "playtime_minutes": 3,
+      "icon_hash": "38ad6fd10e2b89ab24e8013584ece7961bebe086"
     },
     {
       "appid": 1623940,
       "name": "Bramble: The Mountain King",
       "playtime_minutes": 1,
       "icon_hash": "334e35ae8c0cbd295d82e72cf9a7d31b14291a9f"
-    },
-    {
-      "appid": 282070,
-      "name": "This War of Mine",
-      "playtime_minutes": 1,
-      "icon_hash": "38ad6fd10e2b89ab24e8013584ece7961bebe086"
     },
     {
       "appid": 282800,
@@ -1549,5 +1549,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-10-31T10:46:30Z"
+  "updated_at": "2026-10-31T15:58:35Z"
 }
