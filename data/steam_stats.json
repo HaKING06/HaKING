@@ -36,14 +36,14 @@
       "name": "The Witcher 3: Wild Hunt — Remastered",
       "playtime_minutes": 5486,
       "icon_hash": "7b52d11edee478d652ef4e7103e00644bed2c74c",
-      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/e8afc4252e3fee8ed2525ab2fd7675cca39aa38d/header_alt_assets_1.jpg?t=1790845156"
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/4b5b1ba5061b8a992cc69ac58b4245434edb4296/header.jpg?t=1793900434"
     },
     {
       "appid": 812140,
       "name": "Assassin's Creed Odyssey",
       "playtime_minutes": 5159,
       "icon_hash": "4b6cf0715b30669411bf204bce7ed99a9c84671b",
-      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1792778552"
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     },
     {
       "appid": 1091500,
@@ -1538,16 +1538,16 @@
       "name": "The Witcher 3: Wild Hunt — Remastered",
       "playtime_minutes": 5486,
       "icon_hash": "7b52d11edee478d652ef4e7103e00644bed2c74c",
-      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/e8afc4252e3fee8ed2525ab2fd7675cca39aa38d/header_alt_assets_1.jpg?t=1790845156"
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/4b5b1ba5061b8a992cc69ac58b4245434edb4296/header.jpg?t=1793900434"
     },
     {
       "appid": 812140,
       "name": "Assassin's Creed Odyssey",
       "playtime_minutes": 5159,
       "icon_hash": "4b6cf0715b30669411bf204bce7ed99a9c84671b",
-      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1792778552"
+      "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "OFFLINE",
-  "updated_at": "2026-11-04T22:03:52Z"
+  "system_status": "ONLINE",
+  "updated_at": "2026-11-05T18:33:30Z"
 }
