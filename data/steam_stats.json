@@ -412,6 +412,12 @@
       "icon_hash": "3059e94fb89816fe1929a238ac2b55e8be348408"
     },
     {
+      "appid": 698780,
+      "name": "Doki Doki Literature Club",
+      "playtime_minutes": 80,
+      "icon_hash": "2bf8ed528d8f251428435a6f6ffc8e4e8e4b294c"
+    },
+    {
       "appid": 584980,
       "name": "Late Shift",
       "playtime_minutes": 78,
@@ -458,12 +464,6 @@
       "name": "Deadlock",
       "playtime_minutes": 61,
       "icon_hash": "f6da1420a173324d49bcd470fa3eee781ad0fa5e"
-    },
-    {
-      "appid": 698780,
-      "name": "Doki Doki Literature Club",
-      "playtime_minutes": 60,
-      "icon_hash": "2bf8ed528d8f251428435a6f6ffc8e4e8e4b294c"
     },
     {
       "appid": 1137300,
@@ -1573,5 +1573,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-06T14:30:29Z"
+  "updated_at": "2026-11-06T20:44:02Z"
 }
