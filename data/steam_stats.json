@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
-  "total_games": 249,
-  "total_hours": "2,178h",
+  "total_games": 253,
+  "total_hours": "2,179h",
   "games": [
     {
       "appid": 730,
@@ -460,6 +460,12 @@
       "icon_hash": "f6da1420a173324d49bcd470fa3eee781ad0fa5e"
     },
     {
+      "appid": 698780,
+      "name": "Doki Doki Literature Club",
+      "playtime_minutes": 60,
+      "icon_hash": "2bf8ed528d8f251428435a6f6ffc8e4e8e4b294c"
+    },
+    {
       "appid": 1137300,
       "name": "Sherlock Holmes Chapter One",
       "playtime_minutes": 59,
@@ -608,6 +614,12 @@
       "name": "This War of Mine",
       "playtime_minutes": 3,
       "icon_hash": "38ad6fd10e2b89ab24e8013584ece7961bebe086"
+    },
+    {
+      "appid": 1989270,
+      "name": "Slay the Princess — The Pristine Cut",
+      "playtime_minutes": 2,
+      "icon_hash": "aae15ecdf3d29d31d3f7882c6da511f3aba4ca0b"
     },
     {
       "appid": 1623940,
@@ -1426,6 +1438,12 @@
       "icon_hash": "0efc0c5e80b66389d33981aceaf67b7309b4baec"
     },
     {
+      "appid": 898650,
+      "name": "The Shapeshifting Detective",
+      "playtime_minutes": 0,
+      "icon_hash": "62f05c8f90dede57c692ef5084349b1884d62b67"
+    },
+    {
       "appid": 1012460,
       "name": "Through Abandoned: The Refuge",
       "playtime_minutes": 0,
@@ -1466,6 +1484,12 @@
       "name": "WHAT THE PAK?!",
       "playtime_minutes": 0,
       "icon_hash": "bcc6b61bf63fe3ec675bb4da845006d979e6901a"
+    },
+    {
+      "appid": 1628130,
+      "name": "Who Pressed Mute on Uncle Marcus?",
+      "playtime_minutes": 0,
+      "icon_hash": "34f8a8ba6ae77bfc9dff98c0914e31f1a5449597"
     },
     {
       "appid": 1134700,
@@ -1548,6 +1572,6 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "OFFLINE",
-  "updated_at": "2026-11-05T23:57:37Z"
+  "system_status": "ONLINE",
+  "updated_at": "2026-11-06T14:30:29Z"
 }
