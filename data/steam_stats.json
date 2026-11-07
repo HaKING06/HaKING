@@ -1,12 +1,12 @@
 {
   "schema_version": 3,
   "total_games": 253,
-  "total_hours": "2,179h",
+  "total_hours": "2,182h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18137,
+      "playtime_minutes": 18187,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -406,22 +406,28 @@
       "icon_hash": "33e6ef09319f7b7c68fa302871c2bbd083aeb4d4"
     },
     {
+      "appid": 698780,
+      "name": "Doki Doki Literature Club",
+      "playtime_minutes": 105,
+      "icon_hash": "2bf8ed528d8f251428435a6f6ffc8e4e8e4b294c"
+    },
+    {
       "appid": 2807960,
       "name": "Battlefield™ 6",
       "playtime_minutes": 90,
       "icon_hash": "3059e94fb89816fe1929a238ac2b55e8be348408"
     },
     {
-      "appid": 698780,
-      "name": "Doki Doki Literature Club",
-      "playtime_minutes": 80,
-      "icon_hash": "2bf8ed528d8f251428435a6f6ffc8e4e8e4b294c"
-    },
-    {
       "appid": 584980,
       "name": "Late Shift",
       "playtime_minutes": 78,
       "icon_hash": "8a040e14b44da6e798b2c61a8cde1320da05c845"
+    },
+    {
+      "appid": 1989270,
+      "name": "Slay the Princess — The Pristine Cut",
+      "playtime_minutes": 78,
+      "icon_hash": "aae15ecdf3d29d31d3f7882c6da511f3aba4ca0b"
     },
     {
       "appid": 1659040,
@@ -614,12 +620,6 @@
       "name": "This War of Mine",
       "playtime_minutes": 3,
       "icon_hash": "38ad6fd10e2b89ab24e8013584ece7961bebe086"
-    },
-    {
-      "appid": 1989270,
-      "name": "Slay the Princess — The Pristine Cut",
-      "playtime_minutes": 2,
-      "icon_hash": "aae15ecdf3d29d31d3f7882c6da511f3aba4ca0b"
     },
     {
       "appid": 1623940,
@@ -1532,7 +1532,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18137,
+      "playtime_minutes": 18187,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1573,5 +1573,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-07T06:53:19Z"
+  "updated_at": "2026-11-07T13:47:20Z"
 }
