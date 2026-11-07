@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "total_games": 253,
-  "total_hours": "2,182h",
+  "total_hours": "2,183h",
   "games": [
     {
       "appid": 730,
@@ -190,6 +190,12 @@
       "icon_hash": "13958db39ef103148d25d9cb01fe639f681e1f92"
     },
     {
+      "appid": 3240220,
+      "name": "Grand Theft Auto V Enhanced",
+      "playtime_minutes": 666,
+      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
+    },
+    {
       "appid": 2923300,
       "name": "Banana",
       "playtime_minutes": 658,
@@ -200,12 +206,6 @@
       "name": "Battlefield™ 1",
       "playtime_minutes": 648,
       "icon_hash": "325c78f6940b57a43b65468d2dc10e22601b0ec5"
-    },
-    {
-      "appid": 3240220,
-      "name": "Grand Theft Auto V Enhanced",
-      "playtime_minutes": 623,
-      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
     },
     {
       "appid": 1817190,
@@ -1573,5 +1573,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-07T13:47:20Z"
+  "updated_at": "2026-11-07T18:30:44Z"
 }
