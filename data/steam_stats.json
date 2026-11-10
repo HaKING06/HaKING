@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "total_games": 254,
-  "total_hours": "2,185h",
+  "total_hours": "2,186h",
   "games": [
     {
       "appid": 730,
@@ -186,7 +186,7 @@
     {
       "appid": 3240220,
       "name": "Grand Theft Auto V Enhanced",
-      "playtime_minutes": 786,
+      "playtime_minutes": 834,
       "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
     },
     {
@@ -1579,5 +1579,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-10T09:27:00Z"
+  "updated_at": "2026-11-10T17:13:57Z"
 }
