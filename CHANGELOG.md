@@ -1,3 +1,15 @@
+# HaKING 2.1.0 — 2026-11-11
+
+- Resolve original-resolution Steam media from detail pages; keep thumbnails separate from viewer sources.
+- Restore native pointer behavior, including modal dialogs.
+- Replace the native language list with a searchable, height-limited, keyboard-accessible popover; preserve 20 languages and Arabic RTL.
+- Remove light mode and poster shortcut from the application toolbar.
+- Refine the Victus visualization with rounded chassis, individual key legends, numpad, ventilation, underside grille, dual fan illustration and camera presets. Owner confirmed 16-r1015nt with near-black dark gray chassis; this is not manufacturer CAD.
+- Add scroll progress and reduced-motion-aware hardware story transitions.
+- Route contact email drafts to steam@haking.tr. Sending still requires the visitor's mail application.
+- Add Buy Me a Coffee alongside Steam trade support.
+- Add contributor, security and issue-reporting documentation; renew the project README.
+
 # HaKING 2.0.0 — 2026-11-11
 
 - Replaced the old CSS laptop with a locally rendered, interactive HP Victus-inspired 3D model: keyboard, display, hinge, ventilation, side ports, touchpad and back-lid emblem. Mouse/touch rotation, keyboard arrows, zoom and reset. WebGL fallback keeps hardware details available.

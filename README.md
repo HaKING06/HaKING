@@ -1,77 +1,93 @@
 # HaKING
 
-HaKING, Halit Güneş'in oyun profili ve dijital arşivini sunan statik bir web sitesidir. HTML, CSS, çeviriler ve arayüz mantığı ayrı dosyalarda tutulur. Derleme adımı veya JavaScript paket yöneticisi gerektirmez.
+<p align="center"><img src="assets/posters/haking-tr-museum.webp" width="620" alt="HaKING — oyun arşivi ve Steam ekran görüntüleri"></p>
 
-## Proje yapısı
+<p align="center"><strong>Halit Güneş · Oyun profili, görsel arşiv ve kişisel sistem vitrini</strong></p>
+<p align="center"><a href="https://steam.haking.tr/">Web sitesi</a> · <a href="CHANGELOG.md">Sürüm notları</a> · <a href="CONTRIBUTING.md">Katkıda bulunma</a> · <a href="LICENSE">MIT lisansı</a></p>
 
-```text
-.
-├── index.html
-├── assets/
-│   ├── css/main.css
-│   ├── images/
-│   │   ├── HaKING2.png
-│   │   └── HICON.png
-│   └── js/
-│       ├── main.js
-│       └── translations.js
-├── data/
-│   └── steam_stats.json
-├── add/                    # Tanıtım görseli
-├── update_stats.py         # Steam Web API ile istatistik güncelleme
-├── robots.txt
-├── sitemap.xml
-└── .github/workflows/
-    └── update_steam.yml    # İstatistikleri 30 dakikada bir yeniler
-```
+![Version](https://img.shields.io/badge/version-2.1.0-c9a36a) ![License](https://img.shields.io/badge/license-MIT-blue) ![Languages](https://img.shields.io/badge/languages-20-green)
 
-## Yerelde görüntüleme
+## Deneyim
 
-Depo kök dizininde basit bir statik HTTP sunucusu çalıştırın. Örneğin Python kuruluysa:
+HaKING; Steam oyun koleksiyonunu, oyunlardan kaydedilen anları ve kişisel donanım vitrininin aynı arayüzde buluştuğu statik bir web projesidir. Derleme veya npm kurulumu gerektirmez. Koyu arayüz, erişilebilir dil menüsü ve mobil gezinme kullanır.
+
+| Alan | Özellikler |
+| --- | --- |
+| Koleksiyon | Oyun arama, sıralama, oynama süreleri ve güncellenen Steam verileri |
+| Müze | Altı seçili favori, tüm açık görseller, oyun filtresi, kademeli yükleme |
+| Görsel inceleyici | Asıl Steam dosyası, ok tuşları, Escape, kaynak sayfasına bağlantı |
+| Makine | HP Victus 16-r1015nt, Koyu gri; etkileşimli 3D, klavye, alt ızgara, fan temsili ve kamera açıları |
+| Dil | 20 dil; kendi adlarıyla aranabilir, kaydırılabilir menü; Arapça RTL |
+| Destek | Steam takası veya [Buy Me a Coffee](https://buymeacoffee.com/haking) |
+| İletişim | steam@haking.tr adresine önceden doldurulmuş e-posta taslağı |
+| Hareket | Kaydırma ilerlemesi, donanım anlatımı ve azaltılmış hareket tercihi |
+
+### Donanım
+
+Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU · 16 GB RAM · 1 TB SSD · 144 Hz Full HD (1920 × 1080).
+
+Ürün kodu ve renk sahibi tarafından doğrulanmıştır. 3D model elle hazırlanmış web görselleştirmesidir; üreticinin CAD dosyası veya ölçü doğrulanmış dijital ikizi değildir. Fanlar ve iç detaylar açıklayıcı temsildir; gerçek zamanlı sıcaklık ya da RPM ölçülmez. [HP ürün desteği](https://support.hp.com/tr-tr/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-r1000/model/2101982951?sku=9J217EA).
+
+## Yerel kurulum
+
+Python 3.12 veya daha yenisi önerilir. Ana çalışma ve push klasörü: `C:\Users\halit\OneDrive\Belgeler\GitHub\HaKING`.
 
 ```powershell
 python -m http.server 8000
 ```
 
-Sonra `http://localhost:8000` adresini açın. JSON verisini `fetch()` ile yüklediğimiz için sayfayı `file://` üzerinden açmayın.
-
-## Steam istatistikleri
-
-`update_stats.py`, Steam Web API'den tam oyun listesini, toplam süreyi ve oynama süresine göre sıralanmış ilk altı oyunu alır. Ana sayfada öne çıkan oyun ilk sıradaki oyundur; Cephanelik bölümü API'nin döndürdüğü tüm oyunları arama ve sıralama ile gösterir. `data/steam_stats.json` güncellendiğinde tam oyun arşivi, ana sayfadaki öne çıkan oyun ve oynama saatleri de otomatik yenilenir. Yeni veri biçimi kapak görseli için Steam ikon hash'ini de saklar; ilk altı oyun için güncel mağaza kapağını alır. Diğer kartlarda alternatif Steam görselleri ve oyun baş harfleri kullanılır. Kartlardaki oyun adları Steam mağazasına bağlanır.
-
-GitHub Actions iş akışı kod güncellemesinde ve her 30 dakikada bir veriyi kontrol eder. Veriler değiştiyse JSON dosyasını depoya gönderir; Git bağlantılı Cloudflare Pages dağıtımı bu commit'i yayımlar. Hiçbir değer değişmediyse gereksiz commit ve dağıtım oluşmaz. İlk çalıştırmayı GitHub Actions içinden `Update Steam Stats` iş akışını elle çalıştırarak başlatabilirsiniz.
-
-İş akışının çalışması için GitHub deposunda **Settings → Secrets and variables → Actions** bölümüne `STEAM_API_KEY` adlı bir repository secret ekleyin. Steam profilinde oyun ayrıntıları da API'nin görebileceği şekilde açık olmalıdır. API anahtarı yalnızca GitHub Actions ortamında kullanılır; siteye gönderilen JSON dosyasına veya tarayıcıya yazılmaz. Steam verisi alınamazsa script son başarılı JSON'u korur.
-
-## Dağıtım
-
-Site statik dosyalardan oluşur. Cloudflare Pages Git entegrasyonunda derleme komutu gerekmez; dağıtım dizini depo köküdür. CSS, JavaScript, görseller ve JSON dosyaları HTML ile aynı kökten sunulmalıdır.
-
-## 2.0.0 — yeni özellikler
-
-Makine sayfası yerel Three.js ile etkileşimli Victus görselleştirmesi sunar. Döndürmek için sürükleyin veya odaklanıp ok tuşlarını kullanın; tekerlekle yakınlaştırın. Model HP CAD dosyası değildir. Tam SKU, kasa rengi ve fotoğraf verilmediğinden üreticiyle birebir fiziksel eşleşme iddiası yoktur. Teknik özellikler kullanıcı tarafından verilen yapılandırmadır.
-
-Müze, `data/screenshots.json` içindeki herkese açık arşivi kullanır. Bu teslimde 222 görsel ve altı favori bulunur. Favorileri `data/favorites.json` dosyasındaki Steam görsel kimlikleri belirler; yalnızca halen herkese açık listede olanlar gösterilir. Oyun filtresi, arama, daha fazla yükleme ve Escape/ok tuşlarıyla çalışan görsel penceresi vardır.
-
-### Güncelleme ve kurulum
-
-Siteyi çalıştırmak için npm veya derleme kurulumu gerekmez. Python 3.12 önerilir:
+`http://localhost:8000` adresini açın. `file://` kullanmayın: veri dosyaları HTTP üzerinden yüklenir. Siteyi görüntülemek için ek bağımlılık kurulumu gerekmez. Bakım scriptleri için:
 
 ```powershell
 python -m pip install -r requirements.txt
-python -m http.server 8000
+python scripts/sync_screenshots.py
+python scripts/resolve_media.py
 ```
 
-Arşivi elle yenilemek için ayrı terminalde `python scripts/sync_screenshots.py` çalıştırın. API anahtarı gerekmez; yalnızca herkese açık Steam ekran görüntüleri alınır. Hatalı yanıtlarda son başarılı dosya korunur. `Sync public screenshots` GitHub Actions iş akışı altı saatte bir arşivi yeniler; GitHub Actions yazma izninin açık olması gerekir. Steam oyun istatistikleri için mevcut `STEAM_API_KEY` secret gereklidir. Secrets dosyalarını commit etmeyin.
+## Mimari
 
-### Afişler ve görünürlük
+```text
+index.html                 Sayfa yapısı ve erişilebilir içerik
+assets/css/                Temel arayüz ve deneyim stilleri
+assets/js/main.js          Gezinme, Steam koleksiyonu, iletişim
+assets/js/upgrade.js       Dil menüsü ve görsel inceleyici
+assets/js/victus.js        Yerel Three.js görselleştirmesi
+assets/js/translations.js  20 dilin sözlükleri
+assets/vendor/             Three.js ve lisansı
+assets/posters/            40 WebP tanıtım görseli
+data/                      Steam verisi, ekran görüntüleri, favoriler
+posters/                   Dil bazlı tanıtım sayfaları
+docs/                      Gerçek site ekran görüntüleri
+scripts/                   Arşiv ve tanıtım sayfası üretimi
+.github/                   Otomasyonlar, issue ve PR şablonları
+```
 
-`posters/tr/` dahil 20 dil sayfasında toplam 40 indirilebilir WebP afiş bulunur; hepsi `assets/posters/` dizinindedir. Kaynak ekran görüntüleri `docs/` içindedir. Yeni ekran görüntülerinden afiş üretmek için `node scripts/export_locales.mjs` ve `python scripts/build_posters.py` sayfaları oluşturur; sayfalardaki `#poster-setup` ve `#poster-museum` elemanlarını 768 px görünümde tarayıcıyla yakalayıp WebP olarak kaydedin. Siteyi yeniledikten sonra afişleri otomatik olarak güncellediği iddia edilmez.
+## Veri güncelleme
 
-Yayımdan sonra Google Search Console'da `https://steam.haking.tr/sitemap.xml` adresini gönderin. Afişlerin çokluğu sıralama garantisi değildir; gerçek görseller, açıklamalar, kalıcı URL'ler ve ilgili içerik birlikte kullanılır. Canlı ortamda canonical alan adını doğrulayın. Kod yerelde hazırlandı; bu teslimde push veya dağıtım yapılmadı.
+`Update Steam Stats` iş akışı oyun verisini 30 dakikada bir yeniler. Repository secrets altında `STEAM_API_KEY` gerekir. Steam oyun ayrıntıları herkese açık olmalıdır. API anahtarı tarayıcıya veya JSON'a yazılmaz.
 
-Lisans `LICENSE` (MIT); oyun görselleri, marka ve üçüncü taraf bağımlılıklarının hakları için `THIRD_PARTY_NOTICES.md` geçerlidir. Sürüm: `VERSION`, HTML metadata ve `CHANGELOG.md` içinde 2.0.0.
+`Sync public screenshots` altı saatte bir açık görselleri indeksler; ardından detay sayfalarından yüksek çözünürlüklü dosya bağlantılarını çözer. Başarısız çözümlemeler mevcut veriyi korur. Favoriler `data/favorites.json` içindeki kimliklerle belirlenir. Gizli veya silinmiş görseller yeniden yayımlanmaz. GitHub Actions'ın depoya yazma izni açık olmalıdır.
 
-## Ana GitHub çalışma klasörü
+Liste sayfasındaki küçük Steam önizlemeleri asıl görüntü değildir. İnceleyici `original` adresini kullanır; bağlantı çözülememişse mevcut önizlemeyi gösterir. Kaynağın kendi çözünürlüğü aşılamaz.
 
-Push için kullanılan ana depo `C:\Users\halit\OneDrive\Belgeler\GitHub\HaKING` klasörüdür. 2.0.0 geliştirmeleri bu klasöre aktarıldı; daha güncel Steam verisi korundu. GitHub Desktop üzerinden bu depoyu seçip değişiklikleri commit edin, ardından **Push origin** kullanın.
+## İletişim ve destek
+
+İletişim formu `mailto:steam@haking.tr` taslağı açar. Mesaj ziyaretçinin e-posta uygulamasından gönderilir; site kendi başına e-posta teslimatı yapmaz veya gönderildi onayı vermez. Sunucudan doğrudan e-posta için ayrıca bir gönderim servisi/backend gerekir.
+
+Destek bağlantıları dış hizmetleri açar. Site ödeme bilgisi almaz. Steam takas bağlantısını ve kahve hesabını değiştirmek için `index.html` içindeki destek kartlarını düzenleyin.
+
+## Yayın ve keşfedilebilirlik
+
+Cloudflare Pages gibi statik hosting üzerinde derleme komutu boş, yayın dizini depo köküdür. GitHub Desktop ile değişiklikleri commit edip **Push origin** kullanın. Özel alan adı `steam.haking.tr` olmalıdır. `robots.txt`, canonical, Open Graph ve görsel site haritası bu alan adına bağlıdır.
+
+Yayından sonra Search Console'a `https://steam.haking.tr/sitemap.xml` gönderilebilir. Görsellerin veya afiş sayısının sıralama garantisi yoktur. 20 dilde 40 afiş `posters/` sayfalarında tutulur; uygulama araç çubuğunda afiş bağlantısı bulunmaz.
+
+Afiş sayfalarını üretmek için `node scripts/export_locales.mjs` ve `python scripts/build_posters.py` kullanılır. Kaynak ekran görüntüleri değiştiğinde WebP afişleri de yeniden yakalayın; HTML üretimi raster afişleri otomatik yenilemez.
+
+## Doğrulama ve sınırlar
+
+Önemli UI değişikliklerinde 390 ve 768 px görünüm, taşma, dil araması, RTL, modal klavye kontrolü ve 3D kamera düğmeleri kontrol edilir. Gerçek Steam açık verisi kullanılır; browser extension API'si kullanılmaz. Arama motoru indekslemesi, gerçek e-posta teslimatı ve ödeme işlemleri yerel testlerle doğrulanmış sayılmaz.
+
+## Lisans ve güvenlik
+
+Kod [MIT](LICENSE) lisanslıdır. Oyun görselleri, Steam içeriği, marka ve fontların hakları kendi sahiplerinde kalır; [üçüncü taraf bildirimlerini](THIRD_PARTY_NOTICES.md) okuyun. Güvenlik bildirimi için [SECURITY.md](SECURITY.md), geliştirme kuralları için [CONTRIBUTING.md](CONTRIBUTING.md) kullanın.

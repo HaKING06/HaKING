@@ -35,7 +35,8 @@ function translate(){
  $('museum-game').ariaLabel=label('all'); $('museum-game').options[0].textContent=label('all');
  $('language-select').value=document.documentElement.dataset.uiLang;
  const code=$('language-select').value || 'en';
- $('poster-link').href=`posters/${code}/`; $('poster-link').textContent=label('posters');
+ $('language-name').textContent=names[Array.from($('language-select').options).findIndex(x=>x.value===code)] || code;
+ document.querySelectorAll('.language-option').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.code===code)));
  render();
 }
 function card(item){
@@ -52,14 +53,23 @@ function render(){
  $('museum-count').textContent=`${filtered.length} / ${items.length}`;
  $('museum-more').hidden=rest.length<=limit; $('museum-empty').hidden=filtered.length>0;
 }
-function show(){const item=filtered[index];if(!item)return;$('gallery-image').src=item.image;$('gallery-image').alt=`HaKING — ${item.game}`;$('gallery-caption').textContent=`${item.game} · ${index+1} / ${filtered.length}`;$('gallery-steam').href=`https://steamcommunity.com/sharedfiles/filedetails/?id=${item.id}`;}
+function show(){const item=filtered[index];if(!item)return;$('gallery-image').src=item.original || item.image;$('gallery-image').alt=`HaKING — ${item.game}`;$('gallery-caption').textContent=`${item.game} · ${index+1} / ${filtered.length}`;$('gallery-steam').href=`https://steamcommunity.com/sharedfiles/filedetails/?id=${item.id}`;}
 window.addEventListener('DOMContentLoaded',async()=>{
+ $('gallery-image').addEventListener('load',()=>{$('gallery-image').style.maxWidth=$('gallery-image').naturalWidth+'px';});
  const select=$('language-select');
  Array.from(document.querySelectorAll('#lang-menu .lang-opt')).forEach((button,i)=>{const option=new Option(names[i],button.dataset.language);select.add(option);});
  select.addEventListener('change',()=>document.querySelector(`#lang-menu [data-language="${select.value}"]`)?.click());
  new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
- $('theme-toggle').addEventListener('click',()=>{const theme=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=theme;try{localStorage.setItem('haking.theme',theme);}catch{}});
- try{document.documentElement.dataset.theme=localStorage.getItem('haking.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}catch{}
+ document.documentElement.dataset.theme='dark';
+ const popover=$('language-popover'),trigger=$('language-trigger');
+ function closeLanguages(){popover.hidden=true;trigger.setAttribute('aria-expanded','false');}
+ function languageList(){const query=$('language-search').value.toLocaleLowerCase();$('language-options').replaceChildren(...Array.from(select.options).filter(o=>o.text.toLocaleLowerCase().includes(query)||o.value.includes(query)).map(o=>{const b=document.createElement('button');b.type='button';b.className='language-option';b.dataset.code=o.value;b.textContent=o.text;b.setAttribute('aria-pressed',String(o.value===select.value));b.addEventListener('click',()=>{select.value=o.value;select.dispatchEvent(new Event('change'));closeLanguages();trigger.focus();});return b;}));}
+ trigger.addEventListener('click',()=>{$('language-search').value='';popover.hidden=!popover.hidden;trigger.setAttribute('aria-expanded',String(!popover.hidden));if(!popover.hidden){languageList();$('language-search').focus();}});
+ $('language-search').addEventListener('input',languageList);
+ document.addEventListener('click',e=>{if(!e.target.closest('.language-control'))closeLanguages();});
+ document.addEventListener('keydown',e=>{if(popover.hidden)return;if(e.key==='Escape'){closeLanguages();trigger.focus();}if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const options=[...$('language-options').children];if(!options.length)return;const i=options.indexOf(document.activeElement);options[(i+(e.key==='ArrowDown'?1:-1)+options.length)%options.length].focus();}});
+ document.querySelectorAll('.section').forEach(section=>{section.addEventListener('scroll',()=>{const progress=section.scrollTop/Math.max(1,section.scrollHeight-section.clientHeight);section.style.setProperty('--scroll-progress',progress);},{passive:true});});
+ const observer=new IntersectionObserver(entries=>entries.forEach(e=>e.target.classList.toggle('revealed',e.isIntersecting)),{threshold:.12});document.querySelectorAll('.machine-story article,.support-card').forEach(e=>observer.observe(e));
  for(const id of ['museum-search','museum-game']) $(id).addEventListener('input',()=>{limit=24;render();});
  $('museum-more').addEventListener('click',()=>{limit+=24;render();});
  $('gallery-close').addEventListener('click',()=>$('gallery-dialog').close());

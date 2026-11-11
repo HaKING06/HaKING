@@ -1,0 +1,3 @@
+# Contributing
+
+Use the GitHub checkout documented in AGENTS.md. Keep changes focused and preserve public Steam data. Run a local HTTP server instead of opening HTML with file://. Check JavaScript syntax with node --check and Python syntax with ast.parse. Significant UI changes must be checked at 390 and 768 px, including keyboard interaction, Arabic RTL and reduced motion. Keep all 20 languages. Never commit .env files, API keys or personal mail. Document behavior and validation in the pull request, update VERSION and CHANGELOG, and keep release labels consistent. Generated posters must be refreshed when their source screenshots change. MIT covers project code; third-party artwork retains its rights.

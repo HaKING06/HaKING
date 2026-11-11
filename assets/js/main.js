@@ -638,8 +638,8 @@ function setLang(c, remember = false) {
                     gsap.to(success, { opacity: 1, scale: 1, duration: 0.4 });
 
                     const output = document.getElementById('terminal-console-output');
-                    output.innerText = `${LANG_DATA[activeLang]?.contact_draft_note || LANG_DATA.en.contact_draft_note}\n\nhalitguns06@gmail.com`;
-                    window.location.href = `mailto:halitguns06@gmail.com?subject=${encodeURIComponent("HaKING Contact - " + name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
+                    output.innerText = `${LANG_DATA[activeLang]?.contact_draft_note || LANG_DATA.en.contact_draft_note}\n\nsteam@haking.tr`;
+                    window.location.href = `mailto:steam@haking.tr?subject=${encodeURIComponent("HaKING Contact - " + name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
                 }
             });
         }

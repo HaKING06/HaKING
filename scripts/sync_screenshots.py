@@ -42,6 +42,10 @@ def sync():
     if not items:
         raise RuntimeError('Empty archive; existing data preserved.')
     target = ROOT / 'data/screenshots.json'
+    previous = json.loads(target.read_text(encoding='utf-8')).get('items', []) if target.exists() else []
+    originals = {x['id']: x['original'] for x in previous if x.get('original')}
+    for item in items.values():
+        if item['id'] in originals: item['original'] = originals[item['id']]
     data = {'updated_at': datetime.now(timezone.utc).isoformat(), 'items': list(items.values())}
     if target.exists() and json.loads(target.read_text(encoding='utf-8')).get('items') == data['items']:
         return

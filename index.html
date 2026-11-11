@@ -65,7 +65,7 @@
     <script type="module" src="assets/js/main.js"></script>
     <script type="module" src="assets/js/upgrade.js"></script>
     <link rel="stylesheet" href="assets/css/upgrade.css">
-    <meta name="application-version" content="2.0.0">
+    <meta name="application-version" content="2.1.0">
 
 
 </head>
@@ -138,7 +138,7 @@
     </div>
 
     <!-- LANG -->
-    <div class="lang-box"><select id="language-select" aria-label="Language"></select><button id="theme-toggle" type="button" data-u="theme">Tema</button><span class="site-version">v2.0.0</span><a id="poster-link" href="posters/tr/" data-u="posters">Afişler</a>
+    <div class="lang-box"><div class="language-control"><button id="language-trigger" type="button" aria-expanded="false" aria-controls="language-popover"><span>◎</span><span id="language-name">Türkçe</span><span>⌄</span></button><div id="language-popover" hidden><input id="language-search" type="search" placeholder="Language…" aria-label="Search languages"><div id="language-options" role="group" aria-label="Languages"></div></div><select id="language-select" hidden aria-hidden="true" tabindex="-1"></select></div><span class="site-version">v2.1.0</span>
         <button type="button" class="lang-btn" id="lang-togg" aria-controls="lang-menu" aria-expanded="false"><i data-lucide="globe" aria-hidden="true"></i> <span
                 id="curr-lang">EN</span></button>
         <div class="lang-list" id="lang-menu">
@@ -391,9 +391,9 @@
                             data-k="sub_machine">SYSTEM ARCHITECTURE</span>
                     </div>
                 </div>
-                <div class="setup-intro"><span class="edition">VICTUS BY HP · 16</span><h2 data-k="sub_machine">Sistem mimarisi</h2><p>Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU</p></div>
-                <div class="victus-layout"><div class="model-panel"><div id="victus-stage"><div class="model-fallback"><strong>HP VICTUS</strong><p>i7-14700HX · RTX 4070 · 144 Hz</p></div></div><div class="model-toolbar"><span data-u="drag">Sürükleyerek döndür · Kaydırarak yakınlaştır</span><button type="button" id="model-reset" data-u="reset">Görünümü sıfırla</button></div></div>
-                <dl class="spec-list"><div><dt>MODEL</dt><dd>HP Victus</dd></div><div><dt>CPU</dt><dd>Intel Core i7-14700HX</dd></div><div><dt>GPU</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></div><div><dt>RAM</dt><dd>16 GB</dd></div><div><dt>SSD</dt><dd>1 TB SSD</dd></div><div><dt>DISPLAY</dt><dd>144 Hz · Full HD<br><small>1920 × 1080</small></dd></div></dl></div>
+                <div class="setup-intro"><span class="edition">VICTUS BY HP · 16-r1015nt</span><h2 data-k="sub_machine">Sistem mimarisi</h2><p>Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU</p></div>
+                <div class="victus-layout"><div class="model-panel"><div id="victus-stage"><div class="model-fallback"><strong>HP VICTUS</strong><p>i7-14700HX · RTX 4070 · 144 Hz</p></div></div><div class="model-toolbar"><span data-u="drag">Sürükleyerek döndür · Kaydırarak yakınlaştır</span><button type="button" id="model-front">01 ↗</button><button type="button" id="model-back">02 ↶</button><button type="button" id="model-bottom">03 ◉</button><button type="button" id="model-reset" data-u="reset">Görünümü sıfırla</button></div></div>
+                <dl class="spec-list"><div><dt>MODEL</dt><dd>HP Victus 16-r1015nt<small> · Koyu gri</small></dd></div><div><dt>CPU</dt><dd>Intel Core i7-14700HX</dd></div><div><dt>GPU</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></div><div><dt>RAM</dt><dd>16 GB</dd></div><div><dt>SSD</dt><dd>1 TB SSD</dd></div><div><dt>DISPLAY</dt><dd>144 Hz · Full HD<br><small>1920 × 1080</small></dd></div></dl></div><div class="machine-story"><article><span>01 / COMPUTE</span><h2>Intel Core i7-14700HX</h2><p>20 cores · 28 threads · 33 MB cache</p></article><article><span>02 / GRAPHICS</span><h2>GeForce RTX 4070</h2><p>Laptop GPU · 8 GB GDDR6</p></article><article><span>03 / EXPERIENCE</span><h2>144 Hz · Full HD</h2><p>1920 × 1080 · 16 GB RAM · 1 TB SSD</p></article></div>
             </section>
 
             <section id="museum" class="section">
@@ -525,6 +525,7 @@
                             </p>
                         </div>
                     </div>
+                    <div class="panel support-card coffee-card"><span class="edition">BUY ME A COFFEE</span><h2 class="support-card-title">☕ HaKING</h2><p class="support-card-description" data-k="coffee_desc">Steam takasına alternatif olarak kahve sitesi üzerinden doğrudan destek olabilirsin.</p><a class="btn-view support-card-link" href="https://buymeacoffee.com/haking" target="_blank" rel="noopener noreferrer" data-k="coffee_btn">BİR KAHVE ISMARLA</a></div>
                 </div>
             </section>
         </main>

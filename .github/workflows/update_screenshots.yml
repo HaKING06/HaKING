@@ -23,6 +23,7 @@ jobs:
           python-version: '3.12'
       - run: pip install -r requirements.txt
       - run: python scripts/sync_screenshots.py
+      - run: python scripts/resolve_media.py
       - name: Commit archive
         run: |
           git config user.name 'HaKING Bot'
