@@ -1,12 +1,12 @@
 {
   "schema_version": 3,
-  "total_games": 254,
-  "total_hours": "2,186h",
+  "total_games": 269,
+  "total_hours": "2,188h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18213,
+      "playtime_minutes": 18331,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -844,6 +844,12 @@
       "icon_hash": "568c6e789a8387ae17a4aa3dc206ce05256d6b70"
     },
     {
+      "appid": 636150,
+      "name": "Cyberhunt",
+      "playtime_minutes": 0,
+      "icon_hash": "7c84ce7b6481f437e75e3fd2a20b7f4a54640ced"
+    },
+    {
       "appid": 723830,
       "name": "Cyborg Invasion Shooter",
       "playtime_minutes": 0,
@@ -994,10 +1000,28 @@
       "icon_hash": "0561084dfe24c469c905fe0681da82aa31102836"
     },
     {
+      "appid": 1546970,
+      "name": "Grand Theft Auto III - The Definitive Edition",
+      "playtime_minutes": 0,
+      "icon_hash": "34da0ad18d5dd3507e137195038ecd4b45ec08b3"
+    },
+    {
       "appid": 271590,
       "name": "Grand Theft Auto V Legacy",
       "playtime_minutes": 0,
       "icon_hash": "1e72f87eb927fa1485e68aefaff23c7fd7178251"
+    },
+    {
+      "appid": 1547000,
+      "name": "Grand Theft Auto: San Andreas - The Definitive Edition",
+      "playtime_minutes": 0,
+      "icon_hash": "44e14013432397d8c710ffcafcb77c259f3b4f27"
+    },
+    {
+      "appid": 1546990,
+      "name": "Grand Theft Auto: Vice City - The Definitive Edition",
+      "playtime_minutes": 0,
+      "icon_hash": "cdbe042499edb7c1ca10ae17077a01ef2d4ea116"
     },
     {
       "appid": 599140,
@@ -1258,6 +1282,12 @@
       "icon_hash": "a80c96dde162ef5ed25704384b6e312b6b6cddf9"
     },
     {
+      "appid": 562360,
+      "name": "Planes, Bullets and Vodka",
+      "playtime_minutes": 0,
+      "icon_hash": "a0a8985b9b76d6a2a81e79c5eb24a95d5d671d34"
+    },
+    {
       "appid": 1599600,
       "name": "PlateUp!",
       "playtime_minutes": 0,
@@ -1306,6 +1336,12 @@
       "icon_hash": "23fb52b6f56bb51450467c5c689f980785d1920e"
     },
     {
+      "appid": 539720,
+      "name": "Razortron 2000",
+      "playtime_minutes": 0,
+      "icon_hash": "80b5e8ac3ead11b6aac0817f84ff008eade83df6"
+    },
+    {
       "appid": 1174180,
       "name": "Red Dead Redemption 2",
       "playtime_minutes": 0,
@@ -1334,6 +1370,12 @@
       "name": "Resident Evil Village",
       "playtime_minutes": 0,
       "icon_hash": "d97fb0681f9517c65a9d7ba9dd7e63f775375645"
+    },
+    {
+      "appid": 438480,
+      "name": "Rock 'N' Roll Defense",
+      "playtime_minutes": 0,
+      "icon_hash": "c1b3094bfa9a69be71fc6446219496a3b4483baa"
     },
     {
       "appid": 700580,
@@ -1462,6 +1504,54 @@
       "icon_hash": "7a7c69259b7d1f622d8f7c0d34f93a85683c8fa4"
     },
     {
+      "appid": 357070,
+      "name": "UBERMOSH",
+      "playtime_minutes": 0,
+      "icon_hash": "e8cd0580affd04d1da681da369fb0d5f927dae8d"
+    },
+    {
+      "appid": 515570,
+      "name": "UBERMOSH Vol.3",
+      "playtime_minutes": 0,
+      "icon_hash": "2f395cabed97d474934f38ccba50dfc69f2706fa"
+    },
+    {
+      "appid": 640380,
+      "name": "UBERMOSH Vol.5",
+      "playtime_minutes": 0,
+      "icon_hash": "0e22b6611485da170ae1d2dc7aa101f87f833e49"
+    },
+    {
+      "appid": 1029980,
+      "name": "UBERMOSH Vol.7",
+      "playtime_minutes": 0,
+      "icon_hash": "1d552c7387d7df63937841d6bd5065e7ce6842a2"
+    },
+    {
+      "appid": 444940,
+      "name": "UBERMOSH:BLACK",
+      "playtime_minutes": 0,
+      "icon_hash": "8657125c41777b73b759c8c95d039aaa250bf7a6"
+    },
+    {
+      "appid": 1181000,
+      "name": "UBERMOSH:OMEGA",
+      "playtime_minutes": 0,
+      "icon_hash": "10203ce2ead1539bbe0613c5f70ec550f21d353d"
+    },
+    {
+      "appid": 898450,
+      "name": "UBERMOSH:SANTICIDE",
+      "playtime_minutes": 0,
+      "icon_hash": "90b36a36166f66f1032b4bb9e35082f9c5a4c86e"
+    },
+    {
+      "appid": 586350,
+      "name": "UBERMOSH:WRAITH",
+      "playtime_minutes": 0,
+      "icon_hash": "b0319d74f74241a82f664cfceafb0dcc1505430e"
+    },
+    {
       "appid": 1035510,
       "name": "Ultimate Zombie Defense",
       "playtime_minutes": 0,
@@ -1538,7 +1628,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18213,
+      "playtime_minutes": 18331,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1579,5 +1669,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-11T09:44:41Z"
+  "updated_at": "2026-11-11T17:45:31Z"
 }
