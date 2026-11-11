@@ -61,6 +61,8 @@ function setLang(c, remember = false) {
                 option.setAttribute('aria-pressed', String(option.dataset.language === activeLang));
             });
             document.getElementById('curr-lang').innerText = activeLang.toUpperCase();
+            document.dispatchEvent(new Event('haking:language'));
+            if (remember) { const url = new URL(location.href); url.searchParams.set('lang', htmlLangTags[activeLang] || activeLang); history.replaceState(null, '', url); }
             document.getElementById('lang-menu').classList.remove('show');
             if (steamStats) {
                 updateLibrarySummary(steamStats);
@@ -441,7 +443,7 @@ function setLang(c, remember = false) {
             });
         }
 
-        const sfx = { click: new HowlClass({ src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.m4a'], volume: 0.2 }) };
+        const sfx = { click: new HowlClass({ src: ['assets/audio/click.wav'], volume: 0.2 }) };
         function sfxClick() { sfx.click.play(); }
 
         function initThree() {
@@ -688,7 +690,7 @@ function setLang(c, remember = false) {
             window.setTimeout(revealApp, 1800);
 
             const bootSfx = new HowlClass({
-                src: ['https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.m4a'],
+                src: ['assets/audio/boot.wav'],
                 volume: 0.25
             });
 

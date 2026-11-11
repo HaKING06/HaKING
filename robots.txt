@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://haking.tr/sitemap.xml
+Sitemap: https://steam.haking.tr/sitemap.xml

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "3587443677",
+    "appid": 2322010,
+    "game": "God of War Ragnarök",
+    "image": "https://images.steamusercontent.com/ugc/12378042621997334601/E47F3FB4C5AE4FF1EA7B74A8FB267E155A12F65B/",
+    "favorite": true
+  },
+  {
+    "id": "3565203458",
+    "appid": 2531310,
+    "game": "The Last of Us™ Part II Remastered",
+    "image": "https://images.steamusercontent.com/ugc/15566897679527924002/A32EBC50B8201D63E7E651ED6EAE5D164CF2C2C2/",
+    "favorite": true
+  },
+  {
+    "id": "3552788785",
+    "appid": 292030,
+    "game": "The Witcher 3: Wild Hunt",
+    "image": "https://images.steamusercontent.com/ugc/17036147118589743603/4C23D97CA5EC7A5B6BB7F287EEC18A4A9A3FB741/",
+    "favorite": true
+  },
+  {
+    "id": "3518267543",
+    "appid": 20920,
+    "game": "The Witcher 2: Assassins of Kings Enhanced Edition",
+    "image": "https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/",
+    "favorite": true
+  },
+  {
+    "id": "3589141535",
+    "appid": 990080,
+    "game": "Hogwarts Legacy",
+    "image": "https://images.steamusercontent.com/ugc/11321918544718607285/91300EB97577DF31955304DDCB2E0B7634810273/",
+    "favorite": true
+  },
+  {
+    "id": "3556595502",
+    "appid": 1888930,
+    "game": "The Last of Us™ Part I",
+    "image": "https://images.steamusercontent.com/ugc/9998270276105590867/8FBC96CBFE406B735EF9F7A814AFABAF8FB8FCCE/",
+    "favorite": true
+  }
+]

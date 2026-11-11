@@ -30,7 +30,7 @@
                 .find(Boolean);
             let timezone = '';
             try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (_) {}
-            const language = saved || preferred || byTimezone[timezone] || 'en';
+            const language = normalize(new URLSearchParams(location.search).get('lang')) || saved || preferred || byTimezone[timezone] || 'en';
             document.documentElement.dataset.initialLang = language;
             document.documentElement.lang = ({ jp: 'ja', cn: 'zh-CN', kr: 'ko' })[language] || language;
             document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
@@ -39,15 +39,18 @@
     <title>HaKING | Halit Güneş – Oyun Profili ve Dijital Arşiv</title>
     <meta name="description" content="Halit Güneş'in oyun profili, sistem özellikleri, ekran görüntüleri ve dijital bağlantıları.">
     <meta name="theme-color" content="#020101">
-    <link rel="canonical" href="https://haking.tr/">
+    <link rel="canonical" href="https://steam.haking.tr/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="tr_TR">
     <meta property="og:site_name" content="HaKING">
     <meta property="og:title" content="HaKING | Halit Güneş">
     <meta property="og:description" content="Oyun profili, sistem özellikleri, ekran görüntüleri ve dijital bağlantılar.">
-    <meta property="og:url" content="https://haking.tr/">
-    <meta property="og:image" content="https://haking.tr/assets/images/HaKING2.png">
+    <meta property="og:url" content="https://steam.haking.tr/">
+    <meta property="og:image" content="https://steam.haking.tr/assets/posters/haking-tr-museum.webp">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://steam.haking.tr/assets/posters/haking-tr-museum.webp">
+    <meta property="og:image:alt" content="HaKING — Steam oyun arşivi ve ekran görüntüleri">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfilePage","url":"https://steam.haking.tr/","name":"HaKING — Halit Güneş","mainEntity":{"@type":"Person","name":"Halit Güneş","alternateName":"HaKING","url":"https://steam.haking.tr/","sameAs":["https://steamcommunity.com/profiles/76561199760755154/","https://github.com/HaKING06"]}}</script>
     <link rel="icon" type="image/png" href="assets/images/HICON.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,11 +58,14 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <!-- LIBS -->
     <!-- Enhancement libraries are optional; async loading keeps local/offline startup responsive. -->
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script async src="assets/vendor/three.min.js"></script>
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-    <script async data-icon-library src="https://unpkg.com/lucide@latest"></script>
+    <script async data-icon-library src="https://unpkg.com/lucide@0.468.0"></script>
     <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/upgrade.js"></script>
+    <link rel="stylesheet" href="assets/css/upgrade.css">
+    <meta name="application-version" content="2.0.0">
 
 
 </head>
@@ -132,7 +138,7 @@
     </div>
 
     <!-- LANG -->
-    <div class="lang-box">
+    <div class="lang-box"><select id="language-select" aria-label="Language"></select><button id="theme-toggle" type="button" data-u="theme">Tema</button><span class="site-version">v2.0.0</span><a id="poster-link" href="posters/tr/" data-u="posters">Afişler</a>
         <button type="button" class="lang-btn" id="lang-togg" aria-controls="lang-menu" aria-expanded="false"><i data-lucide="globe" aria-hidden="true"></i> <span
                 id="curr-lang">EN</span></button>
         <div class="lang-list" id="lang-menu">
@@ -385,42 +391,9 @@
                             data-k="sub_machine">SYSTEM ARCHITECTURE</span>
                     </div>
                 </div>
-                <div class="grid">
-                    <div class="rig">
-                        <div class="holo"></div>
-                        <div class="laptop">
-                            <div class="lid">
-                                <div class="v-logo">V</div>
-                            </div>
-                            <div class="base">
-                                <div class="kb"></div>
-                            </div>
-                        </div>
-                        <div class="rtx">RTX 4070</div>
-                    </div>
-                    <div class="panel hardware-specs">
-                        <div>
-                            <div class="hardware-label">CPU</div>
-                            <div class="hardware-value">i7-14700HX</div>
-                        </div>
-                        <div>
-                            <div class="hardware-label">GPU</div>
-                            <div class="hardware-value">RTX 4070</div>
-                        </div>
-                        <div>
-                            <div class="hardware-label">RAM</div>
-                            <div class="hardware-value">16GB DDR5</div>
-                        </div>
-                        <div>
-                            <div class="hardware-label">SSD</div>
-                            <div class="hardware-value">1TB NVMe</div>
-                        </div>
-                        <div>
-                            <div class="hardware-label">LCD</div>
-                            <div class="hardware-value">144Hz IPS</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="setup-intro"><span class="edition">VICTUS BY HP · 16</span><h2 data-k="sub_machine">Sistem mimarisi</h2><p>Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU</p></div>
+                <div class="victus-layout"><div class="model-panel"><div id="victus-stage"><div class="model-fallback"><strong>HP VICTUS</strong><p>i7-14700HX · RTX 4070 · 144 Hz</p></div></div><div class="model-toolbar"><span data-u="drag">Sürükleyerek döndür · Kaydırarak yakınlaştır</span><button type="button" id="model-reset" data-u="reset">Görünümü sıfırla</button></div></div>
+                <dl class="spec-list"><div><dt>MODEL</dt><dd>HP Victus</dd></div><div><dt>CPU</dt><dd>Intel Core i7-14700HX</dd></div><div><dt>GPU</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></div><div><dt>RAM</dt><dd>16 GB</dd></div><div><dt>SSD</dt><dd>1 TB SSD</dd></div><div><dt>DISPLAY</dt><dd>144 Hz · Full HD<br><small>1920 × 1080</small></dd></div></dl></div>
             </section>
 
             <section id="museum" class="section">
@@ -430,58 +403,10 @@
                             ARCHIVE</span>
                     </div>
                 </div>
-                <div class="grid">
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3587443677" target="_blank"
-                        class="museum-item">
-                        <div class="museum-bg museum-bg-ragnarok">
-                        </div>
-                        <div class="museum-ov"><span class="m-tit">God of War Ragnarök</span><i data-lucide="maximize-2"
-                                class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3565203458" target="_blank"
-                        class="museum-item">
-                        <div class="museum-bg museum-bg-lastofus2">
-                        </div>
-                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part II Remastered</span><i
-                                data-lucide="maximize-2" class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3552788785" target="_blank"
-                        class="museum-item">
-                        <div class="museum-bg museum-bg-witcher3">
-                        </div>
-                        <div class="museum-ov"><span class="m-tit">The Witcher 3: Wild Hunt</span><i
-                                data-lucide="maximize-2" class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3518267543" target="_blank"
-                        class="museum-item">
-                        <div class="museum-bg museum-bg-witcher2">
-                        </div>
-                        <div class="museum-ov"><span class="m-tit">The Witcher 2: Assassins of Kings Enhanced
-                                Edition</span><i data-lucide="maximize-2" class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3589141535" target="_blank"
-                        class="museum-item">
-                        <div class="museum-bg museum-bg-hogwarts">
-                        </div>
-                        <div class="museum-ov"><span class="m-tit">Hogwarts Legacy</span><i data-lucide="maximize-2"
-                                class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3556595502" target="_blank"
-                        class="museum-item">
-                        <div class="museum-bg museum-bg-lastofus1">
-                        </div>
-                        <div class="museum-ov"><span class="m-tit">The Last of Us™ Part I</span><i
-                                data-lucide="maximize-2" class="m-icon" size="16"></i></div>
-                    </a>
-
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/screenshots/" target="_blank"
-                        class="btn-view" data-k="view_gallery">VIEW FULL GALLERY</a>
-                </div>
+                <div class="archive-toolbar"><input id="museum-search" type="search" placeholder="Oyun ara"><select id="museum-game"><option value="">Tüm oyunlar</option></select><output id="museum-count" aria-live="polite">…</output></div>
+                <h2 class="archive-heading" data-u="favorites">Favoriler</h2><div id="favorite-grid" class="archive-grid"></div>
+                <h2 class="archive-heading" data-u="archive">Tüm arşiv</h2><div id="archive-grid" class="archive-grid"></div><p id="museum-empty" data-u="empty" hidden>Görsel bulunamadı</p><button id="museum-more" class="archive-more" type="button" data-u="more" hidden>Daha fazla göster</button>
+                <a class="archive-source" href="https://steamcommunity.com/profiles/76561199760755154/screenshots/" target="_blank" rel="noopener noreferrer" data-k="view_gallery">STEAM GALLERY</a>
             </section>
 
             <section id="network" class="section">
@@ -606,6 +531,6 @@
     </div>
 
 
-</body>
+<dialog id="gallery-dialog"><div class="gallery-top"><span id="gallery-caption"></span><button type="button" id="gallery-close" data-u="close">Kapat</button></div><img id="gallery-image" alt=""><div class="gallery-controls"><button type="button" id="gallery-prev" data-u="prev">Önceki</button><a id="gallery-steam" target="_blank" rel="noopener noreferrer" data-u="steam">Steam’de aç</a><button type="button" id="gallery-next" data-u="next">Sonraki</button></div></dialog></body>
 
 </html>

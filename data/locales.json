@@ -1,0 +1,142 @@
+{
+  "en": {
+    "museum": "MUSEUM",
+    "machine": "MACHINE",
+    "library": "ARMORY",
+    "role": "UNDERWORLD OPERATOR",
+    "posters": "Posters"
+  },
+  "tr": {
+    "museum": "MÜZE",
+    "machine": "MAKİNE",
+    "library": "CEPHANELİK",
+    "role": "YERALTI OPERATÖRÜ",
+    "posters": "Afişler"
+  },
+  "es": {
+    "museum": "MUSEO",
+    "machine": "MÁQUINA",
+    "library": "ARMERÍA",
+    "role": "OPERADOR",
+    "posters": "Carteles"
+  },
+  "ru": {
+    "museum": "МУЗЕЙ",
+    "machine": "МАШИНА",
+    "library": "АРСЕНАЛ",
+    "role": "ОПЕРАТОР",
+    "posters": "Плакаты"
+  },
+  "de": {
+    "museum": "MUSEUM",
+    "machine": "MASCHINE",
+    "library": "WAFFENKAMMER",
+    "role": "OPERATOR",
+    "posters": "Poster"
+  },
+  "fr": {
+    "museum": "MUSÉE",
+    "machine": "MACHINE",
+    "library": "ARMURERIE",
+    "role": "OPÉRATEUR",
+    "posters": "Affiches"
+  },
+  "jp": {
+    "museum": "博物館",
+    "machine": "機械",
+    "library": "武器庫",
+    "role": "オペレーター",
+    "posters": "ポスター"
+  },
+  "cn": {
+    "museum": "博物馆",
+    "machine": "机器",
+    "library": "军械库",
+    "role": "操作员",
+    "posters": "海报"
+  },
+  "pt": {
+    "museum": "MUSEU",
+    "machine": "MÁQUINA",
+    "library": "ARSENAL",
+    "role": "OPERADOR",
+    "posters": "Pôsteres"
+  },
+  "it": {
+    "museum": "MUSEO",
+    "machine": "MACCHINA",
+    "library": "ARMERIA",
+    "role": "OPERATORE",
+    "posters": "Poster"
+  },
+  "kr": {
+    "museum": "박물관",
+    "machine": "머신",
+    "library": "무기고",
+    "role": "운영자",
+    "posters": "포스터"
+  },
+  "ar": {
+    "museum": "متحف",
+    "machine": "آلة",
+    "library": "ترسانة",
+    "role": "مشغل",
+    "posters": "الملصقات"
+  },
+  "hi": {
+    "museum": "संग्रहालय",
+    "machine": "मशीन",
+    "library": "शस्त्रागार",
+    "role": "ऑपरेटर",
+    "posters": "पोस्टर"
+  },
+  "bn": {
+    "museum": "যাদুঘর",
+    "machine": "মেশিন",
+    "library": "আর্মরি",
+    "role": "অপারেটর",
+    "posters": "পোস্টার"
+  },
+  "nl": {
+    "museum": "MUSEUM",
+    "machine": "MACHINE",
+    "library": "WAPENKAMER",
+    "role": "OPERATOR",
+    "posters": "Posters"
+  },
+  "pl": {
+    "museum": "MUZEUM",
+    "machine": "MASZYNA",
+    "library": "ZBROJOWNIA",
+    "role": "OPERATOR",
+    "posters": "Plakaty"
+  },
+  "sv": {
+    "museum": "MUSEUM",
+    "machine": "MASKIN",
+    "library": "VAPENKAMMARE",
+    "role": "OPERATÖR",
+    "posters": "Affischer"
+  },
+  "vi": {
+    "museum": "BẢO TÀNG",
+    "machine": "MÁY MÓC",
+    "library": "KHO VŨ KHÍ",
+    "role": "ĐIỀU HÀNH",
+    "posters": "Áp phích"
+  },
+  "el": {
+    "museum": "ΜΟΥΣΕΙΟ",
+    "machine": "ΜΗΧΑΝΗ",
+    "library": "ΟΠΛΟΣΤΑΣΙΟ",
+    "role": "ΧΕΙΡΙΣΤΗΣ",
+    "posters": "Αφίσες"
+  },
+  "th": {
+    "museum": "พิพิธภัณฑ์",
+    "machine": "เครื่องจักร",
+    "library": "คลังแสง",
+    "role": "ผู้ดำเนินการ",
+    "posters": "โปสเตอร์"
+  }
+}
