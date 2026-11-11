@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Repoyu Çek
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Python Kur
         uses: actions/setup-python@v5
