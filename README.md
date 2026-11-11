@@ -5,11 +5,11 @@
 <p align="center"><strong>Halit Güneş · Oyun profili, görsel arşiv ve kişisel sistem vitrini</strong></p>
 <p align="center"><a href="https://steam.haking.tr/">Web sitesi</a> · <a href="CHANGELOG.md">Sürüm notları</a> · <a href="CONTRIBUTING.md">Katkıda bulunma</a> · <a href="LICENSE">MIT lisansı</a></p>
 
-![Version](https://img.shields.io/badge/version-2.1.0-c9a36a) ![License](https://img.shields.io/badge/license-MIT-blue) ![Languages](https://img.shields.io/badge/languages-20-green)
+![Version](https://img.shields.io/badge/version-2.2.0-c9a36a) ![License](https://img.shields.io/badge/license-MIT-blue) ![Languages](https://img.shields.io/badge/languages-20-green)
 
 ## Deneyim
 
-HaKING; Steam oyun koleksiyonunu, oyunlardan kaydedilen anları ve kişisel donanım vitrininin aynı arayüzde buluştuğu statik bir web projesidir. Derleme veya npm kurulumu gerektirmez. Koyu arayüz, erişilebilir dil menüsü ve mobil gezinme kullanır.
+HaKING; Steam oyun koleksiyonunu, oyunlardan kaydedilen anları ve kişisel donanım vitrininin aynı arayüzde buluştuğu statik bir web projesidir. Derleme veya npm kurulumu gerektirmez. Koyu arayüz, kompakt erişilebilir dil menüsü ve mobil gezinme kullanır. Arayüz sessizdir; sayfa bağlantıları paylaşılabilir ve tarayıcının geri/ileri düğmeleriyle gezinilebilir. Otomatik açılan reklam penceresi yoktur.
 
 | Alan | Özellikler |
 | --- | --- |

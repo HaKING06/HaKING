@@ -1,3 +1,12 @@
+# HaKING 2.2.0 — 2026-11-11
+
+- Remove click/startup sounds and the visible toolbar version label.
+- Compact language trigger and scrollable searchable language menu.
+- Synchronous section state fixes rapid-navigation races; add shareable section URLs and browser back/forward support.
+- Remove unsolicited timed sponsor popup.
+- Improve original-image resolution and responsive gallery media handling.
+- Refine the HP Victus 16-r1015nt visualization against manufacturer references and the owner's charcoal finish reference.
+
 # HaKING 2.1.0 — 2026-11-11
 
 - Resolve original-resolution Steam media from detail pages; keep thumbnails separate from viewer sources.

@@ -30,7 +30,6 @@ const fallbackGsap = {
     }
 };
 const gsap = window.gsap || fallbackGsap;
-const HowlClass = window.Howl || class { play() {} pause() {} };
 
 function setLang(c, remember = false) {
             activeLang = LANG_DATA[c] ? c : 'en';
@@ -101,6 +100,8 @@ function setLang(c, remember = false) {
                 section.inert = !isActive;
                 section.setAttribute('aria-hidden', String(!isActive));
             });
+            nav(location.hash.slice(1) || 'sanctum', false);
+            window.addEventListener('popstate', () => nav(location.hash.slice(1) || 'sanctum', false));
             runBootLoader(); // Start boot sequence
 
             document.querySelectorAll('.nav-btn').forEach(button => {
@@ -161,35 +162,32 @@ function setLang(c, remember = false) {
             });
         });
 
-        function nav(id) {
-            let c = document.querySelector('.section.active'), n = document.getElementById(id);
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.classList.remove('active');
-                b.removeAttribute('aria-current');
+        function nav(id, updateHistory = true) {
+            const next = document.getElementById(id);
+            if (!next?.classList.contains('section')) return;
+            const current = document.querySelector('.section.active');
+            if (current === next) return;
+            // Commit state synchronously: fast repeated navigation must not leave stale tween callbacks.
+            document.querySelectorAll('.section').forEach(section => {
+                gsap.killTweensOf?.(section);
+                section.getAnimations?.().forEach(animation => animation.cancel());
+                const active = section === next;
+                section.classList.toggle('active', active);
+                section.inert = !active;
+                section.setAttribute('aria-hidden', String(!active));
+                section.style.opacity = active ? '1' : '0';
+                section.style.transform = 'none';
             });
-            const activeNavBtn = document.querySelector(`[data-t="${id}"]`);
-            if (activeNavBtn) {
-                activeNavBtn.classList.add('active');
-                activeNavBtn.setAttribute('aria-current', 'page');
-            }
-            if (c !== n) {
-                sfxClick();
-                // Start every destination at the top, regardless of where it was
-                // last left when the user switched to another section.
-                n.scrollTop = 0;
-                // Snappy, modern page fade & slide transition (duration: 0.2s - 0.25s)
-                gsap.to(c, {
-                    opacity: 0, y: -15, duration: 0.2, onComplete: () => {
-                        c.classList.remove('active');
-                        c.inert = true;
-                        c.setAttribute('aria-hidden', 'true');
-                        gsap.set(n, { opacity: 0, y: 15 });
-                        n.inert = false;
-                        n.setAttribute('aria-hidden', 'false');
-                        n.classList.add('active');
-                        gsap.to(n, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" });
-                    }
-                });
+            next.scrollTop = 0;
+            document.querySelectorAll('.nav-btn').forEach(button => {
+                const active = button.dataset.t === id;
+                button.classList.toggle('active', active);
+                if (active) button.setAttribute('aria-current', 'page');
+                else button.removeAttribute('aria-current');
+            });
+            if (updateHistory && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                next.animate([{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'none'}], {duration: 180, easing: 'ease-out'});
             }
         }
 
@@ -443,8 +441,6 @@ function setLang(c, remember = false) {
             });
         }
 
-        const sfx = { click: new HowlClass({ src: ['assets/audio/click.wav'], volume: 0.2 }) };
-        function sfxClick() { sfx.click.play(); }
 
         function initThree() {
             const THREE = window.THREE;
@@ -597,7 +593,7 @@ function setLang(c, remember = false) {
 
         function switchModalTab(event, tabName) {
             event.stopPropagation();
-            sfxClick();
+
 
             document.querySelectorAll('.modal-tab').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.modal-tab-content').forEach(content => content.style.display = 'none');
@@ -621,7 +617,7 @@ function setLang(c, remember = false) {
         /* ======================================= */
         function handleContactSubmit(e) {
             e.preventDefault();
-            sfxClick();
+
 
             const name = document.getElementById('c-name').value;
             const email = document.getElementById('c-email').value;
@@ -645,7 +641,7 @@ function setLang(c, remember = false) {
         }
 
         function resetContactForm() {
-            sfxClick();
+
             const terminal = document.getElementById('contact-terminal');
             const success = document.getElementById('contact-success');
 
@@ -689,10 +685,7 @@ function setLang(c, remember = false) {
             // A visual loader is decorative; never let a slow optional asset hide the site indefinitely.
             window.setTimeout(revealApp, 1800);
 
-            const bootSfx = new HowlClass({
-                src: ['assets/audio/boot.wav'],
-                volume: 0.25
-            });
+
 
             const labels = LANG_DATA[activeLang] || LANG_DATA.en;
             const logs = {
@@ -775,7 +768,7 @@ function setLang(c, remember = false) {
                 updateProgress(100, logs.ready);
                 await new Promise(r => setTimeout(r, 180));
 
-                bootSfx.play();
+
 
                 gsap.to('#loader', {
                     opacity: 0,
@@ -783,7 +776,7 @@ function setLang(c, remember = false) {
                     onComplete: () => {
                         revealApp();
 
-                        setTimeout(checkAndShowModalWithTimer, 30000);
+                        // Sponsor content remains available through intentional navigation, never a timed interruption.
                     }
                 });
 

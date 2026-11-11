@@ -1,32 +1,53 @@
-"""Resolve full-resolution Steam media from detail pages, not listing thumbnails."""
-from concurrent.futures import ThreadPoolExecutor, as_completed
+"""Resolve canonical Steam screenshot media politely, with resumable progress."""
 from pathlib import Path
 from urllib.parse import urlparse
-import json,re,html,requests
-from threading import Event
-RATE_LIMITED=Event()
-ROOT=Path(__file__).resolve().parent.parent
+from html.parser import HTMLParser
+import json
+import time
+import requests
 
-def resolve(item):
- if item.get('original') or RATE_LIMITED.is_set():return item
- try:
-  r=requests.get(f"https://steamcommunity.com/sharedfiles/filedetails/?id={item['id']}",timeout=12)
-  if r.status_code==429:
-   RATE_LIMITED.set();return item
-  r.raise_for_status()
-  match=re.search(r'<a href="(https://images\.steamusercontent\.com/ugc/[^"]+)"[^>]*><img id="ActualMedia"',r.text)
-  if match:
-   url=html.unescape(match[1]);assert urlparse(url).hostname=='images.steamusercontent.com'
-   item['original']=url
- except (requests.RequestException,ValueError,AssertionError):pass
- return item
+ROOT = Path(__file__).resolve().parent.parent
+
+class MediaParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.original = None
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == 'img' and attrs.get('id') == 'ActualMedia':
+            self.original = attrs.get('src')
+
+def save(path, data):
+    temporary = path.with_suffix('.tmp')
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
+    temporary.replace(path)
 
 def run():
- p=ROOT/'data/screenshots.json';d=json.loads(p.read_text(encoding='utf8'));byid={}
- with ThreadPoolExecutor(max_workers=2) as pool:
-  for f in as_completed([pool.submit(resolve,x) for x in d['items']]):
-   x=f.result();byid[x['id']]=x
- d['items']=[byid[x['id']] for x in d['items']]
- p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
- print('Full resolution:',sum(bool(x.get('original')) for x in d['items']),'/',len(d['items']))
-if __name__=='__main__':run()
+    path = ROOT / 'data/screenshots.json'
+    data = json.loads(path.read_text(encoding='utf8'))
+    session = requests.Session()
+    changed = 0
+    for item in data['items']:
+        if item.get('original'):
+            continue
+        try:
+            response = session.get('https://steamcommunity.com/sharedfiles/filedetails/', params={'id': item['id']}, timeout=20)
+            if response.status_code == 429:
+                print('Steam rate limit reached; progress saved. Resume on next scheduled run.', flush=True)
+                break
+            response.raise_for_status()
+            parser = MediaParser()
+            parser.feed(response.text)
+            url = parser.original
+            if url and urlparse(url).scheme == 'https' and urlparse(url).hostname == 'images.steamusercontent.com':
+                item['original'] = url.split('?')[0] + '?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false'
+                changed += 1
+                save(path, data)
+                print(f"Resolved {item['id']} ({changed} new)", flush=True)
+        except requests.RequestException:
+            print(f"Deferred {item['id']}: Steam unavailable", flush=True)
+        time.sleep(1.5)
+    print('Original media:', sum(bool(x.get('original')) for x in data['items']), '/', len(data['items']), flush=True)
+
+if __name__ == '__main__':
+    run()

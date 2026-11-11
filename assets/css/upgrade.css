@@ -22,3 +22,6 @@ body{background:#0b0b0e}.scanlines{display:none}.h-tit{font-family:system-ui!imp
 @media(prefers-reduced-motion:reduce){.machine-story article{transform:none;opacity:1;transition:none}.archive-card img{transition:none}}
 
 #gallery-image{margin-inline:auto} .coffee-card{grid-column:span 12}
+
+/* Compact language access, shared across all pages. */
+#language-trigger{gap:8px;padding:8px 11px;border-radius:9px;font-size:12px;min-height:34px}#language-trigger>span:first-child{display:none}#language-popover{width:200px;padding:7px;border-radius:11px}#language-search{padding:9px;font-size:12px}.language-option{padding:8px 10px;font-size:13px}#language-options{max-height:min(210px,38vh)}

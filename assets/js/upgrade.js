@@ -41,7 +41,7 @@ function translate(){
 }
 function card(item){
  const button=document.createElement('button'); button.type='button'; button.className='archive-card';
- const img=new Image(); img.src=item.image+'?imw=640&imh=360&ima=fit'; img.alt=`HaKING — ${item.game}`; img.loading='lazy'; img.decoding='async'; img.width=640; img.height=360;
+ const img=new Image(); const source=(item.original || item.image).split('?')[0]; img.src=source+'?imw=960&imh=540&ima=fit&impolicy=Letterbox&letterbox=false'; if(item.original){img.srcset=source+'?imw=640&imh=360&ima=fit&impolicy=Letterbox&letterbox=false 640w, '+source+'?imw=1280&imh=720&ima=fit&impolicy=Letterbox&letterbox=false 1280w';img.sizes='(max-width: 480px) 100vw, (max-width: 1000px) 50vw, 33vw';} img.alt=`HaKING — ${item.game}`; img.loading='lazy'; img.decoding='async'; img.width=640; img.height=360;
  const title=document.createElement('span'); title.textContent=item.game;
  button.append(img,title); button.addEventListener('click',()=>{index=filtered.findIndex(x=>x.id===item.id);show();$('gallery-dialog').showModal();}); return button;
 }
@@ -53,9 +53,10 @@ function render(){
  $('museum-count').textContent=`${filtered.length} / ${items.length}`;
  $('museum-more').hidden=rest.length<=limit; $('museum-empty').hidden=filtered.length>0;
 }
-function show(){const item=filtered[index];if(!item)return;$('gallery-image').src=item.original || item.image;$('gallery-image').alt=`HaKING — ${item.game}`;$('gallery-caption').textContent=`${item.game} · ${index+1} / ${filtered.length}`;$('gallery-steam').href=`https://steamcommunity.com/sharedfiles/filedetails/?id=${item.id}`;}
+function show(){const item=filtered[index];if(!item)return;$('gallery-image').style.maxWidth='100%';$('gallery-image').classList.add('loading');$('gallery-image').src=item.original || item.image;$('gallery-image').alt=`HaKING — ${item.game}`;$('gallery-caption').textContent=`${item.game} · ${index+1} / ${filtered.length}`;$('gallery-steam').href=`https://steamcommunity.com/sharedfiles/filedetails/?id=${item.id}`;}
 window.addEventListener('DOMContentLoaded',async()=>{
- $('gallery-image').addEventListener('load',()=>{$('gallery-image').style.maxWidth=$('gallery-image').naturalWidth+'px';});
+ $('gallery-image').addEventListener('load',()=>{$('gallery-image').classList.remove('loading');});
+ $('gallery-image').addEventListener('error',()=>{$('gallery-image').classList.remove('loading');});
  const select=$('language-select');
  Array.from(document.querySelectorAll('#lang-menu .lang-opt')).forEach((button,i)=>{const option=new Option(names[i],button.dataset.language);select.add(option);});
  select.addEventListener('change',()=>document.querySelector(`#lang-menu [data-language="${select.value}"]`)?.click());
