@@ -46,7 +46,8 @@
       "appid": 220240,
       "game": "Far Cry® 3",
       "image": "https://images.steamusercontent.com/ugc/10079734936382015518/0A5B24D693E2641101F519C6B3C2C6D4FEFA0A2A/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/10079734936382015518/0A5B24D693E2641101F519C6B3C2C6D4FEFA0A2A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3825270097",
@@ -133,7 +134,8 @@
       "appid": 1222140,
       "game": "Detroit: Become Human",
       "image": "https://images.steamusercontent.com/ugc/12068124110626160330/49285C61E20A55A608986EC8FAEDFDC2172860CB/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/12068124110626160330/49285C61E20A55A608986EC8FAEDFDC2172860CB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3796807820",
@@ -156,49 +158,56 @@
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/11000111315414463522/609415A8A933596DA9A953649A4F63AF76B58AF4/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/18437650267680661981/E1EDAFAB86F6272777FFABB0F27E4E882819AA75/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3796807443",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/18238382187159130834/0EBCF4D1F5CAB0C3AE00C65D0D365F840EC804CE/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/18238382187159130834/0EBCF4D1F5CAB0C3AE00C65D0D365F840EC804CE/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3796807346",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/11170866434963247305/539D0991833FAE9D07FBE8D8DA37614F9CC7C864/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/11170866434963247305/539D0991833FAE9D07FBE8D8DA37614F9CC7C864/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3796807175",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/9605510096830976529/9EE27D4691D8E4A56507114090CA2E8EBFD9169D/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/15117472645714498824/A7894E0D310E082A3E14D2EDB130C8CFBA61827F/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3796806981",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/10202254951293710941/F7933DAA50C9ED765B62EB3ED0E9183C85685935/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/14540536127337985729/F1D335A1D6A96DBCF2DBA7FA773A2006E4C6CD58/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3796806863",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/15920022952711706743/CAEFA5DA13CE59E284AFE24C868360E5CD3A92DB/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/15484670855467062534/AB2C6008537DAD1A83C1315369F36C707CDC10F4/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3793930695",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/18421886423695132126/8F460B96002481C1371EA79B7CD6570677C4525B/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/16214941559470851375/051E5C1C6B15A4668B2B51CA3B31AD4E92C51744/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3792248265",
