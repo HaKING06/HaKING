@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "total_games": 269,
-  "total_hours": "2,188h",
+  "total_hours": "2,189h",
   "games": [
     {
       "appid": 730,
@@ -27,7 +27,7 @@
     {
       "appid": 3405690,
       "name": "EA SPORTS FC™ 26",
-      "playtime_minutes": 5734,
+      "playtime_minutes": 5787,
       "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
@@ -1649,7 +1649,7 @@
     {
       "appid": 3405690,
       "name": "EA SPORTS FC™ 26",
-      "playtime_minutes": 5734,
+      "playtime_minutes": 5787,
       "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
@@ -1669,5 +1669,5 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-13T11:25:03Z"
+  "updated_at": "2026-11-13T18:40:34Z"
 }
