@@ -1,6 +1,13 @@
 {
-  "updated_at": "2026-11-11T19:42:30.189453+00:00",
+  "updated_at": "2026-11-14T18:15:37.639172+00:00",
   "items": [
+    {
+      "id": "3839694983",
+      "appid": 3240220,
+      "game": "Grand Theft Auto V Enhanced",
+      "image": "https://images.steamusercontent.com/ugc/13615862974825134304/60F035ECEC7D4416F1BDE98B002774254F22C5DF/",
+      "favorite": false
+    },
     {
       "id": "3837844844",
       "appid": 730,
@@ -34,12 +41,11 @@
       "original": "https://images.steamusercontent.com/ugc/14280856387672082865/77C6AEE52E76E041A69640E35661F78C811581C3/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
     },
     {
-      "id": "3830031084",
-      "appid": 730,
-      "game": "Counter-Strike 2",
-      "image": "https://images.steamusercontent.com/ugc/12360944259581310385/4B474501834A7299C550FF9D60CC5B064CA5D3F9/",
-      "favorite": false,
-      "original": "https://images.steamusercontent.com/ugc/12992326943033159222/140278BA0522BE3AAC027F4ADA85F81FD93EE935/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+      "id": "3826967798",
+      "appid": 233270,
+      "game": "Far Cry® 3 Blood Dragon",
+      "image": "https://images.steamusercontent.com/ugc/17052031882634721499/0CC7A5FF33F9683BD17D34BA1EBF3C3193CBACE6/",
+      "favorite": false
     },
     {
       "id": "3825270299",
@@ -53,7 +59,7 @@
       "id": "3825270097",
       "appid": 220240,
       "game": "Far Cry® 3",
-      "image": "https://images.steamusercontent.com/ugc/16077815146747476652/922E1C3689B7EACFAECEA6B132A58760E52D7F63/",
+      "image": "https://images.steamusercontent.com/ugc/9685129672757685128/BCFBD1757DBDC0F1E6F7D71D13EC2D6180479C16/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/16077815146747476652/922E1C3689B7EACFAECEA6B132A58760E52D7F63/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
     },
@@ -69,7 +75,7 @@
       "id": "3809228055",
       "appid": 1222140,
       "game": "Detroit: Become Human",
-      "image": "https://images.steamusercontent.com/ugc/9793461160882974977/5CBC0EDB14BB31886353B9594C6DFCE4AEFFA57C/",
+      "image": "https://images.steamusercontent.com/ugc/17278805775395914003/A535A6622E4DD4E03AC767763370A202B793EC8C/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/17278805775395914003/A535A6622E4DD4E03AC767763370A202B793EC8C/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
     },
@@ -85,7 +91,7 @@
       "id": "3809227683",
       "appid": 1222140,
       "game": "Detroit: Become Human",
-      "image": "https://images.steamusercontent.com/ugc/13048729750470946236/BCAD6F918C2BE36F75DBE7DDD80436B6529120E1/",
+      "image": "https://images.steamusercontent.com/ugc/13917314016969604283/EEBD2ADD9CBF0993A29A53774EDEEBD62201762B/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/13048729750470946236/BCAD6F918C2BE36F75DBE7DDD80436B6529120E1/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
     },
@@ -122,12 +128,11 @@
       "original": "https://images.steamusercontent.com/ugc/13838660267913316455/F5BB7CF74079A323F254F1B7CB6614D9B6098209/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
     },
     {
-      "id": "3803926644",
+      "id": "3803762717",
       "appid": 1222140,
       "game": "Detroit: Become Human",
-      "image": "https://images.steamusercontent.com/ugc/11371509837169283413/70B7CB3B5600D8AE27B227DF7171EBCCAFCCFF5B/",
-      "favorite": false,
-      "original": "https://images.steamusercontent.com/ugc/13657797740459464669/6B4488513E26251E44DAB85A4B7D2274AF01C618/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+      "image": "https://images.steamusercontent.com/ugc/17898695783541847419/476089FAAFFF4708917784A454295AD495B8F563/",
+      "favorite": false
     },
     {
       "id": "3803762595",
@@ -141,7 +146,7 @@
       "id": "3796807820",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/16516391701576453920/308CE02C65AF4B54D6A1C5FFB931896B5C946862/",
+      "image": "https://images.steamusercontent.com/ugc/18430513595255794998/E6F6A1D20D60DBBE72C9AB8FE1CEA04F5754D376/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/16516391701576453920/308CE02C65AF4B54D6A1C5FFB931896B5C946862/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
     },
@@ -157,7 +162,7 @@
       "id": "3796807540",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/11000111315414463522/609415A8A933596DA9A953649A4F63AF76B58AF4/",
+      "image": "https://images.steamusercontent.com/ugc/18437650267680661981/E1EDAFAB86F6272777FFABB0F27E4E882819AA75/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/18437650267680661981/E1EDAFAB86F6272777FFABB0F27E4E882819AA75/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -173,7 +178,7 @@
       "id": "3796807346",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/11170866434963247305/539D0991833FAE9D07FBE8D8DA37614F9CC7C864/",
+      "image": "https://images.steamusercontent.com/ugc/9339486374666776605/2E18ED73E799193F5AD342593629955ECA23C466/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/11170866434963247305/539D0991833FAE9D07FBE8D8DA37614F9CC7C864/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -210,12 +215,11 @@
       "original": "https://images.steamusercontent.com/ugc/16214941559470851375/051E5C1C6B15A4668B2B51CA3B31AD4E92C51744/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
-      "id": "3792248265",
+      "id": "3792248115",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/11634037172671393254/0544C9ABE9D22636DDACD07B4D37D4299A8AAF22/",
-      "favorite": false,
-      "original": "https://images.steamusercontent.com/ugc/13431137296284800872/5B8734BE08D8857303195284DB63D1C9FF082C87/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
+      "image": "https://images.steamusercontent.com/ugc/17870279857362059174/040B89C622AE5E5A2D7AE23ADCE779D8BEA62C64/",
+      "favorite": false
     },
     {
       "id": "3790576174",
@@ -229,7 +233,7 @@
       "id": "3789953251",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/13890482626012307757/B0937306EDB9EBB6C46068E018E143FF8411740F/",
+      "image": "https://images.steamusercontent.com/ugc/11512370548628300248/8A9AE7042C59342C7A23D10A5ECE9DC4FEE6A37A/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/13890482626012307757/B0937306EDB9EBB6C46068E018E143FF8411740F/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -245,7 +249,7 @@
       "id": "3789952961",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/11856909407166493329/429201D587663339CBCFBBC98BFD9AA73DD66650/",
+      "image": "https://images.steamusercontent.com/ugc/16952961696503228228/4E6318CB56FAF71D9D605EB9CEA3CBDB9A826A5E/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/16952961696503228228/4E6318CB56FAF71D9D605EB9CEA3CBDB9A826A5E/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -261,7 +265,7 @@
       "id": "3789812933",
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
-      "image": "https://images.steamusercontent.com/ugc/16015272595511347404/0E40E14D359FDDE68FA973B3917F84521DE973C8/",
+      "image": "https://images.steamusercontent.com/ugc/15097046830713853220/88BECE6B4C687138EFF8892FF6FAA42D69E77C9B/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/16015272595511347404/0E40E14D359FDDE68FA973B3917F84521DE973C8/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -298,12 +302,11 @@
       "original": "https://images.steamusercontent.com/ugc/11979949721782584947/2FA72F6F7D4AB167DC272B4141C56D5CBCF5B1DB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
-      "id": "3787364350",
+      "id": "3787364254",
       "appid": 241930,
       "game": "Middle-earth™: Shadow of Mordor™",
-      "image": "https://images.steamusercontent.com/ugc/14064317546637567824/20D6B55E1DFF7076587812B9A75B716E44A9DD47/",
-      "favorite": false,
-      "original": "https://images.steamusercontent.com/ugc/14195064150118074275/35EF8CC5261CDB663FDCECD3171FACFD7280BC43/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
+      "image": "https://images.steamusercontent.com/ugc/10182204417266680864/87358F44F99ABDFCB8D5FF54D9094A02B519C695/",
+      "favorite": false
     },
     {
       "id": "3787364177",
@@ -317,7 +320,7 @@
       "id": "3787295559",
       "appid": 241930,
       "game": "Middle-earth™: Shadow of Mordor™",
-      "image": "https://images.steamusercontent.com/ugc/10585827419077288607/153E9E49F6B664A287ADED5D58B9CEAD7CAB6917/",
+      "image": "https://images.steamusercontent.com/ugc/17061762787132513739/A6CF9555BF6554018B72C2C9028F95DD38638898/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/10585827419077288607/153E9E49F6B664A287ADED5D58B9CEAD7CAB6917/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -333,7 +336,7 @@
       "id": "3785291207",
       "appid": 241930,
       "game": "Middle-earth™: Shadow of Mordor™",
-      "image": "https://images.steamusercontent.com/ugc/11612155106753940937/A7B441352F382D21795FAF9EA2E2AACC95D70481/",
+      "image": "https://images.steamusercontent.com/ugc/15552404397546662073/C7C04D1FB3FFEAFED72C17AEFA1CF529827BB655/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/15552404397546662073/C7C04D1FB3FFEAFED72C17AEFA1CF529827BB655/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -349,7 +352,7 @@
       "id": "3785290945",
       "appid": 241930,
       "game": "Middle-earth™: Shadow of Mordor™",
-      "image": "https://images.steamusercontent.com/ugc/11717333284551359775/432BD290AB39E52EF965DAEED977FA8EFE4B5D05/",
+      "image": "https://images.steamusercontent.com/ugc/12281797419583017989/7AEF6192DD2B4C84FF9B06FB36B10C261AD43732/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/11717333284551359775/432BD290AB39E52EF965DAEED977FA8EFE4B5D05/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -386,12 +389,11 @@
       "original": "https://images.steamusercontent.com/ugc/14412039995759815452/18A59AB85AEBA6CE03EEE9D05272BC88314CF877/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
-      "id": "3770928970",
+      "id": "3770928678",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
-      "image": "https://images.steamusercontent.com/ugc/16390058420059600320/FB5AE614ADD9E56996983649028BED7B840A818D/",
-      "favorite": false,
-      "original": "https://images.steamusercontent.com/ugc/17189415828719471427/920E3218514541703317A4892457BDF305B74D9B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
+      "image": "https://images.steamusercontent.com/ugc/16831841733961304836/884C1D29DC548A30D4C4582ED96E6BCD67F91708/",
+      "favorite": false
     },
     {
       "id": "3770927102",
@@ -405,7 +407,7 @@
       "id": "3769541626",
       "appid": 3405690,
       "game": "EA SPORTS FC™ 26",
-      "image": "https://images.steamusercontent.com/ugc/17085271626431398015/D4A9E60AF56FD302FCFBF5E2D4B6B8C75A687DA8/",
+      "image": "https://images.steamusercontent.com/ugc/12852707305056750783/F683FB641AC6B33165BEB41AC1FED95BFAED109F/",
       "favorite": false,
       "original": "https://images.steamusercontent.com/ugc/17085271626431398015/D4A9E60AF56FD302FCFBF5E2D4B6B8C75A687DA8/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -421,7 +423,7 @@
       "id": "3765863086",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
-      "image": "https://images.steamusercontent.com/ugc/14292169263816147502/0A1DE01053FE25193BBD9AB17BC0C4D19EFCDBB2/",
+      "image": "https://images.steamusercontent.com/ugc/10672533435529525894/A7C0BF23EBC66269F6D8DE38849CF825FF0CAC22/",
       "favorite": false
     },
     {
@@ -435,7 +437,7 @@
       "id": "3765234321",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
-      "image": "https://images.steamusercontent.com/ugc/16791323104981614955/051D73DE7098E49057F5CA682469309DDEE823BF/",
+      "image": "https://images.steamusercontent.com/ugc/13658264218024023181/2394AD42B8ECAB22086493528171C87665892C41/",
       "favorite": false
     },
     {
@@ -467,10 +469,10 @@
       "favorite": false
     },
     {
-      "id": "3761684450",
+      "id": "3761391646",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
-      "image": "https://images.steamusercontent.com/ugc/17107317838084606496/6D7316F675361B58034C2986B00FC208C1F8BBDD/",
+      "image": "https://images.steamusercontent.com/ugc/17797626723455066363/1268CA919B23E7C7381E4A7246EAA519CC8436DC/",
       "favorite": false
     },
     {
@@ -484,7 +486,7 @@
       "id": "3761391298",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
-      "image": "https://images.steamusercontent.com/ugc/10294905519995410730/59E2F93CEDB4FC933CA3EB23149FCC22FAEC810F/",
+      "image": "https://images.steamusercontent.com/ugc/10750934243067000306/0DFDE11A9829873AA836BA178573774FCD39F828/",
       "favorite": false
     },
     {
@@ -498,7 +500,7 @@
       "id": "3761070203",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
-      "image": "https://images.steamusercontent.com/ugc/15477058534328148373/FC7D30E087DAC0BA09BBA58F7D77D0F661306774/",
+      "image": "https://images.steamusercontent.com/ugc/12084197703283658459/36EBED7662E097E40A5D8637744EA7FE83F4A20F/",
       "favorite": false
     },
     {
@@ -512,7 +514,7 @@
       "id": "3760655870",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
-      "image": "https://images.steamusercontent.com/ugc/12541033921432032455/BA4694F2836737B2F70EF44416D79435B9DBE77B/",
+      "image": "https://images.steamusercontent.com/ugc/11000380719655822927/9BE79F4F74B6E87E3EDC7499B53F11AD8F6A2399/",
       "favorite": false
     },
     {
@@ -544,10 +546,10 @@
       "favorite": false
     },
     {
-      "id": "3741620111",
+      "id": "3741620002",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
-      "image": "https://images.steamusercontent.com/ugc/10875159752140247116/D26E8B668D2E2C58A786358737AC78FD66733E90/",
+      "image": "https://images.steamusercontent.com/ugc/13507747056795171720/9F9D1E8F3CEC1C61CFC5E5F1D56101C9B5B91387/",
       "favorite": false
     },
     {
@@ -561,7 +563,7 @@
       "id": "3741619500",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
-      "image": "https://images.steamusercontent.com/ugc/16053481411616017233/F25D068DDAD2773D9A841066B53DDA871E66EA04/",
+      "image": "https://images.steamusercontent.com/ugc/17366717912644526104/8BA7624AD32C631A98FC9D1661F420F53E2E3246/",
       "favorite": false
     },
     {
@@ -575,7 +577,7 @@
       "id": "3727808751",
       "appid": 812140,
       "game": "Assassin's Creed Odyssey",
-      "image": "https://images.steamusercontent.com/ugc/11631845902318219199/AC5324584025CA7E96E77E910A77B39B78C9B23A/",
+      "image": "https://images.steamusercontent.com/ugc/13138129906039437694/6E460FCB588C0279AD46AAF6300040CC3B48CB72/",
       "favorite": false
     },
     {
@@ -589,7 +591,7 @@
       "id": "3722753647",
       "appid": 812140,
       "game": "Assassin's Creed Odyssey",
-      "image": "https://images.steamusercontent.com/ugc/15067894288121673006/C68C1DA4C5474B8A96D36A7C23D70F642AF2B67A/",
+      "image": "https://images.steamusercontent.com/ugc/14886243919765200544/657C87EB53A4751F0F6B83F9BB8326DDE32E9A7E/",
       "favorite": false
     },
     {
@@ -621,10 +623,10 @@
       "favorite": false
     },
     {
-      "id": "3719085891",
-      "appid": 239140,
-      "game": "Dying Light",
-      "image": "https://images.steamusercontent.com/ugc/15947135067246689995/6E97BA6B8B47859E01967C1053841D63D9BB7F78/",
+      "id": "3718374120",
+      "appid": 812140,
+      "game": "Assassin's Creed Odyssey",
+      "image": "https://images.steamusercontent.com/ugc/12381216071495261918/DC7C1D95850D7B185158186E5D521E93B665BAB2/",
       "favorite": false
     },
     {
@@ -638,7 +640,7 @@
       "id": "3717672172",
       "appid": 812140,
       "game": "Assassin's Creed Odyssey",
-      "image": "https://images.steamusercontent.com/ugc/11191549102484390985/0FBA75D5884718E42D48E3C7400455BE6B7F0CBD/",
+      "image": "https://images.steamusercontent.com/ugc/11575184622593669153/EAEEEBB87DE14B2E0157AAE8B6D53D3D4153E446/",
       "favorite": false
     },
     {
@@ -652,7 +654,7 @@
       "id": "3717671911",
       "appid": 812140,
       "game": "Assassin's Creed Odyssey",
-      "image": "https://images.steamusercontent.com/ugc/12932629114355126198/F17F3F2068A3C20E2F43D899ECB5E7538DF9B3E3/",
+      "image": "https://images.steamusercontent.com/ugc/9949865700822689077/22DBF4B667891CA0A791BB97FF82CD1C5EAA581B/",
       "favorite": false
     },
     {
@@ -666,7 +668,7 @@
       "id": "3716463059",
       "appid": 812140,
       "game": "Assassin's Creed Odyssey",
-      "image": "https://images.steamusercontent.com/ugc/17606919915716672673/86959D722473E0D229AFE5E8F6E46F96D57CBB2A/",
+      "image": "https://images.steamusercontent.com/ugc/16148441070176756677/7D12F597AD26316E2F1B044FD507ED671F79713C/",
       "favorite": false
     },
     {
@@ -698,10 +700,10 @@
       "favorite": false
     },
     {
-      "id": "3712069272",
-      "appid": 911400,
-      "game": "Assassin's Creed III Remastered",
-      "image": "https://images.steamusercontent.com/ugc/9992138161139977876/42B279E4013A52D43F8F23A4A8F56C47839DC5CD/",
+      "id": "3709281919",
+      "appid": 1817190,
+      "game": "Marvel's Spider-Man: Miles Morales",
+      "image": "https://images.steamusercontent.com/ugc/15022332934422448358/07A559AC4333A5B191F06C0B1378ED6F1B4510C9/",
       "favorite": false
     },
     {
@@ -715,7 +717,7 @@
       "id": "3709237835",
       "appid": 1817190,
       "game": "Marvel's Spider-Man: Miles Morales",
-      "image": "https://images.steamusercontent.com/ugc/10761770354571347113/6EFE833FCBF74A71DD7723B291AE4CA334E6F77D/",
+      "image": "https://images.steamusercontent.com/ugc/16962960448819516360/5385BDDC8152F27E11BC8C3E04387461624195DE/",
       "favorite": false
     },
     {
@@ -729,7 +731,7 @@
       "id": "3709237416",
       "appid": 1817190,
       "game": "Marvel's Spider-Man: Miles Morales",
-      "image": "https://images.steamusercontent.com/ugc/16674803847572759540/B18FCA2D45E51B27BE572147A6B4D2E0A1A113CB/",
+      "image": "https://images.steamusercontent.com/ugc/11254048974221452577/B4F49E1A653DC1075B4CC29DC9D45D556996D08D/",
       "favorite": false
     },
     {
@@ -743,7 +745,7 @@
       "id": "3709236808",
       "appid": 1817190,
       "game": "Marvel's Spider-Man: Miles Morales",
-      "image": "https://images.steamusercontent.com/ugc/10111807820714555560/A83A2BA40AAF0E64704C197344CB1A7A6FD4D529/",
+      "image": "https://images.steamusercontent.com/ugc/12888132741099894070/4AB4F06E5CDDF47A9400E95843846708C992A8E1/",
       "favorite": false
     },
     {
@@ -775,10 +777,10 @@
       "favorite": false
     },
     {
-      "id": "3703993973",
+      "id": "3703992862",
       "appid": 1817070,
       "game": "Marvel’s Spider-Man Remastered",
-      "image": "https://images.steamusercontent.com/ugc/16632952323748549979/F57826D0C95FB5E522435C3D0A87B41D87027A32/",
+      "image": "https://images.steamusercontent.com/ugc/16428901669383764329/E4E51BB7E9A97634B3BC67268F6327F9C0FEBD52/",
       "favorite": false
     },
     {
@@ -792,7 +794,7 @@
       "id": "3700228841",
       "appid": 1817070,
       "game": "Marvel’s Spider-Man Remastered",
-      "image": "https://images.steamusercontent.com/ugc/16848526698294750214/659F9566D009C8C0E45545E2F837AC0169CB7670/",
+      "image": "https://images.steamusercontent.com/ugc/15863190712268496410/A6827EB7906CC0DE687300AF49FBB2F4C3EFFFE2/",
       "favorite": false
     },
     {
@@ -806,7 +808,7 @@
       "id": "3699438297",
       "appid": 1817070,
       "game": "Marvel’s Spider-Man Remastered",
-      "image": "https://images.steamusercontent.com/ugc/16519677021337358315/A20BF91303016AAB8306A0589BE1AB65B6D9DC9C/",
+      "image": "https://images.steamusercontent.com/ugc/11140929317177038997/FDECB7C47365A9CCAEDD9F2CADB462D1F104DFC1/",
       "favorite": false
     },
     {
@@ -820,7 +822,7 @@
       "id": "3697688791",
       "appid": 1817070,
       "game": "Marvel’s Spider-Man Remastered",
-      "image": "https://images.steamusercontent.com/ugc/17619238506263023842/F56AB7578272BDED732015B621C9D5DB6B34EBB1/",
+      "image": "https://images.steamusercontent.com/ugc/15834745771062872462/BC7FFF4EE4E6EA0682008AEE5FA06EE2F82164A4/",
       "favorite": false
     },
     {
@@ -852,10 +854,10 @@
       "favorite": false
     },
     {
-      "id": "3665259119",
-      "appid": 1449690,
-      "game": "The Walking Dead: The Telltale Definitive Series",
-      "image": "https://images.steamusercontent.com/ugc/11046088553269142851/8A4DB0E9902BB4D687715761C5607B5BCA0F445C/",
+      "id": "3664751157",
+      "appid": 391720,
+      "game": "Layers of Fear (2016)",
+      "image": "https://images.steamusercontent.com/ugc/16553767632215147006/4DC8DC727A22EC795A3DAFD4DBAD97C283923F6B/",
       "favorite": false
     },
     {
@@ -869,7 +871,7 @@
       "id": "3664702250",
       "appid": 1222700,
       "game": "A Way Out",
-      "image": "https://images.steamusercontent.com/ugc/14145943758045913402/8A7E0055E4E5400F61629F9901EA8C60F37C2C52/",
+      "image": "https://images.steamusercontent.com/ugc/16281545126578659648/D609FFD0F6ABFA191FDB2F6683AE7A5B1E92837D/",
       "favorite": false
     },
     {
@@ -883,7 +885,7 @@
       "id": "3664701873",
       "appid": 391720,
       "game": "Layers of Fear (2016)",
-      "image": "https://images.steamusercontent.com/ugc/15859677058742728557/1235FAAD7C3EE307856B2426859650E4615CCB88/",
+      "image": "https://images.steamusercontent.com/ugc/15969092804525613702/925FB71712F42E5592579B677135C7CB98D03D34/",
       "favorite": false
     },
     {
@@ -897,7 +899,7 @@
       "id": "3645209553",
       "appid": 1850570,
       "game": "DEATH STRANDING DIRECTOR'S CUT",
-      "image": "https://images.steamusercontent.com/ugc/12008889900207608137/DF9ED51885FB614D303B0DA1C11B3A811BA24010/",
+      "image": "https://images.steamusercontent.com/ugc/13559334533328630753/8C71C330AFD7B065F3598B730745520749AE0806/",
       "favorite": false
     },
     {
@@ -929,10 +931,10 @@
       "favorite": false
     },
     {
-      "id": "3620239053",
+      "id": "3620237797",
       "appid": 1091500,
       "game": "Cyberpunk 2077",
-      "image": "https://images.steamusercontent.com/ugc/15685503981272161395/796A8EAE1452A9EDA431BCCDB02C895B6DCE83E2/",
+      "image": "https://images.steamusercontent.com/ugc/11849333786110706692/26D7E5D533B60A007FF92FBBA31BCAAB51CC5AD5/",
       "favorite": false
     },
     {
@@ -946,7 +948,7 @@
       "id": "3611788079",
       "appid": 1551360,
       "game": "Forza Horizon 5",
-      "image": "https://images.steamusercontent.com/ugc/16249561444122417820/1C96854FE4DF0CD0E5BC86717F0A6175AB9700D7/",
+      "image": "https://images.steamusercontent.com/ugc/13861278999080314088/7C895033355A1D52FF7E324FD8B9F2237E6D09E4/",
       "favorite": false
     },
     {
@@ -960,7 +962,7 @@
       "id": "3610392952",
       "appid": 1091500,
       "game": "Cyberpunk 2077",
-      "image": "https://images.steamusercontent.com/ugc/14776969923114073544/28D6729AAF72E9B223EF2B96DF39A023AD452F41/",
+      "image": "https://images.steamusercontent.com/ugc/11620328686193650706/A0846E23D1D31137872554DCC5A4D2E834EB1E2C/",
       "favorite": false
     },
     {
@@ -974,7 +976,7 @@
       "id": "3606918629",
       "appid": 990080,
       "game": "Hogwarts Legacy",
-      "image": "https://images.steamusercontent.com/ugc/16624665299521977998/2C55BD490889DC10A990AA17172D317AF734D03C/",
+      "image": "https://images.steamusercontent.com/ugc/12180997416610722892/3F95057197A14BF00CC71B3B414FA46101463197/",
       "favorite": false
     },
     {
@@ -1008,10 +1010,10 @@
       "original": "https://images.steamusercontent.com/ugc/12378042621997334601/E47F3FB4C5AE4FF1EA7B74A8FB267E155A12F65B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
-      "id": "3585769335",
+      "id": "3585631055",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/17961274943858461036/27B0E9DB0AD8B2E416484F366FCA47BBCC7C6EB3/",
+      "image": "https://images.steamusercontent.com/ugc/9904491154809552095/12D74D0656C884C825B7163E3C48C26A49487421/",
       "favorite": false
     },
     {
@@ -1025,7 +1027,7 @@
       "id": "3585629898",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/15381553122877714903/0E61F82C5FED26D211B32103004ED959436BFA0B/",
+      "image": "https://images.steamusercontent.com/ugc/9809836596215341005/6653877BB8A1381AB21D494586427E1AA4080EA5/",
       "favorite": false
     },
     {
@@ -1039,7 +1041,7 @@
       "id": "3585511221",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/17116310564474681868/38EB7913293DA4CF5AC2DE20C70A7CF9A5BB6DA2/",
+      "image": "https://images.steamusercontent.com/ugc/12994509316711636764/893304205EC23EB8D9A5CD2850AC9D1352B3296F/",
       "favorite": false
     },
     {
@@ -1053,7 +1055,7 @@
       "id": "3583071607",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/12875051373516656362/D0E6A45AFC1580D7CADA11D145E68F00081BCC8A/",
+      "image": "https://images.steamusercontent.com/ugc/10218349410885486632/52C5EF2D17C80E731E4DA862B9A6A3C8D3AD48B9/",
       "favorite": false
     },
     {
@@ -1085,10 +1087,10 @@
       "favorite": false
     },
     {
-      "id": "3581114479",
+      "id": "3580211551",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/12886153207043688172/CB7F7393C4F4B1BE6272C704F2BE288C83259E10/",
+      "image": "https://images.steamusercontent.com/ugc/15999067909455020883/792C30A69C3A62E5B04283FE90008A04DD4B0EE0/",
       "favorite": false
     },
     {
@@ -1102,7 +1104,7 @@
       "id": "3580211242",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/12039717465298527789/79ED5BB59C70467E9AFF8CAAF54594187386618C/",
+      "image": "https://images.steamusercontent.com/ugc/15560679179104023276/EF74664FDB64A7C1FEEE4E16AD98CAF470602962/",
       "favorite": false
     },
     {
@@ -1116,7 +1118,7 @@
       "id": "3579778854",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/12147105104511529757/5AAA1DC300932830EFFE192C17E50ADCF7C34367/",
+      "image": "https://images.steamusercontent.com/ugc/15610206405318669670/3C3BC727ECA08F0C9C4DDBC37304E8810F6E1BDF/",
       "favorite": false
     },
     {
@@ -1130,7 +1132,7 @@
       "id": "3579434696",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/13308481709500738319/A8FCE4C292AAEA04480B5680A16253A2ED7F917D/",
+      "image": "https://images.steamusercontent.com/ugc/12832037518015030760/DFE04F613D7ACD98B3892721A2A991CF89D55F6F/",
       "favorite": false
     },
     {
@@ -1162,10 +1164,10 @@
       "favorite": false
     },
     {
-      "id": "3577169532",
+      "id": "3575115000",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/9388283851861602840/18E38079C3AB50E2FFB282C0B6DE557DD76AF589/",
+      "image": "https://images.steamusercontent.com/ugc/17378491503518974011/4F9468949CFE860D9ABC42E8197748F052A1AC81/",
       "favorite": false
     },
     {
@@ -1179,7 +1181,7 @@
       "id": "3572915398",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/10323360339357855740/707C82B3C2A3DEE230E94262AF6B953B0731AA23/",
+      "image": "https://images.steamusercontent.com/ugc/18294640453972355078/6CA946A82F52F251330B54B95DA4605CF3A88FFF/",
       "favorite": false
     },
     {
@@ -1193,7 +1195,7 @@
       "id": "3571796402",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/13029334746623422109/E27D7CACC089389D55C29A47347ED69F85F24A06/",
+      "image": "https://images.steamusercontent.com/ugc/9241126016963342507/79E85D7DED2F5144111ED55A4C86834CA875489B/",
       "favorite": false
     },
     {
@@ -1207,7 +1209,7 @@
       "id": "3571467259",
       "appid": 2322010,
       "game": "God of War Ragnarök",
-      "image": "https://images.steamusercontent.com/ugc/10324814963826657416/1964435FA4966A8A499027AB7966258331F143D9/",
+      "image": "https://images.steamusercontent.com/ugc/11511067271001384062/BE3823FD94DC36B1088A9F873651DED476B53F9D/",
       "favorite": false
     },
     {
@@ -1240,10 +1242,10 @@
       "original": "https://images.steamusercontent.com/ugc/15566897679527924002/A32EBC50B8201D63E7E651ED6EAE5D164CF2C2C2/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
-      "id": "3565203285",
+      "id": "3564682224",
       "appid": 2531310,
       "game": "The Last of Us™ Part II Remastered",
-      "image": "https://images.steamusercontent.com/ugc/15390304342755012902/DB02084C75C2A75C05FD8AD6BE31A2F93FCCF0B7/",
+      "image": "https://images.steamusercontent.com/ugc/15512163009840031116/E31BE2E727C58DE85EFDB20BC5A2A9DB54F0C320/",
       "favorite": false
     },
     {
@@ -1257,7 +1259,7 @@
       "id": "3564681929",
       "appid": 2531310,
       "game": "The Last of Us™ Part II Remastered",
-      "image": "https://images.steamusercontent.com/ugc/15651700764568986077/C3F63509DC31E83BE06D63AE772EF3BC0DBE0A76/",
+      "image": "https://images.steamusercontent.com/ugc/10076156341696570725/1333FEDF65347E3C9797671BCC95E3CA7E8D724A/",
       "favorite": false
     },
     {
@@ -1271,7 +1273,7 @@
       "id": "3564681550",
       "appid": 2531310,
       "game": "The Last of Us™ Part II Remastered",
-      "image": "https://images.steamusercontent.com/ugc/17456560027046402197/EC12A1238B15BB2BC450725F47B2A90BFFEC2E37/",
+      "image": "https://images.steamusercontent.com/ugc/13286841847854089529/F9549F5E072776E942C2B59C17A7536D280DCAEB/",
       "favorite": false
     },
     {
@@ -1285,7 +1287,7 @@
       "id": "3562096303",
       "appid": 2531310,
       "game": "The Last of Us™ Part II Remastered",
-      "image": "https://images.steamusercontent.com/ugc/13965878446203299208/F6C2C59861B642FD6CA92F64E41B0455EA3E48ED/",
+      "image": "https://images.steamusercontent.com/ugc/12186903987179026992/5C3FE247B566CDF888A711EDDA24CF2D1770BB0B/",
       "favorite": false
     },
     {
@@ -1317,10 +1319,10 @@
       "favorite": false
     },
     {
-      "id": "3559707024",
+      "id": "3559476720",
       "appid": 2531310,
       "game": "The Last of Us™ Part II Remastered",
-      "image": "https://images.steamusercontent.com/ugc/11414347478055189214/7571E91EA6B1CBE5D49064B467F5175D46F422BF/",
+      "image": "https://images.steamusercontent.com/ugc/17353412295339689991/355C78E2A51CC64DB527A5DAF620AD8186FFAF92/",
       "favorite": false
     },
     {
@@ -1334,7 +1336,7 @@
       "id": "3558724889",
       "appid": 2531310,
       "game": "The Last of Us™ Part II Remastered",
-      "image": "https://images.steamusercontent.com/ugc/17172383057593844116/987658115019D100D19B763B7C0571BCDB87D554/",
+      "image": "https://images.steamusercontent.com/ugc/15718864827081530298/5992DC8C5F7CF73B1E68EF79B3A4CDB056F3AA3B/",
       "favorite": false
     },
     {
@@ -1348,7 +1350,7 @@
       "id": "3556597102",
       "appid": 1888930,
       "game": "The Last of Us™ Part I",
-      "image": "https://images.steamusercontent.com/ugc/11156162883079471966/0F696DD3F3EC4FC5E99DAD4FED462574894A739D/",
+      "image": "https://images.steamusercontent.com/ugc/17898140736723979389/23BB7C62AB20124D01E89C5C41E7CA4507AF3C5E/",
       "favorite": false
     },
     {
@@ -1363,7 +1365,7 @@
       "id": "3556595190",
       "appid": 1888930,
       "game": "The Last of Us™ Part I",
-      "image": "https://images.steamusercontent.com/ugc/12178456936433498505/44D4AFA2AB4DA08A5429B95E5BA65E1DB028176E/",
+      "image": "https://images.steamusercontent.com/ugc/15351483951679389486/092A813540589F2EC34F62202A40C15632AD4105/",
       "favorite": false
     },
     {
@@ -1396,10 +1398,10 @@
       "favorite": false
     },
     {
-      "id": "3543502797",
-      "appid": 1163550,
-      "game": "Captain Tsubasa - Rise of New Champions",
-      "image": "https://images.steamusercontent.com/ugc/15978009631387965591/83A852FB21A11F56082CBD72A110E869A9FE333B/",
+      "id": "3543500633",
+      "appid": 292030,
+      "game": "The Witcher 3: Wild Hunt — Remastered",
+      "image": "https://images.steamusercontent.com/ugc/15872380764619156102/7A2D0871904738E9C638A866CC650EE4DE9CD360/",
       "favorite": false
     },
     {
@@ -1413,7 +1415,7 @@
       "id": "3540426014",
       "appid": 1163550,
       "game": "Captain Tsubasa - Rise of New Champions",
-      "image": "https://images.steamusercontent.com/ugc/15014514571958783019/4F36B58038B2F85BD574244F8D6DBA102474F590/",
+      "image": "https://images.steamusercontent.com/ugc/12250052044391758925/CA244B7939E63C757B453627A1A4DF610B876DC4/",
       "favorite": false
     },
     {
@@ -1427,7 +1429,7 @@
       "id": "3539049848",
       "appid": 292030,
       "game": "The Witcher 3: Wild Hunt — Remastered",
-      "image": "https://images.steamusercontent.com/ugc/12089444215626971799/6228EA0495A48E3CB25B8DB3AB0EAD4F2CA0580D/",
+      "image": "https://images.steamusercontent.com/ugc/10740989263120255804/5F02A3BB0D6E771520DA97D756A6CDF51E6A1065/",
       "favorite": false
     },
     {
@@ -1441,7 +1443,7 @@
       "id": "3533674589",
       "appid": 292030,
       "game": "The Witcher 3: Wild Hunt — Remastered",
-      "image": "https://images.steamusercontent.com/ugc/15223234000584890466/1EC93AD12217988AD900A32F91663E5222E058FA/",
+      "image": "https://images.steamusercontent.com/ugc/16331929832158800974/2A923CC1576452BD844749138573A5269507E37A/",
       "favorite": false
     },
     {
@@ -1473,10 +1475,10 @@
       "favorite": false
     },
     {
-      "id": "3520393051",
-      "appid": 292030,
-      "game": "The Witcher 3: Wild Hunt — Remastered",
-      "image": "https://images.steamusercontent.com/ugc/9621804063613285490/81BC8302459E2A792F9823849692DF19CC460346/",
+      "id": "3519402145",
+      "appid": 447040,
+      "game": "Watch_Dogs 2",
+      "image": "https://images.steamusercontent.com/ugc/16012303129811027474/27A0C325987419BF5597138C561FADE01A66D137/",
       "favorite": false
     },
     {
@@ -1490,7 +1492,7 @@
       "id": "3518267543",
       "appid": 20920,
       "game": "The Witcher 2: Assassins of Kings Enhanced Edition",
-      "image": "https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/",
+      "image": "https://images.steamusercontent.com/ugc/13518246609962102995/9B7AE6F497B9618FE9344D8B3A6C4A2BA3F9443E/",
       "favorite": true,
       "original": "https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
@@ -1505,7 +1507,7 @@
       "id": "3516661938",
       "appid": 447040,
       "game": "Watch_Dogs 2",
-      "image": "https://images.steamusercontent.com/ugc/10437554177938219074/62D3422428C148CA01CE2D559B54273BE9B40057/",
+      "image": "https://images.steamusercontent.com/ugc/13593327863498995874/FABE90153D6010F9276D85F1BDF5DC7E8C752FFA/",
       "favorite": false
     },
     {
@@ -1519,7 +1521,7 @@
       "id": "3514690774",
       "appid": 20920,
       "game": "The Witcher 2: Assassins of Kings Enhanced Edition",
-      "image": "https://images.steamusercontent.com/ugc/17755989235460507485/8EAECC95BA66140F41A49E4F5DC3D253535B1F37/",
+      "image": "https://images.steamusercontent.com/ugc/12609226490218207941/78446C8829DB88CC52ED3DF104B035E884261A57/",
       "favorite": false
     },
     {
@@ -1551,10 +1553,10 @@
       "favorite": false
     },
     {
-      "id": "3488285920",
+      "id": "3488284741",
       "appid": 12210,
       "game": "Grand Theft Auto IV: The Complete Edition",
-      "image": "https://images.steamusercontent.com/ugc/14411741758565004924/9C529207D73A2FEE5E82D40EB6F974AFB156386D/",
+      "image": "https://images.steamusercontent.com/ugc/15308067844934798101/2C83D59FF459172AD1E677393EB70D70B9C991CC/",
       "favorite": false
     },
     {
@@ -1568,7 +1570,7 @@
       "id": "3488283721",
       "appid": 12210,
       "game": "Grand Theft Auto IV: The Complete Edition",
-      "image": "https://images.steamusercontent.com/ugc/15805368847345900877/42943C42CEDDA2B35FCA130185122A1581FD7930/",
+      "image": "https://images.steamusercontent.com/ugc/13167993184488463717/30B95F8D5663EB4A5957D10E29A96937A266239A/",
       "favorite": false
     },
     {
@@ -1582,7 +1584,7 @@
       "id": "3474013903",
       "appid": 1238840,
       "game": "Battlefield™ 1",
-      "image": "https://images.steamusercontent.com/ugc/16665921942256471096/8A01A0B7387E6DFB46DF1749D1B41BBE2C8FC059/",
+      "image": "https://images.steamusercontent.com/ugc/9871058315666296701/F3884D2AEEF087E90A049FA454372826BA00EC96/",
       "favorite": false
     },
     {
@@ -1593,10 +1595,10 @@
       "favorite": false
     },
     {
-      "id": "3473446163",
-      "appid": 379430,
-      "game": "Kingdom Come: Deliverance",
-      "image": "https://images.steamusercontent.com/ugc/14759198121496452384/69522D3CEA57A2078010974F6CB67635DEFE2B4E/",
+      "id": "3472358077",
+      "appid": 1593500,
+      "game": "God of War",
+      "image": "https://images.steamusercontent.com/ugc/58092815985039799/30BBBDE90099AB2428FB8C643B3CD317E5CA1884/",
       "favorite": false
     },
     {
@@ -1610,7 +1612,14 @@
       "id": "3469804218",
       "appid": 1593500,
       "game": "God of War",
-      "image": "https://images.steamusercontent.com/ugc/58092815971918305/4910B806693FCFE1BA8A165E347575E88D62DD64/",
+      "image": "https://images.steamusercontent.com/ugc/58092815971918367/98C438123DCFABAF95B8E871A65365C7C69FE630/",
+      "favorite": false
+    },
+    {
+      "id": "3469803381",
+      "appid": 1593500,
+      "game": "God of War",
+      "image": "https://images.steamusercontent.com/ugc/58092815971915626/B9CC8E65EB0C49FBF202C28667FABF912F66F19C/",
       "favorite": false
     }
   ]
