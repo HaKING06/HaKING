@@ -5,9 +5,9 @@
  */
 
 const VENDOR_ADDONS = [
-  'assets/vendor/GLTFLoader.js?v=2.5.2-20261115',
-  'assets/vendor/Reflector.js?v=2.5.2-20261115',
-  'assets/vendor/RoomEnvironment.js?v=2.5.2-20261115'
+  'assets/vendor/GLTFLoader.js?v=2.5.3-20261115',
+  'assets/vendor/Reflector.js?v=2.5.3-20261115',
+  'assets/vendor/RoomEnvironment.js?v=2.5.3-20261115'
 ];
 
 const WING_SIZE = 15;

@@ -1,6 +1,6 @@
-import { LANG_DATA, LANG_OPTIONS } from './translations.js?v=2.5.2-20261115';
-import { initVictus } from './victus.js?v=2.5.2-20261115';
-import { openMuseum3D } from './museum3d.js?v=2.5.2-20261115';
+import { LANG_DATA, LANG_OPTIONS } from './translations.js?v=2.5.3-20261115';
+import { initVictus } from './victus.js?v=2.5.3-20261115';
+import { openMuseum3D } from './museum3d.js?v=2.5.3-20261115';
 
 const copy = {
   tr: ['Favoriler', 'Tüm arşiv', 'Tüm oyunlar', 'Oyun ara', 'Daha fazla göster', 'Önceki', 'Sonraki', 'Kapat', 'Steam’de aç', 'Görsel bulunamadı', 'Afişler', 'Görünümü sıfırla', 'Sürükleyerek döndür · Kaydırarak yakınlaştır', 'Tema'],

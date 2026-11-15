@@ -31,6 +31,8 @@ class SiteIntegrityTests(unittest.TestCase):
         self.assertTrue((ROOT / 'assets/vendor/Reflector.js').is_file())
         self.assertTrue((ROOT / 'assets/vendor/RoomEnvironment.js').is_file())
         self.assertTrue((ROOT / 'assets/images/walpaper.png').is_file())
+        self.assertTrue((ROOT / 'assets/images/HICON.png').is_file())
+        self.assertIn('assets/images/HICON.png" alt="" class="logo-emblem"', index_html)
         self.assertTrue((ROOT / 'assets/js/museum3d.js').is_file())
         self.assertTrue((ROOT / 'assets/museum/models/marble_bust_01/marble_bust_01_1k.gltf').is_file())
         self.assertTrue((ROOT / 'assets/museum/models/chandelier_02/Chandelier_02_1k.gltf').is_file())

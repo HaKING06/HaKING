@@ -1,3 +1,7 @@
+# HaKING 2.5.3 — 2026-11-15
+
+- Replaced the mismatched spinning triangle SVG sidebar logo in `index.html` and `assets/css/main.css` with the owner's crisp `assets/images/HICON.png` emblem (`.logo-emblem`) framed with a subtle amber-crimson ambient glow and smooth hover highlight, eliminating dead `.t1`/`.t2`/`.lh` logo CSS.
+
 # HaKING 2.5.2 — 2026-11-15
 
 - Fixed critical CSS brace mismatch in `assets/css/main.css` that broke layout, button styling, hero columns, `#armory` filter controls, and `#support` side-by-side layout across desktop and mobile sections.

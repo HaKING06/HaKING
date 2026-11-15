@@ -6,7 +6,7 @@
 
 **Halit Güneş** için geliştirilen; canlı **Steam kütüphane telemetrisi**, etkileşimli **Three.js 3D HP Victus 16** donanım modeli, **20 dilli** (Arapça RTL dahil) çok dilli mimari ve otomatik senkronize edilen **Steam Müze arşivi** sunan statik web platformu.
 
-[![Version](https://img.shields.io/badge/version-2.5.2-f3bd63?style=for-the-badge)](VERSION)
+[![Version](https://img.shields.io/badge/version-2.5.3-f3bd63?style=for-the-badge)](VERSION)
 [![Languages](https://img.shields.io/badge/languages-20%20(%2B%20RTL)-1f2937?style=for-the-badge)](assets/js/translations.js)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3b82f6?style=for-the-badge)](LICENSE)
 [![Live Site](https://img.shields.io/badge/live-steam.haking.tr-10b981?style=for-the-badge)](https://steam.haking.tr/)
@@ -50,7 +50,7 @@
 
 ---
 
-## Öne Çıkan Özellikler (`v2.5.2`)
+## Öne Çıkan Özellikler (`v2.5.3`)
 
 - **3D Sanal Müze Turu & Steam Görsel Arşivi (`#museum` & `assets/js/museum3d.js`)**
   - Klasik 2D arşiv (`Favoriler`, arama, oyun filtresi, slayt gösterisi ve lightbox) korunur; tek tıkla **"Sanal Turu Başlat"** düğmesine basıldığında isteğe bağlı **WebGL 3D Sergi Salonu** açılır.
@@ -117,7 +117,7 @@ HaKING/
 ├── scripts/                     # Medya çözümleyici, locale aktarımı ve poster üreteci
 ├── tests/                       # Medya hattı, değerleme ve site bütünlüğü birim testleri
 ├── update_stats.py              # Steam Web API + Mağaza değerleme eşitleme betiği
-├── VERSION / CHANGELOG.md       # Sürüm (2.5.2) ve sürüm notları
+├── VERSION / CHANGELOG.md       # Sürüm (2.5.3) ve sürüm notları
 └── .github/workflows/           # Günlük Steam istatistik ve haftalık ekran görüntüsü akışları
 ```
 
