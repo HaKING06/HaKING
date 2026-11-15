@@ -1,3 +1,11 @@
+# HaKING 2.3.0 — 2026-11-15
+
+- Rebuild the Victus exterior: tapered chassis, inset hinges, full keyboard, numeric pad, side ports and closed underside grille. Correct linear color handling and excessive lighting for the owner's matte charcoal finish.
+- Retain only remote Steam original-image URL metadata. Remove the abandoned local gallery cache and Pillow runtime dependency.
+- Serve responsive remote 640/1280 thumbnails and large dialog images from canonical originals; retain resumable metadata-only synchronization and rate-limit handling.
+- Version local entrypoints and module imports to refresh stale browser assets.
+- Refresh product screenshots, localized posters and documentation for this delivery.
+
 # HaKING 2.2.0 — 2026-11-11
 
 - Remove click/startup sounds and the visible toolbar version label.

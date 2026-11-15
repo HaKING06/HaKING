@@ -1,5 +1,5 @@
-import { LANG_DATA } from './translations.js';
-import { initVictus } from './victus.js';
+import { LANG_DATA } from './translations.js?v=2.3.0-20261115';
+import { initVictus } from './victus.js?v=2.3.0-20261115';
 const copy = {
 tr:['Favoriler','Tüm arşiv','Tüm oyunlar','Oyun ara','Daha fazla göster','Önceki','Sonraki','Kapat','Steam’de aç','Görsel bulunamadı','Afişler','Görünümü sıfırla','Sürükleyerek döndür · Kaydırarak yakınlaştır','Tema'],
 en:['Favorites','Full archive','All games','Search games','Load more','Previous','Next','Close','Open on Steam','No images found','Posters','Reset view','Drag to rotate · Scroll to zoom','Theme'],
@@ -39,9 +39,17 @@ function translate(){
  document.querySelectorAll('.language-option').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.code===code)));
  render();
 }
+function mediaSources(item){
+ const original=(item.original || item.image).split('?')[0];
+ return {full:item.original || item.image,small:original+'?imw=640&imh=360&ima=fit&impolicy=Letterbox&letterbox=false',large:original+'?imw=1280&imh=720&ima=fit&impolicy=Letterbox&letterbox=false',width:1920,height:1080};
+}
 function card(item){
  const button=document.createElement('button'); button.type='button'; button.className='archive-card';
- const img=new Image(); const source=(item.original || item.image).split('?')[0]; img.src=source+'?imw=960&imh=540&ima=fit&impolicy=Letterbox&letterbox=false'; if(item.original){img.srcset=source+'?imw=640&imh=360&ima=fit&impolicy=Letterbox&letterbox=false 640w, '+source+'?imw=1280&imh=720&ima=fit&impolicy=Letterbox&letterbox=false 1280w';img.sizes='(max-width: 480px) 100vw, (max-width: 1000px) 50vw, 33vw';} img.alt=`HaKING — ${item.game}`; img.loading='lazy'; img.decoding='async'; img.width=640; img.height=360;
+ const source=mediaSources(item),img=new Image();
+ img.src=source.large;img.srcset=`${source.small} 640w, ${source.large} 1280w`;
+ img.sizes='(max-width: 480px) calc(100vw - 40px), (max-width: 1000px) 50vw, 33vw';
+ img.alt=`HaKING — ${item.game}`;img.loading='lazy';img.decoding='async';img.width=source.width;img.height=source.height;img.style.objectFit='contain';
+ img.addEventListener('error',()=>{img.removeAttribute('srcset');if(img.dataset.fallback==='image')return;if(!img.dataset.fallback&&item.original){img.dataset.fallback='orig';img.src=item.original;return;}img.dataset.fallback='image';img.src=item.image;});
  const title=document.createElement('span'); title.textContent=item.game;
  button.append(img,title); button.addEventListener('click',()=>{index=filtered.findIndex(x=>x.id===item.id);show();$('gallery-dialog').showModal();}); return button;
 }
@@ -53,10 +61,18 @@ function render(){
  $('museum-count').textContent=`${filtered.length} / ${items.length}`;
  $('museum-more').hidden=rest.length<=limit; $('museum-empty').hidden=filtered.length>0;
 }
-function show(){const item=filtered[index];if(!item)return;$('gallery-image').style.maxWidth='100%';$('gallery-image').classList.add('loading');$('gallery-image').src=item.original || item.image;$('gallery-image').alt=`HaKING — ${item.game}`;$('gallery-caption').textContent=`${item.game} · ${index+1} / ${filtered.length}`;$('gallery-steam').href=`https://steamcommunity.com/sharedfiles/filedetails/?id=${item.id}`;}
+function show(){
+ const item=filtered[index];if(!item)return;
+ const source=mediaSources(item),image=$('gallery-image');
+ image.style.maxWidth='100%';image.classList.add('loading');image.width=source.width;image.height=source.height;
+ image.dataset.fallback='';image.src=source.full;image.alt=`HaKING — ${item.game}`;
+ if(image.complete&&image.naturalWidth)image.classList.remove('loading');
+ $('gallery-caption').textContent=`${item.game} · ${index+1} / ${filtered.length}`;
+ $('gallery-steam').href=`https://steamcommunity.com/sharedfiles/filedetails/?id=${item.id}`;
+}
 window.addEventListener('DOMContentLoaded',async()=>{
  $('gallery-image').addEventListener('load',()=>{$('gallery-image').classList.remove('loading');});
- $('gallery-image').addEventListener('error',()=>{$('gallery-image').classList.remove('loading');});
+ $('gallery-image').addEventListener('error',()=>{const image=$('gallery-image'),item=filtered[index];if(item&&!image.dataset.fallback&&image.src!==item.image){image.dataset.fallback='image';image.src=item.image;return;}image.classList.remove('loading');});
  const select=$('language-select');
  Array.from(document.querySelectorAll('#lang-menu .lang-opt')).forEach((button,i)=>{const option=new Option(names[i],button.dataset.language);select.add(option);});
  select.addEventListener('change',()=>document.querySelector(`#lang-menu [data-language="${select.value}"]`)?.click());

@@ -5,7 +5,7 @@
 <p align="center"><strong>Halit Güneş · Oyun profili, görsel arşiv ve kişisel sistem vitrini</strong></p>
 <p align="center"><a href="https://steam.haking.tr/">Web sitesi</a> · <a href="CHANGELOG.md">Sürüm notları</a> · <a href="CONTRIBUTING.md">Katkıda bulunma</a> · <a href="LICENSE">MIT lisansı</a></p>
 
-![Version](https://img.shields.io/badge/version-2.2.0-c9a36a) ![License](https://img.shields.io/badge/license-MIT-blue) ![Languages](https://img.shields.io/badge/languages-20-green)
+![Version](https://img.shields.io/badge/version-2.3.0-c9a36a) ![License](https://img.shields.io/badge/license-MIT-blue) ![Languages](https://img.shields.io/badge/languages-20-green)
 
 ## Deneyim
 
@@ -16,7 +16,7 @@ HaKING; Steam oyun koleksiyonunu, oyunlardan kaydedilen anları ve kişisel dona
 | Koleksiyon | Oyun arama, sıralama, oynama süreleri ve güncellenen Steam verileri |
 | Müze | Altı seçili favori, tüm açık görseller, oyun filtresi, kademeli yükleme |
 | Görsel inceleyici | Asıl Steam dosyası, ok tuşları, Escape, kaynak sayfasına bağlantı |
-| Makine | HP Victus 16-r1015nt, Koyu gri; etkileşimli 3D, klavye, alt ızgara, fan temsili ve kamera açıları |
+| Makine | HP Victus 16-r1015nt, Koyu gri; etkileşimli 3D, klavye, alt kapak ızgarası ve kamera açıları |
 | Dil | 20 dil; kendi adlarıyla aranabilir, kaydırılabilir menü; Arapça RTL |
 | Destek | Steam takası veya [Buy Me a Coffee](https://buymeacoffee.com/haking) |
 | İletişim | steam@haking.tr adresine önceden doldurulmuş e-posta taslağı |
@@ -26,7 +26,7 @@ HaKING; Steam oyun koleksiyonunu, oyunlardan kaydedilen anları ve kişisel dona
 
 Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU · 16 GB RAM · 1 TB SSD · 144 Hz Full HD (1920 × 1080).
 
-Ürün kodu ve renk sahibi tarafından doğrulanmıştır. 3D model elle hazırlanmış web görselleştirmesidir; üreticinin CAD dosyası veya ölçü doğrulanmış dijital ikizi değildir. Fanlar ve iç detaylar açıklayıcı temsildir; gerçek zamanlı sıcaklık ya da RPM ölçülmez. [HP ürün desteği](https://support.hp.com/tr-tr/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-r1000/model/2101982951?sku=9J217EA).
+Ürün kodu ve renk sahibi tarafından doğrulanmıştır. 3D model elle hazırlanmış web görselleştirmesidir; üreticinin CAD dosyası veya ölçü doğrulanmış dijital ikizi değildir. Alt kapak, portlar, klavye ve gövde görselleştirmesi referanslara göre hazırlanır; gerçek zamanlı sıcaklık ya da RPM ölçülmez. [HP ürün desteği](https://support.hp.com/tr-tr/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-r1000/model/2101982951?sku=9J217EA).
 
 ## Yerel kurulum
 
@@ -66,9 +66,11 @@ scripts/                   Arşiv ve tanıtım sayfası üretimi
 
 `Update Steam Stats` iş akışı oyun verisini 30 dakikada bir yeniler. Repository secrets altında `STEAM_API_KEY` gerekir. Steam oyun ayrıntıları herkese açık olmalıdır. API anahtarı tarayıcıya veya JSON'a yazılmaz.
 
-`Sync public screenshots` altı saatte bir açık görselleri indeksler; ardından detay sayfalarından yüksek çözünürlüklü dosya bağlantılarını çözer. Başarısız çözümlemeler mevcut veriyi korur. Favoriler `data/favorites.json` içindeki kimliklerle belirlenir. Gizli veya silinmiş görseller yeniden yayımlanmaz. GitHub Actions'ın depoya yazma izni açık olmalıdır.
+`Sync public screenshots` altı saatte bir açık görselleri indeksler; ardından detay sayfalarından yüksek çözünürlüklü dosya bağlantılarını çözer. Başarısız çözümlemeler mevcut veriyi korur. Favoriler `data/favorites.json` içindeki kimliklerle belirlenir. Gizli veya silinmiş görseller yeniden yayımlanmaz. GitHub Actions'ın depoya yazma izni açık olmalıdır. Asıl dosya adresleri JSON içinde saklanır; fotoğraflar depoya indirilmez. Ziyaretçi doğrudan Steam görsel CDN’ine bağlanır, detay sayfasına istek atmaz.
 
-Liste sayfasındaki küçük Steam önizlemeleri asıl görüntü değildir. İnceleyici `original` adresini kullanır; bağlantı çözülememişse mevcut önizlemeyi gösterir. Kaynağın kendi çözünürlüğü aşılamaz.
+Liste sayfasındaki küçük Steam önizlemeleri asıl görüntü değildir. Bakım scripti yalnızca asıl dosyanın adresini çözümler ve atomik olarak JSON’a kaydeder. Kartlar aynı kaynağın 640/1280 piksel CDN sürümünü, inceleyici büyük sürümünü kullanır. Fotoğraflar, yerel kopyalar veya üretilmiş galeri türevleri Git deposunda tutulmaz. Görseller yalnızca ziyaretçinin görüntülediği kartlarda yüklenir; tarayıcı ve Steam CDN normal HTTP önbelleklemesini kullanır.
+
+Steam bağlantısı silinir, gizlenir veya servis erişilemez olursa görsel sunulamayabilir. Çözümleme tekrar çalıştırılabilir; başarılı adresler korunur ve hız sınırı yanıtları dikkate alınır. Hiçbir uzak hizmet için kesintisiz erişim garantisi verilmez.
 
 ## İletişim ve destek
 
