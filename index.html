@@ -4,38 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <script>
-        (() => {
-            const supported = ['tr', 'en', 'es', 'ru', 'de', 'fr', 'jp', 'cn', 'pt', 'it', 'kr', 'ar', 'hi', 'bn', 'nl', 'pl', 'sv', 'vi', 'el', 'th'];
-            const aliases = { ja: 'jp', zh: 'cn', ko: 'kr' };
-            const byTimezone = {
-                'Europe/Istanbul': 'tr', 'Asia/Tokyo': 'jp', 'Asia/Shanghai': 'cn', 'Asia/Hong_Kong': 'cn',
-                'Asia/Seoul': 'kr', 'Europe/Madrid': 'es', 'America/Mexico_City': 'es', 'America/Bogota': 'es',
-                'Europe/Moscow': 'ru', 'Asia/Dubai': 'ar', 'Asia/Riyadh': 'ar', 'Africa/Cairo': 'ar',
-                'Europe/Paris': 'fr', 'Europe/Berlin': 'de', 'Europe/Rome': 'it', 'Europe/Lisbon': 'pt',
-                'America/Sao_Paulo': 'pt', 'Asia/Kolkata': 'hi', 'Asia/Dhaka': 'bn', 'Europe/Amsterdam': 'nl',
-                'Europe/Warsaw': 'pl', 'Europe/Stockholm': 'sv', 'Asia/Ho_Chi_Minh': 'vi',
-                'Europe/Athens': 'el', 'Asia/Bangkok': 'th'
-            };
-            const normalize = value => {
-                const primary = String(value || '').toLowerCase().split('-')[0];
-                const code = aliases[primary] || primary;
-                return supported.includes(code) ? code : null;
-            };
-            let saved = null;
-            try { saved = normalize(localStorage.getItem('haking.language')); } catch (_) {}
-            const preferred = (Array.isArray(navigator.languages) ? navigator.languages : [])
-                .concat(navigator.language || [])
-                .map(normalize)
-                .find(Boolean);
-            let timezone = '';
-            try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (_) {}
-            const language = normalize(new URLSearchParams(location.search).get('lang')) || saved || preferred || byTimezone[timezone] || 'en';
-            document.documentElement.dataset.initialLang = language;
-            document.documentElement.lang = ({ jp: 'ja', cn: 'zh-CN', kr: 'ko' })[language] || language;
-            document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-        })();
-    </script>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.steamstatic.com https://media.steampowered.com https://images.steamusercontent.com data:; media-src 'self' https://casehug.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:">
+    <script src="assets/js/lang-init.js?v=2.4.0-20261115"></script>
     <title>HaKING | Halit Güneş – Oyun Profili ve Dijital Arşiv</title>
     <meta name="description" content="Halit Güneş'in oyun profili, sistem özellikleri, ekran görüntüleri ve dijital bağlantıları.">
     <meta name="theme-color" content="#020101">
@@ -55,78 +26,85 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link id="web-fonts" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@400&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet" media="print">
-    <link rel="stylesheet" href="assets/css/main.css?v=2.3.0-20261115">
-    <!-- LIBS -->
-    <!-- Enhancement libraries are optional; async loading keeps local/offline startup responsive. -->
-    <script async src="assets/vendor/three.min.js?v=2.3.0-20261115"></script>
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script async data-icon-library src="https://unpkg.com/lucide@0.468.0"></script>
-    <script type="module" src="assets/js/main.js?v=2.3.0-20261115"></script>
-    <script type="module" src="assets/js/upgrade.js?v=2.3.0-20261115"></script>
-    <link rel="stylesheet" href="assets/css/upgrade.css?v=2.3.0-20261115">
-    <meta name="application-version" content="2.3.0">
-
-
+    <link rel="stylesheet" href="assets/css/main.css?v=2.4.0-20261115">
+    <!-- Core Three.js and Lucide run locally; GSAP loads asynchronously with a safe fallback. -->
+    <script async src="assets/vendor/three.min.js?v=2.4.0-20261115"></script>
+    <script async data-icon-library src="assets/vendor/lucide.min.js?v=2.4.0-20261115"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module" src="assets/js/main.js?v=2.4.0-20261115"></script>
+    <script type="module" src="assets/js/upgrade.js?v=2.4.0-20261115"></script>
+    <link rel="stylesheet" href="assets/css/upgrade.css?v=2.4.0-20261115">
+    <meta name="application-version" content="2.4.0">
 </head>
 
 <body>
 
+    <div id="first-time-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-partner-title" hidden>
+        <div class="modal-content partner-modal">
+            <div class="partner-modal-head">
+                <div class="partner-badge-group">
+                    <span class="partner-pill"><span class="partner-dot" aria-hidden="true"></span><span data-k="ad_badge">SPONSORLU PARTNER</span></span>
+                    <strong id="modal-partner-title" class="partner-brand">CaseHug × HaKING</strong>
+                </div>
+                <button type="button" class="modal-close-btn" id="modal-close" aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+            </div>
 
-
-    <div id="first-time-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="HaKING tanıtımı">
-        <div class="modal-content">
-            <button type="button" class="modal-close-btn" id="modal-close" aria-label="Pencereyi kapat"><i data-lucide="x" aria-hidden="true"></i></button>
-
-            <div class="modal-tabs">
-                <button type="button" class="modal-tab active" data-modal-tab="banner">
-                    <i data-lucide="image" aria-hidden="true"></i>BANNER
+            <div class="modal-tabs" role="tablist">
+                <button type="button" class="modal-tab active" role="tab" aria-selected="true" aria-controls="modal-tab-banner" data-modal-tab="banner">
+                    <i data-lucide="image" aria-hidden="true"></i><span data-k="ad_tab_banner">AFİŞ</span>
                 </button>
-                <button type="button" class="modal-tab" data-modal-tab="trailer">
-                    <i data-lucide="play" aria-hidden="true"></i>TRAILER
+                <button type="button" class="modal-tab" role="tab" aria-selected="false" aria-controls="modal-tab-trailer" data-modal-tab="trailer">
+                    <i data-lucide="play" aria-hidden="true"></i><span data-k="ad_tab_trailer">TANITIM</span>
                 </button>
             </div>
 
-            <div class="modal-body">
-                <!-- Banner Tab -->
-                <a href="https://casehug.com/r/HAK06" target="_blank" id="modal-tab-banner"
-                    class="modal-tab-content modal-image-link">
-                    <div class="modal-image-container modal-banner-frame">
-                        <img src="add/SOL.png" alt="Popup Görseli" class="modal-image-full">
+            <div class="modal-body partner-modal-body">
+                <a href="https://casehug.com/r/HAK06" target="_blank" rel="sponsored noopener noreferrer" id="modal-tab-banner" class="modal-tab-content modal-image-link">
+                    <div class="modal-banner-stage">
+                        <img src="add/SOL.png" alt="CaseHug × HaKING — HAK06" class="modal-banner-img" decoding="async">
                     </div>
                 </a>
 
-                <!-- Trailer Tab -->
-                <div id="modal-tab-trailer" class="modal-tab-content modal-video-link">
-                    <div class="modal-video-container modal-trailer-frame">
-                        <video id="modal-video" muted loop playsinline class="modal-video-responsive">
-                            <source
-                                src="https://casehug.com/ch-static/creator-banner-v7.webm"
-                                type="video/webm">
-                            Tarayıcınız video etiketini desteklemiyor.
+                <div id="modal-tab-trailer" class="modal-tab-content modal-video-link" hidden>
+                    <div class="modal-trailer-stage">
+                        <video id="modal-video" poster="add/SOL.png" muted loop playsinline preload="none" class="modal-video-responsive">
+                            <source src="https://casehug.com/ch-static/creator-banner-v7.webm" type="video/webm">
                         </video>
-                        <a href="https://casehug.com/r/HAK06" target="_blank" class="modal-visit-link">
-                            VISIT UPLINK <i data-lucide="external-link" aria-hidden="true"></i>
-                        </a>
                     </div>
+                </div>
+            </div>
+
+            <div class="partner-modal-footer">
+                <p class="partner-copy" data-k="ad_subtitle">CaseHug üzerinde içerik üreticisi kodunu kullan veya resmi tanıtımı incele.</p>
+                <div class="partner-code-row">
+                    <div class="partner-code-box">
+                        <span class="partner-code-lbl" data-k="ad_code_label">ORTAKLIK KODU</span>
+                        <code class="partner-code-val">HAK06</code>
+                    </div>
+                    <button type="button" id="modal-copy-code" class="partner-copy-btn" data-copy-code="HAK06">
+                        <i data-lucide="copy" aria-hidden="true"></i><span data-k="ad_copy">Kopyala</span>
+                    </button>
+                </div>
+                <div class="partner-actions">
+                    <a href="https://casehug.com/r/HAK06" target="_blank" rel="sponsored noopener noreferrer" class="partner-cta">
+                        <span data-k="ad_cta">CaseHug’a Git</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                    </a>
+                    <button type="button" id="modal-snooze" class="partner-snooze" data-k="ad_dismiss">24 saat gösterme</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="canvas"></div>
-    <div class="scanlines"></div>
-    <div id="cursor">
-        <div class="dot"></div>
-    </div>
 
     <!-- BOOT -->
     <div id="loader">
         <div class="seal-wrap">
             <div class="seal-ring"></div>
             <div class="seal-in"></div>
-                <svg viewBox="0 0 100 100" class="seal-svg">
-                    <polygon points="50,10 85,75 15,75" class="lt1" />
-                    <polygon points="50,90 85,25 15,25" class="lt2" />
+            <svg viewBox="0 0 100 100" class="seal-svg">
+                <polygon points="50,10 85,75 15,75" class="lt1" />
+                <polygon points="50,90 85,25 15,25" class="lt2" />
             </svg>
             <div class="seal-text">H</div>
         </div>
@@ -137,11 +115,11 @@
     </div>
 
     <!-- LANG -->
-    <div class="lang-box"><div class="language-control"><button id="language-trigger" type="button" aria-expanded="false" aria-controls="language-popover"><span>◎</span><span id="language-name">Türkçe</span><span>⌄</span></button><div id="language-popover" hidden><input id="language-search" type="search" placeholder="Language…" aria-label="Search languages"><div id="language-options" role="group" aria-label="Languages"></div></div><select id="language-select" hidden aria-hidden="true" tabindex="-1"></select></div>
-        <button type="button" class="lang-btn" id="lang-togg" aria-controls="lang-menu" aria-expanded="false"><i data-lucide="globe" aria-hidden="true"></i> <span
-                id="curr-lang">EN</span></button>
-        <div class="lang-list" id="lang-menu">
-            <!-- Dilleri buraya kopyala yapıştır -->
+    <div class="lang-box">
+        <div class="language-control">
+            <button id="language-trigger" type="button" aria-expanded="false" aria-controls="language-popover"><span>◎</span><span id="language-name">Türkçe</span><span>⌄</span></button>
+            <div id="language-popover" hidden><input id="language-search" type="search" placeholder="Language…" aria-label="Search languages"><div id="language-options" role="group" aria-label="Languages"></div></div>
+            <select id="language-select" hidden aria-hidden="true" tabindex="-1"></select>
         </div>
     </div>
 
@@ -158,20 +136,13 @@
                 <div class="lh">H</div>
             </button>
             <nav class="navs">
-                <button type="button" class="nav-btn active" data-t="sanctum" data-aria-k="nav_sanctum" aria-current="page"><i data-lucide="skull" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_sanctum">SANCTUM</span></button>
-                <button type="button" class="nav-btn" data-t="armory" data-aria-k="nav_armory"><i data-lucide="swords" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_armory">ARMORY</span></button>
-                <button type="button" class="nav-btn" data-t="machine" data-aria-k="nav_machine"><i data-lucide="cpu" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_machine">MACHINE</span></button>
-                <button type="button" class="nav-btn" data-t="museum" data-aria-k="nav_museum"><i data-lucide="image" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_museum">MUSEUM</span></button>
-                <button type="button" class="nav-btn" data-t="network" data-aria-k="nav_network"><i data-lucide="globe" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_network">NETWORK</span></button>
-                <button type="button" class="nav-btn" data-t="trans" data-aria-k="nav_trans"><i data-lucide="send" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_trans">CONTACT</span></button>
-                <button type="button" class="nav-btn" data-t="support" data-aria-k="nav_support"><i data-lucide="gift" aria-hidden="true"></i><span class="nav-lbl"
-                        data-k="nav_support">SUPPORT</span></button>
+                <button type="button" class="nav-btn active" data-t="sanctum" data-aria-k="nav_sanctum" aria-current="page"><i data-lucide="skull" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_sanctum">SANCTUM</span></button>
+                <button type="button" class="nav-btn" data-t="armory" data-aria-k="nav_armory"><i data-lucide="swords" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_armory">ARMORY</span></button>
+                <button type="button" class="nav-btn" data-t="machine" data-aria-k="nav_machine"><i data-lucide="cpu" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_machine">MACHINE</span></button>
+                <button type="button" class="nav-btn" data-t="museum" data-aria-k="nav_museum"><i data-lucide="image" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_museum">MUSEUM</span></button>
+                <button type="button" class="nav-btn" data-t="network" data-aria-k="nav_network"><i data-lucide="globe" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_network">NETWORK</span></button>
+                <button type="button" class="nav-btn" data-t="trans" data-aria-k="nav_trans"><i data-lucide="send" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_trans">CONTACT</span></button>
+                <button type="button" class="nav-btn" data-t="support" data-aria-k="nav_support"><i data-lucide="gift" aria-hidden="true"></i><span class="nav-lbl" data-k="nav_support">SUPPORT</span></button>
             </nav>
         </aside>
 
@@ -185,62 +156,59 @@
                 </div>
                 <div class="grid">
                     <div class="home-overview">
-                    <div class="profile">
-                        <div class="avi-w">
-                            <div class="frame-corner fc-tl"></div>
-                            <div class="frame-corner fc-tr"></div>
-                            <div class="frame-corner fc-bl"></div>
-                            <div class="frame-corner fc-br"></div>
-                            <img src="assets/images/HaKING2.png" class="avi-img"
-                                onerror="this.src='https://avatars.akamai.steamstatic.com/b5bd56c1aa4644a474a298e131597431c4897244_full.jpg'">
-                        </div>
-                        <div class="p-info">
-                            <span class="profile-kicker" data-k="profile_kicker">PLAYER PROFILE / 001</span>
-                            <h2>Halit Güneş</h2>
-                            <p data-k="profile_desc">FULL-STACK DEV & GAMER</p>
-                            <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" rel="noopener noreferrer">
-                                <div class="badge"><i data-lucide="shield" size="16"></i>STEAM LEVEL 31</div>
-                            </a>
-                            <div class="hero-actions">
-                                <button type="button" class="hero-action hero-action-primary" data-nav-target="armory">
-                                    <span data-k="hero_cta_games">OYUN KÜTÜPHANESİNİ KEŞFET</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="hero-action hero-action-secondary" data-nav-target="machine">
-                                    <span data-k="hero_cta_setup">SİSTEMİ GÖR</span><i data-lucide="cpu" aria-hidden="true"></i>
-                                </button>
+                        <div class="profile">
+                            <div class="avi-w">
+                                <div class="frame-corner fc-tl"></div>
+                                <div class="frame-corner fc-tr"></div>
+                                <div class="frame-corner fc-bl"></div>
+                                <div class="frame-corner fc-br"></div>
+                                <img src="assets/images/HaKING2.png" id="profile-avatar" class="avi-img" alt="Halit Güneş — HaKING">
+                            </div>
+                            <div class="p-info">
+                                <span class="profile-kicker" data-k="profile_kicker">PLAYER PROFILE / 001</span>
+                                <h2>Halit Güneş</h2>
+                                <p data-k="profile_desc">FULL-STACK DEV &amp; GAMER</p>
+                                <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" rel="noopener noreferrer">
+                                    <div class="badge"><i data-lucide="shield" size="16" aria-hidden="true"></i>STEAM LEVEL 31</div>
+                                </a>
+                                <div class="hero-actions">
+                                    <button type="button" class="hero-action hero-action-primary" data-nav-target="armory">
+                                        <span data-k="hero_cta_games">OYUN KÜTÜPHANESİNİ KEŞFET</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="hero-action hero-action-secondary" data-nav-target="machine">
+                                        <span data-k="hero_cta_setup">SİSTEMİ GÖR</span><i data-lucide="cpu" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="home-dashboard-rail">
-                    <div class="home-stats">
-                    <div class="panel stat">
-                        <h3 data-k="playtime">TIME</h3>
-                        <div class="stat-val" id="total-hours">Loading...</div>
-                    </div>
-                    <div class="panel stat">
-                        <h3 data-k="value">VALUE</h3>
-                        <div class="stat-val">$2395</div>
-                    </div>
-                    <div class="panel stat">
-                        <h3 data-k="games">GAMES</h3>
-                        <div class="stat-val" id="total-games">Loading...</div>
-                    </div>
-
-                    </div>
-                    <article class="home-top-game panel" aria-labelledby="featured-game-title">
-                        <div class="home-top-cover" id="featured-game-cover" aria-hidden="true"></div>
-                        <div class="home-top-game-copy">
-                            <span class="home-kicker" data-k="featured_game_kicker">MOST PLAYED ON STEAM</span>
-                            <h2 id="featured-game-title">EA SPORTS FC 25</h2>
-                            <p><strong id="featured-game-hours">226.3h</strong><span data-k="featured_game_hours_label">total playtime</span></p>
-                            <button type="button" class="hero-action hero-action-secondary" data-nav-target="armory">
-                                <span data-k="featured_game_cta">VIEW TOP SIX</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                            </button>
+                        <div class="home-dashboard-rail">
+                            <div class="home-stats">
+                                <div class="panel stat">
+                                    <h3 data-k="playtime">TIME</h3>
+                                    <div class="stat-val" id="total-hours">Loading...</div>
+                                </div>
+                                <div class="panel stat">
+                                    <h3 data-k="value">VALUE</h3>
+                                    <div class="stat-val">$2395</div>
+                                </div>
+                                <div class="panel stat">
+                                    <h3 data-k="games">GAMES</h3>
+                                    <div class="stat-val" id="total-games">Loading...</div>
+                                </div>
+                            </div>
+                            <article class="home-top-game panel" aria-labelledby="featured-game-title">
+                                <div class="home-top-cover" id="featured-game-cover" aria-hidden="true"></div>
+                                <div class="home-top-game-copy">
+                                    <span class="home-kicker" data-k="featured_game_kicker">MOST PLAYED ON STEAM</span>
+                                    <h2 id="featured-game-title">EA SPORTS FC 25</h2>
+                                    <p><strong id="featured-game-hours">226.3h</strong><span data-k="featured_game_hours_label">total playtime</span></p>
+                                    <button type="button" class="hero-action hero-action-secondary" data-nav-target="armory">
+                                        <span data-k="featured_game_cta">VIEW TOP SIX</span><i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <span class="home-top-rank" aria-hidden="true">№ 01</span>
+                            </article>
                         </div>
-                        <span class="home-top-rank" aria-hidden="true">№ 01</span>
-                    </article>
-
-                    </div>
                     </div>
 
                     <div class="home-explorer">
@@ -280,14 +248,14 @@
                         <div class="sanctum-support-copy">
                             <i data-lucide="gift" aria-hidden="true"></i>
                             <div>
-                                <h4 data-k="sanctum_support_title" class="sanctum-support-title">
-                                    SUPPORT THE OPERATOR</h4>
-                                <p data-k="sanctum_support_desc" class="sanctum-support-description">
-                                    Send items or game cards via Steam Trade Offer</p>
+                                <h4 data-k="sanctum_support_title" class="sanctum-support-title">SUPPORT THE OPERATOR</h4>
+                                <p data-k="sanctum_support_desc" class="sanctum-support-description">Send items or game cards via Steam Trade Offer</p>
                             </div>
                         </div>
-                        <button type="button" data-nav-target="support" class="lang-btn sanctum-support-button"><span
-                                data-k="sanctum_support_btn">SECURE LINK</span></button>
+                        <div class="sanctum-support-actions">
+                            <button type="button" data-open-partner class="lang-btn partner-pill-btn"><i data-lucide="sparkles" aria-hidden="true"></i><span data-k="ad_open_pill">Partner · CaseHug</span></button>
+                            <button type="button" data-nav-target="support" class="lang-btn sanctum-support-button"><span data-k="sanctum_support_btn">SECURE LINK</span></button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -318,6 +286,14 @@
                             <span data-k="library_hours_label">TOPLAM SÜRE</span>
                             <strong id="library-total-hours">—</strong>
                         </div>
+                        <div class="library-overview-stat">
+                            <span data-k="library_played_label">OYNANAN</span>
+                            <strong id="library-played-count">—</strong>
+                        </div>
+                        <div class="library-overview-stat">
+                            <span data-k="library_top_share_label">İLK 10 PAYI</span>
+                            <strong id="library-top-share">—</strong>
+                        </div>
                     </div>
                 </div>
                 <div class="collection-tools">
@@ -334,116 +310,138 @@
                             <option value="name" data-k="sort_name">İsme göre</option>
                         </select>
                     </label>
+                    <div class="roulette-controls">
+                        <button type="button" id="spin-game-btn" class="roulette-btn"><i data-lucide="dices" aria-hidden="true"></i><span data-k="library_spin">Rastgele Oyun Seç</span></button>
+                        <label class="roulette-filter"><input type="checkbox" id="spin-unplayed-toggle"><span data-k="library_spin_unplayed">Oynanmamış</span></label>
+                    </div>
                     <p id="game-results" class="collection-results" aria-live="polite"></p>
+                </div>
+                <div id="armory-pick" class="armory-pick" hidden aria-live="polite">
+                    <div class="armory-pick-cover" id="armory-pick-cover" aria-hidden="true"></div>
+                    <div class="armory-pick-meta">
+                        <span class="armory-pick-kicker" data-k="library_pick_label">GÜNÜN OYUNU SEÇİMİ</span>
+                        <h3 id="armory-pick-title"></h3>
+                        <p id="armory-pick-hours"></p>
+                    </div>
+                    <div class="armory-pick-actions">
+                        <button type="button" id="spin-again-btn" class="armory-pick-btn"><i data-lucide="refresh-cw" aria-hidden="true"></i><span data-k="library_pick_again">Tekrar Çevir</span></button>
+                        <a id="armory-pick-link" class="armory-pick-cta" target="_blank" rel="noopener noreferrer"><span data-k="library_open_steam">Steam’de Aç</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+                    </div>
                 </div>
                 <div class="grid">
                     <a class="game" data-appid="2669320" data-playtime-minutes="13578" href="https://store.steampowered.com/app/2669320/" target="_blank" rel="noopener noreferrer" aria-label="EA SPORTS FC 25 — 226.3h">
-                        <div class="game-bg game-bg-fc25">
-                        </div>
+                        <div class="game-bg game-bg-fc25"></div>
                         <div class="game-ov">
                             <div class="g-tit">EA SPORTS FC 25</div><span class="g-time">226.3h</span>
                         </div>
                     </a>
                     <a class="game" data-appid="261550" data-playtime-minutes="9882" href="https://store.steampowered.com/app/261550/" target="_blank" rel="noopener noreferrer" aria-label="Mount &amp; Blade II: Bannerlord — 164.7h">
-                        <div class="game-bg game-bg-bannerlord">
-                        </div>
+                        <div class="game-bg game-bg-bannerlord"></div>
                         <div class="game-ov">
                             <div class="g-tit">Mount &amp; Blade II: Bannerlord</div><span class="g-time">164.7h</span>
                         </div>
                     </a>
                     <a class="game" data-appid="292030" data-playtime-minutes="5484" href="https://store.steampowered.com/app/292030/" target="_blank" rel="noopener noreferrer" aria-label="The Witcher 3: Wild Hunt — 91.4h">
-                        <div class="game-bg game-bg-witcher3">
-                        </div>
+                        <div class="game-bg game-bg-witcher3"></div>
                         <div class="game-ov">
                             <div class="g-tit">The Witcher 3: Wild Hunt</div><span class="g-time">91.4h</span>
                         </div>
                     </a>
                     <a class="game" data-appid="812140" data-playtime-minutes="5160" href="https://store.steampowered.com/app/812140/" target="_blank" rel="noopener noreferrer" aria-label="Assassin's Creed Odyssey — 86.0h">
-                        <div class="game-bg game-bg-odyssey">
-                        </div>
+                        <div class="game-bg game-bg-odyssey"></div>
                         <div class="game-ov">
                             <div class="g-tit">Assassin's Creed Odyssey</div><span class="g-time">86.0h</span>
                         </div>
                     </a>
                     <a class="game" data-appid="1091500" data-playtime-minutes="4764" href="https://store.steampowered.com/app/1091500/" target="_blank" rel="noopener noreferrer" aria-label="Cyberpunk 2077 — 79.4h">
-                        <div class="game-bg game-bg-cyberpunk">
-                        </div>
+                        <div class="game-bg game-bg-cyberpunk"></div>
                         <div class="game-ov">
                             <div class="g-tit">Cyberpunk 2077</div><span class="g-time">79.4h</span>
                         </div>
                     </a>
-                    <a class="game" data-appid="2322010" data-playtime-minutes="4422" href="https://store.steampowered.com/app/2322010/" target="_blank" rel="noopener noreferrer" aria-label="God of War — 73.7h">
-                        <div class="game-bg game-bg-godofwar">
-                        </div>
+                    <a class="game" data-appid="2322010" data-playtime-minutes="4422" href="https://store.steampowered.com/app/2322010/" target="_blank" rel="noopener noreferrer" aria-label="God of War Ragnarök — 73.7h">
+                        <div class="game-bg game-bg-godofwar"></div>
                         <div class="game-ov">
                             <div class="g-tit">God of War Ragnarök</div><span class="g-time">73.7h</span>
                         </div>
                     </a>
-</div>
+                </div>
                 <p id="game-empty" class="collection-empty" hidden data-k="library_empty">Bu aramayla eşleşen oyun yok.</p>
             </section>
 
             <section id="machine" class="section">
                 <div class="head">
                     <div>
-                        <h1 class="h-tit" data-k="nav_machine">MACHINE</h1><span class="h-sub"
-                            data-k="sub_machine">SYSTEM ARCHITECTURE</span>
+                        <h1 class="h-tit" data-k="nav_machine">MACHINE</h1><span class="h-sub" data-k="sub_machine">SYSTEM ARCHITECTURE</span>
                     </div>
                 </div>
                 <div class="setup-intro"><span class="edition">VICTUS BY HP · 16-r1015nt</span><h2 data-k="sub_machine">Sistem mimarisi</h2><p>Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU</p></div>
-                <div class="victus-layout"><div class="model-panel"><div id="victus-stage"><div class="model-fallback"><strong>HP VICTUS</strong><p>i7-14700HX · RTX 4070 · 144 Hz</p></div></div><div class="model-toolbar"><span data-u="drag">Sürükleyerek döndür · Kaydırarak yakınlaştır</span><button type="button" id="model-front">01 ↗</button><button type="button" id="model-back">02 ↶</button><button type="button" id="model-bottom">03 ◉</button><button type="button" id="model-reset" data-u="reset">Görünümü sıfırla</button></div></div>
-                <dl class="spec-list"><div><dt>MODEL</dt><dd>HP Victus 16-r1015nt<small> · Koyu gri</small></dd></div><div><dt>CPU</dt><dd>Intel Core i7-14700HX</dd></div><div><dt>GPU</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></div><div><dt>RAM</dt><dd>16 GB</dd></div><div><dt>SSD</dt><dd>1 TB SSD</dd></div><div><dt>DISPLAY</dt><dd>144 Hz · Full HD<br><small>1920 × 1080</small></dd></div></dl></div><div class="machine-story"><article><span>01 / COMPUTE</span><h2>Intel Core i7-14700HX</h2><p>20 cores · 28 threads · 33 MB cache</p></article><article><span>02 / GRAPHICS</span><h2>GeForce RTX 4070</h2><p>Laptop GPU · 8 GB GDDR6</p></article><article><span>03 / EXPERIENCE</span><h2>144 Hz · Full HD</h2><p>1920 × 1080 · 16 GB RAM · 1 TB SSD</p></article></div>
+                <div class="victus-layout">
+                    <div class="model-panel">
+                        <div id="victus-stage"><div class="model-fallback"><strong>HP VICTUS</strong><p>i7-14700HX · RTX 4070 · 144 Hz</p></div></div>
+                        <div class="model-toolbar"><span data-u="drag">Sürükleyerek döndür · Kaydırarak yakınlaştır</span><button type="button" id="model-front">01 ↗</button><button type="button" id="model-back">02 ↶</button><button type="button" id="model-bottom">03 ◉</button><button type="button" id="model-reset" data-u="reset">Görünümü sıfırla</button></div>
+                    </div>
+                    <dl class="spec-list">
+                        <div><dt>MODEL</dt><dd>HP Victus 16-r1015nt<small> · Koyu gri</small></dd></div>
+                        <div><dt>CPU</dt><dd>Intel Core i7-14700HX</dd></div>
+                        <div><dt>GPU</dt><dd>NVIDIA GeForce RTX 4070 Laptop GPU</dd></div>
+                        <div><dt>RAM</dt><dd>16 GB</dd></div>
+                        <div><dt>SSD</dt><dd>1 TB SSD</dd></div>
+                        <div><dt>DISPLAY</dt><dd>144 Hz · Full HD<br><small>1920 × 1080</small></dd></div>
+                    </dl>
+                </div>
+                <div class="machine-story">
+                    <article><span>01 / COMPUTE</span><h2>Intel Core i7-14700HX</h2><p>20 cores · 28 threads · 33 MB cache</p></article>
+                    <article><span>02 / GRAPHICS</span><h2>GeForce RTX 4070</h2><p>Laptop GPU · 8 GB GDDR6</p></article>
+                    <article><span>03 / EXPERIENCE</span><h2>144 Hz · Full HD</h2><p>1920 × 1080 · 16 GB RAM · 1 TB SSD</p></article>
+                </div>
             </section>
 
             <section id="museum" class="section">
                 <div class="head">
                     <div>
-                        <h1 class="h-tit" data-k="nav_museum">MUSEUM</h1><span class="h-sub" data-k="sub_museum">VISUAL
-                            ARCHIVE</span>
+                        <h1 class="h-tit" data-k="nav_museum">MUSEUM</h1><span class="h-sub" data-k="sub_museum">VISUAL ARCHIVE</span>
                     </div>
                 </div>
-                <div class="archive-toolbar"><input id="museum-search" type="search" placeholder="Oyun ara"><select id="museum-game"><option value="">Tüm oyunlar</option></select><output id="museum-count" aria-live="polite">…</output></div>
-                <h2 class="archive-heading" data-u="favorites">Favoriler</h2><div id="favorite-grid" class="archive-grid"></div>
-                <h2 class="archive-heading" data-u="archive">Tüm arşiv</h2><div id="archive-grid" class="archive-grid"></div><p id="museum-empty" data-u="empty" hidden>Görsel bulunamadı</p><button id="museum-more" class="archive-more" type="button" data-u="more" hidden>Daha fazla göster</button>
+                <div class="archive-toolbar">
+                    <input id="museum-search" type="search" placeholder="Oyun ara">
+                    <select id="museum-game"><option value="">Tüm oyunlar</option></select>
+                    <output id="museum-count" aria-live="polite">…</output>
+                </div>
+                <h2 class="archive-heading" data-u="favorites">Favoriler</h2>
+                <div id="favorite-grid" class="archive-grid"></div>
+                <h2 class="archive-heading" data-u="archive">Tüm arşiv</h2>
+                <div id="archive-grid" class="archive-grid"></div>
+                <p id="museum-empty" data-u="empty" hidden>Görsel bulunamadı</p>
+                <button id="museum-more" class="archive-more" type="button" data-u="more" hidden>Daha fazla göster</button>
                 <a class="archive-source" href="https://steamcommunity.com/profiles/76561199760755154/screenshots/" target="_blank" rel="noopener noreferrer" data-k="view_gallery">STEAM GALLERY</a>
             </section>
 
             <section id="network" class="section">
                 <div class="head">
                     <div>
-                        <h1 class="h-tit" data-k="nav_network">NETWORK</h1><span class="h-sub"
-                            data-k="sub_network">UPLINKS</span>
+                        <h1 class="h-tit" data-k="nav_network">NETWORK</h1><span class="h-sub" data-k="sub_network">UPLINKS</span>
                     </div>
                 </div>
                 <div class="grid">
-                    <a href="https://discord.com/users/510807224000446484" target="_blank" class="net dc">
-                        <div>
-                            <h3>DISCORD</h3><span>haking06</span>
-                        </div>
+                    <a href="https://discord.com/users/510807224000446484" target="_blank" rel="noopener noreferrer" class="net dc">
+                        <div><h3>DISCORD</h3><span>haking06</span></div>
                         <div class="net-stat">JOIN</div>
                     </a>
-                    <a href="https://www.instagram.com/user/" target="_blank" class="net ig">
-                        <div>
-                            <h3>INSTAGRAM</h3><span>...</span>
-                        </div>
-                        <div class="net-stat">FOLLOW</div>
+                    <a href="https://github.com/HaKING06" target="_blank" rel="noopener noreferrer" class="net gh">
+                        <div><h3>GITHUB</h3><span>HaKING06</span></div>
+                        <div class="net-stat">CODE</div>
                     </a>
-                    <a href="https://www.youtube.com/@gunshalit" target="_blank" class="net yt">
-                        <div>
-                            <h3>YOUTUBE</h3><span>Halit</span>
-                        </div>
+                    <a href="https://www.youtube.com/@gunshalit" target="_blank" rel="noopener noreferrer" class="net yt">
+                        <div><h3>YOUTUBE</h3><span>Halit</span></div>
                         <div class="net-stat">SUBSCRIBE</div>
                     </a>
-                    <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" class="net st">
-                        <div>
-                            <h3>STEAM</h3><span>HaKING</span>
-                        </div>
+                    <a href="https://steamcommunity.com/profiles/76561199760755154/" target="_blank" rel="noopener noreferrer" class="net st">
+                        <div><h3>STEAM</h3><span>HaKING</span></div>
                         <div class="net-stat">CONNECT</div>
                     </a>
-                    <a href="https://steamdb.info/calculator/76561199760755154/" target="_blank" class="net st">
-                        <div>
-                            <h3>STEAM.DB</h3><span>HaKING</span>
-                        </div>
+                    <a href="https://steamdb.info/calculator/76561199760755154/" target="_blank" rel="noopener noreferrer" class="net st">
+                        <div><h3>STEAM.DB</h3><span>HaKING</span></div>
                         <div class="net-stat">CHECK</div>
                     </a>
                 </div>
@@ -452,8 +450,7 @@
             <section id="trans" class="section">
                 <div class="head">
                     <div>
-                        <h1 class="h-tit" data-k="nav_trans">CONTACT</h1><span class="h-sub"
-                            data-k="sub_trans">SECURE</span>
+                        <h1 class="h-tit" data-k="nav_trans">CONTACT</h1><span class="h-sub" data-k="sub_trans">SECURE</span>
                     </div>
                 </div>
                 <div class="grid">
@@ -462,18 +459,15 @@
                             <form id="contact-form">
                                 <div class="form-field">
                                     <i data-lucide="user" class="form-field-icon" aria-hidden="true"></i>
-                                    <input data-p="ph_name" data-aria-p="ph_name" type="text" name="name" id="c-name" class="h-in"
-                                        placeholder="CODENAME" autocomplete="name" maxlength="100" required>
+                                    <input data-p="ph_name" data-aria-p="ph_name" type="text" name="name" id="c-name" class="h-in" placeholder="CODENAME" autocomplete="name" maxlength="100" required>
                                 </div>
                                 <div class="form-field">
                                     <i data-lucide="mail" class="form-field-icon" aria-hidden="true"></i>
-                                    <input data-p="ph_email" data-aria-p="ph_email" type="email" name="email" id="c-email" class="h-in"
-                                        placeholder="FREQUENCY(Mail)" autocomplete="email" maxlength="254" required>
+                                    <input data-p="ph_email" data-aria-p="ph_email" type="email" name="email" id="c-email" class="h-in" placeholder="FREQUENCY(Mail)" autocomplete="email" maxlength="254" required>
                                 </div>
                                 <div class="form-field">
                                     <i data-lucide="terminal" class="form-field-icon" aria-hidden="true"></i>
-                                    <textarea data-p="ph_msg" data-aria-p="ph_msg" name="msg" id="c-msg" class="h-in" rows="5"
-                                        placeholder="PACKET..." maxlength="2000" required></textarea>
+                                    <textarea data-p="ph_msg" data-aria-p="ph_msg" name="msg" id="c-msg" class="h-in" rows="5" placeholder="PACKET..." maxlength="2000" required></textarea>
                                 </div>
                                 <button type="submit" data-k="send_btn" class="send_btn">TRANSMIT</button>
                             </form>
@@ -498,39 +492,56 @@
                         <h1 class="h-tit" data-k="nav_support">SUPPORT</h1>
                         <span class="h-sub" data-k="sub_support">DONATION UPLINK</span>
                     </div>
-                    <div class="h-stat" data-k="support_status">SYSTEM READY</div>
+                    <div class="support-head-meta">
+                        <button type="button" data-open-partner class="partner-head-pill"><i data-lucide="sparkles" aria-hidden="true"></i><span data-k="ad_open_pill">Partner · CaseHug</span></button>
+                        <div class="h-stat" data-k="support_status">SYSTEM READY</div>
+                    </div>
                 </div>
-                <div class="grid">
+                <div class="support-grid">
                     <div class="panel support-card">
+                        <span class="edition" data-k="support_title">STEAM TAKASI</span>
                         <i data-lucide="gift" class="support-card-icon" aria-hidden="true"></i>
-                        <h2 class="support-card-title">
-                            STEAM TRADE UPLINK</h2>
-                        <p data-k="support_desc"
-                            class="support-card-description">
-                            Projeyi desteklemek için Steam takas teklifi, skin veya hediye gönderebilirsiniz.
-                        </p>
+                        <h2 class="support-card-title">STEAM TRADE UPLINK</h2>
+                        <p data-k="support_desc" class="support-card-description">Projeyi desteklemek için Steam takas teklifi, skin veya hediye gönderebilirsiniz.</p>
 
-                        <!-- Steam Trade Button -->
-                        <a href="https://steamcommunity.com/tradeoffer/new/?partner=1800489426&token=jIoKxNd7"
-                            target="_blank" class="btn-view support-card-link">
+                        <a href="https://steamcommunity.com/tradeoffer/new/?partner=1800489426&token=jIoKxNd7" target="_blank" rel="noopener noreferrer" class="btn-view support-card-link">
                             <span data-k="support_btn">TAKAS TEKLİFİ GÖNDER</span>
                         </a>
 
                         <div class="support-card-wanted">
-                            <h4 data-k="support_wanted" class="support-card-wanted-title">
-                                MOST WANTED ITEMS</h4>
-                            <p data-k="support_wanted_desc" class="support-card-wanted-description">
-                                CS2 Skins, Steam Gift Cards, TF2 Keys
-                            </p>
+                            <h4 data-k="support_wanted" class="support-card-wanted-title">MOST WANTED ITEMS</h4>
+                            <p data-k="support_wanted_desc" class="support-card-wanted-description">CS2 Skins, Steam Gift Cards, TF2 Keys</p>
                         </div>
                     </div>
-                    <div class="panel support-card coffee-card"><span class="edition">BUY ME A COFFEE</span><h2 class="support-card-title">☕ HaKING</h2><p class="support-card-description" data-k="coffee_desc">Steam takasına alternatif olarak kahve sitesi üzerinden doğrudan destek olabilirsin.</p><a class="btn-view support-card-link" href="https://buymeacoffee.com/haking" target="_blank" rel="noopener noreferrer" data-k="coffee_btn">BİR KAHVE ISMARLA</a></div>
+                    <div class="panel support-card coffee-card">
+                        <span class="edition">BUY ME A COFFEE</span>
+                        <i data-lucide="coffee" class="support-card-icon coffee-icon" aria-hidden="true"></i>
+                        <h2 class="support-card-title">Buy Me a Coffee · HaKING</h2>
+                        <p class="support-card-description" data-k="coffee_desc">Steam takasına alternatif olarak kahve sitesi üzerinden doğrudan destek olabilirsin.</p>
+                        <a class="btn-view support-card-link" href="https://buymeacoffee.com/haking" target="_blank" rel="noopener noreferrer" data-k="coffee_btn">BİR KAHVE ISMARLA</a>
+                        <div class="support-card-wanted coffee-wanted">
+                            <h4 class="support-card-wanted-title">BUY ME A COFFEE</h4>
+                            <p data-k="coffee_tags" class="support-card-wanted-description">Doğrudan Destek · Anında Bağlantı</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
     </div>
 
-
-<dialog id="gallery-dialog"><div class="gallery-top"><span id="gallery-caption"></span><button type="button" id="gallery-close" data-u="close">Kapat</button></div><img id="gallery-image" alt=""><div class="gallery-controls"><button type="button" id="gallery-prev" data-u="prev">Önceki</button><a id="gallery-steam" target="_blank" rel="noopener noreferrer" data-u="steam">Steam’de aç</a><button type="button" id="gallery-next" data-u="next">Sonraki</button></div></dialog></body>
+    <dialog id="gallery-dialog">
+        <div class="gallery-top">
+            <span id="gallery-caption"></span>
+            <button type="button" id="gallery-close" data-u="close">Kapat</button>
+        </div>
+        <img id="gallery-image" alt="">
+        <div class="gallery-controls">
+            <button type="button" id="gallery-prev" data-u="prev">Önceki</button>
+            <button type="button" id="gallery-play" data-k="museum_play" aria-pressed="false">Slayt</button>
+            <a id="gallery-steam" target="_blank" rel="noopener noreferrer" data-u="steam">Steam’de aç</a>
+            <button type="button" id="gallery-next" data-u="next">Sonraki</button>
+        </div>
+    </dialog>
+</body>
 
 </html>

@@ -1,111 +1,39 @@
-/* ======================================= */
-        /* POPUP (REKLAM-CSS) */
-        /* ======================================= */
+/* === MODAL BASE === */
         .modal-overlay {
             display: none;
             position: fixed;
             z-index: 999999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            overflow: hidden;
+            inset: 0;
+            background-color: rgba(4, 4, 8, 0.84);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow-y: auto;
         }
 
-        .modal-content {
-            background: rgba(10, 5, 5, 0.95);
-            border: 1px solid var(--red-dim);
-            box-shadow: 0 0 35px rgba(255, 0, 0, 0.25), inset 0 0 15px rgba(255, 0, 0, 0.1);
-            margin: 5% auto;
-            border-radius: 6px;
-            padding: 0;
-            position: relative;
-            width: 90%;
-            max-width: 440px;
-            overflow: hidden;
-            animation: modalSlideIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .modal-overlay[hidden] {
+            display: none !important;
         }
 
         .modal-close-btn {
             color: var(--text);
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid var(--red-dim);
+            width: 34px;
+            height: 34px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 1000010;
-            transition: 0.3s;
+            transition: 0.25s;
             padding: 0;
             font: inherit;
         }
 
         .modal-close-btn:hover {
-            background: var(--red);
-            color: #fff;
-            box-shadow: 0 0 15px var(--red);
-            border-color: var(--red);
-        }
-
-        .modal-tab:hover {
-            color: var(--text) !important;
-        }
-
-        .modal-tab.active {
-            color: var(--gold) !important;
-            background: rgba(255, 183, 0, 0.05) !important;
-            border-bottom: 2px solid var(--gold) !important;
-        }
-
-        .modal-image-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-image-full {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .modal-video-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-video-responsive {
-            width: 100%;
-            height: 100%;
-        }
-
-        .modal-image-link,
-        .modal-video-link {
-            display: block;
-            text-decoration: none;
-            display: block;
-            text-decoration: none;
-            color: inherit;
+            background: rgba(243, 189, 99, 0.16);
+            color: var(--gold);
+            border-color: var(--gold);
         }
 
 
@@ -1115,20 +1043,24 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .dc:hover {
-            border-left: 5px solid #5865F2;
+        [dir=rtl] .net:hover {
+            transform: translateX(-20px);
         }
 
-        .ig:hover {
-            border-left: 5px solid #E1306C;
+        .dc:hover {
+            border-inline-start: 5px solid #5865F2;
+        }
+
+        .gh:hover {
+            border-inline-start: 5px solid #f3bd63;
         }
 
         .yt:hover {
-            border-left: 5px solid #FF0000;
+            border-inline-start: 5px solid #FF0000;
         }
 
         .st:hover {
-            border-left: 5px solid #1b2838;
+            border-inline-start: 5px solid #1b2838;
         }
 
         .net h3 {
@@ -1489,15 +1421,9 @@
         .game-bg-fc25 { background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/2669320/header.jpg'); }
         .game-bg-bannerlord { background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/261550/header.jpg'); }
         .game-bg-witcher3 { background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg'); }
-        .game-bg-odyssey { background-image: url('https://cdn.steamstatic.com/steam/apps/812140/header.jpg'); }
+        .game-bg-odyssey { background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/812140/header.jpg'); }
         .game-bg-cyberpunk { background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg'); }
         .game-bg-godofwar { background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/header.jpg'); }
-        .museum-bg-ragnarok { background-image: url('https://images.steamusercontent.com/ugc/12378042621997334601/E47F3FB4C5AE4FF1EA7B74A8FB267E155A12F65B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'); }
-        .museum-bg-lastofus2 { background-image: url('https://images.steamusercontent.com/ugc/15566897679527924002/A32EBC50B8201D63E7E651ED6EAE5D164CF2C2C2/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'); }
-        .museum-bg-witcher3 { background-image: url('https://images.steamusercontent.com/ugc/17036147118589743603/4C23D97CA5EC7A5B6BB7F287EEC18A4A9A3FB741/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'); }
-        .museum-bg-witcher2 { background-image: url('https://images.steamusercontent.com/ugc/10184854948906728475/A22F8C926DBEB72E0CD981F6D8548952FF16FA7A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'); }
-        .museum-bg-hogwarts { background-image: url('https://images.steamusercontent.com/ugc/11321918544718607285/91300EB97577DF31955304DDCB2E0B7634810273/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'); }
-        .museum-bg-lastofus1 { background-image: url('https://images.steamusercontent.com/ugc/9998270276105590867/8FBC96CBFE406B735EF9F7A814AFABAF8FB8FCCE/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'); }
 
         .hardware-specs {
             grid-column: span 12;
@@ -1513,12 +1439,12 @@
         .form-field-icon {
             position: absolute;
             top: 22px;
-            left: 20px;
+            inset-inline-start: 20px;
             width: 18px;
             height: 18px;
             color: var(--muted);
         }
-        .form-field .h-in { margin-bottom: 0; padding-left: 55px; }
+        .form-field .h-in { margin-bottom: 0; padding-inline-start: 55px; }
         .form-field textarea.h-in { resize: vertical; }
         .contact-success {
             display: none;
@@ -1793,9 +1719,9 @@
             .lang-box { top: 12px; right: 14px; }
             .lang-btn { min-height: 38px; }
             .form-box { padding: 22px 16px; }
-            .h-in { padding: 17px 14px 17px 46px; font-size: 16px; }
-            .form-field .h-in { padding-left: 46px; }
-            .form-field-icon { top: 19px; left: 14px; }
+            .h-in { padding-block: 17px; padding-inline: 46px 14px; font-size: 16px; }
+            .form-field .h-in { padding-inline-start: 46px; }
+            .form-field-icon { top: 19px; inset-inline-start: 14px; }
             .send_btn { padding: 18px; font-size: 1rem; letter-spacing: 0.15em; }
             .sanctum-support-card { gap: 14px; padding: 16px; }
             .sanctum-support-button { align-self: stretch; }

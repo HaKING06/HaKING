@@ -1,95 +1,143 @@
-# HaKING
+<div align="center">
 
-<p align="center"><img src="assets/posters/haking-tr-museum.webp" width="620" alt="HaKING — oyun arşivi ve Steam ekran görüntüleri"></p>
+<img src="assets/images/HICON.png" alt="HaKING Emblem" width="84" height="84">
 
-<p align="center"><strong>Halit Güneş · Oyun profili, görsel arşiv ve kişisel sistem vitrini</strong></p>
-<p align="center"><a href="https://steam.haking.tr/">Web sitesi</a> · <a href="CHANGELOG.md">Sürüm notları</a> · <a href="CONTRIBUTING.md">Katkıda bulunma</a> · <a href="LICENSE">MIT lisansı</a></p>
+# HaKING · Digital Game Vault & 3D Hardware Showcase
 
-![Version](https://img.shields.io/badge/version-2.3.0-c9a36a) ![License](https://img.shields.io/badge/license-MIT-blue) ![Languages](https://img.shields.io/badge/languages-20-green)
+**Halit Güneş** için geliştirilen; canlı **Steam kütüphane telemetrisi**, etkileşimli **Three.js 3D HP Victus 16** donanım modeli, **20 dilli** (Arapça RTL dahil) çok dilli mimari ve otomatik senkronize edilen **Steam Müze arşivi** sunan statik web platformu.
 
-## Deneyim
+[![Version](https://img.shields.io/badge/version-2.4.0-f3bd63?style=for-the-badge)](VERSION)
+[![Languages](https://img.shields.io/badge/languages-20%20(%2B%20RTL)-1f2937?style=for-the-badge)](assets/js/translations.js)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3b82f6?style=for-the-badge)](LICENSE)
+[![Live Site](https://img.shields.io/badge/live-steam.haking.tr-10b981?style=for-the-badge)](https://steam.haking.tr/)
 
-HaKING; Steam oyun koleksiyonunu, oyunlardan kaydedilen anları ve kişisel donanım vitrininin aynı arayüzde buluştuğu statik bir web projesidir. Derleme veya npm kurulumu gerektirmez. Koyu arayüz, kompakt erişilebilir dil menüsü ve mobil gezinme kullanır. Arayüz sessizdir; sayfa bağlantıları paylaşılabilir ve tarayıcının geri/ileri düğmeleriyle gezinilebilir. Otomatik açılan reklam penceresi yoktur.
+[Canlı Site](https://steam.haking.tr/) · [Poster Galerisi](https://steam.haking.tr/posters/tr/) · [Değişiklik Günlüğü](CHANGELOG.md) · [Güvenlik Politikası](SECURITY.md)
 
-| Alan | Özellikler |
-| --- | --- |
-| Koleksiyon | Oyun arama, sıralama, oynama süreleri ve güncellenen Steam verileri |
-| Müze | Altı seçili favori, tüm açık görseller, oyun filtresi, kademeli yükleme |
-| Görsel inceleyici | Asıl Steam dosyası, ok tuşları, Escape, kaynak sayfasına bağlantı |
-| Makine | HP Victus 16-r1015nt, Koyu gri; etkileşimli 3D, klavye, alt kapak ızgarası ve kamera açıları |
-| Dil | 20 dil; kendi adlarıyla aranabilir, kaydırılabilir menü; Arapça RTL |
-| Destek | Steam takası veya [Buy Me a Coffee](https://buymeacoffee.com/haking) |
-| İletişim | steam@haking.tr adresine önceden doldurulmuş e-posta taslağı |
-| Hareket | Kaydırma ilerlemesi, donanım anlatımı ve azaltılmış hareket tercihi |
+</div>
 
-### Donanım
+---
 
-Intel Core i7-14700HX · NVIDIA GeForce RTX 4070 Laptop GPU · 16 GB RAM · 1 TB SSD · 144 Hz Full HD (1920 × 1080).
+## Önizleme
 
-Ürün kodu ve renk sahibi tarafından doğrulanmıştır. 3D model elle hazırlanmış web görselleştirmesidir; üreticinin CAD dosyası veya ölçü doğrulanmış dijital ikizi değildir. Alt kapak, portlar, klavye ve gövde görselleştirmesi referanslara göre hazırlanır; gerçek zamanlı sıcaklık ya da RPM ölçülmez. [HP ürün desteği](https://support.hp.com/tr-tr/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-r1000/model/2101982951?sku=9J217EA).
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <a href="docs/home-768.png"><img src="docs/home-768.png" alt="HaKING Ana Üs — Steam Profil ve Telemetri" width="100%"></a>
+      <br><sub><b>Ana Üs (Sanctum)</b> — Steam profil özeti, hızlı erişim ve öne çıkan oyun</sub>
+    </td>
+    <td width="50%" align="center">
+      <a href="docs/setup-768.png"><img src="docs/setup-768.png" alt="HP Victus 16 3D Model — Özel Duvar Kağıdı" width="100%"></a>
+      <br><sub><b>Makine (3D Victus)</b> — Özel ekran kaplamalı Three.js HP Victus 16-r1015nt</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <a href="docs/museum-768.png"><img src="docs/museum-768.png" alt="HaKING Müze — Steam Ekran Görüntüsü Arşivi" width="100%"></a>
+      <br><sub><b>Müze (Visual Archive)</b> — Favoriler, filtreleme, slayt gösterisi ve lightbox</sub>
+    </td>
+    <td width="50%" align="center">
+      <a href="docs/support-768.png"><img src="docs/support-768.png" alt="HaKING Destek — Yan Yana Steam Takas ve Buy Me a Coffee" width="100%"></a>
+      <br><sub><b>Destek (Support)</b> — Kaydırmasız yan yana Steam Takası ve Buy Me a Coffee</sub>
+    </td>
+  </tr>
+</table>
 
-## Yerel kurulum
+---
 
-Python 3.12 veya daha yenisi önerilir. Ana çalışma ve push klasörü: `C:\Users\halit\OneDrive\Belgeler\GitHub\HaKING`.
+## Öne Çıkan Özellikler (`v2.4.0`)
 
-```powershell
-python -m http.server 8000
-```
+- **3D HP Victus 16-r1015nt Sahneleri (`assets/js/victus.js`)**
+  - Three.js `r128` ile sıfırdan modellenmiş koyu antrasit Victus gövdesi, tam Türkçe Q/sayısal klavye dokusu, menteşe, soğutma ızgaraları ve yan portlar.
+  - Bilgisayar ekranında sahibine özel `assets/images/walpaper.png` görseli yüksek çözünürlüklü sRGB doku olarak işlenir; fare/dokunmatik döndürme, klavye ok tuşları, kamera ön ayarları (`01`, `02`, `03`, sıfırlama) ve `webglcontextlost` koruması içerir.
+- **Cephanelik & "Ne Oynasam?" Ruleti (`#armory`)**
+  - `data/steam_stats.json` üzerinden otomatik senkronize edilen **270 oyun** ve toplam süre telemetrisi, **oynanan/oynanmamış oranı** ve **ilk 10 oyunun süre payı**.
+  - Anlık Türkçe/yerelleştirilmiş arama (`/` kısayolu), sıralama ve **oynanmamış oyunları hedefleyebilen rastgele oyun ruleti** (`#spin-game-btn`).
+- **Steam Ekran Görüntüsü Müzesi (`#museum`)**
+  - Yerel galeri görseli önbelleği tutmadan doğrudan `images.steamusercontent.com` üzerinden responsive `640w` / `1280w` / orijinal çözünürlük akışı.
+  - Oyun filtresi, anlık arama, artırımlı yükleme, klavye destekli tam ekran lightbox ve **otomatik slayt gösterisi (Oynat / Duraklat)**.
+- **Yan Yana Destek & Profesyonel Partner Modu (`#support` & `#first-time-modal`)**
+  - **Steam Trade Uplink** ve **Buy Me a Coffee** kartları `>=640px` ekranlarda tek bakışta, kaydırma gerektirmeden yan yana hizalanır.
+  - Yenilenen **CaseHug × HaKING** partner penceresi; afiş (`add/SOL.png`) / WebM tanıtım sekmeleri, tek tıkla `HAK06` kod kopyalama, erişilebilir odak yönetimi, 24 saat erteleme ve Ana Üs / Destek üzerinden isteğe bağlı yeniden açma düğmeleri sunar.
+- **20 Dil + Arapça RTL & SEO Poster Hattı**
+  - Tek, aranabilir yerel dil seçici (`Türkçe`, `English`, `Español`, `Русский`, `Deutsch`, `Français`, `日本語`, `简体中文`, `Português`, `Italiano`, `한국어`, `العربية` RTL, `हिन्दी`, `বাংলা`, `Nederlands`, `Polski`, `Svenska`, `Tiếng Việt`, `Ελληνικά`, `ไทย`).
+  - Tüm diller için üretilen statik poster galerileri (`posters/<code>/index.html`), 40 adet WebP poster (`assets/posters/`), `sitemap.xml` ve OpenGraph meta verileri.
+- **Sertleştirilmiş Güvenlik ve Yerel Bağımlılıklar**
+  - Sıkı `Content-Security-Policy` + `Referrer-Policy`, harici inline `<script>` / `onerror=` kalıntılarının temizlenmesi, yerel `three.min.js` (`r128`) ve `lucide.min.js` (`0.468.0`), Steam CDN URL doğrulama koruması (`https:` allowlist), harici bağlantılarda `rel="noopener noreferrer"`.
 
-`http://localhost:8000` adresini açın. `file://` kullanmayın: veri dosyaları HTTP üzerinden yüklenir. Siteyi görüntülemek için ek bağımlılık kurulumu gerekmez. Bakım scriptleri için:
+---
 
-```powershell
-python -m pip install -r requirements.txt
-python scripts/sync_screenshots.py
-python scripts/resolve_media.py
-```
+## Donanım Profili
 
-## Mimari
+| Bileşen | Özellik |
+| :--- | :--- |
+| **Model** | HP Victus 16-r1015nt (`9J217EA`, koyu antrasit) |
+| **İşlemci** | Intel Core i7-14700HX (20 çekirdek, 28 iş parçacığı) |
+| **Ekran Kartı** | NVIDIA GeForce RTX 4070 Laptop GPU (8 GB GDDR6) |
+| **Bellek & Depolama** | 16 GB RAM · 1 TB SSD |
+| **Ekran** | 16.1" Full HD (1920 × 1080) · 144 Hz |
+
+---
+
+## Depo Yapısı
 
 ```text
-index.html                 Sayfa yapısı ve erişilebilir içerik
-assets/css/                Temel arayüz ve deneyim stilleri
-assets/js/main.js          Gezinme, Steam koleksiyonu, iletişim
-assets/js/upgrade.js       Dil menüsü ve görsel inceleyici
-assets/js/victus.js        Yerel Three.js görselleştirmesi
-assets/js/translations.js  20 dilin sözlükleri
-assets/vendor/             Three.js ve lisansı
-assets/posters/            40 WebP tanıtım görseli
-data/                      Steam verisi, ekran görüntüleri, favoriler
-posters/                   Dil bazlı tanıtım sayfaları
-docs/                      Gerçek site ekran görüntüleri
-scripts/                   Arşiv ve tanıtım sayfası üretimi
-.github/                   Otomasyonlar, issue ve PR şablonları
+HaKING/
+├── index.html                   # Tek sayfa uygulama iskeleti, sıkı CSP ve semantik bölümler
+├── add/SOL.png                  # CaseHug × HaKING partner promosyon afişi
+├── assets/
+│   ├── css/{main,upgrade}.css   # Temel stil + 2.4 yan yana destek, partner modal, rulet stilleri
+│   ├── images/                  # HICON.png, HaKING2.png, walpaper.png (3D ekran dokusu)
+│   ├── js/
+│   │   ├── lang-init.js         # İlk boyama öncesi dil ve RTL başlatıcısı
+│   │   ├── translations.js      # 20 dil sözlüğü + arayüz metinleri
+│   │   ├── victus.js            # Three.js HP Victus 3D sahnesi ve özel ekran dokusu
+│   │   ├── main.js              # Navigasyon, Steam telemetrisi, rulet, iletişim ve partner popup
+│   │   └── upgrade.js           # Müze arşivi, slayt gösterisi, dil seçici ve Victus bağlayıcı
+│   ├── models/victus/           # Donanım ve kaplama referans notları
+│   ├── posters/                 # 20 dil × 2 şablon = 40 WebP poster
+│   └── vendor/                  # Yerel Three.js r128 ve Lucide 0.468.0 (+ lisans metinleri)
+├── data/
+│   ├── favorites.json           # Müze vitrini için öncelikli ekran görüntüleri
+│   ├── locales.json             # Poster üreteci için dışa aktarılmış dil verisi
+│   ├── screenshots.json         # Sadece uzak Steam CDN URL ve başlık metadatası
+│   └── steam_stats.json         # Günlük eşitlenen oyun kütüphanesi & sistem durumu
+├── docs/                        # 390px / 768px doğrulama ekran görüntüleri ve sürüm raporları
+├── posters/                     # Statik HTML poster sayfaları (tr..th)
+├── scripts/                     # Medya çözümleyici, locale aktarımı ve poster üreteci
+├── tests/                       # Medya hattı ve site bütünlüğü birim testleri
+├── update_stats.py              # Steam Web API kütüphane eşitleme betiği
+├── VERSION / CHANGELOG.md       # Sürüm (2.4.0) ve sürüm notları
+└── .github/workflows/           # Günlük Steam istatistik ve haftalık ekran görüntüsü akışları
 ```
 
-## Veri güncelleme
+---
 
-`Update Steam Stats` iş akışı oyun verisini 30 dakikada bir yeniler. Repository secrets altında `STEAM_API_KEY` gerekir. Steam oyun ayrıntıları herkese açık olmalıdır. API anahtarı tarayıcıya veya JSON'a yazılmaz.
+## Yerel Geliştirme ve Doğrulama
 
-`Sync public screenshots` altı saatte bir açık görselleri indeksler; ardından detay sayfalarından yüksek çözünürlüklü dosya bağlantılarını çözer. Başarısız çözümlemeler mevcut veriyi korur. Favoriler `data/favorites.json` içindeki kimliklerle belirlenir. Gizli veya silinmiş görseller yeniden yayımlanmaz. GitHub Actions'ın depoya yazma izni açık olmalıdır. Asıl dosya adresleri JSON içinde saklanır; fotoğraflar depoya indirilmez. Ziyaretçi doğrudan Steam görsel CDN’ine bağlanır, detay sayfasına istek atmaz.
+```bash
+# 1. Yerel HTTP sunucusu başlat (ES modülleri ve JSON fetch için gereklidir)
+python -m http.server 8765
 
-Liste sayfasındaki küçük Steam önizlemeleri asıl görüntü değildir. Bakım scripti yalnızca asıl dosyanın adresini çözümler ve atomik olarak JSON’a kaydeder. Kartlar aynı kaynağın 640/1280 piksel CDN sürümünü, inceleyici büyük sürümünü kullanır. Fotoğraflar, yerel kopyalar veya üretilmiş galeri türevleri Git deposunda tutulmaz. Görseller yalnızca ziyaretçinin görüntülediği kartlarda yüklenir; tarayıcı ve Steam CDN normal HTTP önbelleklemesini kullanır.
+# 2. Birim ve bütünlük testlerini çalıştır
+python -m unittest discover -s tests -v
 
-Steam bağlantısı silinir, gizlenir veya servis erişilemez olursa görsel sunulamayabilir. Çözümleme tekrar çalıştırılabilir; başarılı adresler korunur ve hız sınırı yanıtları dikkate alınır. Hiçbir uzak hizmet için kesintisiz erişim garantisi verilmez.
+# 3. Yerelleştirme verisini ve statik poster sayfalarını yeniden üret
+node scripts/export_locales.mjs
+python scripts/build_posters.py
 
-## İletişim ve destek
+# 4. İsteğe bağlı: Steam istatistiklerini ve ekran görüntüsü metadatasını güncelle
+python update_stats.py
+python scripts/sync_screenshots.py
+```
 
-İletişim formu `mailto:steam@haking.tr` taslağı açar. Mesaj ziyaretçinin e-posta uygulamasından gönderilir; site kendi başına e-posta teslimatı yapmaz veya gönderildi onayı vermez. Sunucudan doğrudan e-posta için ayrıca bir gönderim servisi/backend gerekir.
+### Otomatik GitHub Actions Akışları
 
-Destek bağlantıları dış hizmetleri açar. Site ödeme bilgisi almaz. Steam takas bağlantısını ve kahve hesabını değiştirmek için `index.html` içindeki destek kartlarını düzenleyin.
+- [`.github/workflows/update_steam.yml`](.github/workflows/update_steam.yml): Her gün `03:00 UTC` saatinde `update_stats.py` betiğini çalıştırıp `data/steam_stats.json` dosyasını günceller (`STEAM_API_KEY` ve `STEAM_ID` repo secret gerektirir).
+- [`.github/workflows/update_screenshots.yml`](.github/workflows/update_screenshots.yml): Haftalık olarak herkese açık Steam ekran görüntüsü bağlantılarını ve poster/site haritası çıktılarını günceller.
 
-## Yayın ve keşfedilebilirlik
+---
 
-Cloudflare Pages gibi statik hosting üzerinde derleme komutu boş, yayın dizini depo köküdür. GitHub Desktop ile değişiklikleri commit edip **Push origin** kullanın. Özel alan adı `steam.haking.tr` olmalıdır. `robots.txt`, canonical, Open Graph ve görsel site haritası bu alan adına bağlıdır.
+## Lisans ve Telif Notları
 
-Yayından sonra Search Console'a `https://steam.haking.tr/sitemap.xml` gönderilebilir. Görsellerin veya afiş sayısının sıralama garantisi yoktur. 20 dilde 40 afiş `posters/` sayfalarında tutulur; uygulama araç çubuğunda afiş bağlantısı bulunmaz.
-
-Afiş sayfalarını üretmek için `node scripts/export_locales.mjs` ve `python scripts/build_posters.py` kullanılır. Kaynak ekran görüntüleri değiştiğinde WebP afişleri de yeniden yakalayın; HTML üretimi raster afişleri otomatik yenilemez.
-
-## Doğrulama ve sınırlar
-
-Önemli UI değişikliklerinde 390 ve 768 px görünüm, taşma, dil araması, RTL, modal klavye kontrolü ve 3D kamera düğmeleri kontrol edilir. Gerçek Steam açık verisi kullanılır; browser extension API'si kullanılmaz. Arama motoru indekslemesi, gerçek e-posta teslimatı ve ödeme işlemleri yerel testlerle doğrulanmış sayılmaz.
-
-## Lisans ve güvenlik
-
-Kod [MIT](LICENSE) lisanslıdır. Oyun görselleri, Steam içeriği, marka ve fontların hakları kendi sahiplerinde kalır; [üçüncü taraf bildirimlerini](THIRD_PARTY_NOTICES.md) okuyun. Güvenlik bildirimi için [SECURITY.md](SECURITY.md), geliştirme kuralları için [CONTRIBUTING.md](CONTRIBUTING.md) kullanın.
+- Proje kaynak kodu **MIT** lisansı altındadır ([LICENSE](LICENSE)).
+- Üçüncü parti kütüphaneler (`Three.js r128`, `Lucide 0.468.0`, isteğe bağlı `GSAP` ve `Google Fonts`), Steam oyun görselleri/ekran görüntüleri, donanım markaları (`HP Victus`, `Intel`, `NVIDIA`) ve partner promosyon materyalleri ilgili hak sahiplerine aittir; ayrıntılar için [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) dosyasına bakın.

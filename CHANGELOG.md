@@ -1,3 +1,12 @@
+# HaKING 2.4.0 — 2026-11-15
+
+- Side-by-side `#support` panel: Steam Trade Uplink and Buy Me a Coffee now sit evenly beside each other (`>=640px`) with balanced card geometry so both support channels fit on screen without vertical scrolling, while stacking cleanly on narrow mobile viewports.
+- Custom 3D laptop display texture: HP Victus 16-r1015nt renders `assets/images/walpaper.png` inside the lid bezel with cover scaling, fallback protection, and `webglcontextlost` handling.
+- Redesigned CaseHug partner popup (`#first-time-modal`): responsive glassmorphic obsidian-and-gold modal with banner (`add/SOL.png`) and WebM trailer tabs, one-click `HAK06` promo code copy button, accessible keyboard/focus management, 24-hour dismiss cooldown, and manual partner pill triggers on `#sanctum` and `#support`.
+- New Armory telemetry & Random Game Roulette (`#armory`): displays played/total ratio and top-10 playtime share from `data/steam_stats.json`, plus a random game picker with an unplayed-backlog filter; added Play/Pause slideshow control inside the `#museum` gallery dialog.
+- Security & bug fixes: extracted inline pre-paint language bootstrap (`assets/js/lang-init.js`), enforced strict `Content-Security-Policy` + `Referrer-Policy`, vendored Lucide 0.468.0 locally (`assets/vendor/lucide.min.js`), sanitized Steam image URLs before CSS interpolation, enforced `rel="noopener noreferrer"` on external links, replaced the dead placeholder social link with verified GitHub (`HaKING06`), removed dead custom cursor / legacy menu / unused CSS selectors, fixed `cdn.steamstatic.com` host typo and RTL form icon padding, and cleaned empty folders.
+- Refreshed modern visual `README.md`, versioned entrypoints (`2.4.0`), 20-language posters, WebPs, and site integrity tests.
+
 # HaKING 2.3.0 — 2026-11-15
 
 - Rebuild the Victus exterior: tapered chassis, inset hinges, full keyboard, numeric pad, side ports and closed underside grille. Correct linear color handling and excessive lighting for the owner's matte charcoal finish.

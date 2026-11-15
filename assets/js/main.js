@@ -1,7 +1,8 @@
-import { LANG_DATA, LANG_OPTIONS } from './translations.js?v=2.3.0-20261115';
+import { LANG_DATA } from './translations.js?v=2.4.0-20261115';
 
 let activeLang = LANG_DATA[document.documentElement.dataset.initialLang] ? document.documentElement.dataset.initialLang : 'en';
 let steamStats = null;
+let pickedArmoryGame = null;
 const htmlLangTags = { jp: 'ja', cn: 'zh-CN', kr: 'ko' };
 const numberLocales = {
     tr: 'tr-TR', en: 'en-US', es: 'es-ES', ru: 'ru-RU', de: 'de-DE', fr: 'fr-FR', jp: 'ja-JP',
@@ -32,413 +33,469 @@ const fallbackGsap = {
 const gsap = window.gsap || fallbackGsap;
 
 function setLang(c, remember = false) {
-            activeLang = LANG_DATA[c] ? c : 'en';
-            document.documentElement.lang = htmlLangTags[activeLang] || activeLang;
-            document.documentElement.dir = activeLang === 'ar' ? 'rtl' : 'ltr';
-            if (remember) {
-                try { localStorage.setItem('haking.language', activeLang); } catch (_) {}
-            }
-            let t = LANG_DATA[activeLang] || LANG_DATA['en'];
-            let fallback = LANG_DATA['en'];
-            document.querySelectorAll('[data-k]').forEach(e => {
-                const key = e.getAttribute('data-k');
-                e.innerText = t[key] || fallback[key] || e.innerText;
-            });
-            document.querySelectorAll('[data-p]').forEach(e => {
-                const key = e.getAttribute('data-p');
-                e.placeholder = t[key] || fallback[key] || e.placeholder;
-            });
-            document.querySelectorAll('[data-aria-p]').forEach(e => {
-                const key = e.getAttribute('data-aria-p');
-                e.setAttribute('aria-label', t[key] || fallback[key] || key);
-            });
-            document.querySelectorAll('[data-aria-k]').forEach(e => {
-                const key = e.getAttribute('data-aria-k');
-                e.setAttribute('aria-label', t[key] || fallback[key] || key);
-            });
-            document.querySelectorAll('.lang-opt').forEach(option => {
-                option.setAttribute('aria-pressed', String(option.dataset.language === activeLang));
-            });
-            document.getElementById('curr-lang').innerText = activeLang.toUpperCase();
-            document.dispatchEvent(new Event('haking:language'));
-            if (remember) { const url = new URL(location.href); url.searchParams.set('lang', htmlLangTags[activeLang] || activeLang); history.replaceState(null, '', url); }
-            document.getElementById('lang-menu').classList.remove('show');
-            if (steamStats) {
-                updateLibrarySummary(steamStats);
-                renderGameLibrary(steamStats.games?.length ? steamStats.games : steamStats.top_games);
-                updateFeaturedGame(steamStats.top_games?.[0] || steamStats.games?.[0]);
-            }
-        }
+    activeLang = LANG_DATA[c] ? c : 'en';
+    document.documentElement.lang = htmlLangTags[activeLang] || activeLang;
+    document.documentElement.dir = activeLang === 'ar' ? 'rtl' : 'ltr';
+    if (remember) {
+        try { localStorage.setItem('haking.language', activeLang); } catch (_) { }
+    }
+    let t = LANG_DATA[activeLang] || LANG_DATA['en'];
+    let fallback = LANG_DATA['en'];
+    document.querySelectorAll('[data-k]').forEach(e => {
+        const key = e.getAttribute('data-k');
+        e.innerText = t[key] || fallback[key] || e.innerText;
+    });
+    document.querySelectorAll('[data-p]').forEach(e => {
+        const key = e.getAttribute('data-p');
+        e.placeholder = t[key] || fallback[key] || e.placeholder;
+    });
+    document.querySelectorAll('[data-aria-p]').forEach(e => {
+        const key = e.getAttribute('data-aria-p');
+        e.setAttribute('aria-label', t[key] || fallback[key] || key);
+    });
+    document.querySelectorAll('[data-aria-k]').forEach(e => {
+        const key = e.getAttribute('data-aria-k');
+        e.setAttribute('aria-label', t[key] || fallback[key] || key);
+    });
+    document.dispatchEvent(new Event('haking:language'));
+    if (remember) { const url = new URL(location.href); url.searchParams.set('lang', htmlLangTags[activeLang] || activeLang); history.replaceState(null, '', url); }
+    if (steamStats) {
+        updateLibrarySummary(steamStats);
+        renderGameLibrary(steamStats.games?.length ? steamStats.games : steamStats.top_games);
+        updateFeaturedGame(steamStats.top_games?.[0] || steamStats.games?.[0]);
+    }
+    renderArmoryPick();
+}
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const webFonts = document.getElementById('web-fonts');
-            if (webFonts) webFonts.media = 'all';
-            window.lucide?.createIcons();
-            document.querySelector('[data-icon-library]')?.addEventListener('load', () => {
-                window.lucide?.createIcons();
-            }, { once: true });
-            document.querySelectorAll('a[target="_blank"]').forEach(link => {
-                link.rel = 'noopener noreferrer';
-            });
-            const m = document.getElementById('lang-menu');
-            const langToggle = document.getElementById('lang-togg');
+window.addEventListener('DOMContentLoaded', () => {
+    const webFonts = document.getElementById('web-fonts');
+    if (webFonts) webFonts.media = 'all';
+    window.lucide?.createIcons();
+    document.querySelector('[data-icon-library]')?.addEventListener('load', () => {
+        window.lucide?.createIcons();
+    }, { once: true });
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        const tokens = new Set(String(link.rel || '').split(/\s+/).filter(Boolean));
+        tokens.add('noopener');
+        tokens.add('noreferrer');
+        link.rel = [...tokens].join(' ');
+    });
+    const profileAvatar = document.getElementById('profile-avatar');
+    profileAvatar?.addEventListener('error', () => {
+        profileAvatar.src = 'assets/images/HaKING2.png';
+    }, { once: true });
 
-            // Populate Lang Menu
-            LANG_OPTIONS.forEach(l => {
-                const d = document.createElement('button');
-                d.type = 'button';
-                d.className = 'lang-opt';
-                d.dataset.language = l.c;
-                d.innerText = l.n;
-                d.addEventListener('click', () => setLang(l.c, true));
-                m.appendChild(d);
-            });
-
-            setLang(activeLang); // Browser preference, timezone fallback, or saved choice
-            document.querySelectorAll('.section').forEach(section => {
-                const isActive = section.classList.contains('active');
-                section.inert = !isActive;
-                section.setAttribute('aria-hidden', String(!isActive));
-            });
-            nav(location.hash.slice(1) || 'sanctum', false);
-            window.addEventListener('popstate', () => nav(location.hash.slice(1) || 'sanctum', false));
-            runBootLoader(); // Start boot sequence
-
-            document.querySelectorAll('.nav-btn').forEach(button => {
-                button.addEventListener('click', () => nav(button.dataset.t));
-            });
-            document.querySelectorAll('[data-nav-target]').forEach(button => {
-                button.addEventListener('click', () => nav(button.dataset.navTarget));
-            });
-            document.querySelectorAll('[data-modal-tab]').forEach(button => {
-                button.addEventListener('click', event => switchModalTab(event, button.dataset.modalTab));
-            });
-            document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
-            document.getElementById('contact-reset').addEventListener('click', resetContactForm);
-
-            const gameSearch = document.getElementById('game-search');
-            const gameSort = document.getElementById('game-sort');
-            gameSearch.addEventListener('input', refreshGameCollection);
-            gameSort.addEventListener('change', refreshGameCollection);
-            document.addEventListener('keydown', event => {
-                const target = event.target;
-                const isEditing = target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-                if (event.key === '/' && !isEditing && !event.ctrlKey && !event.metaKey && !event.altKey) {
-                    event.preventDefault();
-                    if (document.querySelector('.section.active')?.id === 'armory') {
-                        gameSearch.focus();
-                    } else {
-                        nav('armory');
-                        window.setTimeout(() => gameSearch.focus(), 420);
-                    }
-                }
-                if (event.key === 'Escape' && document.activeElement === gameSearch) {
-                    gameSearch.value = '';
-                    refreshGameCollection();
-                    gameSearch.blur();
-                }
-            });
-            refreshGameCollection();
-
-            langToggle.addEventListener('click', event => {
-                event.stopPropagation();
-                const isOpen = m.classList.toggle('show');
-                langToggle.setAttribute('aria-expanded', String(isOpen));
-            });
-            document.addEventListener('click', event => {
-                if (!m.contains(event.target) && !langToggle.contains(event.target)) {
-                    m.classList.remove('show');
-                    langToggle.setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            const modal = document.getElementById('first-time-modal');
-            document.getElementById('modal-close').addEventListener('click', closeIntroModal);
-            modal.addEventListener('click', event => {
-                if (event.target === modal) closeIntroModal();
-            });
-            document.addEventListener('keydown', event => {
-                if (event.key === 'Escape' && window.getComputedStyle(modal).display !== 'none') closeIntroModal();
-            });
+        setLang(activeLang); // Browser preference, timezone fallback, or saved choice
+        window.addEventListener('haking:selectlang', event => {
+            if (event.detail) setLang(event.detail, true);
         });
+        document.querySelectorAll('.section').forEach(section => {
+            const isActive = section.classList.contains('active');
+            section.inert = !isActive;
+            section.setAttribute('aria-hidden', String(!isActive));
+        });
+        nav(location.hash.slice(1) || 'sanctum', false);
+        window.addEventListener('popstate', () => nav(location.hash.slice(1) || 'sanctum', false));
+        runBootLoader(); // Start boot sequence
 
-        function nav(id, updateHistory = true) {
-            const next = document.getElementById(id);
-            if (!next?.classList.contains('section')) return;
-            const current = document.querySelector('.section.active');
-            if (current === next) return;
-            // Commit state synchronously: fast repeated navigation must not leave stale tween callbacks.
-            document.querySelectorAll('.section').forEach(section => {
-                gsap.killTweensOf?.(section);
-                section.getAnimations?.().forEach(animation => animation.cancel());
-                const active = section === next;
-                section.classList.toggle('active', active);
-                section.inert = !active;
-                section.setAttribute('aria-hidden', String(!active));
-                section.style.opacity = active ? '1' : '0';
-                section.style.transform = 'none';
-            });
-            next.scrollTop = 0;
-            document.querySelectorAll('.nav-btn').forEach(button => {
-                const active = button.dataset.t === id;
-                button.classList.toggle('active', active);
-                if (active) button.setAttribute('aria-current', 'page');
-                else button.removeAttribute('aria-current');
-            });
-            if (updateHistory && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
-            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                next.animate([{opacity: 0, transform: 'translateY(8px)'}, {opacity: 1, transform: 'none'}], {duration: 180, easing: 'ease-out'});
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', () => nav(button.dataset.t));
+        });
+        document.querySelectorAll('[data-nav-target]').forEach(button => {
+            button.addEventListener('click', () => nav(button.dataset.navTarget));
+        });
+        document.querySelectorAll('[data-open-partner]').forEach(button => {
+            button.addEventListener('click', () => openSponsorModal(true));
+        });
+        document.querySelectorAll('[data-modal-tab]').forEach(button => {
+            button.addEventListener('click', event => switchModalTab(event, button.dataset.modalTab));
+        });
+        document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
+        document.getElementById('contact-reset').addEventListener('click', resetContactForm);
+
+        const gameSearch = document.getElementById('game-search');
+        const gameSort = document.getElementById('game-sort');
+        gameSearch.addEventListener('input', refreshGameCollection);
+        gameSort.addEventListener('change', refreshGameCollection);
+        document.getElementById('spin-game-btn')?.addEventListener('click', spinRandomGame);
+        document.getElementById('spin-again-btn')?.addEventListener('click', spinRandomGame);
+        document.addEventListener('keydown', event => {
+            const target = event.target;
+            const isEditing = target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+            if (event.key === '/' && !isEditing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+                event.preventDefault();
+                if (document.querySelector('.section.active')?.id === 'armory') {
+                    gameSearch.focus();
+                } else {
+                    nav('armory');
+                    gameSearch.focus();
+                }
             }
-        }
-
-        function formatSteamHours(minutes) {
-            const hours = Math.max(0, Number(minutes) || 0) / 60;
-            const locale = numberLocales[activeLang] || 'en-US';
-            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(hours);
-            return `${formatted} ${labels.hours_short || 'h'}`;
-        }
-
-        function formatLocalizedNumber(value) {
-            const number = Number(value);
-            return Number.isFinite(number)
-                ? new Intl.NumberFormat(numberLocales[activeLang] || 'en-US', { maximumFractionDigits: 0 }).format(number)
-                : '—';
-        }
-
-        function formatTotalHours(value) {
-            const hours = Number(String(value ?? '').replace(/[^\d]/g, ''));
-            if (!Number.isFinite(hours)) return '—';
-            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            return `${formatLocalizedNumber(hours)} ${labels.hours_short || 'h'}`;
-        }
-
-        function updateLibrarySummary(data) {
-            const totalGames = Number(data.total_games);
-            const totalHours = formatTotalHours(data.total_hours);
-            const games = Array.isArray(data.games) ? data.games : (data.top_games || []);
-            const longplayCount = games.filter(game => Number(game.playtime_minutes) >= 6000).length;
-            const gameText = formatLocalizedNumber(data.total_games);
-            const longplayText = formatLocalizedNumber(longplayCount);
-
-            const homeHours = document.getElementById('total-hours');
-            const homeGames = document.getElementById('total-games');
-            const libraryGames = document.getElementById('library-game-count');
-            const libraryHours = document.getElementById('library-total-hours');
-            const libraryLongplay = document.getElementById('library-longplay-count');
-            if (homeHours && data.total_hours) homeHours.textContent = totalHours;
-            if (homeGames && Number.isFinite(totalGames)) homeGames.textContent = gameText;
-            if (libraryGames && Number.isFinite(totalGames)) libraryGames.textContent = gameText;
-            if (libraryHours && data.total_hours) libraryHours.textContent = totalHours;
-            if (libraryLongplay) libraryLongplay.textContent = longplayText;
-        }
-
-        function steamImageCandidates(game) {
-            const appid = Number(game?.appid);
-            if (!Number.isSafeInteger(appid) || appid <= 0) return [];
-
-            const base = 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/' + appid;
-            const candidates = [];
-            if (typeof game.cover_url === 'string' && game.cover_url.startsWith('https://')) {
-                candidates.push(game.cover_url);
+            if (event.key === 'Escape' && document.activeElement === gameSearch) {
+                gameSearch.value = '';
+                refreshGameCollection();
+                gameSearch.blur();
             }
-            candidates.push(
-                base + '/header.jpg',
-                base + '/capsule_616x353.jpg',
-                'https://cdn.akamai.steamstatic.com/steam/apps/' + appid + '/header.jpg',
-                'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appid + '/header.jpg'
-            );
-            const iconHash = typeof game.icon_hash === 'string' ? game.icon_hash.trim() : '';
-            if (/^[a-f0-9]{32}$/i.test(iconHash)) {
-                candidates.push('https://media.steampowered.com/steamcommunity/public/images/apps/' + appid + '/' + iconHash + '.jpg');
+        });
+        refreshGameCollection();
+
+        initSponsorModal();
+    });
+
+    function nav(id, updateHistory = true) {
+        const next = document.getElementById(id);
+        if (!next?.classList.contains('section')) return;
+        const current = document.querySelector('.section.active');
+        if (current === next) return;
+        // Commit state synchronously: fast repeated navigation must not leave stale tween callbacks.
+        document.querySelectorAll('.section').forEach(section => {
+            gsap.killTweensOf?.(section);
+            section.getAnimations?.().forEach(animation => animation.cancel());
+            const active = section === next;
+            section.classList.toggle('active', active);
+            section.inert = !active;
+            section.setAttribute('aria-hidden', String(!active));
+            section.style.opacity = active ? '1' : '0';
+            section.style.transform = 'none';
+        });
+        next.scrollTop = 0;
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            const active = button.dataset.t === id;
+            button.classList.toggle('active', active);
+            if (active) button.setAttribute('aria-current', 'page');
+            else button.removeAttribute('aria-current');
+        });
+        if (updateHistory && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            next.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: 'ease-out' });
+        }
+    }
+
+    function formatSteamHours(minutes) {
+        const hours = Math.max(0, Number(minutes) || 0) / 60;
+        const locale = numberLocales[activeLang] || 'en-US';
+        const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+        const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(hours);
+        return `${formatted} ${labels.hours_short || 'h'}`;
+    }
+
+    function formatLocalizedNumber(value) {
+        const number = Number(value);
+        return Number.isFinite(number)
+            ? new Intl.NumberFormat(numberLocales[activeLang] || 'en-US', { maximumFractionDigits: 0 }).format(number)
+            : '—';
+    }
+
+    function formatTotalHours(value) {
+        const hours = Number(String(value ?? '').replace(/[^\d]/g, ''));
+        if (!Number.isFinite(hours)) return '—';
+        const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+        return `${formatLocalizedNumber(hours)} ${labels.hours_short || 'h'}`;
+    }
+
+    const ALLOWED_STEAM_ASSET_HOSTS = new Set([
+        'shared.akamai.steamstatic.com',
+        'shared.cloudflare.steamstatic.com',
+        'shared.fastly.steamstatic.com',
+        'shared.steamstatic.com',
+        'cdn.akamai.steamstatic.com',
+        'cdn.cloudflare.steamstatic.com',
+        'cdn.fastly.steamstatic.com',
+        'media.steampowered.com'
+    ]);
+
+    function sanitizeSteamAssetUrl(rawUrl) {
+        try {
+            const parsed = new URL(String(rawUrl || ''));
+            if (parsed.protocol === 'https:' && ALLOWED_STEAM_ASSET_HOSTS.has(parsed.hostname)) {
+                return parsed.href.replace(/["'()\\<>]/g, '');
             }
-            return [...new Set(candidates)];
+        } catch (_) { }
+        return '';
+    }
+
+    function updateLibrarySummary(data) {
+        const totalGames = Number(data.total_games);
+        const totalHours = formatTotalHours(data.total_hours);
+        const games = Array.isArray(data.games) ? data.games : (data.top_games || []);
+        const longplayCount = games.filter(game => Number(game.playtime_minutes) >= 6000).length;
+        const playedCount = games.filter(game => Number(game.playtime_minutes) > 0).length;
+        const totalMinutes = games.reduce((sum, game) => sum + Math.max(0, Number(game.playtime_minutes) || 0), 0);
+        const top10Minutes = [...games]
+            .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes))
+            .slice(0, 10)
+            .reduce((sum, game) => sum + Math.max(0, Number(game.playtime_minutes) || 0), 0);
+        const playedPct = games.length ? Math.round((playedCount / games.length) * 100) : 0;
+        const topSharePct = totalMinutes > 0 ? Math.round((top10Minutes / totalMinutes) * 100) : 0;
+        const gameText = formatLocalizedNumber(data.total_games);
+        const longplayText = formatLocalizedNumber(longplayCount);
+
+        const homeHours = document.getElementById('total-hours');
+        const homeGames = document.getElementById('total-games');
+        const libraryGames = document.getElementById('library-game-count');
+        const libraryHours = document.getElementById('library-total-hours');
+        const libraryLongplay = document.getElementById('library-longplay-count');
+        const libraryPlayed = document.getElementById('library-played-count');
+        const libraryTopShare = document.getElementById('library-top-share');
+        if (homeHours && data.total_hours) homeHours.textContent = totalHours;
+        if (homeGames && Number.isFinite(totalGames)) homeGames.textContent = gameText;
+        if (libraryGames && Number.isFinite(totalGames)) libraryGames.textContent = gameText;
+        if (libraryHours && data.total_hours) libraryHours.textContent = totalHours;
+        if (libraryLongplay) libraryLongplay.textContent = longplayText;
+        if (libraryPlayed) libraryPlayed.textContent = games.length ? `${formatLocalizedNumber(playedCount)} (${playedPct}%)` : '—';
+        if (libraryTopShare) libraryTopShare.textContent = totalMinutes > 0 ? `${topSharePct}%` : '—';
+    }
+
+    function steamImageCandidates(game) {
+        const appid = Number(game?.appid);
+        if (!Number.isSafeInteger(appid) || appid <= 0) return [];
+
+        const base = 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/' + appid;
+        const candidates = [];
+        const customCover = sanitizeSteamAssetUrl(game.cover_url);
+        if (customCover) candidates.push(customCover);
+        candidates.push(
+            base + '/header.jpg',
+            base + '/capsule_616x353.jpg',
+            'https://cdn.akamai.steamstatic.com/steam/apps/' + appid + '/header.jpg',
+            'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appid + '/header.jpg'
+        );
+        const iconHash = typeof game.icon_hash === 'string' ? game.icon_hash.trim() : '';
+        if (/^[a-f0-9]{32}$/i.test(iconHash)) {
+            candidates.push('https://media.steampowered.com/steamcommunity/public/images/apps/' + appid + '/' + iconHash + '.jpg');
+        }
+        return [...new Set(candidates.map(sanitizeSteamAssetUrl).filter(Boolean))];
+    }
+
+    function gameMonogram(name) {
+        return String(name || 'Steam')
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map(word => Array.from(word)[0] || '')
+            .join('')
+            .toLocaleUpperCase('en');
+    }
+
+    function setSteamCover(element, game) {
+        if (!element || !game) return;
+        const candidates = steamImageCandidates(game);
+        if (!candidates.length) return;
+        const reqId = String((Number(element.dataset.coverReqId) || 0) + 1);
+        element.dataset.coverReqId = reqId;
+
+        if (element instanceof HTMLImageElement) {
+            let candidateIndex = 0;
+            element.onerror = () => {
+                if (element.dataset.coverReqId !== reqId) return;
+                candidateIndex += 1;
+                if (candidateIndex < candidates.length) {
+                    element.src = candidates[candidateIndex];
+                } else {
+                    element.classList.add('is-missing');
+                    element.removeAttribute('src');
+                }
+            };
+            element.src = candidates[0];
+            return;
         }
 
-        function gameMonogram(name) {
-            return String(name || 'Steam')
-                .trim()
-                .split(/\s+/)
-                .slice(0, 2)
-                .map(word => Array.from(word)[0] || '')
-                .join('')
-                .toLocaleUpperCase('en');
-        }
-
-        function setSteamCover(element, game) {
-            if (!element || !game) return;
-            const candidates = steamImageCandidates(game);
-            if (!candidates.length) return;
-
-            if (element instanceof HTMLImageElement) {
-                let candidateIndex = 0;
-                element.onerror = () => {
-                    candidateIndex += 1;
-                    if (candidateIndex < candidates.length) {
-                        element.src = candidates[candidateIndex];
-                    } else {
-                        element.classList.add('is-missing');
-                        element.removeAttribute('src');
-                    }
-                };
-                element.src = candidates[0];
+        element.style.backgroundImage = 'linear-gradient(145deg, #1c1a19, #090a0c)';
+        let candidateIndex = 0;
+        const tryNextImage = () => {
+            if (element.dataset.coverReqId !== reqId) return;
+            if (candidateIndex >= candidates.length) {
+                element.classList.add('is-missing');
+                element.style.backgroundImage = 'linear-gradient(135deg, rgba(243, 189, 99, 0.11), transparent 58%), linear-gradient(145deg, #1c1a19, #090a0c)';
                 return;
             }
-
-            let candidateIndex = 0;
-            const tryNextImage = () => {
-                if (candidateIndex >= candidates.length) {
-                    element.classList.add('is-missing');
-                    element.style.backgroundImage = 'linear-gradient(135deg, rgba(243, 189, 99, 0.11), transparent 58%), linear-gradient(145deg, #1c1a19, #090a0c)';
-                    return;
-                }
-                const image = new Image();
-                const imageUrl = candidates[candidateIndex];
-                image.onload = () => {
-                    element.classList.remove('is-missing');
-                    element.style.backgroundImage = 'linear-gradient(0deg, rgba(5, 6, 9, 0.94), rgba(5, 6, 9, 0.08) 76%), url("' + imageUrl + '")';
-                };
-                image.onerror = () => {
-                    candidateIndex += 1;
-                    tryNextImage();
-                };
-                image.src = imageUrl;
+            const image = new Image();
+            const imageUrl = candidates[candidateIndex];
+            image.onload = () => {
+                if (element.dataset.coverReqId !== reqId) return;
+                element.classList.remove('is-missing');
+                element.style.backgroundImage = 'linear-gradient(0deg, rgba(5, 6, 9, 0.94), rgba(5, 6, 9, 0.08) 76%), url("' + imageUrl + '")';
             };
-            tryNextImage();
+            image.onerror = () => {
+                if (element.dataset.coverReqId !== reqId) return;
+                candidateIndex += 1;
+                tryNextImage();
+            };
+            image.src = imageUrl;
+        };
+        tryNextImage();
+    }
+
+    function updateFeaturedGame(game) {
+        if (!game) return;
+        const title = document.getElementById('featured-game-title');
+        const hours = document.getElementById('featured-game-hours');
+        const cover = document.getElementById('featured-game-cover');
+        if (title) title.textContent = game.name || 'Steam';
+        if (hours) hours.textContent = formatSteamHours(game.playtime_minutes);
+        setSteamCover(cover, game);
+    }
+
+    function renderGameLibrary(games) {
+        const grid = document.querySelector('#armory .grid');
+        if (!grid || !Array.isArray(games) || games.length === 0) return;
+
+        const validGames = games
+            .filter(game => Number.isSafeInteger(Number(game.appid)) && Number(game.appid) > 0 && typeof game.name === 'string')
+            .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes));
+        if (!validGames.length) return;
+
+        const fragment = document.createDocumentFragment();
+        validGames.forEach(game => {
+            const appid = Number(game.appid);
+            const minutes = Math.max(0, Number(game.playtime_minutes) || 0);
+            const playtime = formatSteamHours(minutes);
+            const card = document.createElement('a');
+            card.className = 'game';
+            card.dataset.appid = String(appid);
+            card.dataset.playtimeMinutes = String(minutes);
+            card.href = 'https://store.steampowered.com/app/' + appid + '/';
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
+            card.setAttribute('aria-label', game.name + ' — ' + playtime);
+
+            const cover = document.createElement('div');
+            cover.className = 'game-bg';
+            cover.setAttribute('aria-hidden', 'true');
+            const fallback = document.createElement('span');
+            fallback.className = 'game-art-fallback';
+            fallback.textContent = gameMonogram(game.name);
+            const art = document.createElement('img');
+            art.className = 'game-art';
+            art.alt = '';
+            art.loading = 'lazy';
+            art.decoding = 'async';
+            setSteamCover(art, game);
+            cover.append(fallback, art);
+
+            const overlay = document.createElement('div');
+            overlay.className = 'game-ov';
+            const rank = document.createElement('span');
+            rank.className = 'game-rank';
+            const title = document.createElement('div');
+            title.className = 'g-tit';
+            title.textContent = game.name;
+            const time = document.createElement('span');
+            time.className = 'g-time';
+            time.textContent = playtime;
+            overlay.append(rank, title, time);
+            card.append(cover, overlay);
+            fragment.append(card);
+        });
+
+        grid.replaceChildren(fragment);
+        refreshGameCollection();
+    }
+
+    function applySteamStats(data) {
+        steamStats = data;
+        updateLibrarySummary(data);
+
+        const sysEl = document.getElementById('sys-status');
+        const statusKey = { ONLINE: 'sys', OFFLINE: 'sys_off', UNKNOWN: 'sys_unknown' }[data.system_status] || 'sys_unknown';
+        if (sysEl) {
+            const isOnline = data.system_status === 'ONLINE';
+            sysEl.setAttribute('data-k', statusKey);
+            sysEl.style.color = isOnline ? '' : 'var(--muted)';
+            sysEl.style.textShadow = isOnline ? '' : 'none';
+            sysEl.style.animation = isOnline ? '' : 'none';
         }
+        setLang(activeLang);
+    }
 
-        function updateFeaturedGame(game) {
-            if (!game) return;
-            const title = document.getElementById('featured-game-title');
-            const hours = document.getElementById('featured-game-hours');
-            const cover = document.getElementById('featured-game-cover');
-            if (title) title.textContent = game.name || 'Steam';
-            if (hours) hours.textContent = formatSteamHours(game.playtime_minutes);
-            setSteamCover(cover, game);
-        }
+    function refreshGameCollection() {
+        const grid = document.querySelector('#armory .grid');
+        const search = document.getElementById('game-search');
+        const sort = document.getElementById('game-sort');
+        if (!grid || !search || !sort) return;
 
-        function renderGameLibrary(games) {
-            const grid = document.querySelector('#armory .grid');
-            if (!grid || !Array.isArray(games) || games.length === 0) return;
-
-            const validGames = games
-                .filter(game => Number.isSafeInteger(Number(game.appid)) && Number(game.appid) > 0 && typeof game.name === 'string')
-                .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes));
-            if (!validGames.length) return;
-
-            const fragment = document.createDocumentFragment();
-            validGames.forEach(game => {
-                const appid = Number(game.appid);
-                const minutes = Math.max(0, Number(game.playtime_minutes) || 0);
-                const playtime = formatSteamHours(minutes);
-                const card = document.createElement('a');
-                card.className = 'game';
-                card.dataset.appid = String(appid);
-                card.dataset.playtimeMinutes = String(minutes);
-                card.href = 'https://store.steampowered.com/app/' + appid + '/';
-                card.target = '_blank';
-                card.rel = 'noopener noreferrer';
-                card.setAttribute('aria-label', game.name + ' — ' + playtime);
-
-                const cover = document.createElement('div');
-                cover.className = 'game-bg';
-                cover.setAttribute('aria-hidden', 'true');
-                const fallback = document.createElement('span');
-                fallback.className = 'game-art-fallback';
-                fallback.textContent = gameMonogram(game.name);
-                const art = document.createElement('img');
-                art.className = 'game-art';
-                art.alt = '';
-                art.loading = 'lazy';
-                art.decoding = 'async';
-                setSteamCover(art, game);
-                cover.append(fallback, art);
-
-                const overlay = document.createElement('div');
-                overlay.className = 'game-ov';
-                const rank = document.createElement('span');
-                rank.className = 'game-rank';
-                const title = document.createElement('div');
-                title.className = 'g-tit';
-                title.textContent = game.name;
-                const time = document.createElement('span');
-                time.className = 'g-time';
-                time.textContent = playtime;
-                overlay.append(rank, title, time);
-                card.append(cover, overlay);
-                fragment.append(card);
-            });
-
-            grid.replaceChildren(fragment);
-            refreshGameCollection();
-        }
-
-        function applySteamStats(data) {
-            steamStats = data;
-            updateLibrarySummary(data);
-
-            const sysEl = document.getElementById('sys-status');
-            const statusKey = { ONLINE: 'sys', OFFLINE: 'sys_off', UNKNOWN: 'sys_unknown' }[data.system_status] || 'sys_unknown';
-            if (sysEl) {
-                const isOnline = data.system_status === 'ONLINE';
-                sysEl.setAttribute('data-k', statusKey);
-                sysEl.style.color = isOnline ? '' : 'var(--muted)';
-                sysEl.style.textShadow = isOnline ? '' : 'none';
-                sysEl.style.animation = isOnline ? '' : 'none';
+        const games = [...grid.querySelectorAll('.game')];
+        const query = search.value.trim().toLocaleLowerCase('en');
+        const sortMode = sort.value;
+        games.sort((a, b) => {
+            if (sortMode === 'name') {
+                return a.querySelector('.g-tit').textContent.localeCompare(b.querySelector('.g-tit').textContent, document.documentElement.lang);
             }
-            setLang(activeLang);
+            return (Number(b.dataset.playtimeMinutes) || 0) - (Number(a.dataset.playtimeMinutes) || 0);
+        });
+
+        let visibleCount = 0;
+        games.forEach(game => {
+            const matches = game.querySelector('.g-tit').textContent.toLocaleLowerCase('en').includes(query);
+            game.hidden = !matches;
+            if (matches) {
+                visibleCount += 1;
+                const rank = game.querySelector('.game-rank');
+                if (rank) rank.textContent = String(visibleCount).padStart(2, '0');
+            }
+            grid.append(game);
+        });
+
+        const resultCount = document.getElementById('game-results');
+        const emptyState = document.getElementById('game-empty');
+        const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+        const indexedCount = Math.max(games.length, Number(steamStats?.total_games) || 0);
+        resultCount.textContent = visibleCount + ' / ' + indexedCount + ' ' + (indexedCount === 1 ? labels.library_result_one : labels.library_result_many);
+        emptyState.hidden = visibleCount > 0;
+    }
+
+        function getArmoryGamePool() {
+            const jsonGames = Array.isArray(steamStats?.games) && steamStats.games.length
+                ? steamStats.games
+                : (Array.isArray(steamStats?.top_games) ? steamStats.top_games : []);
+            if (jsonGames.length) return jsonGames;
+            return [...document.querySelectorAll('#armory .grid .game')].map(card => ({
+                appid: Number(card.dataset.appid),
+                name: card.querySelector('.g-tit')?.textContent?.trim() || 'Steam Game',
+                playtime_minutes: Number(card.dataset.playtimeMinutes) || 0
+            })).filter(g => Number.isSafeInteger(g.appid) && g.appid > 0);
         }
 
-        function refreshGameCollection() {
-            const grid = document.querySelector('#armory .grid');
-            const search = document.getElementById('game-search');
-            const sort = document.getElementById('game-sort');
-            if (!grid || !search || !sort) return;
+        function renderArmoryPick() {
+            const box = document.getElementById('armory-pick');
+            if (!box || !pickedArmoryGame) return;
+            const appid = Number(pickedArmoryGame.appid);
+            if (!Number.isSafeInteger(appid) || appid <= 0) return;
 
-            const games = [...grid.querySelectorAll('.game')];
-            const query = search.value.trim().toLocaleLowerCase('en');
-            const sortMode = sort.value;
-            games.sort((a, b) => {
-                if (sortMode === 'name') {
-                    return a.querySelector('.g-tit').textContent.localeCompare(b.querySelector('.g-tit').textContent, document.documentElement.lang);
-                }
-                return (Number(b.dataset.playtimeMinutes) || 0) - (Number(a.dataset.playtimeMinutes) || 0);
-            });
-
-            let visibleCount = 0;
-            games.forEach(game => {
-                const matches = game.querySelector('.g-tit').textContent.toLocaleLowerCase('en').includes(query);
-                game.hidden = !matches;
-                if (matches) {
-                    visibleCount += 1;
-                    const rank = game.querySelector('.game-rank');
-                    if (rank) rank.textContent = String(visibleCount).padStart(2, '0');
-                }
-                grid.append(game);
-            });
-
-            const resultCount = document.getElementById('game-results');
-            const emptyState = document.getElementById('game-empty');
             const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            const indexedCount = Math.max(games.length, Number(steamStats?.total_games) || 0);
-            resultCount.textContent = visibleCount + ' / ' + indexedCount + ' ' + (indexedCount === 1 ? labels.library_result_one : labels.library_result_many);
-            emptyState.hidden = visibleCount > 0;
+            const titleEl = document.getElementById('armory-pick-title');
+            const hoursEl = document.getElementById('armory-pick-hours');
+            const coverEl = document.getElementById('armory-pick-cover');
+            const linkEl = document.getElementById('armory-pick-link');
+            const minutes = Math.max(0, Number(pickedArmoryGame.playtime_minutes) || 0);
+
+            if (titleEl) titleEl.textContent = pickedArmoryGame.name || 'Steam';
+            if (hoursEl) {
+                hoursEl.textContent = minutes > 0
+                    ? formatSteamHours(minutes)
+                    : (labels.library_zero_hours || '0h · Unplayed');
+            }
+            if (linkEl) {
+                linkEl.href = `https://store.steampowered.com/app/${appid}/`;
+                linkEl.rel = 'noopener noreferrer';
+            }
+            setSteamCover(coverEl, pickedArmoryGame);
+            box.hidden = false;
         }
 
-        function initCur() {
-            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-            const c = document.getElementById('cursor');
-            if (!c) return;
-            document.addEventListener('mousemove', event => {
-                c.style.left = `${event.clientX}px`;
-                c.style.top = `${event.clientY}px`;
-            });
-            document.addEventListener('mousedown', () => document.body.classList.add('hover'));
-            document.addEventListener('mouseup', () => document.body.classList.remove('hover'));
-            document.querySelectorAll('a,button,input,textarea,.card,.nav-btn,.lang-opt').forEach(element => {
-                element.addEventListener('mouseenter', () => document.body.classList.add('hover'));
-                element.addEventListener('mouseleave', () => document.body.classList.remove('hover'));
-            });
+        function spinRandomGame() {
+            const allGames = getArmoryGamePool();
+            if (!allGames.length) return;
+            const unplayedOnly = Boolean(document.getElementById('spin-unplayed-toggle')?.checked);
+            let pool = unplayedOnly
+                ? allGames.filter(game => Number(game.playtime_minutes) === 0)
+                : allGames;
+            if (!pool.length) pool = allGames;
+            if (pool.length > 1 && pickedArmoryGame) {
+                pool = pool.filter(game => Number(game.appid) !== Number(pickedArmoryGame.appid));
+            }
+            pickedArmoryGame = pool[Math.floor(Math.random() * pool.length)];
+            renderArmoryPick();
         }
 
 
@@ -563,240 +620,316 @@ function setLang(c, remember = false) {
         /* ======================================= */
         /* POPUP (REKLAM-Script) */
         /* ======================================= */
-        const POPUP_LAST_CLOSED_TIME_KEY = 'popup_last_closed_time';
-        const SHOW_DELAY_MINUTES = 10;
-        const DELAY_MILLIS = SHOW_DELAY_MINUTES * 60 * 1000;
+        const POPUP_LAST_CLOSED_TIME_KEY = 'haking.partner_last_closed_ms';
+        const POPUP_SESSION_KEY = 'haking.partner_shown';
+        const POPUP_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+        let sponsorReturnFocusEl = null;
+        let sponsorAutoTimer = 0;
 
-        function checkAndShowModalWithTimer() {
-            const modal = document.getElementById('first-time-modal');
-            const lastClosedTime = localStorage.getItem(POPUP_LAST_CLOSED_TIME_KEY);
-            const currentTime = new Date().getTime();
-
-            if (sessionStorage.getItem('intro-promo-shown') === 'true') return;
-            if (!lastClosedTime || (currentTime - parseInt(lastClosedTime) > DELAY_MILLIS)) {
-                sessionStorage.setItem('intro-promo-shown', 'true');
-                modal.style.display = 'block';
+            function safeStorageGet(storage, key) {
+                try { return storage.getItem(key); } catch (_) { return null; }
             }
 
-        }
-
-        function closeIntroModal() {
-            const modal = document.getElementById('first-time-modal');
-            const videoElement = document.getElementById('modal-video');
-            modal.style.display = 'none';
-            if (videoElement) {
-                videoElement.pause();
-                videoElement.currentTime = 0;
+            function safeStorageSet(storage, key, value) {
+                try { storage.setItem(key, String(value)); } catch (_) { }
             }
-            localStorage.setItem(POPUP_LAST_CLOSED_TIME_KEY, new Date().getTime().toString());
-        }
 
-        function switchModalTab(event, tabName) {
-            event.stopPropagation();
-
-
-            document.querySelectorAll('.modal-tab').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.modal-tab-content').forEach(content => content.style.display = 'none');
-
-            event.currentTarget.classList.add('active');
-            const targetContent = document.getElementById('modal-tab-' + tabName);
-            if (targetContent) targetContent.style.display = 'block';
-
-            const video = document.getElementById('modal-video');
-            if (video) {
-                if (tabName === 'trailer') {
-                    video.play().catch(err => console.log("Video auto play blocked", err));
-                } else {
-                    video.pause();
-                }
-            }
-        }
-
-        /* ======================================= */
-        /* CONTACT FORM */
-        /* ======================================= */
-        function handleContactSubmit(e) {
-            e.preventDefault();
-
-
-            const name = document.getElementById('c-name').value;
-            const email = document.getElementById('c-email').value;
-            const msg = document.getElementById('c-msg').value;
-
-            const terminal = document.getElementById('contact-terminal');
-            const success = document.getElementById('contact-success');
-
-            gsap.to(terminal, {
-                opacity: 0, duration: 0.3, onComplete: () => {
-                    terminal.style.display = 'none';
-                    success.style.display = 'flex';
-                    gsap.set(success, { opacity: 0, scale: 0.95 });
-                    gsap.to(success, { opacity: 1, scale: 1, duration: 0.4 });
-
-                    const output = document.getElementById('terminal-console-output');
-                    output.innerText = `${LANG_DATA[activeLang]?.contact_draft_note || LANG_DATA.en.contact_draft_note}\n\nsteam@haking.tr`;
-                    window.location.href = `mailto:steam@haking.tr?subject=${encodeURIComponent("HaKING Contact - " + name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
-                }
-            });
-        }
-
-        function resetContactForm() {
-
-            const terminal = document.getElementById('contact-terminal');
-            const success = document.getElementById('contact-success');
-
-            document.getElementById('contact-form').reset();
-
-            gsap.to(success, {
-                opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => {
-                    success.style.display = 'none';
-                    terminal.style.display = 'block';
-                    gsap.set(terminal, { opacity: 0 });
-                    gsap.to(terminal, { opacity: 1, duration: 0.4 });
-                }
-            });
-        }
-
-        /* ======================================= */
-        /* SYNCHRONIZED BOOT SEQUENCE */
-        /* ======================================= */
-        function revealApp() {
-            const loader = document.getElementById('loader');
-            const app = document.getElementById('app');
-            if (!loader || !app || app.dataset.ready === 'true') return;
-            app.dataset.ready = 'true';
-            loader.style.display = 'none';
-            app.style.opacity = 1;
-            app.style.pointerEvents = 'all';
-            app.classList.add('is-ready');
-            if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                const heroItems = Array.from(document.querySelectorAll('#sanctum .home-overview > *'));
-                if (heroItems.length) {
-                    window.gsap.fromTo(heroItems, { opacity: 0, y: 24 }, {
-                        opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power3.out', delay: 0.08
-                    });
-                }
-            }
-        }
-
-        async function runBootLoader() {
-            const fill = document.querySelector('.load-fill');
-            const logText = document.getElementById('ltxt');
-            // A visual loader is decorative; never let a slow optional asset hide the site indefinitely.
-            window.setTimeout(revealApp, 1800);
-
-
-
-            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            const logs = {
-                init: labels.boot_init || LANG_DATA.en.boot_init,
-                pointer: labels.boot_pointer || LANG_DATA.en.boot_pointer,
-                steam: labels.boot_steam || LANG_DATA.en.boot_steam,
-                cache: labels.boot_cache || LANG_DATA.en.boot_cache,
-                ready: labels.boot_ready || LANG_DATA.en.boot_ready
-            };
-
-            const updateProgress = (pct, labelText) => {
-                gsap.to(fill, { width: pct + '%', duration: 0.3, ease: 'power1.out' });
-                if (logText) logText.innerText = labelText;
-            };
-            let statsLoaded = false;
-
-            try {
-                // Phase 1: Initialize components
-                updateProgress(20, logs.init);
-                try {
-                    initThree();
-                } catch (error) {
-                    console.warn('Background animation unavailable:', error);
-                }
-                await new Promise(r => setTimeout(r, 120));
-
-                // Phase 2: Pointer tracking
-                updateProgress(40, logs.pointer);
-                initCur();
-                await new Promise(r => setTimeout(r, 120));
-
-                // Phase 3: Fetching stats from JSON file
-                updateProgress(70, logs.steam);
-
-                const statsController = new AbortController();
-                const statsTimeout = window.setTimeout(() => statsController.abort(), 5000);
-                const statsPromise = (async () => {
-                    try {
-                        const response = await fetch('./data/steam_stats.json', { cache: 'no-store', signal: statsController.signal });
-                        if (!response.ok) throw new Error(`Steam stats request failed: ${response.status}`);
-                        const data = await response.json();
-                        if (!data || typeof data !== 'object') throw new Error('Steam stats JSON is invalid');
-                        applySteamStats(data);
-                        statsLoaded = true;
-                    } finally {
-                        window.clearTimeout(statsTimeout);
+            function openSponsorModal(manual = false) {
+                const modal = document.getElementById('first-time-modal');
+                    if (!modal) return;
+                    if (sponsorAutoTimer) {
+                        window.clearTimeout(sponsorAutoTimer);
+                        sponsorAutoTimer = 0;
                     }
-                })().catch(error => {
-                    console.warn('Steam stats unavailable; using safe defaults:', error);
-                    if (!statsLoaded) {
-                        ['total-hours', 'total-games'].forEach(id => {
-                            const value = document.getElementById(id);
-                            if (value?.textContent === 'Loading...') value.textContent = '—';
-                        });
-                        const status = document.getElementById('sys-status');
-                        if (status) {
-                            status.setAttribute('data-k', 'sys_unknown');
-                            status.style.color = 'var(--muted)';
-                            status.style.textShadow = 'none';
-                            status.style.animation = 'none';
-                            setLang(activeLang);
+                    if (!manual) {
+                        if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
+                        const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
+                        if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;
+                    }
+                    sponsorReturnFocusEl = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+                    safeStorageSet(sessionStorage, POPUP_SESSION_KEY, 'true');
+                    modal.hidden = false;
+                    modal.classList.add('is-open');
+                    window.lucide?.createIcons();
+                    const closeBtn = document.getElementById('modal-close');
+                    closeBtn?.focus({ preventScroll: true });
+                }
+
+                    function closeSponsorModal(rememberDismiss = true) {
+                        const modal = document.getElementById('first-time-modal');
+                        if (!modal || modal.hidden) return;
+                        const videoElement = document.getElementById('modal-video');
+                        modal.classList.remove('is-open');
+                        modal.hidden = true;
+                        if (videoElement) {
+                            videoElement.pause();
+                            videoElement.currentTime = 0;
                         }
+                        if (rememberDismiss) {
+                            safeStorageSet(localStorage, POPUP_LAST_CLOSED_TIME_KEY, Date.now());
+                        }
+                        if (sponsorReturnFocusEl && sponsorReturnFocusEl.isConnected) {
+                            sponsorReturnFocusEl.focus({ preventScroll: true });
+                        }
+                        sponsorReturnFocusEl = null;
                     }
-                });
 
-                // Statistics enhance the page, but must never hold the entire interface behind the loader.
-                await Promise.race([statsPromise, new Promise(resolve => setTimeout(resolve, 180))]);
+                        function scheduleSponsorModal() {
+                            if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
+                            const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
+                            if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;
+                            if (sponsorAutoTimer) window.clearTimeout(sponsorAutoTimer);
+                            sponsorAutoTimer = window.setTimeout(() => openSponsorModal(false), 2200);
+                        }
 
-                // Phase 4: Cache graphics
-                updateProgress(90, logs.cache);
-                await Promise.race([new Promise((resolve) => {
-                    const img = new Image();
-                    img.src = "assets/images/HaKING2.png";
-                    img.onload = () => resolve();
-                    img.onerror = () => resolve();
-                }), new Promise(resolve => setTimeout(resolve, 1500))]);
-                await new Promise(r => setTimeout(r, 120));
+                        async function copyPartnerCode(button) {
+                            const code = button.dataset.copyCode || 'HAK06';
+                            try {
+                                if (navigator.clipboard?.writeText) {
+                                    await navigator.clipboard.writeText(code);
+                                } else {
+                                    const tmp = document.createElement('textarea');
+                                    tmp.value = code;
+                                    tmp.setAttribute('readonly', '');
+                                    tmp.style.position = 'fixed';
+                                    tmp.style.opacity = '0';
+                                    document.body.append(tmp);
+                                    tmp.select();
+                                    document.execCommand('copy');
+                                    tmp.remove();
+                                }
+                            } catch (_) { }
+                            const labelSpan = button.querySelector('span');
+                            const t = LANG_DATA[activeLang] || LANG_DATA.en;
+                            if (labelSpan) labelSpan.textContent = t.ad_copied || LANG_DATA.en.ad_copied;
+                            button.classList.add('is-copied');
+                            window.setTimeout(() => {
+                                button.classList.remove('is-copied');
+                                const currentT = LANG_DATA[activeLang] || LANG_DATA.en;
+                                if (labelSpan) labelSpan.textContent = currentT.ad_copy || LANG_DATA.en.ad_copy;
+                            }, 2200);
+                        }
 
-                // Phase 5: Connection ready
-                updateProgress(100, logs.ready);
-                await new Promise(r => setTimeout(r, 180));
+                        function initSponsorModal() {
+                            const modal = document.getElementById('first-time-modal');
+                            if (!modal) return;
+                            document.getElementById('modal-close')?.addEventListener('click', () => closeSponsorModal(true));
+                            document.getElementById('modal-snooze')?.addEventListener('click', () => closeSponsorModal(true));
+                            document.getElementById('modal-copy-code')?.addEventListener('click', event => copyPartnerCode(event.currentTarget));
+                            modal.addEventListener('click', event => {
+                                if (event.target === modal) closeSponsorModal(true);
+                            });
+                            document.addEventListener('keydown', event => {
+                                if (event.key === 'Escape' && !modal.hidden) closeSponsorModal(true);
+                            });
+                        }
+
+                        function switchModalTab(event, tabName) {
+                            event.stopPropagation();
+                            document.querySelectorAll('.modal-tab').forEach(btn => {
+                                const isTarget = btn === event.currentTarget;
+                                btn.classList.toggle('active', isTarget);
+                                btn.setAttribute('aria-selected', String(isTarget));
+                            });
+                            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                                content.hidden = content.id !== ('modal-tab-' + tabName);
+                            });
+
+                            const video = document.getElementById('modal-video');
+                            if (video) {
+                                if (tabName === 'trailer') {
+                                    video.play().catch(() => { });
+                                } else {
+                                    video.pause();
+                                }
+                            }
+                        }
+
+                        /* ======================================= */
+                        /* CONTACT FORM */
+                        /* ======================================= */
+                        function handleContactSubmit(e) {
+                            e.preventDefault();
+
+
+                            const name = document.getElementById('c-name').value;
+                            const email = document.getElementById('c-email').value;
+                            const msg = document.getElementById('c-msg').value;
+
+                            const terminal = document.getElementById('contact-terminal');
+                            const success = document.getElementById('contact-success');
+
+                            gsap.to(terminal, {
+                                opacity: 0, duration: 0.3, onComplete: () => {
+                                    terminal.style.display = 'none';
+                                    success.style.display = 'flex';
+                                    gsap.set(success, { opacity: 0, scale: 0.95 });
+                                    gsap.to(success, { opacity: 1, scale: 1, duration: 0.4 });
+
+                                    const output = document.getElementById('terminal-console-output');
+                                    output.innerText = `${LANG_DATA[activeLang]?.contact_draft_note || LANG_DATA.en.contact_draft_note}\n\nsteam@haking.tr`;
+                                    window.location.href = `mailto:steam@haking.tr?subject=${encodeURIComponent("HaKING Contact - " + name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
+                                }
+                            });
+                        }
+
+                        function resetContactForm() {
+
+                            const terminal = document.getElementById('contact-terminal');
+                            const success = document.getElementById('contact-success');
+
+                            document.getElementById('contact-form').reset();
+
+                            gsap.to(success, {
+                                opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => {
+                                    success.style.display = 'none';
+                                    terminal.style.display = 'block';
+                                    gsap.set(terminal, { opacity: 0 });
+                                    gsap.to(terminal, { opacity: 1, duration: 0.4 });
+                                }
+                            });
+                        }
+
+                        /* ======================================= */
+                        /* SYNCHRONIZED BOOT SEQUENCE */
+                        /* ======================================= */
+                        function revealApp() {
+                            const loader = document.getElementById('loader');
+                            const app = document.getElementById('app');
+                            if (!loader || !app || app.dataset.ready === 'true') return;
+                            app.dataset.ready = 'true';
+                            loader.style.display = 'none';
+                            app.style.opacity = 1;
+                            app.style.pointerEvents = 'all';
+                            app.classList.add('is-ready');
+                            if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                                const heroItems = Array.from(document.querySelectorAll('#sanctum .home-overview > *'));
+                                if (heroItems.length) {
+                                    window.gsap.fromTo(heroItems, { opacity: 0, y: 24 }, {
+                                        opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power3.out', delay: 0.08
+                                    });
+                                }
+                            }
+                            scheduleSponsorModal();
+                        }
+
+                        async function runBootLoader() {
+                            const fill = document.querySelector('.load-fill');
+                            const logText = document.getElementById('ltxt');
+                            // A visual loader is decorative; never let a slow optional asset hide the site indefinitely.
+                            window.setTimeout(revealApp, 1800);
 
 
 
-                gsap.to('#loader', {
-                    opacity: 0,
-                    duration: 0.5,
-                    onComplete: () => {
-                        revealApp();
+                            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+                            const logs = {
+                                init: labels.boot_init || LANG_DATA.en.boot_init,
+                                pointer: labels.boot_pointer || LANG_DATA.en.boot_pointer,
+                                steam: labels.boot_steam || LANG_DATA.en.boot_steam,
+                                cache: labels.boot_cache || LANG_DATA.en.boot_cache,
+                                ready: labels.boot_ready || LANG_DATA.en.boot_ready
+                            };
 
-                        // Sponsor content remains available through intentional navigation, never a timed interruption.
-                    }
-                });
+                            const updateProgress = (pct, labelText) => {
+                                gsap.to(fill, { width: pct + '%', duration: 0.3, ease: 'power1.out' });
+                                if (logText) logText.innerText = labelText;
+                            };
+                            let statsLoaded = false;
 
-            } catch (err) {
-                console.error("Bootloader Exception:", err);
-                if (!statsLoaded) {
-                    ['total-hours', 'total-games'].forEach(id => {
-                        const value = document.getElementById(id);
-                        if (value?.textContent === 'Loading...') value.textContent = '—';
-                    });
-                    const status = document.getElementById('sys-status');
-                    if (status) {
-                        status.setAttribute('data-k', 'sys_unknown');
-                        status.style.color = 'var(--muted)';
-                        status.style.textShadow = 'none';
-                        status.style.animation = 'none';
-                        setLang(activeLang);
-                    }
-                }
-                updateProgress(100, LANG_DATA[activeLang]?.sys_unknown || LANG_DATA.en.sys_unknown);
-                setTimeout(revealApp, 800);
-            }
-        }
+                            try {
+                                // Phase 1: Initialize components
+                                updateProgress(20, logs.init);
+                                try {
+                                    initThree();
+                                } catch (error) {
+                                    console.warn('Background animation unavailable:', error);
+                                }
+                                await new Promise(r => setTimeout(r, 120));
+
+                                // Phase 2: UI ready
+                                updateProgress(40, logs.pointer);
+                                await new Promise(r => setTimeout(r, 90));
+
+                                // Phase 3: Fetching stats from JSON file
+                                updateProgress(70, logs.steam);
+
+                                const statsController = new AbortController();
+                                const statsTimeout = window.setTimeout(() => statsController.abort(), 5000);
+                                const statsPromise = (async () => {
+                                    try {
+                                        const response = await fetch('./data/steam_stats.json', { cache: 'no-store', signal: statsController.signal });
+                                        if (!response.ok) throw new Error(`Steam stats request failed: ${response.status}`);
+                                        const data = await response.json();
+                                        if (!data || typeof data !== 'object') throw new Error('Steam stats JSON is invalid');
+                                        applySteamStats(data);
+                                        statsLoaded = true;
+                                    } finally {
+                                        window.clearTimeout(statsTimeout);
+                                    }
+                                })().catch(error => {
+                                    console.warn('Steam stats unavailable; using safe defaults:', error);
+                                    if (!statsLoaded) {
+                                        ['total-hours', 'total-games'].forEach(id => {
+                                            const value = document.getElementById(id);
+                                            if (value?.textContent === 'Loading...') value.textContent = '—';
+                                        });
+                                        const status = document.getElementById('sys-status');
+                                        if (status) {
+                                            status.setAttribute('data-k', 'sys_unknown');
+                                            status.style.color = 'var(--muted)';
+                                            status.style.textShadow = 'none';
+                                            status.style.animation = 'none';
+                                            setLang(activeLang);
+                                        }
+                                    }
+                                });
+
+                                // Statistics enhance the page, but must never hold the entire interface behind the loader.
+                                await Promise.race([statsPromise, new Promise(resolve => setTimeout(resolve, 180))]);
+
+                                // Phase 4: Cache graphics
+                                updateProgress(90, logs.cache);
+                                await Promise.race([new Promise((resolve) => {
+                                    const img = new Image();
+                                    img.src = "assets/images/HaKING2.png";
+                                    img.onload = () => resolve();
+                                    img.onerror = () => resolve();
+                                }), new Promise(resolve => setTimeout(resolve, 1500))]);
+                                await new Promise(r => setTimeout(r, 120));
+
+                                // Phase 5: Connection ready
+                                updateProgress(100, logs.ready);
+                                await new Promise(r => setTimeout(r, 180));
+
+
+
+                                gsap.to('#loader', {
+                                    opacity: 0,
+                                    duration: 0.5,
+                                    onComplete: () => {
+                                        revealApp();
+
+                                        // Sponsor content remains available through intentional navigation, never a timed interruption.
+                                    }
+                                });
+
+                            } catch (err) {
+                                console.error("Bootloader Exception:", err);
+                                if (!statsLoaded) {
+                                    ['total-hours', 'total-games'].forEach(id => {
+                                        const value = document.getElementById(id);
+                                        if (value?.textContent === 'Loading...') value.textContent = '—';
+                                    });
+                                    const status = document.getElementById('sys-status');
+                                    if (status) {
+                                        status.setAttribute('data-k', 'sys_unknown');
+                                        status.style.color = 'var(--muted)';
+                                        status.style.textShadow = 'none';
+                                        status.style.animation = 'none';
+                                        setLang(activeLang);
+                                    }
+                                }
+                                updateProgress(100, LANG_DATA[activeLang]?.sys_unknown || LANG_DATA.en.sys_unknown);
+                                setTimeout(revealApp, 800);
+                            }
+                        }
