@@ -5,9 +5,9 @@
  */
 
 const VENDOR_ADDONS = [
-  'assets/vendor/GLTFLoader.js?v=2.5.0-20261115',
-  'assets/vendor/Reflector.js?v=2.5.0-20261115',
-  'assets/vendor/RoomEnvironment.js?v=2.5.0-20261115'
+  'assets/vendor/GLTFLoader.js?v=2.5.1-20261115',
+  'assets/vendor/Reflector.js?v=2.5.1-20261115',
+  'assets/vendor/RoomEnvironment.js?v=2.5.1-20261115'
 ];
 
 const WING_SIZE = 15;
@@ -184,7 +184,7 @@ export async function openMuseum3D(options = {}) {
   const {
     items = [],
     getCopy = () => ({}),
-    onInspect = () => {},
+    onInspect = () => { },
     returnFocusTo = null
   } = options;
 
@@ -209,6 +209,16 @@ export async function openMuseum3D(options = {}) {
     sponsorModal.classList.remove('is-open');
     sponsorModal.hidden = true;
   }
+  const detectTouchProfile = () => (
+    window.matchMedia('(hover: none), (pointer: coarse)').matches ||
+    (navigator.maxTouchPoints > 0 && window.innerWidth <= 1024) ||
+    window.innerWidth <= 768
+  );
+  const isTouchProfile = detectTouchProfile();
+  overlay.dataset.inputMode = isTouchProfile ? 'touch' : 'desktop';
+  const fovForAspect = (w, h) => ((w / Math.max(1, h)) < 0.85 ? 72 : 60);
+  const maxAniso = isTouchProfile ? 2 : 4;
+
   overlay.hidden = false;
   document.documentElement.classList.add('museum-3d-active');
   loadingEl.hidden = false;
@@ -249,8 +259,11 @@ export async function openMuseum3D(options = {}) {
   const trackTex = t => { disposableTextures.push(t); return t; };
   const col = hex => new T.Color(hex).convertSRGBToLinear();
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.setSize(stage.clientWidth || window.innerWidth, stage.clientHeight || window.innerHeight);
+  const stageW = stage.clientWidth || window.innerWidth;
+  const stageH = Math.max(1, stage.clientHeight || window.innerHeight);
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isTouchProfile ? 1.5 : 2));
+  renderer.setSize(stageW, stageH);
   renderer.outputEncoding = T.sRGBEncoding;
   renderer.toneMapping = T.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.06;
@@ -282,12 +295,7 @@ export async function openMuseum3D(options = {}) {
     // Software WebGL contexts without float extensions degrade cleanly to direct lights.
   }
 
-  const camera = new T.PerspectiveCamera(
-    60,
-    (stage.clientWidth || window.innerWidth) / Math.max(1, stage.clientHeight || window.innerHeight),
-    0.1,
-    80
-  );
+  const camera = new T.PerspectiveCamera(fovForAspect(stageW, stageH), stageW / stageH, 0.1, 80);
   const player = {
     x: 0,
     y: PLAYER_EYE_Y,
@@ -308,7 +316,7 @@ export async function openMuseum3D(options = {}) {
       tex.wrapT = T.RepeatWrapping;
       tex.repeat.set(rx, ry);
       if (srgb) tex.encoding = T.sRGBEncoding;
-      tex.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+      tex.anisotropy = Math.min(maxAniso, renderer.capabilities.getMaxAnisotropy());
       return trackTex(tex);
     };
     return {
@@ -387,10 +395,11 @@ export async function openMuseum3D(options = {}) {
 
   let floorReflector = null;
   try {
+    const reflRes = isTouchProfile ? 256 : 1024;
     floorReflector = new T.Reflector(trackGeo(new T.PlaneGeometry(6.6, 21.8)), {
       clipBias: 0.003,
-      textureWidth: 512,
-      textureHeight: 512,
+      textureWidth: reflRes,
+      textureHeight: reflRes,
       color: 0x38342f
     });
     floorReflector.position.y = 0.002;
@@ -820,7 +829,7 @@ export async function openMuseum3D(options = {}) {
             return;
           }
           tex.encoding = T.sRGBEncoding;
-          tex.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+          tex.anisotropy = Math.min(maxAniso, renderer.capabilities.getMaxAnisotropy());
           activeWingTextures.push(tex);
           exhibit.artMat.map = tex;
           exhibit.artMat.needsUpdate = true;
@@ -856,13 +865,16 @@ export async function openMuseum3D(options = {}) {
   }
 
   // Movement, camera glide, raycasting & auto-tour state
+  const galleryDialog = document.getElementById('gallery-dialog');
   const keysDown = new Set();
   const touchMove = { forward: false, back: false, left: false, right: false };
+  const padButtons = [...overlay.querySelectorAll('[data-pad]')];
   let activeExhibitIndex = 0;
   let focusedExhibit = null;
   let glide = null;
   let autoTour = false;
   let autoDwell = AUTO_DWELL_SECONDS;
+  let returnToFpsAfterDialog = false;
   let isDragging = false;
   let dragDistance = 0;
   let lastPointer = { x: 0, y: 0 };
@@ -870,6 +882,28 @@ export async function openMuseum3D(options = {}) {
   let prevTime = performance.now();
   const raycaster = new T.Raycaster();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dragYawSens = isTouchProfile ? 0.0052 : 0.0040;
+  const dragPitchSens = isTouchProfile ? 0.0042 : 0.0034;
+  const baseWalkSpeed = isTouchProfile ? 3.4 : 4.2;
+
+  function clearInputs() {
+    keysDown.clear();
+    touchMove.forward = false;
+    touchMove.back = false;
+    touchMove.left = false;
+    touchMove.right = false;
+    for (const btn of padButtons) btn.classList.remove('is-pressed');
+  }
+
+  function safeRequestPointerLock() {
+    if (isTouchProfile || document.pointerLockElement === canvas) return;
+    try {
+      const maybePromise = canvas.requestPointerLock?.();
+      if (maybePromise && typeof maybePromise.catch === 'function') {
+        maybePromise.catch(() => { });
+      }
+    } catch { }
+  }
 
   function updateArtCounter(idx) {
     activeExhibitIndex = ((idx % exhibits.length) + exhibits.length) % exhibits.length;
@@ -983,11 +1017,23 @@ export async function openMuseum3D(options = {}) {
     const target = exhibit || focusedExhibit || exhibits[activeExhibitIndex];
     if (!target?.item) return;
     stopAutoTour();
-    if (document.pointerLockElement === canvas) document.exitPointerLock?.();
+    clearInputs();
+    returnToFpsAfterDialog = document.pointerLockElement === canvas;
+    if (returnToFpsAfterDialog) document.exitPointerLock?.();
     onInspect(target.item);
   }
 
   // Event handlers (properly registered & cleaned up on close)
+  const stopContextMenu = e => e.preventDefault();
+  const onWindowBlur = () => clearInputs();
+  const onVisibilityChange = () => { if (document.hidden) clearInputs(); };
+  const onDialogClose = () => {
+    returnToFpsAfterDialog = false;
+    if (!disposed && !overlay.hidden && !isTouchProfile) {
+      canvas.focus({ preventScroll: true });
+    }
+  };
+
   const onPointerDown = e => {
     if (document.pointerLockElement === canvas) {
       inspectExhibit();
@@ -1001,8 +1047,8 @@ export async function openMuseum3D(options = {}) {
 
   const onPointerMove = e => {
     if (document.pointerLockElement === canvas) {
-      player.yaw -= e.movementX * 0.0022;
-      player.pitch = Math.max(-1.05, Math.min(1.05, player.pitch - e.movementY * 0.0022));
+      player.yaw -= e.movementX * 0.0021;
+      player.pitch = Math.max(-1.05, Math.min(1.05, player.pitch - e.movementY * 0.0021));
       stopAutoTour();
       glide = null;
       return;
@@ -1012,8 +1058,8 @@ export async function openMuseum3D(options = {}) {
       const dy = e.clientY - lastPointer.y;
       lastPointer = { x: e.clientX, y: e.clientY };
       dragDistance += Math.hypot(dx, dy);
-      player.yaw += dx * 0.0042;
-      player.pitch = Math.max(-1.05, Math.min(1.05, player.pitch + dy * 0.0036));
+      player.yaw += dx * dragYawSens;
+      player.pitch = Math.max(-1.05, Math.min(1.05, player.pitch + dy * dragPitchSens));
       if (dragDistance > 6) {
         stopAutoTour();
         glide = null;
@@ -1041,19 +1087,43 @@ export async function openMuseum3D(options = {}) {
 
   const onKeyDown = e => {
     if (overlay.hidden) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
     const dialog = document.getElementById('gallery-dialog');
-    if (dialog?.open) return;
+    if (dialog?.open) {
+      if (e.code === 'KeyE' && !e.repeat) {
+        e.preventDefault();
+        const shouldRelock = returnToFpsAfterDialog;
+        returnToFpsAfterDialog = false;
+        dialog.close();
+        canvas.focus({ preventScroll: true });
+        if (shouldRelock) safeRequestPointerLock();
+      }
+      return;
+    }
 
     const code = e.code;
     if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ShiftLeft', 'ShiftRight'].includes(code)) {
       keysDown.add(code);
       stopAutoTour();
       glide = null;
-    } else if (code === 'KeyE' || code === 'Enter') {
-      if (document.activeElement === canvas || document.pointerLockElement === canvas || focusedExhibit) {
-        e.preventDefault();
-        inspectExhibit();
-      }
+    } else if (code === 'KeyE' && !e.repeat) {
+      e.preventDefault();
+      inspectExhibit();
+    } else if (code === 'Enter' && !(document.activeElement instanceof HTMLButtonElement)) {
+      e.preventDefault();
+      inspectExhibit();
+    } else if ((code === 'KeyQ' || code === 'BracketLeft') && !e.repeat) {
+      e.preventDefault();
+      loadWing(wingIndex - 1);
+    } else if ((code === 'KeyR' || code === 'BracketRight') && !e.repeat) {
+      e.preventDefault();
+      loadWing(wingIndex + 1);
+    } else if (code === 'KeyF' && !e.repeat && !isTouchProfile) {
+      e.preventDefault();
+      toggleFps();
+    } else if (code === 'KeyT' && !e.repeat) {
+      e.preventDefault();
+      toggleAutoTour();
     } else if (code === 'Escape') {
       if (document.pointerLockElement === canvas) return;
       e.preventDefault();
@@ -1067,6 +1137,7 @@ export async function openMuseum3D(options = {}) {
     if (disposed) return;
     const w = stage.clientWidth || window.innerWidth;
     const h = Math.max(1, stage.clientHeight || window.innerHeight);
+    camera.fov = fovForAspect(w, h);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
@@ -1094,7 +1165,7 @@ export async function openMuseum3D(options = {}) {
     if (document.pointerLockElement === canvas) {
       document.exitPointerLock?.();
     } else {
-      canvas.requestPointerLock?.();
+      safeRequestPointerLock();
     }
   };
 
@@ -1105,38 +1176,54 @@ export async function openMuseum3D(options = {}) {
   const onInspectBtn = () => inspectExhibit();
   const onClose = () => teardown();
 
-  // Touch D-Pad hold buttons for mobile & tablet navigation
-  const padButtons = [...overlay.querySelectorAll('[data-pad]')];
+  // Touch D-Pad hold buttons for mobile & tablet navigation (anti-callout + pointer capture)
   const padHandlers = [];
   for (const btn of padButtons) {
     const dirKey = btn.dataset.pad;
     const down = e => {
       e.preventDefault();
+      e.stopPropagation();
+      try { btn.setPointerCapture?.(e.pointerId); } catch { }
       touchMove[dirKey] = true;
+      btn.classList.add('is-pressed');
       stopAutoTour();
       glide = null;
     };
-    const up = () => { touchMove[dirKey] = false; };
+    const up = e => {
+      try {
+        if (e?.pointerId !== undefined && btn.hasPointerCapture?.(e.pointerId)) {
+          btn.releasePointerCapture(e.pointerId);
+        }
+      } catch { }
+      touchMove[dirKey] = false;
+      btn.classList.remove('is-pressed');
+    };
     btn.addEventListener('pointerdown', down);
     btn.addEventListener('pointerup', up);
-    btn.addEventListener('pointerleave', up);
     btn.addEventListener('pointercancel', up);
+    btn.addEventListener('lostpointercapture', up);
+    btn.addEventListener('contextmenu', stopContextMenu);
     padHandlers.push([btn, down, up]);
   }
 
+  overlay.addEventListener('contextmenu', stopContextMenu);
   canvas.addEventListener('pointerdown', onPointerDown);
   window.addEventListener('pointermove', onPointerMove);
   window.addEventListener('pointerup', onPointerUp);
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('resize', onResize);
+  window.addEventListener('blur', onWindowBlur);
+  document.addEventListener('visibilitychange', onVisibilityChange);
   document.addEventListener('pointerlockchange', onPointerLockChange);
+  galleryDialog?.addEventListener('close', onDialogClose);
   autoTourBtn?.addEventListener('click', toggleAutoTour);
   fpsBtn?.addEventListener('click', toggleFps);
   wingPrevBtn?.addEventListener('click', onWingPrev);
   wingNextBtn?.addEventListener('click', onWingNext);
   artPrevBtn?.addEventListener('click', onArtPrev);
   artNextBtn?.addEventListener('click', onArtNext);
+  targetPill?.addEventListener('click', onInspectBtn);
   inspectBtn?.addEventListener('click', onInspectBtn);
   closeBtn?.addEventListener('click', onClose);
   canvas.addEventListener('webglcontextlost', e => e.preventDefault());
@@ -1182,7 +1269,7 @@ export async function openMuseum3D(options = {}) {
         if (keysDown.has('ArrowRight')) player.yaw -= 1.75 * dt;
 
         if (moveX || moveZ) {
-          const speed = (keysDown.has('ShiftLeft') || keysDown.has('ShiftRight')) ? 6.6 : 4.2;
+          const speed = (keysDown.has('ShiftLeft') || keysDown.has('ShiftRight')) ? 6.6 : baseWalkSpeed;
           const len = Math.hypot(moveX, moveZ) || 1;
           const forwardX = -Math.sin(player.yaw);
           const forwardZ = -Math.cos(player.yaw);
@@ -1216,28 +1303,35 @@ export async function openMuseum3D(options = {}) {
     disposed = true;
     cancelAnimationFrame(rafId);
     stopAutoTour();
+    clearInputs();
     if (document.pointerLockElement === canvas) document.exitPointerLock?.();
 
+    overlay.removeEventListener('contextmenu', stopContextMenu);
     canvas.removeEventListener('pointerdown', onPointerDown);
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerup', onPointerUp);
     window.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('keyup', onKeyUp);
     window.removeEventListener('resize', onResize);
+    window.removeEventListener('blur', onWindowBlur);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
     document.removeEventListener('pointerlockchange', onPointerLockChange);
+    galleryDialog?.removeEventListener('close', onDialogClose);
     autoTourBtn?.removeEventListener('click', toggleAutoTour);
     fpsBtn?.removeEventListener('click', toggleFps);
     wingPrevBtn?.removeEventListener('click', onWingPrev);
     wingNextBtn?.removeEventListener('click', onWingNext);
     artPrevBtn?.removeEventListener('click', onArtPrev);
     artNextBtn?.removeEventListener('click', onArtNext);
+    targetPill?.removeEventListener('click', onInspectBtn);
     inspectBtn?.removeEventListener('click', onInspectBtn);
     closeBtn?.removeEventListener('click', onClose);
     for (const [btn, down, up] of padHandlers) {
       btn.removeEventListener('pointerdown', down);
       btn.removeEventListener('pointerup', up);
-      btn.removeEventListener('pointerleave', up);
       btn.removeEventListener('pointercancel', up);
+      btn.removeEventListener('lostpointercapture', up);
+      btn.removeEventListener('contextmenu', stopContextMenu);
     }
 
     clearActiveArtTextures();
@@ -1250,6 +1344,7 @@ export async function openMuseum3D(options = {}) {
     renderer.dispose();
 
     stage.replaceChildren();
+    delete overlay.dataset.inputMode;
     overlay.hidden = true;
     document.documentElement.classList.remove('museum-3d-active');
     returnFocusTo?.focus?.({ preventScroll: true });
@@ -1266,5 +1361,6 @@ export async function openMuseum3D(options = {}) {
   camera.rotation.set(player.pitch, player.yaw, 0, 'YXZ');
   renderer.render(scene, camera);
   loadingEl.hidden = true;
+  if (!isTouchProfile) canvas.focus({ preventScroll: true });
   rafId = requestAnimationFrame(stepAnimation);
 }

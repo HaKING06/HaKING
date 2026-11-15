@@ -1,4 +1,4 @@
-import { LANG_DATA } from './translations.js?v=2.5.0-20261115';
+import { LANG_DATA } from './translations.js?v=2.5.1-20261115';
 
 let activeLang = LANG_DATA[document.documentElement.dataset.initialLang] ? document.documentElement.dataset.initialLang : 'en';
 let steamStats = null;
@@ -106,9 +106,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     document.querySelectorAll('[data-open-partner]').forEach(button => {
         button.addEventListener('click', () => openSponsorModal(true));
-    });
-    document.querySelectorAll('[data-modal-tab]').forEach(button => {
-        button.addEventListener('click', event => switchModalTab(event, button.dataset.modalTab));
     });
     document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
     document.getElementById('contact-reset').addEventListener('click', resetContactForm);
@@ -679,13 +676,8 @@ function openSponsorModal(manual = false) {
 function closeSponsorModal(rememberDismiss = true) {
     const modal = document.getElementById('first-time-modal');
     if (!modal || modal.hidden) return;
-    const videoElement = document.getElementById('modal-video');
     modal.classList.remove('is-open');
     modal.hidden = true;
-    if (videoElement) {
-        videoElement.pause();
-        videoElement.currentTime = 0;
-    }
     if (rememberDismiss) {
         safeStorageSet(localStorage, POPUP_LAST_CLOSED_TIME_KEY, Date.now());
     }
@@ -743,27 +735,6 @@ function initSponsorModal() {
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape' && !modal.hidden) closeSponsorModal(true);
     });
-}
-
-function switchModalTab(event, tabName) {
-    event.stopPropagation();
-    document.querySelectorAll('.modal-tab').forEach(btn => {
-        const isTarget = btn === event.currentTarget;
-        btn.classList.toggle('active', isTarget);
-        btn.setAttribute('aria-selected', String(isTarget));
-    });
-    document.querySelectorAll('.modal-tab-content').forEach(content => {
-        content.hidden = content.id !== ('modal-tab-' + tabName);
-    });
-
-    const video = document.getElementById('modal-video');
-    if (video) {
-        if (tabName === 'trailer') {
-            video.play().catch(() => { });
-        } else {
-            video.pause();
-        }
-    }
 }
 
 /* ======================================= */

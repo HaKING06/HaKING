@@ -6,7 +6,7 @@
 
 **Halit Güneş** için geliştirilen; canlı **Steam kütüphane telemetrisi**, etkileşimli **Three.js 3D HP Victus 16** donanım modeli, **20 dilli** (Arapça RTL dahil) çok dilli mimari ve otomatik senkronize edilen **Steam Müze arşivi** sunan statik web platformu.
 
-[![Version](https://img.shields.io/badge/version-2.5.0-f3bd63?style=for-the-badge)](VERSION)
+[![Version](https://img.shields.io/badge/version-2.5.1-f3bd63?style=for-the-badge)](VERSION)
 [![Languages](https://img.shields.io/badge/languages-20%20(%2B%20RTL)-1f2937?style=for-the-badge)](assets/js/translations.js)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3b82f6?style=for-the-badge)](LICENSE)
 [![Live Site](https://img.shields.io/badge/live-steam.haking.tr-10b981?style=for-the-badge)](https://steam.haking.tr/)
@@ -20,6 +20,12 @@
 ## Önizleme
 
 <table>
+  <tr>
+    <td colspan="2" align="center">
+      <a href="docs/museum-3d.png"><img src="docs/museum-3d.png" alt="HaKING 3D Sanal Müze Turu — WebGL Sergi Salonu" width="100%"></a>
+      <br><sub><b>3D Sanal Müze Turu (WebGL)</b> — Mermer büst, kristal avize, yansımalı zemin ve pirinç vitrin çerçeveleri (`WASD`, `Q/R`, `F`, `E`)</sub>
+    </td>
+  </tr>
   <tr>
     <td width="50%" align="center">
       <a href="docs/home-768.png"><img src="docs/home-768.png" alt="HaKING Ana Üs — Steam Profil ve Telemetri" width="100%"></a>
@@ -44,11 +50,12 @@
 
 ---
 
-## Öne Çıkan Özellikler (`v2.5.0`)
+## Öne Çıkan Özellikler (`v2.5.1`)
 
 - **3D Sanal Müze Turu & Steam Görsel Arşivi (`#museum` & `assets/js/museum3d.js`)**
   - Klasik 2D arşiv (`Favoriler`, arama, oyun filtresi, slayt gösterisi ve lightbox) korunur; tek tıkla **"Sanal Turu Başlat"** düğmesine basıldığında isteğe bağlı **WebGL 3D Sergi Salonu** açılır.
-  - Yerel Three.js `r128` eklentileri (`GLTFLoader`, `Reflector`, `RoomEnvironment`) ve Poly Haven **CC0 1.0** 3D modelleri (`marble_bust_01` klasik mermer büst, parlayan `Chandelier_02` avize) ile mermer/sıva/ceviz PBR dokuları; `224` Steam ekran görüntüsünü kanatlar (`15` eser/salon) hâlinde pirinç çerçeveler, duvar aplikleri ve yer yansımalarıyla sergiler (`WASD`, sürükle-bak, FPS kilidi, rehberli otomatik tur ve mobil dokunmatik D-Pad).
+  - Yerel Three.js `r128` eklentileri (`GLTFLoader`, `Reflector`, `RoomEnvironment`) ve Poly Haven **CC0 1.0** 3D modelleri (`marble_bust_01` klasik mermer büst, parlayan `Chandelier_02` avize) ile mermer/sıva/ceviz PBR dokuları; `224` Steam ekran görüntüsünü kanatlar (`15` eser/salon) hâlinde sergiler.
+  - **Cihaza Özel PC / Mobil Deneyimi**: Masaüstünde tam klavye & FPS kontrolü (`WASD` yürü, `Q/R` vitrin değiştir, `F` FPS kilidi, `E` eser aç/kapat ile doğrudan FPS'e dönüş, `T` rehberli tur; D-Pad gizlidir); mobilde uzun basmada kopyalama menüsünü engelleyen SVG D-Pad, dokunma hassasiyeti ve dikey görüş açısı (`72°`) kalibrasyonu devreye girer.
 
 - **3D HP Victus 16-r1015nt Sahneleri (`assets/js/victus.js`)**
   - Three.js `r128` ile sıfırdan modellenmiş koyu antrasit Victus gövdesi, tam Türkçe Q/sayısal klavye dokusu, menteşe, soğutma ızgaraları ve yan portlar.
@@ -57,9 +64,9 @@
   - `update_stats.py`, Steam Web API (`GetOwnedGames`) verisine ek olarak Steam Mağazası toplu `appdetails` API'si (`cc=tr`, `filters=price_overview`) üzerinden kütüphanenin güncel ve liste bazlı MENA-USD hesap değerini otomatik hesaplar ve `data/steam_stats.json` dosyasına yazar.
   - `data/steam_stats.json` üzerinden otomatik senkronize edilen **270 oyun**, toplam süre telemetrisi, **oynanan/oynanmamış oranı** ve **ilk 10 oyunun süre payı**.
   - Anlık Türkçe/yerelleştirilmiş arama (`/` kısayolu), sıralama ve **oynanmamış oyunları hedefleyebilen rastgele oyun ruleti** (`#spin-game-btn`).
-- **Yan Yana Destek & Profesyonel Partner Modu (`#support` & `#first-time-modal`)**
+- **Yan Yana Destek & Sadeleştirilmiş Partner Modu (`#support` & `#first-time-modal`)**
   - **Steam Trade Uplink** ve **Buy Me a Coffee** kartları `>=640px` ekranlarda tek bakışta, kaydırma gerektirmeden yan yana hizalanır.
-  - Yenilenen **CaseHug × HaKING** partner penceresi; afiş (`add/SOL.png`) / WebM tanıtım sekmeleri, tek tıkla `HAK06` kod kopyalama, erişilebilir odak yönetimi, 24 saat erteleme ve Ana Üs / Destek üzerinden isteğe bağlı yeniden açma düğmeleri sunar.
+  - Sadeleştirilen **CaseHug × HaKING** partner penceresi; doğrudan `add/SOL.png` afişi, tek tıkla `HAK06` kod kopyalama, erişilebilir odak yönetimi, 24 saat erteleme ve Ana Üs / Destek üzerinden isteğe bağlı yeniden açma düğmeleri sunar.
 - **20 Dil + Arapça RTL & SEO Poster Hattı**
   - Tek, aranabilir yerel dil seçici (`Türkçe`, `English`, `Español`, `Русский`, `Deutsch`, `Français`, `日本語`, `简体中文`, `Português`, `Italiano`, `한국어`, `العربية` RTL, `हिन्दी`, `বাংলা`, `Nederlands`, `Polski`, `Svenska`, `Tiếng Việt`, `Ελληνικά`, `ไทย`).
   - Tüm diller için üretilen statik poster galerileri (`posters/<code>/index.html`), 40 adet WebP poster (`assets/posters/`), `sitemap.xml` ve OpenGraph meta verileri.
@@ -110,7 +117,7 @@ HaKING/
 ├── scripts/                     # Medya çözümleyici, locale aktarımı ve poster üreteci
 ├── tests/                       # Medya hattı, değerleme ve site bütünlüğü birim testleri
 ├── update_stats.py              # Steam Web API + Mağaza değerleme eşitleme betiği
-├── VERSION / CHANGELOG.md       # Sürüm (2.5.0) ve sürüm notları
+├── VERSION / CHANGELOG.md       # Sürüm (2.5.1) ve sürüm notları
 └── .github/workflows/           # Günlük Steam istatistik ve haftalık ekran görüntüsü akışları
 ```
 

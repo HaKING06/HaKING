@@ -1,3 +1,10 @@
+# HaKING 2.5.1 — 2026-11-15
+
+- Hands-free FPS & keyboard shortcuts in the 3D Virtual Museum (`assets/js/museum3d.js`): pressing `E` now both inspects an exhibit and closes `#gallery-dialog` back into active Pointer Lock (`canvas.requestPointerLock()`) without requiring a mouse click; added `Q` / `R` (and `[` / `]`) for Previous/Next Wing, `F` for FPS toggle on PC, and `T` for Guided Tour.
+- Tailored PC vs Mobile 3D HUD and graphics profiles (`assets/css/upgrade.css`, `assets/js/museum3d.js`): desktop PC hides the touch D-Pad and renders crisp up to `2x` DPR with `1024px` floor reflections; touch/mobile viewports dynamically widen portrait FOV (`72°`), tune swipe look speed and walk pace, use SVG arrow icons inside the D-Pad, and block long-press copy/callout menus via `-webkit-touch-callout: none`, `user-select: none`, `touch-action: none`, pointer capture, and `contextmenu` suppression.
+- Simplified CaseHug Partner Popup (`#first-time-modal`): removed the external trailer tab/video player (`#modal-tab-trailer`, `<video id="modal-video">`), tightened CSP `media-src 'self'`, and focused the card on the `add/SOL.png` banner + `HAK06` creator code across all 20 languages.
+- Added 3D Virtual Museum visual preview (`docs/museum-3d.png`) to `README.md` and refreshed localized posters, WebPs, and Playwright test coverage.
+
 # HaKING 2.5.0 — 2026-11-15
 
 - Optional WebGL 3D Virtual Museum Tour (`assets/js/museum3d.js`): added an opt-in **"Sanal Turu Başlat"** banner inside `#museum` while preserving the classic 2D archive, search, filters, and lightbox. Entering launches an interactive obsidian, walnut, brushed-brass, and reflective marble exhibition hall built with Three.js `r128`.

@@ -930,45 +930,6 @@ body {
   flex: none
 }
 
-.partner-modal .modal-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  padding: 4px;
-  border-radius: 12px;
-  background: #0a0a0d;
-  border: 1px solid #ffffff12
-}
-
-.partner-modal .modal-tab {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 9px 12px;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: #9d9aa5;
-  font: 600 12px/1 system-ui, sans-serif;
-  letter-spacing: .08em;
-  cursor: pointer;
-  transition: .18s
-}
-
-.partner-modal .modal-tab svg {
-  width: 14px;
-  height: 14px
-}
-
-.partner-modal .modal-tab.active,
-.partner-modal .modal-tab[aria-selected=true] {
-  background: #f3bd631c !important;
-  color: #f3bd63 !important;
-  border-bottom: 0 !important;
-  box-shadow: inset 0 0 0 1px #f3bd6345
-}
-
 .partner-modal-body {
   position: relative;
   border-radius: 14px;
@@ -977,766 +938,800 @@ body {
   background: radial-gradient(circle at 50% 45%, #282319, #09090c 78%)
 }
 
-.modal-tab-content[hidden] {
-  display: none !important
-}
-
-.modal-image-link,
-.modal-video-link {
-  display: block;
-  text-decoration: none;
-  color: inherit
-}
-
-.modal-banner-stage,
-.modal-trailer-stage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  min-height: 210px
-}
-
-.modal-banner-img,
-.modal-video-responsive {
-  display: block;
-  width: 100%;
-  max-height: min(285px, 36dvh);
-  object-fit: contain;
-  border-radius: 10px
-}
-
-.partner-modal-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px
-}
-
-.partner-copy {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
-  color: #b8b5c0
-}
-
-.partner-code-row {
-  display: flex;
-  align-items: stretch;
-  gap: 8px
-}
-
-.partner-code-box {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 11px;
-  background: #09090c;
-  border: 1px dashed #f3bd6355
-}
-
-.partner-code-lbl {
-  font: 600 10px/1 monospace;
-  letter-spacing: .1em;
-  color: #9f9aa6
-}
-
-.partner-code-val {
-  font: 700 16px/1 monospace;
-  letter-spacing: .14em;
-  color: #f3bd63
-}
-
-.partner-copy-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 15px;
-  border-radius: 11px;
-  border: 1px solid #f3bd6348;
-  background: #201c16;
-  color: #f3bd63;
-  font: 600 13px/1 system-ui, sans-serif;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: .18s
-}
-
-.partner-copy-btn svg {
-  width: 14px;
-  height: 14px
-}
-
-.partner-copy-btn:hover {
-  background: #2d261b;
-  border-color: #f3bd63
-}
-
-.partner-copy-btn.is-copied {
-  background: #183324;
-  border-color: #3ddc84;
-  color: #8ff5ba
-}
-
-.partner-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap
-}
-
-.partner-cta {
-  flex: 1;
-  min-width: 170px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 18px;
-  border-radius: 11px;
-  background: linear-gradient(135deg, #f3bd63, #e29b38);
-  color: #111;
-  font: 700 13px/1 system-ui, sans-serif;
-  text-decoration: none;
-  letter-spacing: .03em;
-  transition: transform .18s, filter .18s
-}
-
-.partner-cta svg {
-  width: 15px;
-  height: 15px
-}
-
-.partner-cta:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.06)
-}
-
-.partner-snooze {
-  padding: 10px 12px;
-  border: 1px solid #ffffff16;
-  border-radius: 10px;
-  background: transparent;
-  color: #a09da8;
-  font: 500 12px/1 system-ui, sans-serif;
-  cursor: pointer;
-  transition: .18s
-}
-
-.partner-snooze:hover {
-  color: #fff;
-  border-color: #ffffff36
-}
-
-/* 2.4 Armory Telemetry + Random Roulette */
-.library-overview-stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(132px, 1fr));
-  gap: 10px
-}
-
-.roulette-controls {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap
-}
-
-.roulette-btn,
-.armory-pick-btn,
-.armory-pick-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 10px 14px;
-  border-radius: 9px;
-  font: 600 13px/1 system-ui, sans-serif;
-  cursor: pointer;
-  text-decoration: none;
-  transition: .18s
-}
-
-.roulette-btn {
-  border: 1px solid #f3bd6352;
-  background: #f3bd6318;
-  color: #f3bd63
-}
-
-.roulette-btn svg,
-.armory-pick-btn svg,
-.armory-pick-cta svg {
-  width: 15px;
-  height: 15px;
-  flex: none
-}
-
-.roulette-btn:hover,
-.armory-pick-btn:hover {
-  background: #f3bd632b;
-  border-color: #f3bd63
-}
-
-.roulette-filter {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 12px;
-  border-radius: 9px;
-  border: 1px solid #ffffff1a;
-  background: #151418;
-  color: #d6d3de;
-  font: 500 12px/1 system-ui, sans-serif;
-  cursor: pointer;
-  user-select: none
-}
-
-.roulette-filter input {
-  accent-color: #f3bd63;
-  width: 14px;
-  height: 14px;
-  margin: 0;
-  cursor: pointer
-}
-
-.armory-pick {
-  display: grid;
-  grid-template-columns: 168px minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: center;
-  margin: 0 0 22px;
-  padding: 14px;
-  border-radius: 16px;
-  border: 1px solid #f3bd6348;
-  background: linear-gradient(125deg, #1c1813ee, #131318f5);
-  box-shadow: 0 16px 40px #0006
-}
-
-.armory-pick[hidden] {
-  display: none !important
-}
-
-.armory-pick-cover {
-  width: 168px;
-  aspect-ratio: 460/215;
-  border-radius: 10px;
-  background: #1d1c22 center/cover no-repeat;
-  border: 1px solid #ffffff1a
-}
-
-.armory-pick-meta {
-  min-width: 0
-}
-
-.armory-pick-kicker {
-  display: block;
-  font: 600 10px/1.2 monospace;
-  letter-spacing: .14em;
-  color: #f3bd63;
-  margin-bottom: 5px
-}
-
-.armory-pick-meta h3 {
-  margin: 0 0 4px;
-  font: 600 1.08rem/1.25 system-ui, sans-serif;
-  color: #fff;
-  overflow-wrap: anywhere
-}
-
-.armory-pick-meta p {
-  margin: 0;
-  font-size: .86rem;
-  color: #b2afba
-}
-
-.armory-pick-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap
-}
-
-.armory-pick-btn {
-  border: 1px solid #ffffff20;
-  background: #1f1e24;
-  color: #eae7f0
-}
-
-.armory-pick-cta {
-  border: 1px solid #f3bd63;
-  background: #f3bd63;
-  color: #111
-}
-
-.armory-pick-cta:hover {
-  filter: brightness(1.06)
-}
-
-/* 2.4 Museum Slideshow */
-.gallery-controls {
-  flex-wrap: wrap
-}
-
-#gallery-play[aria-pressed=true] {
-  background: #f3bd63;
-  color: #111;
-  border-color: #f3bd63
-}
-
-/* 2.5 WebGL 3D Virtual Museum Tour (Optional Overlay) */
-.museum-3d-banner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 18px 22px;
-  margin: 0 0 22px;
-  border: 1px solid rgba(243, 189, 99, 0.34);
-  border-radius: 14px;
-  background: radial-gradient(circle at 85% 25%, rgba(243, 189, 99, 0.14), rgba(18, 17, 22, 0.96) 62%);
-}
-
-.museum-3d-copy {
-  min-width: 0;
-  flex: 1 1 280px;
-}
-
-.museum-3d-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: #f3bd63;
-  font: 700 11px monospace;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-
-.museum-3d-kicker svg {
-  width: 15px;
-  height: 15px;
-}
-
-.museum-3d-copy h2 {
-  margin: 6px 0 4px;
-  font: 600 clamp(1.1rem, 2.2vw, 1.45rem)/1.25 system-ui, sans-serif;
-  color: #fff;
-}
-
-.museum-3d-copy p {
-  margin: 0;
-  color: #bcb7c4;
-  font: 400 0.92rem/1.45 system-ui, sans-serif;
-}
-
-.museum-3d-start-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 13px 20px;
-  border-radius: 10px;
-  border: 1px solid #f3bd63;
-  background: linear-gradient(135deg, #f3bd63, #d89b3b);
-  color: #100f12;
-  font: 700 0.92rem/1 system-ui, sans-serif;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-
-.museum-3d-start-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.museum-3d-start-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(243, 189, 99, 0.25);
-}
-
-.museum-3d-active,
-.museum-3d-active body {
-  overflow: hidden !important;
-}
-
-.museum-3d-active .lang-box {
-  display: none !important;
-}
-
-.museum-3d-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 90000;
-  background: #0b0c10;
-  color: #f2ede2;
-  overflow: hidden;
-  user-select: none;
-}
-
-.museum-3d-overlay[hidden] {
-  display: none;
-}
-
-.museum-3d-stage {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.museum-3d-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  touch-action: none;
-}
-
-.museum-3d-loading {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  background: rgba(11, 12, 16, 0.92);
-  backdrop-filter: blur(8px);
-}
-
-.museum-3d-loading[hidden] {
-  display: none;
-}
-
-.museum-3d-loading-box {
-  width: min(360px, 100%);
-  padding: 24px;
-  border-radius: 14px;
-  border: 1px solid rgba(243, 189, 99, 0.35);
-  background: #14151c;
-  text-align: center;
-}
-
-.museum-3d-loading-box strong {
-  display: block;
-  color: #f3bd63;
-  font: 700 1.05rem system-ui, sans-serif;
-  margin-bottom: 6px;
-}
-
-.museum-3d-loading-box p {
-  margin: 0 0 14px;
-  font: 400 0.88rem system-ui, sans-serif;
-  color: #ccc6d3;
-}
-
-.museum-3d-track {
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-}
-
-#museum-3d-progress {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #c6913a, #f3bd63);
-  transition: width .22s ease;
-}
-
-.museum-3d-hud {
-  position: absolute;
-  inset-inline: 14px;
-  z-index: 3;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  pointer-events: none;
-}
-
-.museum-3d-top {
-  top: 14px;
-}
-
-.museum-3d-bottom {
-  bottom: 14px;
-}
-
-.museum-3d-brand,
-.museum-3d-top-actions,
-.museum-3d-art-nav,
-.museum-3d-pad {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.museum-3d-brand,
-.museum-3d-art-nav {
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(15, 16, 22, 0.82);
-  backdrop-filter: blur(12px);
-}
-
-#museum-3d-hud-title {
-  color: #f3bd63;
-  font: 700 0.82rem monospace;
-  letter-spacing: .12em;
-}
-
-.museum-3d-wing-nav {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding-inline-start: 8px;
-  border-inline-start: 1px solid rgba(255, 255, 255, 0.14);
-  font: 500 0.82rem system-ui, sans-serif;
-  color: #e4dfd5;
-}
-
-.museum-3d-wing-nav button {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #f3bd63;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.museum-3d-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 13px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(18, 19, 26, 0.86);
-  backdrop-filter: blur(10px);
-  color: #efeae0;
-  font: 600 0.82rem/1 system-ui, sans-serif;
-  cursor: pointer;
-}
-
-.museum-3d-btn svg {
-  width: 15px;
-  height: 15px;
-}
-
-.museum-3d-btn[aria-pressed=true],
-.museum-3d-btn-gold {
-  background: #f3bd63;
-  border-color: #f3bd63;
-  color: #111;
-}
-
-.museum-3d-btn-exit {
-  border-color: rgba(243, 189, 99, 0.45);
-  color: #f3bd63;
-}
-
-.museum-3d-reticle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(243, 189, 99, 0.72);
-  background: rgba(255, 255, 255, 0.25);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.museum-3d-target {
-  position: absolute;
-  top: calc(50% + 22px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  max-width: calc(100vw - 32px);
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(243, 189, 99, 0.55);
-  background: rgba(15, 16, 22, 0.9);
-  color: #fff;
-  font: 600 0.84rem system-ui, sans-serif;
-  cursor: pointer;
-}
-
-.museum-3d-target[hidden] {
-  display: none;
-}
-
-.museum-3d-target kbd {
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: #f3bd63;
-  color: #111;
-  font: 700 0.72rem monospace;
-}
-
-.museum-3d-art-label {
-  max-width: 190px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font: 600 0.82rem system-ui, sans-serif;
-  color: #ece6d9;
-}
-
-.museum-3d-hint {
-  margin: 0;
-  padding: 9px 12px;
-  border-radius: 10px;
-  background: rgba(15, 16, 22, 0.76);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #b8b2be;
-  font: 500 0.78rem system-ui, sans-serif;
-  pointer-events: auto;
-}
-
-.museum-3d-pad {
-  display: grid;
-  grid-template-columns: repeat(3, 36px);
-  grid-template-rows: repeat(2, 34px);
-  gap: 4px;
-  padding: 6px;
-  border-radius: 12px;
-  background: rgba(15, 16, 22, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.museum-3d-pad button {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(243, 189, 99, 0.32);
-  color: #f3bd63;
-  border-radius: 7px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.museum-3d-pad .pad-up {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.museum-3d-pad .pad-left {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.museum-3d-pad .pad-down {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.museum-3d-pad .pad-right {
-  grid-column: 3;
-  grid-row: 2;
-}
-
-@media(max-width:767px) {
-  .museum-3d-hint,
-  .museum-3d-fps-only {
-    display: none;
+  .modal-image-link {
+    display: block;
+    text-decoration: none;
+    color: inherit
   }
 
-  .museum-3d-start-btn {
-    width: 100%;
-  }
+    .modal-banner-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      min-height: 210px
+    }
 
-  .museum-3d-hud {
-    inset-inline: 10px;
-  }
+      .modal-banner-img {
+        display: block;
+        width: 100%;
+        max-height: min(300px, 40dvh);
+        object-fit: contain;
+        border-radius: 10px
+      }
 
-  .museum-3d-brand {
-    width: 100%;
-    justify-content: space-between;
-  }
+      .partner-modal-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px
+      }
 
-  .museum-3d-top-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
+      .partner-copy {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.45;
+        color: #b8b5c0
+      }
 
-  .museum-3d-bottom {
-    flex-direction: column;
-    align-items: stretch;
-  }
+      .partner-code-row {
+        display: flex;
+        align-items: stretch;
+        gap: 8px
+      }
 
-  .museum-3d-pad {
-    align-self: flex-start;
-  }
+      .partner-code-box {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 11px;
+        background: #09090c;
+        border: 1px dashed #f3bd6355
+      }
 
-  .museum-3d-art-nav {
-    justify-content: space-between;
-  }
-}
+      .partner-code-lbl {
+        font: 600 10px/1 monospace;
+        letter-spacing: .1em;
+        color: #9f9aa6
+      }
 
-@media(prefers-reduced-motion:reduce) {
-  .museum-3d-start-btn,
-  #museum-3d-progress {
-    transition: none;
-  }
-}
+      .partner-code-val {
+        font: 700 16px/1 monospace;
+        letter-spacing: .14em;
+        color: #f3bd63
+      }
 
-@media(max-width:768px) {
-  .armory-pick {
-    grid-template-columns: 1fr
-  }
+      .partner-copy-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px 15px;
+        border-radius: 11px;
+        border: 1px solid #f3bd6348;
+        background: #201c16;
+        color: #f3bd63;
+        font: 600 13px/1 system-ui, sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: .18s
+      }
 
-  .armory-pick-cover {
-    width: 100%;
-    max-width: 280px
-  }
-}
+      .partner-copy-btn svg {
+        width: 14px;
+        height: 14px
+      }
 
-@media(max-width:639px) {
-  .support-grid {
-    grid-template-columns: 1fr
-  }
+      .partner-copy-btn:hover {
+        background: #2d261b;
+        border-color: #f3bd63
+      }
 
-  .sanctum-support-actions {
-    width: 100%;
-    justify-content: stretch
-  }
+      .partner-copy-btn.is-copied {
+        background: #183324;
+        border-color: #3ddc84;
+        color: #8ff5ba
+      }
 
-  .sanctum-support-actions>button {
-    flex: 1
-  }
-}
+      .partner-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap
+      }
 
-@media(max-width:480px) {
-  .library-overview-stats {
-    grid-template-columns: 1fr 1fr
-  }
+      .partner-cta {
+        flex: 1;
+        min-width: 170px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 18px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, #f3bd63, #e29b38);
+        color: #111;
+        font: 700 13px/1 system-ui, sans-serif;
+        text-decoration: none;
+        letter-spacing: .03em;
+        transition: transform .18s, filter .18s
+      }
 
-  .partner-actions {
-    flex-direction: column;
-    align-items: stretch
-  }
+      .partner-cta svg {
+        width: 15px;
+        height: 15px
+      }
 
-  .partner-snooze {
-    text-align: center
-  }
-}
+      .partner-cta:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.06)
+      }
 
-@media(prefers-reduced-motion:reduce) {
-  .partner-modal {
-    animation: none
-  }
-}
+      .partner-snooze {
+        padding: 10px 12px;
+        border: 1px solid #ffffff16;
+        border-radius: 10px;
+        background: transparent;
+        color: #a09da8;
+        font: 500 12px/1 system-ui, sans-serif;
+        cursor: pointer;
+        transition: .18s
+      }
+
+      .partner-snooze:hover {
+        color: #fff;
+        border-color: #ffffff36
+      }
+
+      /* 2.4 Armory Telemetry + Random Roulette */
+      .library-overview-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(132px, 1fr));
+        gap: 10px
+      }
+
+      .roulette-controls {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap
+      }
+
+      .roulette-btn,
+      .armory-pick-btn,
+      .armory-pick-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 10px 14px;
+        border-radius: 9px;
+        font: 600 13px/1 system-ui, sans-serif;
+        cursor: pointer;
+        text-decoration: none;
+        transition: .18s
+      }
+
+      .roulette-btn {
+        border: 1px solid #f3bd6352;
+        background: #f3bd6318;
+        color: #f3bd63
+      }
+
+      .roulette-btn svg,
+      .armory-pick-btn svg,
+      .armory-pick-cta svg {
+        width: 15px;
+        height: 15px;
+        flex: none
+      }
+
+      .roulette-btn:hover,
+      .armory-pick-btn:hover {
+        background: #f3bd632b;
+        border-color: #f3bd63
+      }
+
+      .roulette-filter {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 12px;
+        border-radius: 9px;
+        border: 1px solid #ffffff1a;
+        background: #151418;
+        color: #d6d3de;
+        font: 500 12px/1 system-ui, sans-serif;
+        cursor: pointer;
+        user-select: none
+      }
+
+      .roulette-filter input {
+        accent-color: #f3bd63;
+        width: 14px;
+        height: 14px;
+        margin: 0;
+        cursor: pointer
+      }
+
+      .armory-pick {
+        display: grid;
+        grid-template-columns: 168px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        margin: 0 0 22px;
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid #f3bd6348;
+        background: linear-gradient(125deg, #1c1813ee, #131318f5);
+        box-shadow: 0 16px 40px #0006
+      }
+
+      .armory-pick[hidden] {
+        display: none !important
+      }
+
+      .armory-pick-cover {
+        width: 168px;
+        aspect-ratio: 460/215;
+        border-radius: 10px;
+        background: #1d1c22 center/cover no-repeat;
+        border: 1px solid #ffffff1a
+      }
+
+      .armory-pick-meta {
+        min-width: 0
+      }
+
+      .armory-pick-kicker {
+        display: block;
+        font: 600 10px/1.2 monospace;
+        letter-spacing: .14em;
+        color: #f3bd63;
+        margin-bottom: 5px
+      }
+
+      .armory-pick-meta h3 {
+        margin: 0 0 4px;
+        font: 600 1.08rem/1.25 system-ui, sans-serif;
+        color: #fff;
+        overflow-wrap: anywhere
+      }
+
+      .armory-pick-meta p {
+        margin: 0;
+        font-size: .86rem;
+        color: #b2afba
+      }
+
+      .armory-pick-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap
+      }
+
+      .armory-pick-btn {
+        border: 1px solid #ffffff20;
+        background: #1f1e24;
+        color: #eae7f0
+      }
+
+      .armory-pick-cta {
+        border: 1px solid #f3bd63;
+        background: #f3bd63;
+        color: #111
+      }
+
+      .armory-pick-cta:hover {
+        filter: brightness(1.06)
+      }
+
+      /* 2.4 Museum Slideshow */
+      .gallery-controls {
+        flex-wrap: wrap
+      }
+
+      #gallery-play[aria-pressed=true] {
+        background: #f3bd63;
+        color: #111;
+        border-color: #f3bd63
+      }
+
+      /* 2.5 WebGL 3D Virtual Museum Tour (Optional Overlay) */
+      .museum-3d-banner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 22px;
+        margin: 0 0 22px;
+        border: 1px solid rgba(243, 189, 99, 0.34);
+        border-radius: 14px;
+        background: radial-gradient(circle at 85% 25%, rgba(243, 189, 99, 0.14), rgba(18, 17, 22, 0.96) 62%);
+      }
+
+      .museum-3d-copy {
+        min-width: 0;
+        flex: 1 1 280px;
+      }
+
+      .museum-3d-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #f3bd63;
+        font: 700 11px monospace;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+
+      .museum-3d-kicker svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .museum-3d-copy h2 {
+        margin: 6px 0 4px;
+        font: 600 clamp(1.1rem, 2.2vw, 1.45rem)/1.25 system-ui, sans-serif;
+        color: #fff;
+      }
+
+      .museum-3d-copy p {
+        margin: 0;
+        color: #bcb7c4;
+        font: 400 0.92rem/1.45 system-ui, sans-serif;
+      }
+
+      .museum-3d-start-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 13px 20px;
+        border-radius: 10px;
+        border: 1px solid #f3bd63;
+        background: linear-gradient(135deg, #f3bd63, #d89b3b);
+        color: #100f12;
+        font: 700 0.92rem/1 system-ui, sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform .18s ease, box-shadow .18s ease;
+      }
+
+      .museum-3d-start-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .museum-3d-start-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(243, 189, 99, 0.25);
+      }
+
+      .museum-3d-active,
+      .museum-3d-active body {
+        overflow: hidden !important;
+      }
+
+      .museum-3d-active .lang-box {
+        display: none !important;
+      }
+
+      .museum-3d-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 90000;
+        background: #0b0c10;
+        color: #f2ede2;
+        overflow: hidden;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .museum-3d-overlay button,
+      .museum-3d-overlay span,
+      .museum-3d-overlay p,
+      .museum-3d-overlay strong {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+      }
+
+      .museum-3d-overlay[hidden] {
+        display: none;
+      }
+
+      .museum-3d-stage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+
+      .museum-3d-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+
+      .museum-3d-loading {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(11, 12, 16, 0.92);
+        backdrop-filter: blur(8px);
+      }
+
+      .museum-3d-loading[hidden] {
+        display: none;
+      }
+
+      .museum-3d-loading-box {
+        width: min(360px, 100%);
+        padding: 24px;
+        border-radius: 14px;
+        border: 1px solid rgba(243, 189, 99, 0.35);
+        background: #14151c;
+        text-align: center;
+      }
+
+      .museum-3d-loading-box strong {
+        display: block;
+        color: #f3bd63;
+        font: 700 1.05rem system-ui, sans-serif;
+        margin-bottom: 6px;
+      }
+
+      .museum-3d-loading-box p {
+        margin: 0 0 14px;
+        font: 400 0.88rem system-ui, sans-serif;
+        color: #ccc6d3;
+      }
+
+      .museum-3d-track {
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+      }
+
+      #museum-3d-progress {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #c6913a, #f3bd63);
+        transition: width .22s ease;
+      }
+
+      .museum-3d-hud {
+        position: absolute;
+        inset-inline: 14px;
+        z-index: 3;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        pointer-events: none;
+      }
+
+      .museum-3d-top {
+        top: 14px;
+      }
+
+      .museum-3d-bottom {
+        bottom: 14px;
+      }
+
+      .museum-3d-brand,
+      .museum-3d-top-actions,
+        .museum-3d-art-nav {
+          pointer-events: auto;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .museum-3d-pad {
+          pointer-events: auto;
+        }
+
+        .museum-3d-brand,
+        .museum-3d-art-nav {
+          padding: 8px 12px;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(15, 16, 22, 0.82);
+          backdrop-filter: blur(12px);
+        }
+
+        #museum-3d-hud-title {
+          color: #f3bd63;
+          font: 700 0.82rem monospace;
+          letter-spacing: .12em;
+        }
+
+        .museum-3d-wing-nav {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding-inline-start: 8px;
+          border-inline-start: 1px solid rgba(255, 255, 255, 0.14);
+          font: 500 0.82rem system-ui, sans-serif;
+          color: #e4dfd5;
+        }
+
+        .museum-3d-wing-nav button {
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          color: #f3bd63;
+          width: 26px;
+          height: 26px;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+
+        .museum-3d-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 9px 13px;
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          background: rgba(18, 19, 26, 0.86);
+          backdrop-filter: blur(10px);
+          color: #efeae0;
+          font: 600 0.82rem/1 system-ui, sans-serif;
+          cursor: pointer;
+        }
+
+        .museum-3d-btn svg {
+          width: 15px;
+          height: 15px;
+        }
+
+        .museum-3d-btn[aria-pressed=true],
+        .museum-3d-btn-gold {
+          background: #f3bd63;
+          border-color: #f3bd63;
+          color: #111;
+        }
+
+        .museum-3d-btn-exit {
+          border-color: rgba(243, 189, 99, 0.45);
+          color: #f3bd63;
+        }
+
+        .museum-3d-reticle {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 8px;
+          height: 8px;
+          margin: -4px 0 0 -4px;
+          border-radius: 50%;
+          border: 1.5px solid rgba(243, 189, 99, 0.72);
+          background: rgba(255, 255, 255, 0.25);
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .museum-3d-target {
+          position: absolute;
+          top: calc(50% + 22px);
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 4;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          max-width: calc(100vw - 32px);
+          padding: 8px 14px;
+          border-radius: 999px;
+          border: 1px solid rgba(243, 189, 99, 0.55);
+          background: rgba(15, 16, 22, 0.9);
+          color: #fff;
+          font: 600 0.84rem system-ui, sans-serif;
+          cursor: pointer;
+        }
+
+        .museum-3d-target[hidden] {
+          display: none;
+        }
+
+        .museum-3d-target kbd {
+          padding: 3px 8px;
+          border-radius: 6px;
+          background: #f3bd63;
+          color: #111;
+          font: 700 0.72rem monospace;
+        }
+
+        .museum-3d-art-label {
+          max-width: 190px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font: 600 0.82rem system-ui, sans-serif;
+          color: #ece6d9;
+        }
+
+        .museum-3d-hint {
+          margin: 0;
+          padding: 9px 12px;
+          border-radius: 10px;
+          background: rgba(15, 16, 22, 0.76);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          color: #b8b2be;
+          font: 500 0.78rem system-ui, sans-serif;
+          pointer-events: auto;
+        }
+
+        .museum-3d-pad {
+          display: none;
+          grid-template-columns: repeat(3, 42px);
+          grid-template-rows: repeat(2, 38px);
+          gap: 5px;
+          padding: 7px;
+          border-radius: 12px;
+          background: rgba(15, 16, 22, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          touch-action: none;
+        }
+
+        .museum-3d-pad button {
+          display: grid;
+          place-items: center;
+          padding: 0;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(243, 189, 99, 0.34);
+          color: #f3bd63;
+          border-radius: 8px;
+          cursor: pointer;
+          touch-action: none;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .museum-3d-pad button.is-pressed,
+        .museum-3d-pad button:active {
+          background: rgba(243, 189, 99, 0.28);
+          border-color: #f3bd63;
+        }
+
+        .museum-3d-pad button svg {
+          width: 14px;
+          height: 14px;
+          pointer-events: none;
+          display: block;
+        }
+
+        .museum-3d-pad .pad-up {
+          grid-column: 2;
+          grid-row: 1;
+        }
+
+        .museum-3d-pad .pad-left {
+          grid-column: 1;
+          grid-row: 2;
+        }
+
+        .museum-3d-pad .pad-down {
+          grid-column: 2;
+          grid-row: 2;
+        }
+
+        .museum-3d-pad .pad-right {
+          grid-column: 3;
+          grid-row: 2;
+        }
+
+          @media(max-width:768px), (hover:none) and (pointer:coarse) {
+            .museum-3d-pad {
+              display: grid;
+            }
+
+            .museum-3d-hint,
+            .museum-3d-fps-only {
+              display: none;
+            }
+          }
+
+          @media(max-width:767px) {
+            .museum-3d-start-btn {
+              width: 100%;
+            }
+
+            .museum-3d-hud {
+              inset-inline: 10px;
+            }
+
+            .museum-3d-brand {
+              width: 100%;
+              justify-content: space-between;
+            }
+
+            .museum-3d-top-actions {
+              width: 100%;
+              justify-content: flex-end;
+            }
+
+            .museum-3d-bottom {
+              flex-direction: column;
+              align-items: stretch;
+            }
+
+            .museum-3d-pad {
+              align-self: flex-start;
+            }
+
+            .museum-3d-art-nav {
+              justify-content: space-between;
+            }
+          }
+
+          @media(prefers-reduced-motion:reduce) {
+
+            .museum-3d-start-btn,
+            #museum-3d-progress {
+              transition: none;
+            }
+          }
+
+          @media(max-width:768px) {
+            .armory-pick {
+              grid-template-columns: 1fr
+            }
+
+            .armory-pick-cover {
+              width: 100%;
+              max-width: 280px
+            }
+          }
+
+          @media(max-width:639px) {
+            .support-grid {
+              grid-template-columns: 1fr
+            }
+
+            .sanctum-support-actions {
+              width: 100%;
+              justify-content: stretch
+            }
+
+            .sanctum-support-actions>button {
+              flex: 1
+            }
+          }
+
+          @media(max-width:480px) {
+            .library-overview-stats {
+              grid-template-columns: 1fr 1fr
+            }
+
+            .partner-actions {
+              flex-direction: column;
+              align-items: stretch
+            }
+
+            .partner-snooze {
+              text-align: center
+            }
+          }
+
+          @media(prefers-reduced-motion:reduce) {
+            .partner-modal {
+              animation: none
+            }
+          }
