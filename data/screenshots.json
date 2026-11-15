@@ -6,7 +6,8 @@
       "appid": 3240220,
       "game": "Grand Theft Auto V Enhanced",
       "image": "https://images.steamusercontent.com/ugc/13615862974825134304/60F035ECEC7D4416F1BDE98B002774254F22C5DF/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/18299659068862831942/C4B6408EC28DDBD8F1B5672861BC381E6BDFC7E6/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3837844844",
@@ -45,7 +46,8 @@
       "appid": 233270,
       "game": "Far Cry® 3 Blood Dragon",
       "image": "https://images.steamusercontent.com/ugc/17052031882634721499/0CC7A5FF33F9683BD17D34BA1EBF3C3193CBACE6/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/17052031882634721499/0CC7A5FF33F9683BD17D34BA1EBF3C3193CBACE6/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3825270299",
@@ -132,7 +134,8 @@
       "appid": 1222140,
       "game": "Detroit: Become Human",
       "image": "https://images.steamusercontent.com/ugc/17898695783541847419/476089FAAFFF4708917784A454295AD495B8F563/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/17898695783541847419/476089FAAFFF4708917784A454295AD495B8F563/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3803762595",
@@ -219,7 +222,8 @@
       "appid": 356190,
       "game": "Middle-earth™: Shadow of War™",
       "image": "https://images.steamusercontent.com/ugc/17870279857362059174/040B89C622AE5E5A2D7AE23ADCE779D8BEA62C64/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/17870279857362059174/040B89C622AE5E5A2D7AE23ADCE779D8BEA62C64/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3790576174",
@@ -306,7 +310,8 @@
       "appid": 241930,
       "game": "Middle-earth™: Shadow of Mordor™",
       "image": "https://images.steamusercontent.com/ugc/10182204417266680864/87358F44F99ABDFCB8D5FF54D9094A02B519C695/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/10182204417266680864/87358F44F99ABDFCB8D5FF54D9094A02B519C695/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3787364177",
@@ -393,7 +398,8 @@
       "appid": 582160,
       "game": "Assassin's Creed Origins",
       "image": "https://images.steamusercontent.com/ugc/16831841733961304836/884C1D29DC548A30D4C4582ED96E6BCD67F91708/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/16831841733961304836/884C1D29DC548A30D4C4582ED96E6BCD67F91708/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3770927102",
@@ -424,63 +430,72 @@
       "appid": 582160,
       "game": "Assassin's Creed Origins",
       "image": "https://images.steamusercontent.com/ugc/10672533435529525894/A7C0BF23EBC66269F6D8DE38849CF825FF0CAC22/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/10672533435529525894/A7C0BF23EBC66269F6D8DE38849CF825FF0CAC22/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3765862921",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
       "image": "https://images.steamusercontent.com/ugc/11519978304744500000/ADC020715E7D23689C2CAC46C6BF8F2013E0EF55/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/11519978304744500000/ADC020715E7D23689C2CAC46C6BF8F2013E0EF55/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3765234321",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
       "image": "https://images.steamusercontent.com/ugc/13658264218024023181/2394AD42B8ECAB22086493528171C87665892C41/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/16791323104981614955/051D73DE7098E49057F5CA682469309DDEE823BF/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3762791292",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
       "image": "https://images.steamusercontent.com/ugc/12797352553598001604/6EA0F74531BA4E2275544338511B551583795BC3/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/16479960117318262931/3E4074DF2F47DFB58AD32289D9B17CE88FF0C41A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3762791150",
       "appid": 582160,
       "game": "Assassin's Creed Origins",
       "image": "https://images.steamusercontent.com/ugc/16729640755228437972/1ABD8C4A31D364CD6D9D0151660535E9365763E0/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/14477165281381616397/7828B8AC52B401A45B8260107B02EF4DFE8CD342/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3761684647",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
       "image": "https://images.steamusercontent.com/ugc/18157261456911458420/50DFE5D644EEDB272E26F8BDCA0946C1B3D3CA1F/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/13432877561684750602/316F3A9F6CA02E1ED031D87EE75436CE75290F25/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3761684555",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
       "image": "https://images.steamusercontent.com/ugc/15552403119340998399/9664B9FB8893F539967E2DC19066647BCF56247E/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/12412212809788586057/BD2A65C6F97C9055570BCBDAC6B70D6DB7CC1BDA/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3761391646",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
       "image": "https://images.steamusercontent.com/ugc/17797626723455066363/1268CA919B23E7C7381E4A7246EAA519CC8436DC/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/17797626723455066363/1268CA919B23E7C7381E4A7246EAA519CC8436DC/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3761391395",
       "appid": 1659420,
       "game": "UNCHARTED™: Legacy of Thieves Collection",
       "image": "https://images.steamusercontent.com/ugc/16858060285795002671/061D484B0C7C5CEB0E821F41B934B7682B4DA226/",
-      "favorite": false
+      "favorite": false,
+      "original": "https://images.steamusercontent.com/ugc/16858060285795002671/061D484B0C7C5CEB0E821F41B934B7682B4DA226/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&letterbox=false"
     },
     {
       "id": "3761391298",
