@@ -47,6 +47,32 @@ class SiteIntegrityTests(unittest.TestCase):
         self.assertGreater(int(stats['total_games']), 0)
         self.assertTrue(len(stats.get('games', [])) >= int(stats['total_games']))
 
+    def test_css_braces_balanced(self):
+        tokens = re.compile(r'/\*[\s\S]*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[{}]')
+        for rel in ('assets/css/main.css', 'assets/css/upgrade.css'):
+            raw = (ROOT / rel).read_text(encoding='utf-8')
+            depth = 0
+            stack = []
+            last = 0
+            for m in tokens.finditer(raw):
+                tok = m.group(0)
+                if tok == '{':
+                    hdr = ' '.join(re.sub(r'/\*[\s\S]*?\*/', '', raw[last:m.start()]).split())
+                    if depth > 0:
+                        self.assertTrue(
+                            stack[-1],
+                            f'Unexpected nested CSS block in {rel} around: {hdr[-80:]!r}',
+                        )
+                    stack.append('@' in hdr)
+                    depth += 1
+                    last = m.end()
+                elif tok == '}':
+                    depth -= 1
+                    self.assertGreaterEqual(depth, 0, f'Unexpected closing brace in {rel}')
+                    stack.pop()
+                    last = m.end()
+            self.assertEqual(depth, 0, f'Unbalanced CSS braces in {rel}: depth={depth}')
+
 
 if __name__ == '__main__':
     unittest.main()

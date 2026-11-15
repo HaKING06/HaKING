@@ -1,3 +1,9 @@
+# HaKING 2.5.2 — 2026-11-15
+
+- Fixed critical CSS brace mismatch in `assets/css/main.css` that broke layout, button styling, hero columns, `#armory` filter controls, and `#support` side-by-side layout across desktop and mobile sections.
+- Fixed laptop/desktop sidebar height fitting (`@media (min-width: 769px)`): dynamically scales sidebar spacing and button height (`clamp()`) with subtle overflow scroll fallback so the bottom **HEDİYE** (`#support`) navigation button never clips off screen on `720px`/`768px`-tall laptop displays.
+- Fixed blurry / washed-out frames in 3D Virtual Museum Salons 10–15 (`data/screenshots.json`, `assets/js/museum3d.js`): resolved canonical full-resolution Steam `original` image URLs across the archive, switched PC desktop salon frames to uniform `1280×720` HD textures with `8x` anisotropic filtering, and eliminated white emissive gray haze + heavy additive light-cone wash on focused frames.
+
 # HaKING 2.5.1 — 2026-11-15
 
 - Hands-free FPS & keyboard shortcuts in the 3D Virtual Museum (`assets/js/museum3d.js`): pressing `E` now both inspects an exhibit and closes `#gallery-dialog` back into active Pointer Lock (`canvas.requestPointerLock()`) without requiring a mouse click; added `Q` / `R` (and `[` / `]`) for Previous/Next Wing, `F` for FPS toggle on PC, and `T` for Guided Tour.

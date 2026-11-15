@@ -73,6 +73,8 @@ def run(interval=8, max_minutes=40):
                         return False
                     print(f'Steam rate limit: waiting {delay:.0f}s as requested.', flush=True)
                     time.sleep(delay)
+                    session.close()
+                    session = requests.Session()
                     continue
                 response.raise_for_status()
                 parser = MediaParser(); parser.feed(response.text)

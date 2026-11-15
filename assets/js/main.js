@@ -1,4 +1,4 @@
-import { LANG_DATA } from './translations.js?v=2.5.1-20261115';
+import { LANG_DATA } from './translations.js?v=2.5.2-20261115';
 
 let activeLang = LANG_DATA[document.documentElement.dataset.initialLang] ? document.documentElement.dataset.initialLang : 'en';
 let steamStats = null;

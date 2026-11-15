@@ -5,9 +5,9 @@
  */
 
 const VENDOR_ADDONS = [
-  'assets/vendor/GLTFLoader.js?v=2.5.1-20261115',
-  'assets/vendor/Reflector.js?v=2.5.1-20261115',
-  'assets/vendor/RoomEnvironment.js?v=2.5.1-20261115'
+  'assets/vendor/GLTFLoader.js?v=2.5.2-20261115',
+  'assets/vendor/Reflector.js?v=2.5.2-20261115',
+  'assets/vendor/RoomEnvironment.js?v=2.5.2-20261115'
 ];
 
 const WING_SIZE = 15;
@@ -217,7 +217,7 @@ export async function openMuseum3D(options = {}) {
   const isTouchProfile = detectTouchProfile();
   overlay.dataset.inputMode = isTouchProfile ? 'touch' : 'desktop';
   const fovForAspect = (w, h) => ((w / Math.max(1, h)) < 0.85 ? 72 : 60);
-  const maxAniso = isTouchProfile ? 2 : 4;
+  const maxAniso = isTouchProfile ? 2 : 8;
 
   overlay.hidden = false;
   document.documentElement.classList.add('museum-3d-active');
@@ -658,11 +658,12 @@ export async function openMuseum3D(options = {}) {
     );
     group.add(innerMat);
 
-    // Artwork canvas plane (with interactive emissive boost on focus)
+    // Artwork canvas plane (matte museum print finish preserves true contrast without gray glare)
     const artMat = trackMat(new T.MeshStandardMaterial({
       color: col('#ffffff'),
-      roughness: 0.42,
-      metalness: 0.04,
+      roughness: 0.84,
+      metalness: 0.0,
+      envMapIntensity: 0.12,
       emissive: col('#000000'),
       emissiveIntensity: 0
     }));
@@ -670,7 +671,7 @@ export async function openMuseum3D(options = {}) {
     artMesh.position.z = 0.052;
     group.add(artMesh);
 
-    // Sculpted brass overhead picture sconce + additive light cone
+    // Sculpted brass overhead picture sconce + gentle top light cone
     const sconceArm = new T.Mesh(trackGeo(new T.BoxGeometry(0.05, 0.04, 0.42)), brassMat);
     sconceArm.position.set(0, frameH / 2 + 0.36, 0.18);
     const sconceHood = new T.Mesh(trackGeo(new T.BoxGeometry(frameW * 0.56, 0.06, 0.14)), brassMat);
@@ -683,13 +684,13 @@ export async function openMuseum3D(options = {}) {
     const haloMat = trackMat(new T.MeshBasicMaterial({
       map: lightConeTex,
       transparent: true,
-      opacity: 0.36,
+      opacity: 0.11,
       blending: T.AdditiveBlending,
       depthWrite: false,
       side: T.DoubleSide
     }));
-    const halo = new T.Mesh(trackGeo(new T.PlaneGeometry(frameW * 1.15, frameH * 1.3)), haloMat);
-    halo.position.set(0, 0.18, 0.12);
+    const halo = new T.Mesh(trackGeo(new T.PlaneGeometry(frameW * 1.08, frameH * 0.92)), haloMat);
+    halo.position.set(0, frameH * 0.24, 0.11);
     group.add(halo);
 
     // Engraved museum brass plaque beneath frame
@@ -789,8 +790,11 @@ export async function openMuseum3D(options = {}) {
 
   let activeWingTextures = [];
   let wingLoadToken = 0;
+  let wingFetchTimer = null;
 
   function clearActiveArtTextures() {
+    clearTimeout(wingFetchTimer);
+    wingFetchTimer = null;
     while (activeWingTextures.length) {
       const tex = activeWingTextures.pop();
       tex?.dispose?.();
@@ -804,6 +808,7 @@ export async function openMuseum3D(options = {}) {
 
     const wingItems = wings[wingIndex];
     const startNumber = wingIndex * WING_SIZE + 1;
+    const pendingLoads = [];
     exhibits.forEach((exhibit, idx) => {
       const item = wingItems[idx] || wingItems[idx % wingItems.length];
       exhibit.item = item;
@@ -819,41 +824,52 @@ export async function openMuseum3D(options = {}) {
       exhibit.plaqueMat.map = plaqueTex;
       exhibit.plaqueMat.needsUpdate = true;
 
-      const src = steamGalleryUrl(item, exhibit.slot.hero);
-      if (!src) return;
-      remoteTexLoader.load(
-        src,
-        tex => {
-          if (disposed || token !== wingLoadToken) {
-            tex.dispose();
-            return;
-          }
-          tex.encoding = T.sRGBEncoding;
-          tex.anisotropy = Math.min(maxAniso, renderer.capabilities.getMaxAnisotropy());
-          activeWingTextures.push(tex);
-          exhibit.artMat.map = tex;
-          exhibit.artMat.needsUpdate = true;
-        },
-        undefined,
-        () => {
-          const fallbackSrc = steamGalleryUrl(item, false);
-          if (!fallbackSrc || fallbackSrc === src) return;
-          remoteTexLoader.load(
-            fallbackSrc,
-            tex => {
-              if (disposed || token !== wingLoadToken) {
-                tex.dispose();
-                return;
-              }
-              tex.encoding = T.sRGBEncoding;
-              activeWingTextures.push(tex);
-              exhibit.artMat.map = tex;
-              exhibit.artMat.needsUpdate = true;
-            }
-          );
-        }
-      );
+      const wantHighRes = exhibit.slot.hero || !isTouchProfile;
+      const src = steamGalleryUrl(item, wantHighRes);
+      if (src) pendingLoads.push([exhibit, item, src]);
     });
+
+    const startWingFetches = () => {
+      if (disposed || token !== wingLoadToken) return;
+      pendingLoads.forEach(([exhibit, item, src]) => {
+        remoteTexLoader.load(
+          src,
+          tex => {
+            if (disposed || token !== wingLoadToken) {
+              tex.dispose();
+              return;
+            }
+            tex.encoding = T.sRGBEncoding;
+            tex.anisotropy = Math.min(maxAniso, renderer.capabilities.getMaxAnisotropy());
+            activeWingTextures.push(tex);
+            exhibit.artMat.map = tex;
+            exhibit.artMat.needsUpdate = true;
+          },
+          undefined,
+          () => {
+            const fallbackSrc = steamGalleryUrl(item, false);
+            if (!fallbackSrc || fallbackSrc === src || disposed || token !== wingLoadToken) return;
+            remoteTexLoader.load(
+              fallbackSrc,
+              tex => {
+                if (disposed || token !== wingLoadToken) {
+                  tex.dispose();
+                  return;
+                }
+                tex.encoding = T.sRGBEncoding;
+                tex.anisotropy = Math.min(maxAniso, renderer.capabilities.getMaxAnisotropy());
+                activeWingTextures.push(tex);
+                exhibit.artMat.map = tex;
+                exhibit.artMat.needsUpdate = true;
+              }
+            );
+          }
+        );
+      });
+    };
+
+    if (token === 1) startWingFetches();
+    else wingFetchTimer = setTimeout(startWingFetches, 180);
 
     if (wingLabelEl) {
       const prefix = wingIndex === 0 ? (c.museum_3d_showcase || 'Showcase') : (c.museum_3d_wing || 'Wing');
@@ -995,13 +1011,12 @@ export async function openMuseum3D(options = {}) {
     if (hit !== focusedExhibit) {
       if (focusedExhibit) {
         focusedExhibit.artMat.emissiveIntensity = 0;
-        focusedExhibit.haloMat.opacity = 0.36;
+        focusedExhibit.haloMat.opacity = 0.11;
       }
       focusedExhibit = hit;
       if (focusedExhibit) {
-        focusedExhibit.artMat.emissive.set('#ffffff');
-        focusedExhibit.artMat.emissiveIntensity = 0.09;
-        focusedExhibit.haloMat.opacity = 0.54;
+        focusedExhibit.artMat.emissiveIntensity = 0;
+        focusedExhibit.haloMat.opacity = 0.21;
         if (targetTitle) {
           targetTitle.textContent = `№ ${focusedExhibit.numberLabel} · ${focusedExhibit.item?.game || ''}`;
         }
@@ -1302,6 +1317,7 @@ export async function openMuseum3D(options = {}) {
     if (disposed) return;
     disposed = true;
     cancelAnimationFrame(rafId);
+    clearTimeout(wingFetchTimer);
     stopAutoTour();
     clearInputs();
     if (document.pointerLockElement === canvas) document.exitPointerLock?.();
