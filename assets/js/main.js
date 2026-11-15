@@ -1,4 +1,4 @@
-import { LANG_DATA } from './translations.js?v=2.4.0-20261115';
+import { LANG_DATA } from './translations.js?v=2.4.1-20261115';
 
 let activeLang = LANG_DATA[document.documentElement.dataset.initialLang] ? document.documentElement.dataset.initialLang : 'en';
 let steamStats = null;
@@ -85,851 +85,870 @@ window.addEventListener('DOMContentLoaded', () => {
         profileAvatar.src = 'assets/images/HaKING2.png';
     }, { once: true });
 
-        setLang(activeLang); // Browser preference, timezone fallback, or saved choice
-        window.addEventListener('haking:selectlang', event => {
-            if (event.detail) setLang(event.detail, true);
-        });
-        document.querySelectorAll('.section').forEach(section => {
-            const isActive = section.classList.contains('active');
-            section.inert = !isActive;
-            section.setAttribute('aria-hidden', String(!isActive));
-        });
-        nav(location.hash.slice(1) || 'sanctum', false);
-        window.addEventListener('popstate', () => nav(location.hash.slice(1) || 'sanctum', false));
-        runBootLoader(); // Start boot sequence
-
-        document.querySelectorAll('.nav-btn').forEach(button => {
-            button.addEventListener('click', () => nav(button.dataset.t));
-        });
-        document.querySelectorAll('[data-nav-target]').forEach(button => {
-            button.addEventListener('click', () => nav(button.dataset.navTarget));
-        });
-        document.querySelectorAll('[data-open-partner]').forEach(button => {
-            button.addEventListener('click', () => openSponsorModal(true));
-        });
-        document.querySelectorAll('[data-modal-tab]').forEach(button => {
-            button.addEventListener('click', event => switchModalTab(event, button.dataset.modalTab));
-        });
-        document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
-        document.getElementById('contact-reset').addEventListener('click', resetContactForm);
-
-        const gameSearch = document.getElementById('game-search');
-        const gameSort = document.getElementById('game-sort');
-        gameSearch.addEventListener('input', refreshGameCollection);
-        gameSort.addEventListener('change', refreshGameCollection);
-        document.getElementById('spin-game-btn')?.addEventListener('click', spinRandomGame);
-        document.getElementById('spin-again-btn')?.addEventListener('click', spinRandomGame);
-        document.addEventListener('keydown', event => {
-            const target = event.target;
-            const isEditing = target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-            if (event.key === '/' && !isEditing && !event.ctrlKey && !event.metaKey && !event.altKey) {
-                event.preventDefault();
-                if (document.querySelector('.section.active')?.id === 'armory') {
-                    gameSearch.focus();
-                } else {
-                    nav('armory');
-                    gameSearch.focus();
-                }
-            }
-            if (event.key === 'Escape' && document.activeElement === gameSearch) {
-                gameSearch.value = '';
-                refreshGameCollection();
-                gameSearch.blur();
-            }
-        });
-        refreshGameCollection();
-
-        initSponsorModal();
+    setLang(activeLang); // Browser preference, timezone fallback, or saved choice
+    window.addEventListener('haking:selectlang', event => {
+        if (event.detail) setLang(event.detail, true);
     });
+    document.querySelectorAll('.section').forEach(section => {
+        const isActive = section.classList.contains('active');
+        section.inert = !isActive;
+        section.setAttribute('aria-hidden', String(!isActive));
+    });
+    nav(location.hash.slice(1) || 'sanctum', false);
+    window.addEventListener('popstate', () => nav(location.hash.slice(1) || 'sanctum', false));
+    runBootLoader(); // Start boot sequence
 
-    function nav(id, updateHistory = true) {
-        const next = document.getElementById(id);
-        if (!next?.classList.contains('section')) return;
-        const current = document.querySelector('.section.active');
-        if (current === next) return;
-        // Commit state synchronously: fast repeated navigation must not leave stale tween callbacks.
-        document.querySelectorAll('.section').forEach(section => {
-            gsap.killTweensOf?.(section);
-            section.getAnimations?.().forEach(animation => animation.cancel());
-            const active = section === next;
-            section.classList.toggle('active', active);
-            section.inert = !active;
-            section.setAttribute('aria-hidden', String(!active));
-            section.style.opacity = active ? '1' : '0';
-            section.style.transform = 'none';
-        });
-        next.scrollTop = 0;
-        document.querySelectorAll('.nav-btn').forEach(button => {
-            const active = button.dataset.t === id;
-            button.classList.toggle('active', active);
-            if (active) button.setAttribute('aria-current', 'page');
-            else button.removeAttribute('aria-current');
-        });
-        if (updateHistory && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
-        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            next.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: 'ease-out' });
-        }
-    }
+    document.querySelectorAll('.nav-btn').forEach(button => {
+        button.addEventListener('click', () => nav(button.dataset.t));
+    });
+    document.querySelectorAll('[data-nav-target]').forEach(button => {
+        button.addEventListener('click', () => nav(button.dataset.navTarget));
+    });
+    document.querySelectorAll('[data-open-partner]').forEach(button => {
+        button.addEventListener('click', () => openSponsorModal(true));
+    });
+    document.querySelectorAll('[data-modal-tab]').forEach(button => {
+        button.addEventListener('click', event => switchModalTab(event, button.dataset.modalTab));
+    });
+    document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
+    document.getElementById('contact-reset').addEventListener('click', resetContactForm);
 
-    function formatSteamHours(minutes) {
-        const hours = Math.max(0, Number(minutes) || 0) / 60;
-        const locale = numberLocales[activeLang] || 'en-US';
-        const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-        const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(hours);
-        return `${formatted} ${labels.hours_short || 'h'}`;
-    }
-
-    function formatLocalizedNumber(value) {
-        const number = Number(value);
-        return Number.isFinite(number)
-            ? new Intl.NumberFormat(numberLocales[activeLang] || 'en-US', { maximumFractionDigits: 0 }).format(number)
-            : '—';
-    }
-
-    function formatTotalHours(value) {
-        const hours = Number(String(value ?? '').replace(/[^\d]/g, ''));
-        if (!Number.isFinite(hours)) return '—';
-        const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-        return `${formatLocalizedNumber(hours)} ${labels.hours_short || 'h'}`;
-    }
-
-    const ALLOWED_STEAM_ASSET_HOSTS = new Set([
-        'shared.akamai.steamstatic.com',
-        'shared.cloudflare.steamstatic.com',
-        'shared.fastly.steamstatic.com',
-        'shared.steamstatic.com',
-        'cdn.akamai.steamstatic.com',
-        'cdn.cloudflare.steamstatic.com',
-        'cdn.fastly.steamstatic.com',
-        'media.steampowered.com'
-    ]);
-
-    function sanitizeSteamAssetUrl(rawUrl) {
-        try {
-            const parsed = new URL(String(rawUrl || ''));
-            if (parsed.protocol === 'https:' && ALLOWED_STEAM_ASSET_HOSTS.has(parsed.hostname)) {
-                return parsed.href.replace(/["'()\\<>]/g, '');
+    const gameSearch = document.getElementById('game-search');
+    const gameSort = document.getElementById('game-sort');
+    gameSearch.addEventListener('input', refreshGameCollection);
+    gameSort.addEventListener('change', refreshGameCollection);
+    document.getElementById('spin-game-btn')?.addEventListener('click', spinRandomGame);
+    document.getElementById('spin-again-btn')?.addEventListener('click', spinRandomGame);
+    document.addEventListener('keydown', event => {
+        const target = event.target;
+        const isEditing = target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+        if (event.key === '/' && !isEditing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+            event.preventDefault();
+            if (document.querySelector('.section.active')?.id === 'armory') {
+                gameSearch.focus();
+            } else {
+                nav('armory');
+                gameSearch.focus();
             }
-        } catch (_) { }
-        return '';
-    }
-
-    function updateLibrarySummary(data) {
-        const totalGames = Number(data.total_games);
-        const totalHours = formatTotalHours(data.total_hours);
-        const games = Array.isArray(data.games) ? data.games : (data.top_games || []);
-        const longplayCount = games.filter(game => Number(game.playtime_minutes) >= 6000).length;
-        const playedCount = games.filter(game => Number(game.playtime_minutes) > 0).length;
-        const totalMinutes = games.reduce((sum, game) => sum + Math.max(0, Number(game.playtime_minutes) || 0), 0);
-        const top10Minutes = [...games]
-            .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes))
-            .slice(0, 10)
-            .reduce((sum, game) => sum + Math.max(0, Number(game.playtime_minutes) || 0), 0);
-        const playedPct = games.length ? Math.round((playedCount / games.length) * 100) : 0;
-        const topSharePct = totalMinutes > 0 ? Math.round((top10Minutes / totalMinutes) * 100) : 0;
-        const gameText = formatLocalizedNumber(data.total_games);
-        const longplayText = formatLocalizedNumber(longplayCount);
-
-        const homeHours = document.getElementById('total-hours');
-        const homeGames = document.getElementById('total-games');
-        const libraryGames = document.getElementById('library-game-count');
-        const libraryHours = document.getElementById('library-total-hours');
-        const libraryLongplay = document.getElementById('library-longplay-count');
-        const libraryPlayed = document.getElementById('library-played-count');
-        const libraryTopShare = document.getElementById('library-top-share');
-        if (homeHours && data.total_hours) homeHours.textContent = totalHours;
-        if (homeGames && Number.isFinite(totalGames)) homeGames.textContent = gameText;
-        if (libraryGames && Number.isFinite(totalGames)) libraryGames.textContent = gameText;
-        if (libraryHours && data.total_hours) libraryHours.textContent = totalHours;
-        if (libraryLongplay) libraryLongplay.textContent = longplayText;
-        if (libraryPlayed) libraryPlayed.textContent = games.length ? `${formatLocalizedNumber(playedCount)} (${playedPct}%)` : '—';
-        if (libraryTopShare) libraryTopShare.textContent = totalMinutes > 0 ? `${topSharePct}%` : '—';
-    }
-
-    function steamImageCandidates(game) {
-        const appid = Number(game?.appid);
-        if (!Number.isSafeInteger(appid) || appid <= 0) return [];
-
-        const base = 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/' + appid;
-        const candidates = [];
-        const customCover = sanitizeSteamAssetUrl(game.cover_url);
-        if (customCover) candidates.push(customCover);
-        candidates.push(
-            base + '/header.jpg',
-            base + '/capsule_616x353.jpg',
-            'https://cdn.akamai.steamstatic.com/steam/apps/' + appid + '/header.jpg',
-            'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appid + '/header.jpg'
-        );
-        const iconHash = typeof game.icon_hash === 'string' ? game.icon_hash.trim() : '';
-        if (/^[a-f0-9]{32}$/i.test(iconHash)) {
-            candidates.push('https://media.steampowered.com/steamcommunity/public/images/apps/' + appid + '/' + iconHash + '.jpg');
         }
-        return [...new Set(candidates.map(sanitizeSteamAssetUrl).filter(Boolean))];
+        if (event.key === 'Escape' && document.activeElement === gameSearch) {
+            gameSearch.value = '';
+            refreshGameCollection();
+            gameSearch.blur();
+        }
+    });
+    refreshGameCollection();
+
+    initSponsorModal();
+});
+
+function nav(id, updateHistory = true) {
+    const next = document.getElementById(id);
+    if (!next?.classList.contains('section')) return;
+    const current = document.querySelector('.section.active');
+    if (current === next) return;
+    // Commit state synchronously: fast repeated navigation must not leave stale tween callbacks.
+    document.querySelectorAll('.section').forEach(section => {
+        gsap.killTweensOf?.(section);
+        section.getAnimations?.().forEach(animation => animation.cancel());
+        const active = section === next;
+        section.classList.toggle('active', active);
+        section.inert = !active;
+        section.setAttribute('aria-hidden', String(!active));
+        section.style.opacity = active ? '1' : '0';
+        section.style.transform = 'none';
+    });
+    next.scrollTop = 0;
+    document.querySelectorAll('.nav-btn').forEach(button => {
+        const active = button.dataset.t === id;
+        button.classList.toggle('active', active);
+        if (active) button.setAttribute('aria-current', 'page');
+        else button.removeAttribute('aria-current');
+    });
+    if (updateHistory && location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        next.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: 'ease-out' });
+    }
+}
+
+function formatSteamHours(minutes) {
+    const hours = Math.max(0, Number(minutes) || 0) / 60;
+    const locale = numberLocales[activeLang] || 'en-US';
+    const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+    const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(hours);
+    return `${formatted} ${labels.hours_short || 'h'}`;
+}
+
+function formatLocalizedNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number)
+        ? new Intl.NumberFormat(numberLocales[activeLang] || 'en-US', { maximumFractionDigits: 0 }).format(number)
+        : '—';
+}
+
+function formatTotalHours(value) {
+    const hours = Number(String(value ?? '').replace(/[^\d]/g, ''));
+    if (!Number.isFinite(hours)) return '—';
+    const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+    return `${formatLocalizedNumber(hours)} ${labels.hours_short || 'h'}`;
+}
+
+function formatUsdCurrency(value) {
+    const amount = Number(value);
+    return Number.isFinite(amount) && amount > 0
+        ? `$${formatLocalizedNumber(Math.round(amount))}`
+        : '—';
+}
+
+const ALLOWED_STEAM_ASSET_HOSTS = new Set([
+    'shared.akamai.steamstatic.com',
+    'shared.cloudflare.steamstatic.com',
+    'shared.fastly.steamstatic.com',
+    'shared.steamstatic.com',
+    'cdn.akamai.steamstatic.com',
+    'cdn.cloudflare.steamstatic.com',
+    'cdn.fastly.steamstatic.com',
+    'media.steampowered.com'
+]);
+
+function sanitizeSteamAssetUrl(rawUrl) {
+    try {
+        const parsed = new URL(String(rawUrl || ''));
+        if (parsed.protocol === 'https:' && ALLOWED_STEAM_ASSET_HOSTS.has(parsed.hostname)) {
+            return parsed.href.replace(/["'()\\<>]/g, '');
+        }
+    } catch (_) { }
+    return '';
+}
+
+function updateLibrarySummary(data) {
+    const totalGames = Number(data.total_games);
+    const totalHours = formatTotalHours(data.total_hours);
+    const games = Array.isArray(data.games) ? data.games : (data.top_games || []);
+    const longplayCount = games.filter(game => Number(game.playtime_minutes) >= 6000).length;
+    const playedCount = games.filter(game => Number(game.playtime_minutes) > 0).length;
+    const totalMinutes = games.reduce((sum, game) => sum + Math.max(0, Number(game.playtime_minutes) || 0), 0);
+    const top10Minutes = [...games]
+        .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes))
+        .slice(0, 10)
+        .reduce((sum, game) => sum + Math.max(0, Number(game.playtime_minutes) || 0), 0);
+    const playedPct = games.length ? Math.round((playedCount / games.length) * 100) : 0;
+    const topSharePct = totalMinutes > 0 ? Math.round((top10Minutes / totalMinutes) * 100) : 0;
+    const gameText = formatLocalizedNumber(data.total_games);
+    const longplayText = formatLocalizedNumber(longplayCount);
+
+    const homeHours = document.getElementById('total-hours');
+    const homeValue = document.getElementById('account-value');
+    const homeGames = document.getElementById('total-games');
+    const libraryGames = document.getElementById('library-game-count');
+    const libraryHours = document.getElementById('library-total-hours');
+    const libraryLongplay = document.getElementById('library-longplay-count');
+    const libraryPlayed = document.getElementById('library-played-count');
+    const libraryTopShare = document.getElementById('library-top-share');
+    if (homeHours && data.total_hours) homeHours.textContent = totalHours;
+    if (homeValue && Number.isFinite(Number(data.account_value_usd)) && Number(data.account_value_usd) > 0) {
+        const currentUsd = Number(data.account_value_usd);
+        const listUsd = Number(data.account_value_list_usd);
+        homeValue.textContent = formatUsdCurrency(currentUsd);
+        if (Number.isFinite(listUsd) && listUsd > currentUsd) {
+            const regionTag = typeof data.account_value_region === 'string' && data.account_value_region ? ` · ${data.account_value_region}` : '';
+            homeValue.title = `${formatUsdCurrency(listUsd)}${regionTag}`;
+        } else {
+            homeValue.removeAttribute('title');
+        }
+    }
+    if (homeGames && Number.isFinite(totalGames)) homeGames.textContent = gameText;
+    if (libraryGames && Number.isFinite(totalGames)) libraryGames.textContent = gameText;
+    if (libraryHours && data.total_hours) libraryHours.textContent = totalHours;
+    if (libraryLongplay) libraryLongplay.textContent = longplayText;
+    if (libraryPlayed) libraryPlayed.textContent = games.length ? `${formatLocalizedNumber(playedCount)} (${playedPct}%)` : '—';
+    if (libraryTopShare) libraryTopShare.textContent = totalMinutes > 0 ? `${topSharePct}%` : '—';
+}
+
+function steamImageCandidates(game) {
+    const appid = Number(game?.appid);
+    if (!Number.isSafeInteger(appid) || appid <= 0) return [];
+
+    const base = 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/' + appid;
+    const candidates = [];
+    const customCover = sanitizeSteamAssetUrl(game.cover_url);
+    if (customCover) candidates.push(customCover);
+    candidates.push(
+        base + '/header.jpg',
+        base + '/capsule_616x353.jpg',
+        'https://cdn.akamai.steamstatic.com/steam/apps/' + appid + '/header.jpg',
+        'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appid + '/header.jpg'
+    );
+    const iconHash = typeof game.icon_hash === 'string' ? game.icon_hash.trim() : '';
+    if (/^[a-f0-9]{32}$/i.test(iconHash)) {
+        candidates.push('https://media.steampowered.com/steamcommunity/public/images/apps/' + appid + '/' + iconHash + '.jpg');
+    }
+    return [...new Set(candidates.map(sanitizeSteamAssetUrl).filter(Boolean))];
+}
+
+function gameMonogram(name) {
+    return String(name || 'Steam')
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(word => Array.from(word)[0] || '')
+        .join('')
+        .toLocaleUpperCase('en');
+}
+
+function setSteamCover(element, game) {
+    if (!element || !game) return;
+    const candidates = steamImageCandidates(game);
+    if (!candidates.length) return;
+    const reqId = String((Number(element.dataset.coverReqId) || 0) + 1);
+    element.dataset.coverReqId = reqId;
+
+    if (element instanceof HTMLImageElement) {
+        let candidateIndex = 0;
+        element.onerror = () => {
+            if (element.dataset.coverReqId !== reqId) return;
+            candidateIndex += 1;
+            if (candidateIndex < candidates.length) {
+                element.src = candidates[candidateIndex];
+            } else {
+                element.classList.add('is-missing');
+                element.removeAttribute('src');
+            }
+        };
+        element.src = candidates[0];
+        return;
     }
 
-    function gameMonogram(name) {
-        return String(name || 'Steam')
-            .trim()
-            .split(/\s+/)
-            .slice(0, 2)
-            .map(word => Array.from(word)[0] || '')
-            .join('')
-            .toLocaleUpperCase('en');
-    }
-
-    function setSteamCover(element, game) {
-        if (!element || !game) return;
-        const candidates = steamImageCandidates(game);
-        if (!candidates.length) return;
-        const reqId = String((Number(element.dataset.coverReqId) || 0) + 1);
-        element.dataset.coverReqId = reqId;
-
-        if (element instanceof HTMLImageElement) {
-            let candidateIndex = 0;
-            element.onerror = () => {
-                if (element.dataset.coverReqId !== reqId) return;
-                candidateIndex += 1;
-                if (candidateIndex < candidates.length) {
-                    element.src = candidates[candidateIndex];
-                } else {
-                    element.classList.add('is-missing');
-                    element.removeAttribute('src');
-                }
-            };
-            element.src = candidates[0];
+    element.style.backgroundImage = 'linear-gradient(145deg, #1c1a19, #090a0c)';
+    let candidateIndex = 0;
+    const tryNextImage = () => {
+        if (element.dataset.coverReqId !== reqId) return;
+        if (candidateIndex >= candidates.length) {
+            element.classList.add('is-missing');
+            element.style.backgroundImage = 'linear-gradient(135deg, rgba(243, 189, 99, 0.11), transparent 58%), linear-gradient(145deg, #1c1a19, #090a0c)';
             return;
         }
-
-        element.style.backgroundImage = 'linear-gradient(145deg, #1c1a19, #090a0c)';
-        let candidateIndex = 0;
-        const tryNextImage = () => {
+        const image = new Image();
+        const imageUrl = candidates[candidateIndex];
+        image.onload = () => {
             if (element.dataset.coverReqId !== reqId) return;
-            if (candidateIndex >= candidates.length) {
-                element.classList.add('is-missing');
-                element.style.backgroundImage = 'linear-gradient(135deg, rgba(243, 189, 99, 0.11), transparent 58%), linear-gradient(145deg, #1c1a19, #090a0c)';
-                return;
-            }
-            const image = new Image();
-            const imageUrl = candidates[candidateIndex];
-            image.onload = () => {
-                if (element.dataset.coverReqId !== reqId) return;
-                element.classList.remove('is-missing');
-                element.style.backgroundImage = 'linear-gradient(0deg, rgba(5, 6, 9, 0.94), rgba(5, 6, 9, 0.08) 76%), url("' + imageUrl + '")';
-            };
-            image.onerror = () => {
-                if (element.dataset.coverReqId !== reqId) return;
-                candidateIndex += 1;
-                tryNextImage();
-            };
-            image.src = imageUrl;
+            element.classList.remove('is-missing');
+            element.style.backgroundImage = 'linear-gradient(0deg, rgba(5, 6, 9, 0.94), rgba(5, 6, 9, 0.08) 76%), url("' + imageUrl + '")';
         };
-        tryNextImage();
+        image.onerror = () => {
+            if (element.dataset.coverReqId !== reqId) return;
+            candidateIndex += 1;
+            tryNextImage();
+        };
+        image.src = imageUrl;
+    };
+    tryNextImage();
+}
+
+function updateFeaturedGame(game) {
+    if (!game) return;
+    const title = document.getElementById('featured-game-title');
+    const hours = document.getElementById('featured-game-hours');
+    const cover = document.getElementById('featured-game-cover');
+    if (title) title.textContent = game.name || 'Steam';
+    if (hours) hours.textContent = formatSteamHours(game.playtime_minutes);
+    setSteamCover(cover, game);
+}
+
+function renderGameLibrary(games) {
+    const grid = document.querySelector('#armory .grid');
+    if (!grid || !Array.isArray(games) || games.length === 0) return;
+
+    const validGames = games
+        .filter(game => Number.isSafeInteger(Number(game.appid)) && Number(game.appid) > 0 && typeof game.name === 'string')
+        .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes));
+    if (!validGames.length) return;
+
+    const fragment = document.createDocumentFragment();
+    validGames.forEach(game => {
+        const appid = Number(game.appid);
+        const minutes = Math.max(0, Number(game.playtime_minutes) || 0);
+        const playtime = formatSteamHours(minutes);
+        const card = document.createElement('a');
+        card.className = 'game';
+        card.dataset.appid = String(appid);
+        card.dataset.playtimeMinutes = String(minutes);
+        card.href = 'https://store.steampowered.com/app/' + appid + '/';
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.setAttribute('aria-label', game.name + ' — ' + playtime);
+
+        const cover = document.createElement('div');
+        cover.className = 'game-bg';
+        cover.setAttribute('aria-hidden', 'true');
+        const fallback = document.createElement('span');
+        fallback.className = 'game-art-fallback';
+        fallback.textContent = gameMonogram(game.name);
+        const art = document.createElement('img');
+        art.className = 'game-art';
+        art.alt = '';
+        art.loading = 'lazy';
+        art.decoding = 'async';
+        setSteamCover(art, game);
+        cover.append(fallback, art);
+
+        const overlay = document.createElement('div');
+        overlay.className = 'game-ov';
+        const rank = document.createElement('span');
+        rank.className = 'game-rank';
+        const title = document.createElement('div');
+        title.className = 'g-tit';
+        title.textContent = game.name;
+        const time = document.createElement('span');
+        time.className = 'g-time';
+        time.textContent = playtime;
+        overlay.append(rank, title, time);
+        card.append(cover, overlay);
+        fragment.append(card);
+    });
+
+    grid.replaceChildren(fragment);
+    refreshGameCollection();
+}
+
+function applySteamStats(data) {
+    steamStats = data;
+    updateLibrarySummary(data);
+
+    const sysEl = document.getElementById('sys-status');
+    const statusKey = { ONLINE: 'sys', OFFLINE: 'sys_off', UNKNOWN: 'sys_unknown' }[data.system_status] || 'sys_unknown';
+    if (sysEl) {
+        const isOnline = data.system_status === 'ONLINE';
+        sysEl.setAttribute('data-k', statusKey);
+        sysEl.style.color = isOnline ? '' : 'var(--muted)';
+        sysEl.style.textShadow = isOnline ? '' : 'none';
+        sysEl.style.animation = isOnline ? '' : 'none';
     }
+    setLang(activeLang);
+}
 
-    function updateFeaturedGame(game) {
-        if (!game) return;
-        const title = document.getElementById('featured-game-title');
-        const hours = document.getElementById('featured-game-hours');
-        const cover = document.getElementById('featured-game-cover');
-        if (title) title.textContent = game.name || 'Steam';
-        if (hours) hours.textContent = formatSteamHours(game.playtime_minutes);
-        setSteamCover(cover, game);
-    }
+function refreshGameCollection() {
+    const grid = document.querySelector('#armory .grid');
+    const search = document.getElementById('game-search');
+    const sort = document.getElementById('game-sort');
+    if (!grid || !search || !sort) return;
 
-    function renderGameLibrary(games) {
-        const grid = document.querySelector('#armory .grid');
-        if (!grid || !Array.isArray(games) || games.length === 0) return;
-
-        const validGames = games
-            .filter(game => Number.isSafeInteger(Number(game.appid)) && Number(game.appid) > 0 && typeof game.name === 'string')
-            .sort((a, b) => Number(b.playtime_minutes) - Number(a.playtime_minutes));
-        if (!validGames.length) return;
-
-        const fragment = document.createDocumentFragment();
-        validGames.forEach(game => {
-            const appid = Number(game.appid);
-            const minutes = Math.max(0, Number(game.playtime_minutes) || 0);
-            const playtime = formatSteamHours(minutes);
-            const card = document.createElement('a');
-            card.className = 'game';
-            card.dataset.appid = String(appid);
-            card.dataset.playtimeMinutes = String(minutes);
-            card.href = 'https://store.steampowered.com/app/' + appid + '/';
-            card.target = '_blank';
-            card.rel = 'noopener noreferrer';
-            card.setAttribute('aria-label', game.name + ' — ' + playtime);
-
-            const cover = document.createElement('div');
-            cover.className = 'game-bg';
-            cover.setAttribute('aria-hidden', 'true');
-            const fallback = document.createElement('span');
-            fallback.className = 'game-art-fallback';
-            fallback.textContent = gameMonogram(game.name);
-            const art = document.createElement('img');
-            art.className = 'game-art';
-            art.alt = '';
-            art.loading = 'lazy';
-            art.decoding = 'async';
-            setSteamCover(art, game);
-            cover.append(fallback, art);
-
-            const overlay = document.createElement('div');
-            overlay.className = 'game-ov';
-            const rank = document.createElement('span');
-            rank.className = 'game-rank';
-            const title = document.createElement('div');
-            title.className = 'g-tit';
-            title.textContent = game.name;
-            const time = document.createElement('span');
-            time.className = 'g-time';
-            time.textContent = playtime;
-            overlay.append(rank, title, time);
-            card.append(cover, overlay);
-            fragment.append(card);
-        });
-
-        grid.replaceChildren(fragment);
-        refreshGameCollection();
-    }
-
-    function applySteamStats(data) {
-        steamStats = data;
-        updateLibrarySummary(data);
-
-        const sysEl = document.getElementById('sys-status');
-        const statusKey = { ONLINE: 'sys', OFFLINE: 'sys_off', UNKNOWN: 'sys_unknown' }[data.system_status] || 'sys_unknown';
-        if (sysEl) {
-            const isOnline = data.system_status === 'ONLINE';
-            sysEl.setAttribute('data-k', statusKey);
-            sysEl.style.color = isOnline ? '' : 'var(--muted)';
-            sysEl.style.textShadow = isOnline ? '' : 'none';
-            sysEl.style.animation = isOnline ? '' : 'none';
+    const games = [...grid.querySelectorAll('.game')];
+    const query = search.value.trim().toLocaleLowerCase('en');
+    const sortMode = sort.value;
+    games.sort((a, b) => {
+        if (sortMode === 'name') {
+            return a.querySelector('.g-tit').textContent.localeCompare(b.querySelector('.g-tit').textContent, document.documentElement.lang);
         }
-        setLang(activeLang);
+        return (Number(b.dataset.playtimeMinutes) || 0) - (Number(a.dataset.playtimeMinutes) || 0);
+    });
+
+    let visibleCount = 0;
+    games.forEach(game => {
+        const matches = game.querySelector('.g-tit').textContent.toLocaleLowerCase('en').includes(query);
+        game.hidden = !matches;
+        if (matches) {
+            visibleCount += 1;
+            const rank = game.querySelector('.game-rank');
+            if (rank) rank.textContent = String(visibleCount).padStart(2, '0');
+        }
+        grid.append(game);
+    });
+
+    const resultCount = document.getElementById('game-results');
+    const emptyState = document.getElementById('game-empty');
+    const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+    const indexedCount = Math.max(games.length, Number(steamStats?.total_games) || 0);
+    resultCount.textContent = visibleCount + ' / ' + indexedCount + ' ' + (indexedCount === 1 ? labels.library_result_one : labels.library_result_many);
+    emptyState.hidden = visibleCount > 0;
+}
+
+function getArmoryGamePool() {
+    const jsonGames = Array.isArray(steamStats?.games) && steamStats.games.length
+        ? steamStats.games
+        : (Array.isArray(steamStats?.top_games) ? steamStats.top_games : []);
+    if (jsonGames.length) return jsonGames;
+    return [...document.querySelectorAll('#armory .grid .game')].map(card => ({
+        appid: Number(card.dataset.appid),
+        name: card.querySelector('.g-tit')?.textContent?.trim() || 'Steam Game',
+        playtime_minutes: Number(card.dataset.playtimeMinutes) || 0
+    })).filter(g => Number.isSafeInteger(g.appid) && g.appid > 0);
+}
+
+function renderArmoryPick() {
+    const box = document.getElementById('armory-pick');
+    if (!box || !pickedArmoryGame) return;
+    const appid = Number(pickedArmoryGame.appid);
+    if (!Number.isSafeInteger(appid) || appid <= 0) return;
+
+    const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+    const titleEl = document.getElementById('armory-pick-title');
+    const hoursEl = document.getElementById('armory-pick-hours');
+    const coverEl = document.getElementById('armory-pick-cover');
+    const linkEl = document.getElementById('armory-pick-link');
+    const minutes = Math.max(0, Number(pickedArmoryGame.playtime_minutes) || 0);
+
+    if (titleEl) titleEl.textContent = pickedArmoryGame.name || 'Steam';
+    if (hoursEl) {
+        hoursEl.textContent = minutes > 0
+            ? formatSteamHours(minutes)
+            : (labels.library_zero_hours || '0h · Unplayed');
+    }
+    if (linkEl) {
+        linkEl.href = `https://store.steampowered.com/app/${appid}/`;
+        linkEl.rel = 'noopener noreferrer';
+    }
+    setSteamCover(coverEl, pickedArmoryGame);
+    box.hidden = false;
+}
+
+function spinRandomGame() {
+    const allGames = getArmoryGamePool();
+    if (!allGames.length) return;
+    const unplayedOnly = Boolean(document.getElementById('spin-unplayed-toggle')?.checked);
+    let pool = unplayedOnly
+        ? allGames.filter(game => Number(game.playtime_minutes) === 0)
+        : allGames;
+    if (!pool.length) pool = allGames;
+    if (pool.length > 1 && pickedArmoryGame) {
+        pool = pool.filter(game => Number(game.appid) !== Number(pickedArmoryGame.appid));
+    }
+    pickedArmoryGame = pool[Math.floor(Math.random() * pool.length)];
+    renderArmoryPick();
+}
+
+
+function initThree() {
+    const THREE = window.THREE;
+    const canvasHost = document.getElementById('canvas');
+    if (!THREE || !canvasHost || canvasHost.dataset.initialized === 'true') return;
+    canvasHost.dataset.initialized = 'true';
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const compactScreen = window.matchMedia('(max-width: 768px)').matches;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.1, 300);
+    camera.position.z = 54;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, compactScreen ? 1 : 1.4));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.domElement.setAttribute('aria-hidden', 'true');
+    canvasHost.appendChild(renderer.domElement);
+
+    const pointCount = compactScreen ? 260 : 1450;
+    const positions = new Float32Array(pointCount * 3);
+    const aspect = window.innerWidth / Math.max(window.innerHeight, 1);
+    for (let index = 0; index < pointCount; index += 1) {
+        const offset = index * 3;
+        positions[offset] = (Math.random() - 0.5) * 92 * aspect;
+        positions[offset + 1] = (Math.random() - 0.5) * 86;
+        positions[offset + 2] = -Math.random() * 125;
     }
 
-    function refreshGameCollection() {
-        const grid = document.querySelector('#armory .grid');
-        const search = document.getElementById('game-search');
-        const sort = document.getElementById('game-sort');
-        if (!grid || !search || !sort) return;
+    const stars = new THREE.BufferGeometry();
+    stars.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const starMaterial = new THREE.PointsMaterial({
+        color: 0xf3bd63,
+        size: compactScreen ? 0.1 : 0.16,
+        transparent: true,
+        opacity: compactScreen ? 0.32 : 0.58,
+        sizeAttenuation: true,
+        depthWrite: false
+    });
+    const field = new THREE.Points(stars, starMaterial);
+    scene.add(field);
 
-        const games = [...grid.querySelectorAll('.game')];
-        const query = search.value.trim().toLocaleLowerCase('en');
-        const sortMode = sort.value;
-        games.sort((a, b) => {
-            if (sortMode === 'name') {
-                return a.querySelector('.g-tit').textContent.localeCompare(b.querySelector('.g-tit').textContent, document.documentElement.lang);
-            }
-            return (Number(b.dataset.playtimeMinutes) || 0) - (Number(a.dataset.playtimeMinutes) || 0);
-        });
+    const emberCount = compactScreen ? 65 : 340;
+    const emberPositions = new Float32Array(emberCount * 3);
+    for (let index = 0; index < emberCount; index += 1) {
+        const offset = index * 3;
+        emberPositions[offset] = (Math.random() - 0.5) * 86 * aspect;
+        emberPositions[offset + 1] = (Math.random() - 0.5) * 42;
+        emberPositions[offset + 2] = -Math.random() * 72;
+    }
+    const embers = new THREE.BufferGeometry();
+    embers.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3));
+    const emberField = new THREE.Points(embers, new THREE.PointsMaterial({
+        color: 0xff493f,
+        size: compactScreen ? 0.08 : 0.12,
+        transparent: true,
+        opacity: 0.3,
+        depthWrite: false
+    }));
+    scene.add(emberField);
 
-        let visibleCount = 0;
-        games.forEach(game => {
-            const matches = game.querySelector('.g-tit').textContent.toLocaleLowerCase('en').includes(query);
-            game.hidden = !matches;
-            if (matches) {
-                visibleCount += 1;
-                const rank = game.querySelector('.game-rank');
-                if (rank) rank.textContent = String(visibleCount).padStart(2, '0');
-            }
-            grid.append(game);
-        });
+    const orbitMaterial = new THREE.MeshBasicMaterial({
+        color: 0xc58c50,
+        transparent: true,
+        opacity: compactScreen ? 0.08 : 0.16,
+        wireframe: true,
+        depthWrite: false
+    });
+    const orbit = new THREE.Mesh(new THREE.TorusGeometry(14, 0.018, 4, 180), orbitMaterial);
+    orbit.position.set(18, 3, -38);
+    orbit.rotation.set(0.7, 0.22, -0.28);
+    scene.add(orbit);
 
-        const resultCount = document.getElementById('game-results');
-        const emptyState = document.getElementById('game-empty');
-        const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-        const indexedCount = Math.max(games.length, Number(steamStats?.total_games) || 0);
-        resultCount.textContent = visibleCount + ' / ' + indexedCount + ' ' + (indexedCount === 1 ? labels.library_result_one : labels.library_result_many);
-        emptyState.hidden = visibleCount > 0;
+    let targetX = 0;
+    let targetY = 0;
+    if (!compactScreen) {
+        window.addEventListener('pointermove', event => {
+            targetX = (event.clientX / window.innerWidth - 0.5) * 2;
+            targetY = (event.clientY / window.innerHeight - 0.5) * 2;
+        }, { passive: true });
     }
 
-        function getArmoryGamePool() {
-            const jsonGames = Array.isArray(steamStats?.games) && steamStats.games.length
-                ? steamStats.games
-                : (Array.isArray(steamStats?.top_games) ? steamStats.top_games : []);
-            if (jsonGames.length) return jsonGames;
-            return [...document.querySelectorAll('#armory .grid .game')].map(card => ({
-                appid: Number(card.dataset.appid),
-                name: card.querySelector('.g-tit')?.textContent?.trim() || 'Steam Game',
-                playtime_minutes: Number(card.dataset.playtimeMinutes) || 0
-            })).filter(g => Number.isSafeInteger(g.appid) && g.appid > 0);
+    const resize = () => {
+        camera.aspect = window.innerWidth / Math.max(window.innerHeight, 1);
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', resize, { passive: true });
+
+    let frame = 0;
+    const draw = () => {
+        if (document.hidden) {
+            frame = 0;
+            return;
         }
-
-        function renderArmoryPick() {
-            const box = document.getElementById('armory-pick');
-            if (!box || !pickedArmoryGame) return;
-            const appid = Number(pickedArmoryGame.appid);
-            if (!Number.isSafeInteger(appid) || appid <= 0) return;
-
-            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-            const titleEl = document.getElementById('armory-pick-title');
-            const hoursEl = document.getElementById('armory-pick-hours');
-            const coverEl = document.getElementById('armory-pick-cover');
-            const linkEl = document.getElementById('armory-pick-link');
-            const minutes = Math.max(0, Number(pickedArmoryGame.playtime_minutes) || 0);
-
-            if (titleEl) titleEl.textContent = pickedArmoryGame.name || 'Steam';
-            if (hoursEl) {
-                hoursEl.textContent = minutes > 0
-                    ? formatSteamHours(minutes)
-                    : (labels.library_zero_hours || '0h · Unplayed');
-            }
-            if (linkEl) {
-                linkEl.href = `https://store.steampowered.com/app/${appid}/`;
-                linkEl.rel = 'noopener noreferrer';
-            }
-            setSteamCover(coverEl, pickedArmoryGame);
-            box.hidden = false;
+        camera.position.x += (targetX * 2.2 - camera.position.x) * 0.018;
+        camera.position.y += (-targetY * 1.4 - camera.position.y) * 0.018;
+        field.rotation.y += compactScreen ? 0.00008 : 0.00016;
+        field.rotation.x += 0.000025;
+        emberField.rotation.y -= 0.00011;
+        orbit.rotation.z += 0.00016;
+        renderer.render(scene, camera);
+        frame = window.requestAnimationFrame(draw);
+    };
+    const resume = () => {
+        if (document.hidden) {
+            if (frame) window.cancelAnimationFrame(frame);
+            frame = 0;
+        } else if (!reducedMotion && !compactScreen && !frame) {
+            frame = window.requestAnimationFrame(draw);
+        } else {
+            renderer.render(scene, camera);
         }
+    };
+    document.addEventListener('visibilitychange', resume);
+    if (reducedMotion || compactScreen) renderer.render(scene, camera);
+    else resume();
+}
 
-        function spinRandomGame() {
-            const allGames = getArmoryGamePool();
-            if (!allGames.length) return;
-            const unplayedOnly = Boolean(document.getElementById('spin-unplayed-toggle')?.checked);
-            let pool = unplayedOnly
-                ? allGames.filter(game => Number(game.playtime_minutes) === 0)
-                : allGames;
-            if (!pool.length) pool = allGames;
-            if (pool.length > 1 && pickedArmoryGame) {
-                pool = pool.filter(game => Number(game.appid) !== Number(pickedArmoryGame.appid));
-            }
-            pickedArmoryGame = pool[Math.floor(Math.random() * pool.length)];
-            renderArmoryPick();
+/* ======================================= */
+/* POPUP (REKLAM-Script) */
+/* ======================================= */
+const POPUP_LAST_CLOSED_TIME_KEY = 'haking.partner_last_closed_ms';
+const POPUP_SESSION_KEY = 'haking.partner_shown';
+const POPUP_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+let sponsorReturnFocusEl = null;
+let sponsorAutoTimer = 0;
+
+function safeStorageGet(storage, key) {
+    try { return storage.getItem(key); } catch (_) { return null; }
+}
+
+function safeStorageSet(storage, key, value) {
+    try { storage.setItem(key, String(value)); } catch (_) { }
+}
+
+function openSponsorModal(manual = false) {
+    const modal = document.getElementById('first-time-modal');
+    if (!modal) return;
+    if (sponsorAutoTimer) {
+        window.clearTimeout(sponsorAutoTimer);
+        sponsorAutoTimer = 0;
+    }
+    if (!manual) {
+        if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
+        const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
+        if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;
+    }
+    sponsorReturnFocusEl = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    safeStorageSet(sessionStorage, POPUP_SESSION_KEY, 'true');
+    modal.hidden = false;
+    modal.classList.add('is-open');
+    window.lucide?.createIcons();
+    const closeBtn = document.getElementById('modal-close');
+    closeBtn?.focus({ preventScroll: true });
+}
+
+function closeSponsorModal(rememberDismiss = true) {
+    const modal = document.getElementById('first-time-modal');
+    if (!modal || modal.hidden) return;
+    const videoElement = document.getElementById('modal-video');
+    modal.classList.remove('is-open');
+    modal.hidden = true;
+    if (videoElement) {
+        videoElement.pause();
+        videoElement.currentTime = 0;
+    }
+    if (rememberDismiss) {
+        safeStorageSet(localStorage, POPUP_LAST_CLOSED_TIME_KEY, Date.now());
+    }
+    if (sponsorReturnFocusEl && sponsorReturnFocusEl.isConnected) {
+        sponsorReturnFocusEl.focus({ preventScroll: true });
+    }
+    sponsorReturnFocusEl = null;
+}
+
+function scheduleSponsorModal() {
+    if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
+    const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
+    if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;
+    if (sponsorAutoTimer) window.clearTimeout(sponsorAutoTimer);
+    sponsorAutoTimer = window.setTimeout(() => openSponsorModal(false), 2200);
+}
+
+async function copyPartnerCode(button) {
+    const code = button.dataset.copyCode || 'HAK06';
+    try {
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(code);
+        } else {
+            const tmp = document.createElement('textarea');
+            tmp.value = code;
+            tmp.setAttribute('readonly', '');
+            tmp.style.position = 'fixed';
+            tmp.style.opacity = '0';
+            document.body.append(tmp);
+            tmp.select();
+            document.execCommand('copy');
+            tmp.remove();
         }
+    } catch (_) { }
+    const labelSpan = button.querySelector('span');
+    const t = LANG_DATA[activeLang] || LANG_DATA.en;
+    if (labelSpan) labelSpan.textContent = t.ad_copied || LANG_DATA.en.ad_copied;
+    button.classList.add('is-copied');
+    window.setTimeout(() => {
+        button.classList.remove('is-copied');
+        const currentT = LANG_DATA[activeLang] || LANG_DATA.en;
+        if (labelSpan) labelSpan.textContent = currentT.ad_copy || LANG_DATA.en.ad_copy;
+    }, 2200);
+}
+
+function initSponsorModal() {
+    const modal = document.getElementById('first-time-modal');
+    if (!modal) return;
+    document.getElementById('modal-close')?.addEventListener('click', () => closeSponsorModal(true));
+    document.getElementById('modal-snooze')?.addEventListener('click', () => closeSponsorModal(true));
+    document.getElementById('modal-copy-code')?.addEventListener('click', event => copyPartnerCode(event.currentTarget));
+    modal.addEventListener('click', event => {
+        if (event.target === modal) closeSponsorModal(true);
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !modal.hidden) closeSponsorModal(true);
+    });
+}
+
+function switchModalTab(event, tabName) {
+    event.stopPropagation();
+    document.querySelectorAll('.modal-tab').forEach(btn => {
+        const isTarget = btn === event.currentTarget;
+        btn.classList.toggle('active', isTarget);
+        btn.setAttribute('aria-selected', String(isTarget));
+    });
+    document.querySelectorAll('.modal-tab-content').forEach(content => {
+        content.hidden = content.id !== ('modal-tab-' + tabName);
+    });
+
+    const video = document.getElementById('modal-video');
+    if (video) {
+        if (tabName === 'trailer') {
+            video.play().catch(() => { });
+        } else {
+            video.pause();
+        }
+    }
+}
+
+/* ======================================= */
+/* CONTACT FORM */
+/* ======================================= */
+function handleContactSubmit(e) {
+    e.preventDefault();
 
 
-        function initThree() {
-            const THREE = window.THREE;
-            const canvasHost = document.getElementById('canvas');
-            if (!THREE || !canvasHost || canvasHost.dataset.initialized === 'true') return;
-            canvasHost.dataset.initialized = 'true';
+    const name = document.getElementById('c-name').value;
+    const email = document.getElementById('c-email').value;
+    const msg = document.getElementById('c-msg').value;
 
-            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const compactScreen = window.matchMedia('(max-width: 768px)').matches;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.1, 300);
-            camera.position.z = 54;
+    const terminal = document.getElementById('contact-terminal');
+    const success = document.getElementById('contact-success');
 
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, compactScreen ? 1 : 1.4));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.domElement.setAttribute('aria-hidden', 'true');
-            canvasHost.appendChild(renderer.domElement);
+    gsap.to(terminal, {
+        opacity: 0, duration: 0.3, onComplete: () => {
+            terminal.style.display = 'none';
+            success.style.display = 'flex';
+            gsap.set(success, { opacity: 0, scale: 0.95 });
+            gsap.to(success, { opacity: 1, scale: 1, duration: 0.4 });
 
-            const pointCount = compactScreen ? 260 : 1450;
-            const positions = new Float32Array(pointCount * 3);
-            const aspect = window.innerWidth / Math.max(window.innerHeight, 1);
-            for (let index = 0; index < pointCount; index += 1) {
-                const offset = index * 3;
-                positions[offset] = (Math.random() - 0.5) * 92 * aspect;
-                positions[offset + 1] = (Math.random() - 0.5) * 86;
-                positions[offset + 2] = -Math.random() * 125;
-            }
+            const output = document.getElementById('terminal-console-output');
+            output.innerText = `${LANG_DATA[activeLang]?.contact_draft_note || LANG_DATA.en.contact_draft_note}\n\nsteam@haking.tr`;
+            window.location.href = `mailto:steam@haking.tr?subject=${encodeURIComponent("HaKING Contact - " + name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
+        }
+    });
+}
 
-            const stars = new THREE.BufferGeometry();
-            stars.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            const starMaterial = new THREE.PointsMaterial({
-                color: 0xf3bd63,
-                size: compactScreen ? 0.1 : 0.16,
-                transparent: true,
-                opacity: compactScreen ? 0.32 : 0.58,
-                sizeAttenuation: true,
-                depthWrite: false
+function resetContactForm() {
+
+    const terminal = document.getElementById('contact-terminal');
+    const success = document.getElementById('contact-success');
+
+    document.getElementById('contact-form').reset();
+
+    gsap.to(success, {
+        opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => {
+            success.style.display = 'none';
+            terminal.style.display = 'block';
+            gsap.set(terminal, { opacity: 0 });
+            gsap.to(terminal, { opacity: 1, duration: 0.4 });
+        }
+    });
+}
+
+/* ======================================= */
+/* SYNCHRONIZED BOOT SEQUENCE */
+/* ======================================= */
+function revealApp() {
+    const loader = document.getElementById('loader');
+    const app = document.getElementById('app');
+    if (!loader || !app || app.dataset.ready === 'true') return;
+    app.dataset.ready = 'true';
+    loader.style.display = 'none';
+    app.style.opacity = 1;
+    app.style.pointerEvents = 'all';
+    app.classList.add('is-ready');
+    if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const heroItems = Array.from(document.querySelectorAll('#sanctum .home-overview > *'));
+        if (heroItems.length) {
+            window.gsap.fromTo(heroItems, { opacity: 0, y: 24 }, {
+                opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power3.out', delay: 0.08
             });
-            const field = new THREE.Points(stars, starMaterial);
-            scene.add(field);
-
-            const emberCount = compactScreen ? 65 : 340;
-            const emberPositions = new Float32Array(emberCount * 3);
-            for (let index = 0; index < emberCount; index += 1) {
-                const offset = index * 3;
-                emberPositions[offset] = (Math.random() - 0.5) * 86 * aspect;
-                emberPositions[offset + 1] = (Math.random() - 0.5) * 42;
-                emberPositions[offset + 2] = -Math.random() * 72;
-            }
-            const embers = new THREE.BufferGeometry();
-            embers.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3));
-            const emberField = new THREE.Points(embers, new THREE.PointsMaterial({
-                color: 0xff493f,
-                size: compactScreen ? 0.08 : 0.12,
-                transparent: true,
-                opacity: 0.3,
-                depthWrite: false
-            }));
-            scene.add(emberField);
-
-            const orbitMaterial = new THREE.MeshBasicMaterial({
-                color: 0xc58c50,
-                transparent: true,
-                opacity: compactScreen ? 0.08 : 0.16,
-                wireframe: true,
-                depthWrite: false
-            });
-            const orbit = new THREE.Mesh(new THREE.TorusGeometry(14, 0.018, 4, 180), orbitMaterial);
-            orbit.position.set(18, 3, -38);
-            orbit.rotation.set(0.7, 0.22, -0.28);
-            scene.add(orbit);
-
-            let targetX = 0;
-            let targetY = 0;
-            if (!compactScreen) {
-                window.addEventListener('pointermove', event => {
-                    targetX = (event.clientX / window.innerWidth - 0.5) * 2;
-                    targetY = (event.clientY / window.innerHeight - 0.5) * 2;
-                }, { passive: true });
-            }
-
-            const resize = () => {
-                camera.aspect = window.innerWidth / Math.max(window.innerHeight, 1);
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            };
-            window.addEventListener('resize', resize, { passive: true });
-
-            let frame = 0;
-            const draw = () => {
-                if (document.hidden) {
-                    frame = 0;
-                    return;
-                }
-                camera.position.x += (targetX * 2.2 - camera.position.x) * 0.018;
-                camera.position.y += (-targetY * 1.4 - camera.position.y) * 0.018;
-                field.rotation.y += compactScreen ? 0.00008 : 0.00016;
-                field.rotation.x += 0.000025;
-                emberField.rotation.y -= 0.00011;
-                orbit.rotation.z += 0.00016;
-                renderer.render(scene, camera);
-                frame = window.requestAnimationFrame(draw);
-            };
-            const resume = () => {
-                if (document.hidden) {
-                    if (frame) window.cancelAnimationFrame(frame);
-                    frame = 0;
-                } else if (!reducedMotion && !compactScreen && !frame) {
-                    frame = window.requestAnimationFrame(draw);
-                } else {
-                    renderer.render(scene, camera);
-                }
-            };
-            document.addEventListener('visibilitychange', resume);
-            if (reducedMotion || compactScreen) renderer.render(scene, camera);
-            else resume();
         }
+    }
+    scheduleSponsorModal();
+}
 
-        /* ======================================= */
-        /* POPUP (REKLAM-Script) */
-        /* ======================================= */
-        const POPUP_LAST_CLOSED_TIME_KEY = 'haking.partner_last_closed_ms';
-        const POPUP_SESSION_KEY = 'haking.partner_shown';
-        const POPUP_COOLDOWN_MS = 24 * 60 * 60 * 1000;
-        let sponsorReturnFocusEl = null;
-        let sponsorAutoTimer = 0;
+async function runBootLoader() {
+    const fill = document.querySelector('.load-fill');
+    const logText = document.getElementById('ltxt');
+    // A visual loader is decorative; never let a slow optional asset hide the site indefinitely.
+    window.setTimeout(revealApp, 1800);
 
-            function safeStorageGet(storage, key) {
-                try { return storage.getItem(key); } catch (_) { return null; }
+
+
+    const labels = LANG_DATA[activeLang] || LANG_DATA.en;
+    const logs = {
+        init: labels.boot_init || LANG_DATA.en.boot_init,
+        pointer: labels.boot_pointer || LANG_DATA.en.boot_pointer,
+        steam: labels.boot_steam || LANG_DATA.en.boot_steam,
+        cache: labels.boot_cache || LANG_DATA.en.boot_cache,
+        ready: labels.boot_ready || LANG_DATA.en.boot_ready
+    };
+
+    const updateProgress = (pct, labelText) => {
+        gsap.to(fill, { width: pct + '%', duration: 0.3, ease: 'power1.out' });
+        if (logText) logText.innerText = labelText;
+    };
+    let statsLoaded = false;
+
+    try {
+        // Phase 1: Initialize components
+        updateProgress(20, logs.init);
+        try {
+            initThree();
+        } catch (error) {
+            console.warn('Background animation unavailable:', error);
+        }
+        await new Promise(r => setTimeout(r, 120));
+
+        // Phase 2: UI ready
+        updateProgress(40, logs.pointer);
+        await new Promise(r => setTimeout(r, 90));
+
+        // Phase 3: Fetching stats from JSON file
+        updateProgress(70, logs.steam);
+
+        const statsController = new AbortController();
+        const statsTimeout = window.setTimeout(() => statsController.abort(), 5000);
+        const statsPromise = (async () => {
+            try {
+                const response = await fetch('./data/steam_stats.json', { cache: 'no-store', signal: statsController.signal });
+                if (!response.ok) throw new Error(`Steam stats request failed: ${response.status}`);
+                const data = await response.json();
+                if (!data || typeof data !== 'object') throw new Error('Steam stats JSON is invalid');
+                applySteamStats(data);
+                statsLoaded = true;
+            } finally {
+                window.clearTimeout(statsTimeout);
             }
-
-            function safeStorageSet(storage, key, value) {
-                try { storage.setItem(key, String(value)); } catch (_) { }
-            }
-
-            function openSponsorModal(manual = false) {
-                const modal = document.getElementById('first-time-modal');
-                    if (!modal) return;
-                    if (sponsorAutoTimer) {
-                        window.clearTimeout(sponsorAutoTimer);
-                        sponsorAutoTimer = 0;
-                    }
-                    if (!manual) {
-                        if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
-                        const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
-                        if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;
-                    }
-                    sponsorReturnFocusEl = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-                    safeStorageSet(sessionStorage, POPUP_SESSION_KEY, 'true');
-                    modal.hidden = false;
-                    modal.classList.add('is-open');
-                    window.lucide?.createIcons();
-                    const closeBtn = document.getElementById('modal-close');
-                    closeBtn?.focus({ preventScroll: true });
+        })().catch(error => {
+            console.warn('Steam stats unavailable; using safe defaults:', error);
+            if (!statsLoaded) {
+                ['total-hours', 'total-games'].forEach(id => {
+                    const value = document.getElementById(id);
+                    if (value?.textContent === 'Loading...') value.textContent = '—';
+                });
+                const status = document.getElementById('sys-status');
+                if (status) {
+                    status.setAttribute('data-k', 'sys_unknown');
+                    status.style.color = 'var(--muted)';
+                    status.style.textShadow = 'none';
+                    status.style.animation = 'none';
+                    setLang(activeLang);
                 }
+            }
+        });
 
-                    function closeSponsorModal(rememberDismiss = true) {
-                        const modal = document.getElementById('first-time-modal');
-                        if (!modal || modal.hidden) return;
-                        const videoElement = document.getElementById('modal-video');
-                        modal.classList.remove('is-open');
-                        modal.hidden = true;
-                        if (videoElement) {
-                            videoElement.pause();
-                            videoElement.currentTime = 0;
-                        }
-                        if (rememberDismiss) {
-                            safeStorageSet(localStorage, POPUP_LAST_CLOSED_TIME_KEY, Date.now());
-                        }
-                        if (sponsorReturnFocusEl && sponsorReturnFocusEl.isConnected) {
-                            sponsorReturnFocusEl.focus({ preventScroll: true });
-                        }
-                        sponsorReturnFocusEl = null;
-                    }
+        // Statistics enhance the page, but must never hold the entire interface behind the loader.
+        await Promise.race([statsPromise, new Promise(resolve => setTimeout(resolve, 180))]);
 
-                        function scheduleSponsorModal() {
-                            if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
-                            const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
-                            if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;
-                            if (sponsorAutoTimer) window.clearTimeout(sponsorAutoTimer);
-                            sponsorAutoTimer = window.setTimeout(() => openSponsorModal(false), 2200);
-                        }
+        // Phase 4: Cache graphics
+        updateProgress(90, logs.cache);
+        await Promise.race([new Promise((resolve) => {
+            const img = new Image();
+            img.src = "assets/images/HaKING2.png";
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+        }), new Promise(resolve => setTimeout(resolve, 1500))]);
+        await new Promise(r => setTimeout(r, 120));
 
-                        async function copyPartnerCode(button) {
-                            const code = button.dataset.copyCode || 'HAK06';
-                            try {
-                                if (navigator.clipboard?.writeText) {
-                                    await navigator.clipboard.writeText(code);
-                                } else {
-                                    const tmp = document.createElement('textarea');
-                                    tmp.value = code;
-                                    tmp.setAttribute('readonly', '');
-                                    tmp.style.position = 'fixed';
-                                    tmp.style.opacity = '0';
-                                    document.body.append(tmp);
-                                    tmp.select();
-                                    document.execCommand('copy');
-                                    tmp.remove();
-                                }
-                            } catch (_) { }
-                            const labelSpan = button.querySelector('span');
-                            const t = LANG_DATA[activeLang] || LANG_DATA.en;
-                            if (labelSpan) labelSpan.textContent = t.ad_copied || LANG_DATA.en.ad_copied;
-                            button.classList.add('is-copied');
-                            window.setTimeout(() => {
-                                button.classList.remove('is-copied');
-                                const currentT = LANG_DATA[activeLang] || LANG_DATA.en;
-                                if (labelSpan) labelSpan.textContent = currentT.ad_copy || LANG_DATA.en.ad_copy;
-                            }, 2200);
-                        }
-
-                        function initSponsorModal() {
-                            const modal = document.getElementById('first-time-modal');
-                            if (!modal) return;
-                            document.getElementById('modal-close')?.addEventListener('click', () => closeSponsorModal(true));
-                            document.getElementById('modal-snooze')?.addEventListener('click', () => closeSponsorModal(true));
-                            document.getElementById('modal-copy-code')?.addEventListener('click', event => copyPartnerCode(event.currentTarget));
-                            modal.addEventListener('click', event => {
-                                if (event.target === modal) closeSponsorModal(true);
-                            });
-                            document.addEventListener('keydown', event => {
-                                if (event.key === 'Escape' && !modal.hidden) closeSponsorModal(true);
-                            });
-                        }
-
-                        function switchModalTab(event, tabName) {
-                            event.stopPropagation();
-                            document.querySelectorAll('.modal-tab').forEach(btn => {
-                                const isTarget = btn === event.currentTarget;
-                                btn.classList.toggle('active', isTarget);
-                                btn.setAttribute('aria-selected', String(isTarget));
-                            });
-                            document.querySelectorAll('.modal-tab-content').forEach(content => {
-                                content.hidden = content.id !== ('modal-tab-' + tabName);
-                            });
-
-                            const video = document.getElementById('modal-video');
-                            if (video) {
-                                if (tabName === 'trailer') {
-                                    video.play().catch(() => { });
-                                } else {
-                                    video.pause();
-                                }
-                            }
-                        }
-
-                        /* ======================================= */
-                        /* CONTACT FORM */
-                        /* ======================================= */
-                        function handleContactSubmit(e) {
-                            e.preventDefault();
-
-
-                            const name = document.getElementById('c-name').value;
-                            const email = document.getElementById('c-email').value;
-                            const msg = document.getElementById('c-msg').value;
-
-                            const terminal = document.getElementById('contact-terminal');
-                            const success = document.getElementById('contact-success');
-
-                            gsap.to(terminal, {
-                                opacity: 0, duration: 0.3, onComplete: () => {
-                                    terminal.style.display = 'none';
-                                    success.style.display = 'flex';
-                                    gsap.set(success, { opacity: 0, scale: 0.95 });
-                                    gsap.to(success, { opacity: 1, scale: 1, duration: 0.4 });
-
-                                    const output = document.getElementById('terminal-console-output');
-                                    output.innerText = `${LANG_DATA[activeLang]?.contact_draft_note || LANG_DATA.en.contact_draft_note}\n\nsteam@haking.tr`;
-                                    window.location.href = `mailto:steam@haking.tr?subject=${encodeURIComponent("HaKING Contact - " + name)}&body=${encodeURIComponent("Sender Name: " + name + "\nSender Email: " + email + "\n\nMessage:\n" + msg)}`;
-                                }
-                            });
-                        }
-
-                        function resetContactForm() {
-
-                            const terminal = document.getElementById('contact-terminal');
-                            const success = document.getElementById('contact-success');
-
-                            document.getElementById('contact-form').reset();
-
-                            gsap.to(success, {
-                                opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => {
-                                    success.style.display = 'none';
-                                    terminal.style.display = 'block';
-                                    gsap.set(terminal, { opacity: 0 });
-                                    gsap.to(terminal, { opacity: 1, duration: 0.4 });
-                                }
-                            });
-                        }
-
-                        /* ======================================= */
-                        /* SYNCHRONIZED BOOT SEQUENCE */
-                        /* ======================================= */
-                        function revealApp() {
-                            const loader = document.getElementById('loader');
-                            const app = document.getElementById('app');
-                            if (!loader || !app || app.dataset.ready === 'true') return;
-                            app.dataset.ready = 'true';
-                            loader.style.display = 'none';
-                            app.style.opacity = 1;
-                            app.style.pointerEvents = 'all';
-                            app.classList.add('is-ready');
-                            if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                                const heroItems = Array.from(document.querySelectorAll('#sanctum .home-overview > *'));
-                                if (heroItems.length) {
-                                    window.gsap.fromTo(heroItems, { opacity: 0, y: 24 }, {
-                                        opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power3.out', delay: 0.08
-                                    });
-                                }
-                            }
-                            scheduleSponsorModal();
-                        }
-
-                        async function runBootLoader() {
-                            const fill = document.querySelector('.load-fill');
-                            const logText = document.getElementById('ltxt');
-                            // A visual loader is decorative; never let a slow optional asset hide the site indefinitely.
-                            window.setTimeout(revealApp, 1800);
+        // Phase 5: Connection ready
+        updateProgress(100, logs.ready);
+        await new Promise(r => setTimeout(r, 180));
 
 
 
-                            const labels = LANG_DATA[activeLang] || LANG_DATA.en;
-                            const logs = {
-                                init: labels.boot_init || LANG_DATA.en.boot_init,
-                                pointer: labels.boot_pointer || LANG_DATA.en.boot_pointer,
-                                steam: labels.boot_steam || LANG_DATA.en.boot_steam,
-                                cache: labels.boot_cache || LANG_DATA.en.boot_cache,
-                                ready: labels.boot_ready || LANG_DATA.en.boot_ready
-                            };
+        gsap.to('#loader', {
+            opacity: 0,
+            duration: 0.5,
+            onComplete: () => {
+                revealApp();
 
-                            const updateProgress = (pct, labelText) => {
-                                gsap.to(fill, { width: pct + '%', duration: 0.3, ease: 'power1.out' });
-                                if (logText) logText.innerText = labelText;
-                            };
-                            let statsLoaded = false;
+                // Sponsor content remains available through intentional navigation, never a timed interruption.
+            }
+        });
 
-                            try {
-                                // Phase 1: Initialize components
-                                updateProgress(20, logs.init);
-                                try {
-                                    initThree();
-                                } catch (error) {
-                                    console.warn('Background animation unavailable:', error);
-                                }
-                                await new Promise(r => setTimeout(r, 120));
-
-                                // Phase 2: UI ready
-                                updateProgress(40, logs.pointer);
-                                await new Promise(r => setTimeout(r, 90));
-
-                                // Phase 3: Fetching stats from JSON file
-                                updateProgress(70, logs.steam);
-
-                                const statsController = new AbortController();
-                                const statsTimeout = window.setTimeout(() => statsController.abort(), 5000);
-                                const statsPromise = (async () => {
-                                    try {
-                                        const response = await fetch('./data/steam_stats.json', { cache: 'no-store', signal: statsController.signal });
-                                        if (!response.ok) throw new Error(`Steam stats request failed: ${response.status}`);
-                                        const data = await response.json();
-                                        if (!data || typeof data !== 'object') throw new Error('Steam stats JSON is invalid');
-                                        applySteamStats(data);
-                                        statsLoaded = true;
-                                    } finally {
-                                        window.clearTimeout(statsTimeout);
-                                    }
-                                })().catch(error => {
-                                    console.warn('Steam stats unavailable; using safe defaults:', error);
-                                    if (!statsLoaded) {
-                                        ['total-hours', 'total-games'].forEach(id => {
-                                            const value = document.getElementById(id);
-                                            if (value?.textContent === 'Loading...') value.textContent = '—';
-                                        });
-                                        const status = document.getElementById('sys-status');
-                                        if (status) {
-                                            status.setAttribute('data-k', 'sys_unknown');
-                                            status.style.color = 'var(--muted)';
-                                            status.style.textShadow = 'none';
-                                            status.style.animation = 'none';
-                                            setLang(activeLang);
-                                        }
-                                    }
-                                });
-
-                                // Statistics enhance the page, but must never hold the entire interface behind the loader.
-                                await Promise.race([statsPromise, new Promise(resolve => setTimeout(resolve, 180))]);
-
-                                // Phase 4: Cache graphics
-                                updateProgress(90, logs.cache);
-                                await Promise.race([new Promise((resolve) => {
-                                    const img = new Image();
-                                    img.src = "assets/images/HaKING2.png";
-                                    img.onload = () => resolve();
-                                    img.onerror = () => resolve();
-                                }), new Promise(resolve => setTimeout(resolve, 1500))]);
-                                await new Promise(r => setTimeout(r, 120));
-
-                                // Phase 5: Connection ready
-                                updateProgress(100, logs.ready);
-                                await new Promise(r => setTimeout(r, 180));
-
-
-
-                                gsap.to('#loader', {
-                                    opacity: 0,
-                                    duration: 0.5,
-                                    onComplete: () => {
-                                        revealApp();
-
-                                        // Sponsor content remains available through intentional navigation, never a timed interruption.
-                                    }
-                                });
-
-                            } catch (err) {
-                                console.error("Bootloader Exception:", err);
-                                if (!statsLoaded) {
-                                    ['total-hours', 'total-games'].forEach(id => {
-                                        const value = document.getElementById(id);
-                                        if (value?.textContent === 'Loading...') value.textContent = '—';
-                                    });
-                                    const status = document.getElementById('sys-status');
-                                    if (status) {
-                                        status.setAttribute('data-k', 'sys_unknown');
-                                        status.style.color = 'var(--muted)';
-                                        status.style.textShadow = 'none';
-                                        status.style.animation = 'none';
-                                        setLang(activeLang);
-                                    }
-                                }
-                                updateProgress(100, LANG_DATA[activeLang]?.sys_unknown || LANG_DATA.en.sys_unknown);
-                                setTimeout(revealApp, 800);
-                            }
-                        }
+    } catch (err) {
+        console.error("Bootloader Exception:", err);
+        if (!statsLoaded) {
+            ['total-hours', 'total-games'].forEach(id => {
+                const value = document.getElementById(id);
+                if (value?.textContent === 'Loading...') value.textContent = '—';
+            });
+            const status = document.getElementById('sys-status');
+            if (status) {
+                status.setAttribute('data-k', 'sys_unknown');
+                status.style.color = 'var(--muted)';
+                status.style.textShadow = 'none';
+                status.style.animation = 'none';
+                setLang(activeLang);
+            }
+        }
+        updateProgress(100, LANG_DATA[activeLang]?.sys_unknown || LANG_DATA.en.sys_unknown);
+        setTimeout(revealApp, 800);
+    }
+}

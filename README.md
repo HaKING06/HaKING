@@ -6,7 +6,7 @@
 
 **Halit Güneş** için geliştirilen; canlı **Steam kütüphane telemetrisi**, etkileşimli **Three.js 3D HP Victus 16** donanım modeli, **20 dilli** (Arapça RTL dahil) çok dilli mimari ve otomatik senkronize edilen **Steam Müze arşivi** sunan statik web platformu.
 
-[![Version](https://img.shields.io/badge/version-2.4.0-f3bd63?style=for-the-badge)](VERSION)
+[![Version](https://img.shields.io/badge/version-2.4.1-f3bd63?style=for-the-badge)](VERSION)
 [![Languages](https://img.shields.io/badge/languages-20%20(%2B%20RTL)-1f2937?style=for-the-badge)](assets/js/translations.js)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3b82f6?style=for-the-badge)](LICENSE)
 [![Live Site](https://img.shields.io/badge/live-steam.haking.tr-10b981?style=for-the-badge)](https://steam.haking.tr/)
@@ -44,13 +44,14 @@
 
 ---
 
-## Öne Çıkan Özellikler (`v2.4.0`)
+## Öne Çıkan Özellikler (`v2.4.1`)
 
 - **3D HP Victus 16-r1015nt Sahneleri (`assets/js/victus.js`)**
   - Three.js `r128` ile sıfırdan modellenmiş koyu antrasit Victus gövdesi, tam Türkçe Q/sayısal klavye dokusu, menteşe, soğutma ızgaraları ve yan portlar.
   - Bilgisayar ekranında sahibine özel `assets/images/walpaper.png` görseli yüksek çözünürlüklü sRGB doku olarak işlenir; fare/dokunmatik döndürme, klavye ok tuşları, kamera ön ayarları (`01`, `02`, `03`, sıfırlama) ve `webglcontextlost` koruması içerir.
-- **Cephanelik & "Ne Oynasam?" Ruleti (`#armory`)**
-  - `data/steam_stats.json` üzerinden otomatik senkronize edilen **270 oyun** ve toplam süre telemetrisi, **oynanan/oynanmamış oranı** ve **ilk 10 oyunun süre payı**.
+- **Otomatik Hesap Değeri & "Ne Oynasam?" Ruleti (`#sanctum` & `#armory`)**
+  - `update_stats.py`, Steam Web API (`GetOwnedGames`) verisine ek olarak Steam Mağazası toplu `appdetails` API'si (`cc=tr`, `filters=price_overview`) üzerinden kütüphanenin güncel ve liste bazlı MENA-USD hesap değerini otomatik hesaplar ve `data/steam_stats.json` dosyasına yazar.
+  - `data/steam_stats.json` üzerinden otomatik senkronize edilen **270 oyun**, toplam süre telemetrisi, **oynanan/oynanmamış oranı** ve **ilk 10 oyunun süre payı**.
   - Anlık Türkçe/yerelleştirilmiş arama (`/` kısayolu), sıralama ve **oynanmamış oyunları hedefleyebilen rastgele oyun ruleti** (`#spin-game-btn`).
 - **Steam Ekran Görüntüsü Müzesi (`#museum`)**
   - Yerel galeri görseli önbelleği tutmadan doğrudan `images.steamusercontent.com` üzerinden responsive `640w` / `1280w` / orijinal çözünürlük akışı.
@@ -101,12 +102,12 @@ HaKING/
 │   ├── locales.json             # Poster üreteci için dışa aktarılmış dil verisi
 │   ├── screenshots.json         # Sadece uzak Steam CDN URL ve başlık metadatası
 │   └── steam_stats.json         # Günlük eşitlenen oyun kütüphanesi & sistem durumu
-├── docs/                        # 390px / 768px doğrulama ekran görüntüleri ve sürüm raporları
+├── docs/                        # 390px / 768px doğrulama ekran görüntüleri
 ├── posters/                     # Statik HTML poster sayfaları (tr..th)
 ├── scripts/                     # Medya çözümleyici, locale aktarımı ve poster üreteci
-├── tests/                       # Medya hattı ve site bütünlüğü birim testleri
-├── update_stats.py              # Steam Web API kütüphane eşitleme betiği
-├── VERSION / CHANGELOG.md       # Sürüm (2.4.0) ve sürüm notları
+├── tests/                       # Medya hattı, değerleme ve site bütünlüğü birim testleri
+├── update_stats.py              # Steam Web API + Mağaza değerleme eşitleme betiği
+├── VERSION / CHANGELOG.md       # Sürüm (2.4.1) ve sürüm notları
 └── .github/workflows/           # Günlük Steam istatistik ve haftalık ekran görüntüsü akışları
 ```
 
@@ -132,7 +133,7 @@ python scripts/sync_screenshots.py
 
 ### Otomatik GitHub Actions Akışları
 
-- [`.github/workflows/update_steam.yml`](.github/workflows/update_steam.yml): Her gün `03:00 UTC` saatinde `update_stats.py` betiğini çalıştırıp `data/steam_stats.json` dosyasını günceller (`STEAM_API_KEY` ve `STEAM_ID` repo secret gerektirir).
+- [`.github/workflows/update_steam.yml`](.github/workflows/update_steam.yml): Her 30 dakikada bir `update_stats.py` betiğini çalıştırıp `data/steam_stats.json` dosyasını (oyun listesi, süreler, çevrimiçi durumu ve TR mağaza hesap değeri) günceller (`STEAM_API_KEY` repo secret gerektirir).
 - [`.github/workflows/update_screenshots.yml`](.github/workflows/update_screenshots.yml): Haftalık olarak herkese açık Steam ekran görüntüsü bağlantılarını ve poster/site haritası çıktılarını günceller.
 
 ---

@@ -6,3 +6,7 @@ __pycache__/
 node_modules/
 .playwright-mcp/
 *.tmp
+
+# Local AI workspace instructions and internal verification logs
+AGENTS.md
+docs/verification-*.md

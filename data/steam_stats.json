@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "total_games": 270,
   "total_hours": "2,190h",
   "games": [
@@ -1675,5 +1675,9 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-15T10:39:35Z"
+  "updated_at": "2026-11-15T10:39:35Z",
+  "account_value_usd": 3262,
+  "account_value_list_usd": 3532,
+  "account_value_priced_apps": 242,
+  "account_value_region": "TR"
 }

@@ -15,8 +15,17 @@ import requests
 
 STEAM_ID = "76561199760755154"
 API_BASE_URL = "https://api.steampowered.com"
+STORE_APPDETAILS_URL = "https://store.steampowered.com/api/appdetails"
+STORE_COUNTRY_CODE = "tr"
+PRICE_BATCH_SIZE = 60
 OUTPUT_PATH = Path(__file__).resolve().parent / "data" / "steam_stats.json"
 TOP_GAME_LIMIT = 6
+VALUATION_KEYS = (
+    "account_value_usd",
+    "account_value_list_usd",
+    "account_value_priced_apps",
+    "account_value_region",
+)
 
 
 def steam_get(endpoint, api_key, **extra_params):
@@ -67,6 +76,75 @@ def get_store_cover_url(appid):
     if parsed.scheme != "https" or parsed.hostname not in allowed_hosts:
         return ""
     return cover_url
+
+
+def get_library_valuation(appids, country_code=STORE_COUNTRY_CODE, chunk_size=PRICE_BATCH_SIZE):
+    """Estimate current and base USD Steam Store values across all owned appids."""
+    unique_ids = []
+    seen = set()
+    for raw_id in appids:
+        try:
+            appid = int(raw_id)
+        except (TypeError, ValueError):
+            continue
+        if appid > 0 and appid not in seen:
+            seen.add(appid)
+            unique_ids.append(appid)
+
+    if not unique_ids:
+        return None
+
+    final_cents = 0
+    initial_cents = 0
+    priced_count = 0
+
+    for start in range(0, len(unique_ids), max(1, int(chunk_size))):
+        batch = unique_ids[start : start + max(1, int(chunk_size))]
+        try:
+            response = requests.get(
+                STORE_APPDETAILS_URL,
+                params={
+                    "appids": ",".join(str(appid) for appid in batch),
+                    "cc": country_code,
+                    "filters": "price_overview",
+                },
+                timeout=12,
+            )
+            if not response.ok:
+                return None
+            payload = response.json()
+        except (requests.RequestException, ValueError):
+            return None
+
+        if not isinstance(payload, dict):
+            return None
+
+        for appid in batch:
+            details = payload.get(str(appid))
+            data = details.get("data") if isinstance(details, dict) and details.get("success") else None
+            price_info = data.get("price_overview") if isinstance(data, dict) else None
+            if not isinstance(price_info, dict) or price_info.get("currency") != "USD":
+                continue
+
+            try:
+                final_val = max(0, int(price_info.get("final", 0) or 0))
+                initial_val = max(0, int(price_info.get("initial", final_val) or 0))
+            except (TypeError, ValueError):
+                continue
+
+            final_cents += final_val
+            initial_cents += max(initial_val, final_val)
+            priced_count += 1
+
+    if priced_count == 0:
+        return None
+
+    return {
+        "account_value_usd": round(final_cents / 100),
+        "account_value_list_usd": round(initial_cents / 100),
+        "account_value_priced_apps": priced_count,
+        "account_value_region": country_code.upper(),
+    }
 
 
 def get_steam_data(api_key):
@@ -139,14 +217,18 @@ def get_steam_data(api_key):
         # not prevent the game collection from being refreshed.
         pass
 
-    return {
-        "schema_version": 3,
+    stats = {
+        "schema_version": 4,
         "total_games": int(games_response.get("game_count") or len(library_games)),
         "total_hours": f"{total_minutes // 60:,}h",
         "games": library_games,
         "top_games": top_games,
         "system_status": system_status,
     }
+    valuation = get_library_valuation([game["appid"] for game in library_games])
+    if valuation:
+        stats.update(valuation)
+    return stats
 
 
 def write_if_changed(stats):
@@ -157,6 +239,11 @@ def write_if_changed(stats):
             previous = json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             previous = None
+
+    if "account_value_usd" not in stats and isinstance(previous, dict):
+        for key in VALUATION_KEYS:
+            if key in previous:
+                stats[key] = previous[key]
 
     if previous and previous.get("updated_at"):
         old_data = {key: value for key, value in previous.items() if key != "updated_at"}

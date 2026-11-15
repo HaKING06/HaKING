@@ -1,3 +1,9 @@
+# HaKING 2.4.1 — 2026-11-15
+
+- Automatic Steam account valuation: `update_stats.py` now queries the official Steam Store bulk `appdetails` endpoint (`cc=tr`, `filters=price_overview`) to compute live current (`account_value_usd`) and base list (`account_value_list_usd`) library values with batch-failure fallback preservation; `#sanctum` dynamically formats `#account-value` across all 20 languages instead of relying on a static `$2395` number.
+- Clean public GitHub repository: added `AGENTS.md` and `docs/verification-*.md` to `.gitignore`, untracked `AGENTS.md` from the Git index while preserving local rules, removed internal AI verification logs, and updated `CONTRIBUTING.md`.
+- Added regression tests (`tests/test_update_stats.py`), bumped entrypoints to `2.4.1`, and refreshed localized posters, WebPs, `README.md`, and docs screenshots.
+
 # HaKING 2.4.0 — 2026-11-15
 
 - Side-by-side `#support` panel: Steam Trade Uplink and Buy Me a Coffee now sit evenly beside each other (`>=640px`) with balanced card geometry so both support channels fit on screen without vertical scrolling, while stacking cleanly on narrow mobile viewports.
