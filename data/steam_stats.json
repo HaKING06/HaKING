@@ -544,16 +544,16 @@
       "icon_hash": "04ef5b7192f02400ea32331b3ac6b2ae322d9f93"
     },
     {
+      "appid": 4262460,
+      "name": "ROB RUN",
+      "playtime_minutes": 14,
+      "icon_hash": "6925066dc70cf9453455a8c1db9539521a116f63"
+    },
+    {
       "appid": 368760,
       "name": "Playing History 3 - Vikings",
       "playtime_minutes": 13,
       "icon_hash": "ccfaaa7c4332643a91cbfcfce84756ec4705be0d"
-    },
-    {
-      "appid": 4262460,
-      "name": "ROB RUN",
-      "playtime_minutes": 12,
-      "icon_hash": "6925066dc70cf9453455a8c1db9539521a116f63"
     },
     {
       "appid": 242760,
@@ -1675,9 +1675,9 @@
     }
   ],
   "system_status": "ONLINE",
-  "updated_at": "2026-11-15T10:39:35Z",
-  "account_value_usd": 3262,
+  "account_value_usd": 3261,
   "account_value_list_usd": 3532,
   "account_value_priced_apps": 242,
-  "account_value_region": "TR"
+  "account_value_region": "TR",
+  "updated_at": "2026-11-15T17:36:33Z"
 }
