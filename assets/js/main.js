@@ -1,4 +1,4 @@
-import { LANG_DATA } from './translations.js?v=2.4.1-20261115';
+import { LANG_DATA } from './translations.js?v=2.5.0-20261115';
 
 let activeLang = LANG_DATA[document.documentElement.dataset.initialLang] ? document.documentElement.dataset.initialLang : 'en';
 let steamStats = null;
@@ -661,6 +661,8 @@ function openSponsorModal(manual = false) {
         sponsorAutoTimer = 0;
     }
     if (!manual) {
+        const museumOverlay = document.getElementById('museum-3d-overlay');
+        if (museumOverlay && !museumOverlay.hidden) return;
         if (safeStorageGet(sessionStorage, POPUP_SESSION_KEY) === 'true') return;
         const lastClosed = Number(safeStorageGet(localStorage, POPUP_LAST_CLOSED_TIME_KEY) || 0);
         if (lastClosed && (Date.now() - lastClosed < POPUP_COOLDOWN_MS)) return;

@@ -27,7 +27,13 @@ class SiteIntegrityTests(unittest.TestCase):
         self.assertIn('github.com/HaKING06', index_html)
         self.assertNotIn('cdn.steamstatic.com/', main_css)
         self.assertTrue((ROOT / 'assets/vendor/lucide.min.js').is_file())
+        self.assertTrue((ROOT / 'assets/vendor/GLTFLoader.js').is_file())
+        self.assertTrue((ROOT / 'assets/vendor/Reflector.js').is_file())
+        self.assertTrue((ROOT / 'assets/vendor/RoomEnvironment.js').is_file())
         self.assertTrue((ROOT / 'assets/images/walpaper.png').is_file())
+        self.assertTrue((ROOT / 'assets/js/museum3d.js').is_file())
+        self.assertTrue((ROOT / 'assets/museum/models/marble_bust_01/marble_bust_01_1k.gltf').is_file())
+        self.assertTrue((ROOT / 'assets/museum/models/chandelier_02/Chandelier_02_1k.gltf').is_file())
 
         for tag in re.findall(r'<a\b[^>]*target="_blank"[^>]*>', index_html):
             self.assertIn('noopener', tag)

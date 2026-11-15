@@ -6,7 +6,7 @@
 
 **Halit Güneş** için geliştirilen; canlı **Steam kütüphane telemetrisi**, etkileşimli **Three.js 3D HP Victus 16** donanım modeli, **20 dilli** (Arapça RTL dahil) çok dilli mimari ve otomatik senkronize edilen **Steam Müze arşivi** sunan statik web platformu.
 
-[![Version](https://img.shields.io/badge/version-2.4.1-f3bd63?style=for-the-badge)](VERSION)
+[![Version](https://img.shields.io/badge/version-2.5.0-f3bd63?style=for-the-badge)](VERSION)
 [![Languages](https://img.shields.io/badge/languages-20%20(%2B%20RTL)-1f2937?style=for-the-badge)](assets/js/translations.js)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3b82f6?style=for-the-badge)](LICENSE)
 [![Live Site](https://img.shields.io/badge/live-steam.haking.tr-10b981?style=for-the-badge)](https://steam.haking.tr/)
@@ -44,7 +44,11 @@
 
 ---
 
-## Öne Çıkan Özellikler (`v2.4.1`)
+## Öne Çıkan Özellikler (`v2.5.0`)
+
+- **3D Sanal Müze Turu & Steam Görsel Arşivi (`#museum` & `assets/js/museum3d.js`)**
+  - Klasik 2D arşiv (`Favoriler`, arama, oyun filtresi, slayt gösterisi ve lightbox) korunur; tek tıkla **"Sanal Turu Başlat"** düğmesine basıldığında isteğe bağlı **WebGL 3D Sergi Salonu** açılır.
+  - Yerel Three.js `r128` eklentileri (`GLTFLoader`, `Reflector`, `RoomEnvironment`) ve Poly Haven **CC0 1.0** 3D modelleri (`marble_bust_01` klasik mermer büst, parlayan `Chandelier_02` avize) ile mermer/sıva/ceviz PBR dokuları; `224` Steam ekran görüntüsünü kanatlar (`15` eser/salon) hâlinde pirinç çerçeveler, duvar aplikleri ve yer yansımalarıyla sergiler (`WASD`, sürükle-bak, FPS kilidi, rehberli otomatik tur ve mobil dokunmatik D-Pad).
 
 - **3D HP Victus 16-r1015nt Sahneleri (`assets/js/victus.js`)**
   - Three.js `r128` ile sıfırdan modellenmiş koyu antrasit Victus gövdesi, tam Türkçe Q/sayısal klavye dokusu, menteşe, soğutma ızgaraları ve yan portlar.
@@ -53,9 +57,6 @@
   - `update_stats.py`, Steam Web API (`GetOwnedGames`) verisine ek olarak Steam Mağazası toplu `appdetails` API'si (`cc=tr`, `filters=price_overview`) üzerinden kütüphanenin güncel ve liste bazlı MENA-USD hesap değerini otomatik hesaplar ve `data/steam_stats.json` dosyasına yazar.
   - `data/steam_stats.json` üzerinden otomatik senkronize edilen **270 oyun**, toplam süre telemetrisi, **oynanan/oynanmamış oranı** ve **ilk 10 oyunun süre payı**.
   - Anlık Türkçe/yerelleştirilmiş arama (`/` kısayolu), sıralama ve **oynanmamış oyunları hedefleyebilen rastgele oyun ruleti** (`#spin-game-btn`).
-- **Steam Ekran Görüntüsü Müzesi (`#museum`)**
-  - Yerel galeri görseli önbelleği tutmadan doğrudan `images.steamusercontent.com` üzerinden responsive `640w` / `1280w` / orijinal çözünürlük akışı.
-  - Oyun filtresi, anlık arama, artırımlı yükleme, klavye destekli tam ekran lightbox ve **otomatik slayt gösterisi (Oynat / Duraklat)**.
 - **Yan Yana Destek & Profesyonel Partner Modu (`#support` & `#first-time-modal`)**
   - **Steam Trade Uplink** ve **Buy Me a Coffee** kartları `>=640px` ekranlarda tek bakışta, kaydırma gerektirmeden yan yana hizalanır.
   - Yenilenen **CaseHug × HaKING** partner penceresi; afiş (`add/SOL.png`) / WebM tanıtım sekmeleri, tek tıkla `HAK06` kod kopyalama, erişilebilir odak yönetimi, 24 saat erteleme ve Ana Üs / Destek üzerinden isteğe bağlı yeniden açma düğmeleri sunar.
@@ -93,10 +94,12 @@ HaKING/
 │   │   ├── translations.js      # 20 dil sözlüğü + arayüz metinleri
 │   │   ├── victus.js            # Three.js HP Victus 3D sahnesi ve özel ekran dokusu
 │   │   ├── main.js              # Navigasyon, Steam telemetrisi, rulet, iletişim ve partner popup
-│   │   └── upgrade.js           # Müze arşivi, slayt gösterisi, dil seçici ve Victus bağlayıcı
+│   │   ├── museum3d.js          # Three.js WebGL 3D Sanal Müze turu ve rehberli gezi motoru
+│   │   └── upgrade.js           # Müze arşivi, slayt gösterisi, dil seçici ve 3D bağlayıcı
 │   ├── models/victus/           # Donanım ve kaplama referans notları
+│   ├── museum/                  # CC0 1.0 Poly Haven 3D büst, avize ve PBR mermer/ahşap dokular
 │   ├── posters/                 # 20 dil × 2 şablon = 40 WebP poster
-│   └── vendor/                  # Yerel Three.js r128 ve Lucide 0.468.0 (+ lisans metinleri)
+│   └── vendor/                  # Yerel Three.js r128 (+ eklentiler) ve Lucide 0.468.0
 ├── data/
 │   ├── favorites.json           # Müze vitrini için öncelikli ekran görüntüleri
 │   ├── locales.json             # Poster üreteci için dışa aktarılmış dil verisi
@@ -107,7 +110,7 @@ HaKING/
 ├── scripts/                     # Medya çözümleyici, locale aktarımı ve poster üreteci
 ├── tests/                       # Medya hattı, değerleme ve site bütünlüğü birim testleri
 ├── update_stats.py              # Steam Web API + Mağaza değerleme eşitleme betiği
-├── VERSION / CHANGELOG.md       # Sürüm (2.4.1) ve sürüm notları
+├── VERSION / CHANGELOG.md       # Sürüm (2.5.0) ve sürüm notları
 └── .github/workflows/           # Günlük Steam istatistik ve haftalık ekran görüntüsü akışları
 ```
 

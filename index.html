@@ -7,7 +7,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.steamstatic.com https://media.steampowered.com https://images.steamusercontent.com data:; media-src 'self' https://casehug.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:">
-    <script src="assets/js/lang-init.js?v=2.4.1-20261115"></script>
+    <script src="assets/js/lang-init.js?v=2.5.0-20261115"></script>
     <title>HaKING | Halit Güneş – Oyun Profili ve Dijital Arşiv</title>
     <meta name="description"
         content="Halit Güneş'in oyun profili, sistem özellikleri, ekran görüntüleri ve dijital bağlantıları.">
@@ -32,16 +32,16 @@
     <link id="web-fonts"
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@400&family=Rajdhani:wght@500;700&display=swap"
         rel="stylesheet" media="print">
-    <link rel="stylesheet" href="assets/css/main.css?v=2.4.1-20261115">
+    <link rel="stylesheet" href="assets/css/main.css?v=2.5.0-20261115">
     <!-- Core Three.js and Lucide run locally; GSAP loads asynchronously with a safe fallback. -->
-    <script async src="assets/vendor/three.min.js?v=2.4.1-20261115"></script>
-    <script async data-icon-library src="assets/vendor/lucide.min.js?v=2.4.1-20261115"></script>
+    <script async src="assets/vendor/three.min.js?v=2.5.0-20261115"></script>
+    <script async data-icon-library src="assets/vendor/lucide.min.js?v=2.5.0-20261115"></script>
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
-    <script type="module" src="assets/js/main.js?v=2.4.1-20261115"></script>
-    <script type="module" src="assets/js/upgrade.js?v=2.4.1-20261115"></script>
-    <link rel="stylesheet" href="assets/css/upgrade.css?v=2.4.1-20261115">
-    <meta name="application-version" content="2.4.1">
+    <script type="module" src="assets/js/main.js?v=2.5.0-20261115"></script>
+    <script type="module" src="assets/js/upgrade.js?v=2.5.0-20261115"></script>
+    <link rel="stylesheet" href="assets/css/upgrade.css?v=2.5.0-20261115">
+    <meta name="application-version" content="2.5.0">
 </head>
 
 <body>
@@ -513,6 +513,19 @@
                             ARCHIVE</span>
                     </div>
                 </div>
+                <div class="museum-3d-banner panel">
+                    <div class="museum-3d-copy">
+                        <span class="museum-3d-kicker"><i data-lucide="cuboid" aria-hidden="true"></i><span
+                                data-k="museum_3d_kicker">WEBGL 3D SERGİ SALONU</span></span>
+                        <h2 data-k="museum_3d_title">3D Sanal Müze Turu</h2>
+                        <p data-k="museum_3d_desc">Oyun ekran görüntülerini mermer ve altın kaplı 3D sergi salonunda
+                            yürüyerek gez.</p>
+                    </div>
+                    <button type="button" id="open-museum-3d" class="museum-3d-start-btn">
+                        <i data-lucide="compass" aria-hidden="true"></i>
+                        <span data-k="museum_3d_start">Sanal Turu Başlat</span>
+                    </button>
+                </div>
                 <div class="archive-toolbar">
                     <input id="museum-search" type="search" placeholder="Oyun ara">
                     <select id="museum-game">
@@ -686,6 +699,78 @@
             <button type="button" id="gallery-next" data-u="next">Sonraki</button>
         </div>
     </dialog>
+
+    <div id="museum-3d-overlay" class="museum-3d-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="museum-3d-hud-title" hidden>
+        <div id="museum-3d-stage" class="museum-3d-stage"></div>
+
+        <div id="museum-3d-loading" class="museum-3d-loading">
+            <div class="museum-3d-loading-box">
+                <strong data-k="museum_3d_title">3D Sanal Müze Turu</strong>
+                <p data-k="museum_3d_loading">3D sergi salonu hazırlanıyor...</p>
+                <div class="museum-3d-track"><span id="museum-3d-progress"></span></div>
+            </div>
+        </div>
+
+        <div id="museum-3d-error" class="museum-3d-loading" hidden>
+            <div class="museum-3d-loading-box">
+                <p data-k="museum_3d_error">WebGL başlatılamadı; klasik 2D arşivi kullanabilirsiniz.</p>
+            </div>
+        </div>
+
+        <div class="museum-3d-hud museum-3d-top">
+            <div class="museum-3d-brand">
+                <strong id="museum-3d-hud-title" data-k="museum_3d_hud">HaKING 3D MÜZE</strong>
+                <div class="museum-3d-wing-nav">
+                    <button type="button" id="museum-3d-wing-prev" aria-label="Previous wing">‹</button>
+                    <span id="museum-3d-wing-label">Vitrin · 1 / 15</span>
+                    <button type="button" id="museum-3d-wing-next" aria-label="Next wing">›</button>
+                </div>
+            </div>
+            <div class="museum-3d-top-actions">
+                <button type="button" id="museum-3d-autotour" class="museum-3d-btn" aria-pressed="false">
+                    <i data-lucide="play" aria-hidden="true"></i>
+                    <span data-k="museum_3d_autotour">Rehberli Tur</span>
+                </button>
+                <button type="button" id="museum-3d-fps-btn" class="museum-3d-btn museum-3d-fps-only"
+                    aria-pressed="false">
+                    <i data-lucide="crosshair" aria-hidden="true"></i>
+                    <span data-k="museum_3d_fps">FPS Kilidi</span>
+                </button>
+                <button type="button" id="museum-3d-close" class="museum-3d-btn museum-3d-btn-exit">
+                    <i data-lucide="x" aria-hidden="true"></i>
+                    <span data-k="museum_3d_exit">Arşive Dön</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="museum-3d-reticle" class="museum-3d-reticle" aria-hidden="true"></div>
+
+        <button type="button" id="museum-3d-target" class="museum-3d-target" hidden>
+            <span id="museum-3d-target-title"></span>
+            <kbd data-k="museum_3d_inspect">İncele</kbd>
+        </button>
+
+        <div class="museum-3d-hud museum-3d-bottom">
+            <div class="museum-3d-pad" dir="ltr" aria-label="Movement controls">
+                <button type="button" class="pad-up" data-pad="forward" aria-label="Forward">▲</button>
+                <button type="button" class="pad-left" data-pad="left" aria-label="Left">◄</button>
+                <button type="button" class="pad-down" data-pad="back" aria-label="Back">▼</button>
+                <button type="button" class="pad-right" data-pad="right" aria-label="Right">►</button>
+            </div>
+            <div class="museum-3d-art-nav">
+                <button type="button" id="museum-3d-prev-art" class="museum-3d-btn"
+                    aria-label="Previous exhibit">‹</button>
+                <span id="museum-3d-art-label" class="museum-3d-art-label">01</span>
+                <button type="button" id="museum-3d-inspect-art" class="museum-3d-btn museum-3d-btn-gold">
+                    <i data-lucide="maximize-2" aria-hidden="true"></i>
+                    <span data-k="museum_3d_inspect">İncele</span>
+                </button>
+                <button type="button" id="museum-3d-next-art" class="museum-3d-btn" aria-label="Next exhibit">›</button>
+            </div>
+            <p class="museum-3d-hint" data-k="museum_3d_controls">WASD: Yürü · Sürükle: Bak · Tıkla / E: İncele</p>
+        </div>
+    </div>
 </body>
 
 </html>

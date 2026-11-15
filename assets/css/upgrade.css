@@ -1287,6 +1287,413 @@ body {
   border-color: #f3bd63
 }
 
+/* 2.5 WebGL 3D Virtual Museum Tour (Optional Overlay) */
+.museum-3d-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  margin: 0 0 22px;
+  border: 1px solid rgba(243, 189, 99, 0.34);
+  border-radius: 14px;
+  background: radial-gradient(circle at 85% 25%, rgba(243, 189, 99, 0.14), rgba(18, 17, 22, 0.96) 62%);
+}
+
+.museum-3d-copy {
+  min-width: 0;
+  flex: 1 1 280px;
+}
+
+.museum-3d-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #f3bd63;
+  font: 700 11px monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.museum-3d-kicker svg {
+  width: 15px;
+  height: 15px;
+}
+
+.museum-3d-copy h2 {
+  margin: 6px 0 4px;
+  font: 600 clamp(1.1rem, 2.2vw, 1.45rem)/1.25 system-ui, sans-serif;
+  color: #fff;
+}
+
+.museum-3d-copy p {
+  margin: 0;
+  color: #bcb7c4;
+  font: 400 0.92rem/1.45 system-ui, sans-serif;
+}
+
+.museum-3d-start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 20px;
+  border-radius: 10px;
+  border: 1px solid #f3bd63;
+  background: linear-gradient(135deg, #f3bd63, #d89b3b);
+  color: #100f12;
+  font: 700 0.92rem/1 system-ui, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.museum-3d-start-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.museum-3d-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(243, 189, 99, 0.25);
+}
+
+.museum-3d-active,
+.museum-3d-active body {
+  overflow: hidden !important;
+}
+
+.museum-3d-active .lang-box {
+  display: none !important;
+}
+
+.museum-3d-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90000;
+  background: #0b0c10;
+  color: #f2ede2;
+  overflow: hidden;
+  user-select: none;
+}
+
+.museum-3d-overlay[hidden] {
+  display: none;
+}
+
+.museum-3d-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.museum-3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.museum-3d-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(11, 12, 16, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.museum-3d-loading[hidden] {
+  display: none;
+}
+
+.museum-3d-loading-box {
+  width: min(360px, 100%);
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(243, 189, 99, 0.35);
+  background: #14151c;
+  text-align: center;
+}
+
+.museum-3d-loading-box strong {
+  display: block;
+  color: #f3bd63;
+  font: 700 1.05rem system-ui, sans-serif;
+  margin-bottom: 6px;
+}
+
+.museum-3d-loading-box p {
+  margin: 0 0 14px;
+  font: 400 0.88rem system-ui, sans-serif;
+  color: #ccc6d3;
+}
+
+.museum-3d-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+#museum-3d-progress {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #c6913a, #f3bd63);
+  transition: width .22s ease;
+}
+
+.museum-3d-hud {
+  position: absolute;
+  inset-inline: 14px;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.museum-3d-top {
+  top: 14px;
+}
+
+.museum-3d-bottom {
+  bottom: 14px;
+}
+
+.museum-3d-brand,
+.museum-3d-top-actions,
+.museum-3d-art-nav,
+.museum-3d-pad {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.museum-3d-brand,
+.museum-3d-art-nav {
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 16, 22, 0.82);
+  backdrop-filter: blur(12px);
+}
+
+#museum-3d-hud-title {
+  color: #f3bd63;
+  font: 700 0.82rem monospace;
+  letter-spacing: .12em;
+}
+
+.museum-3d-wing-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.14);
+  font: 500 0.82rem system-ui, sans-serif;
+  color: #e4dfd5;
+}
+
+.museum-3d-wing-nav button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f3bd63;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.museum-3d-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(18, 19, 26, 0.86);
+  backdrop-filter: blur(10px);
+  color: #efeae0;
+  font: 600 0.82rem/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.museum-3d-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.museum-3d-btn[aria-pressed=true],
+.museum-3d-btn-gold {
+  background: #f3bd63;
+  border-color: #f3bd63;
+  color: #111;
+}
+
+.museum-3d-btn-exit {
+  border-color: rgba(243, 189, 99, 0.45);
+  color: #f3bd63;
+}
+
+.museum-3d-reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(243, 189, 99, 0.72);
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.museum-3d-target {
+  position: absolute;
+  top: calc(50% + 22px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(243, 189, 99, 0.55);
+  background: rgba(15, 16, 22, 0.9);
+  color: #fff;
+  font: 600 0.84rem system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.museum-3d-target[hidden] {
+  display: none;
+}
+
+.museum-3d-target kbd {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #f3bd63;
+  color: #111;
+  font: 700 0.72rem monospace;
+}
+
+.museum-3d-art-label {
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 0.82rem system-ui, sans-serif;
+  color: #ece6d9;
+}
+
+.museum-3d-hint {
+  margin: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: rgba(15, 16, 22, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #b8b2be;
+  font: 500 0.78rem system-ui, sans-serif;
+  pointer-events: auto;
+}
+
+.museum-3d-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 36px);
+  grid-template-rows: repeat(2, 34px);
+  gap: 4px;
+  padding: 6px;
+  border-radius: 12px;
+  background: rgba(15, 16, 22, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.museum-3d-pad button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(243, 189, 99, 0.32);
+  color: #f3bd63;
+  border-radius: 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.museum-3d-pad .pad-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.museum-3d-pad .pad-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.museum-3d-pad .pad-down {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.museum-3d-pad .pad-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+@media(max-width:767px) {
+  .museum-3d-hint,
+  .museum-3d-fps-only {
+    display: none;
+  }
+
+  .museum-3d-start-btn {
+    width: 100%;
+  }
+
+  .museum-3d-hud {
+    inset-inline: 10px;
+  }
+
+  .museum-3d-brand {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .museum-3d-top-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .museum-3d-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .museum-3d-pad {
+    align-self: flex-start;
+  }
+
+  .museum-3d-art-nav {
+    justify-content: space-between;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .museum-3d-start-btn,
+  #museum-3d-progress {
+    transition: none;
+  }
+}
+
 @media(max-width:768px) {
   .armory-pick {
     grid-template-columns: 1fr

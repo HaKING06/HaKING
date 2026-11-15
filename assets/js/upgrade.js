@@ -1,5 +1,6 @@
-import { LANG_DATA, LANG_OPTIONS } from './translations.js?v=2.4.1-20261115';
-import { initVictus } from './victus.js?v=2.4.1-20261115';
+import { LANG_DATA, LANG_OPTIONS } from './translations.js?v=2.5.0-20261115';
+import { initVictus } from './victus.js?v=2.5.0-20261115';
+import { openMuseum3D } from './museum3d.js?v=2.5.0-20261115';
 
 const copy = {
   tr: ['Favoriler', 'Tüm arşiv', 'Tüm oyunlar', 'Oyun ara', 'Daha fazla göster', 'Önceki', 'Sonraki', 'Kapat', 'Steam’de aç', 'Görsel bulunamadı', 'Afişler', 'Görünümü sıfırla', 'Sürükleyerek döndür · Kaydırarak yakınlaştır', 'Tema'],
@@ -287,6 +288,23 @@ window.addEventListener('DOMContentLoaded', async () => {
   $('gallery-dialog').addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') $('gallery-next').click();
     if (e.key === 'ArrowLeft') $('gallery-prev').click();
+  });
+
+  $('open-museum-3d')?.addEventListener('click', () => {
+    const sourceItems = filtered.length ? filtered : items;
+    openMuseum3D({
+      items: sourceItems,
+      getCopy: () => LANG_DATA[document.documentElement.dataset.uiLang] || LANG_DATA.en,
+      onInspect: item => {
+        const found = filtered.findIndex(x => x.id === item.id);
+        if (found >= 0) {
+          index = found;
+          show();
+          $('gallery-dialog').showModal();
+        }
+      },
+      returnFocusTo: $('open-museum-3d')
+    });
   });
 
   translate();

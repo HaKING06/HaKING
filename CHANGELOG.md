@@ -1,3 +1,10 @@
+# HaKING 2.5.0 — 2026-11-15
+
+- Optional WebGL 3D Virtual Museum Tour (`assets/js/museum3d.js`): added an opt-in **"Sanal Turu Başlat"** banner inside `#museum` while preserving the classic 2D archive, search, filters, and lightbox. Entering launches an interactive obsidian, walnut, brushed-brass, and reflective marble exhibition hall built with Three.js `r128`.
+- Vendored open-source MIT Three.js r128 helpers (`GLTFLoader.js`, `Reflector.js`, `RoomEnvironment.js`) and CC0 1.0 Poly Haven museum models (`marble_bust_01` centerpiece sculpture behind velvet cordons, glowing `Chandelier_02`) + 1K PBR marble, plaster, and wood textures (`assets/museum/`), documented in `THIRD_PARTY_NOTICES.md`.
+- Interactive 3D controls & streaming: walks through curated wings of 15 framed Steam screenshots at a time across all 224 captures with engraved brass plaques, `WASD`/Arrow + drag look + optional FPS Pointer Lock + touch D-pad for `390px`/`768px` mobile viewports, Guided Auto-Tour glide, wing switching, and direct click/`E` high-res inspection inside `#gallery-dialog`.
+- Added 20-language translations (`museum3dCopy`) including Arabic RTL (`translations.js`), refreshed localized posters/WebPs, docs screenshots, and automated integrity + Playwright 3D museum tests.
+
 # HaKING 2.4.1 — 2026-11-15
 
 - Automatic Steam account valuation: `update_stats.py` now queries the official Steam Store bulk `appdetails` endpoint (`cc=tr`, `filters=price_overview`) to compute live current (`account_value_usd`) and base list (`account_value_list_usd`) library values with batch-failure fallback preservation; `#sanctum` dynamically formats `#account-value` across all 20 languages instead of relying on a static `$2395` number.
