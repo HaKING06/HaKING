@@ -1,12 +1,12 @@
 {
   "schema_version": 4,
-  "total_games": 270,
+  "total_games": 271,
   "total_hours": "2,193h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18381,
+      "playtime_minutes": 18412,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -378,7 +378,7 @@
     {
       "appid": 4262460,
       "name": "ROB RUN",
-      "playtime_minutes": 150,
+      "playtime_minutes": 167,
       "icon_hash": "6925066dc70cf9453455a8c1db9539521a116f63"
     },
     {
@@ -1162,6 +1162,12 @@
       "icon_hash": "9395e53a7bda1f87985c8b4b783d1fac49b88a30"
     },
     {
+      "appid": 1771300,
+      "name": "Kingdom Come: Deliverance II",
+      "playtime_minutes": 0,
+      "icon_hash": "80e8d75b87433627cafd2a1bcbb5b9f5741e2277"
+    },
+    {
       "appid": 2955840,
       "name": "Kitchen Wars",
       "playtime_minutes": 0,
@@ -1634,7 +1640,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18381,
+      "playtime_minutes": 18412,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1674,10 +1680,10 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "ONLINE",
-  "account_value_usd": 3283,
-  "account_value_list_usd": 3550,
-  "account_value_priced_apps": 242,
+  "system_status": "OFFLINE",
+  "account_value_usd": 3148,
+  "account_value_list_usd": 3595,
+  "account_value_priced_apps": 243,
   "account_value_region": "TR",
-  "updated_at": "2026-11-18T12:05:16Z"
+  "updated_at": "2026-11-18T20:48:41Z"
 }
