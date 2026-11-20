@@ -1,12 +1,12 @@
 {
   "schema_version": 4,
   "total_games": 271,
-  "total_hours": "2,193h",
+  "total_hours": "2,197h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18412,
+      "playtime_minutes": 18518,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -178,16 +178,16 @@
       "icon_hash": "f6a576dc2d56a335da96b6a9525975ed397a15bb"
     },
     {
+      "appid": 3240220,
+      "name": "Grand Theft Auto V Enhanced",
+      "playtime_minutes": 978,
+      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
+    },
+    {
       "appid": 3678970,
       "name": "TBH: Task Bar Hero",
       "playtime_minutes": 900,
       "icon_hash": "293a05477b85149969a15de321eb0ed066187f51"
-    },
-    {
-      "appid": 3240220,
-      "name": "Grand Theft Auto V Enhanced",
-      "playtime_minutes": 867,
-      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
     },
     {
       "appid": 1163550,
@@ -1640,7 +1640,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18412,
+      "playtime_minutes": 18518,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1680,10 +1680,10 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "OFFLINE",
+  "system_status": "ONLINE",
   "account_value_usd": 2880,
   "account_value_list_usd": 3640,
   "account_value_priced_apps": 243,
   "account_value_region": "TR",
-  "updated_at": "2026-11-20T01:23:42Z"
+  "updated_at": "2026-11-20T17:41:48Z"
 }
