@@ -1,7 +1,7 @@
 {
   "schema_version": 4,
   "total_games": 271,
-  "total_hours": "2,199h",
+  "total_hours": "2,201h",
   "games": [
     {
       "appid": 730,
@@ -172,16 +172,16 @@
       "icon_hash": "62dd5c627664df1bcabc47727c7dcd7ccab353e9"
     },
     {
+      "appid": 3240220,
+      "name": "Grand Theft Auto V Enhanced",
+      "playtime_minutes": 1092,
+      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
+    },
+    {
       "appid": 1665460,
       "name": "eFootball™",
       "playtime_minutes": 1050,
       "icon_hash": "f6a576dc2d56a335da96b6a9525975ed397a15bb"
-    },
-    {
-      "appid": 3240220,
-      "name": "Grand Theft Auto V Enhanced",
-      "playtime_minutes": 978,
-      "icon_hash": "8355a7bbdb704f727bfba80ec56bc7228991338e"
     },
     {
       "appid": 3678970,
@@ -330,7 +330,7 @@
     {
       "appid": 4262460,
       "name": "ROB RUN",
-      "playtime_minutes": 273,
+      "playtime_minutes": 288,
       "icon_hash": "6925066dc70cf9453455a8c1db9539521a116f63"
     },
     {
@@ -1680,10 +1680,10 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "OFFLINE",
+  "system_status": "ONLINE",
   "account_value_usd": 2845,
   "account_value_list_usd": 3640,
   "account_value_priced_apps": 243,
   "account_value_region": "TR",
-  "updated_at": "2026-11-20T23:47:14Z"
+  "updated_at": "2026-11-21T14:52:00Z"
 }
