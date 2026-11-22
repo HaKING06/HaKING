@@ -1,12 +1,12 @@
 {
   "schema_version": 4,
   "total_games": 275,
-  "total_hours": "2,205h",
+  "total_hours": "2,206h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18647,
+      "playtime_minutes": 18700,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1664,7 +1664,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18647,
+      "playtime_minutes": 18700,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1704,10 +1704,10 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "ONLINE",
-  "account_value_usd": 2854,
+  "system_status": "OFFLINE",
+  "account_value_usd": 2803,
   "account_value_list_usd": 3833,
   "account_value_priced_apps": 247,
   "account_value_region": "TR",
-  "updated_at": "2026-11-22T16:57:38Z"
+  "updated_at": "2026-11-22T22:22:59Z"
 }
