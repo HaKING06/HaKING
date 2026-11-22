@@ -1,12 +1,12 @@
 {
   "schema_version": 4,
-  "total_games": 271,
-  "total_hours": "2,201h",
+  "total_games": 275,
+  "total_hours": "2,205h",
   "games": [
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18518,
+      "playtime_minutes": 18647,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -27,7 +27,7 @@
     {
       "appid": 3405690,
       "name": "EA SPORTS FC™ 26",
-      "playtime_minutes": 5787,
+      "playtime_minutes": 5884,
       "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
@@ -868,6 +868,12 @@
       "icon_hash": "cf7c92642aa4d1453f8c0bc5d116c0d228dff6e8"
     },
     {
+      "appid": 1259420,
+      "name": "Days Gone",
+      "playtime_minutes": 0,
+      "icon_hash": "839338fcedd1033ab7f0d2a31c194fb880ebf7b5"
+    },
+    {
       "appid": 384310,
       "name": "Dead In Bermuda",
       "playtime_minutes": 0,
@@ -1004,6 +1010,12 @@
       "name": "Frostpunk",
       "playtime_minutes": 0,
       "icon_hash": "0561084dfe24c469c905fe0681da82aa31102836"
+    },
+    {
+      "appid": 2215430,
+      "name": "Ghost of Tsushima DIRECTOR'S CUT",
+      "playtime_minutes": 0,
+      "icon_hash": "e87b8cbe31f7bc5f40ee6ed94ccfa18f59f04fbc"
     },
     {
       "appid": 1546970,
@@ -1456,6 +1468,18 @@
       "icon_hash": "99cc5fe498cf72b083e91f50428cd78696066176"
     },
     {
+      "appid": 1172380,
+      "name": "STAR WARS Jedi: Fallen Order™",
+      "playtime_minutes": 0,
+      "icon_hash": "0ea1d285a8ee6fbeef0e8f7f3b2d7fa4cbcb423b"
+    },
+    {
+      "appid": 1774580,
+      "name": "STAR WARS Jedi: Survivor™",
+      "playtime_minutes": 0,
+      "icon_hash": "25578ffb2c6070c5d4e6569624efaadb8a0f5538"
+    },
+    {
       "appid": 252410,
       "name": "SteamWorld Dig",
       "playtime_minutes": 0,
@@ -1640,7 +1664,7 @@
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "playtime_minutes": 18518,
+      "playtime_minutes": 18647,
       "icon_hash": "8dbc71957312bbd3baea65848b545be9eae2a355",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1793054556"
     },
@@ -1661,7 +1685,7 @@
     {
       "appid": 3405690,
       "name": "EA SPORTS FC™ 26",
-      "playtime_minutes": 5787,
+      "playtime_minutes": 5884,
       "icon_hash": "8bc71e018a346f575c4b1bc6ed42a06c15e8e454",
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg?t=1789751159"
     },
@@ -1680,10 +1704,10 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "OFFLINE",
-  "account_value_usd": 2792,
-  "account_value_list_usd": 3624,
-  "account_value_priced_apps": 243,
+  "system_status": "ONLINE",
+  "account_value_usd": 2854,
+  "account_value_list_usd": 3833,
+  "account_value_priced_apps": 247,
   "account_value_region": "TR",
-  "updated_at": "2026-11-22T01:01:27Z"
+  "updated_at": "2026-11-22T16:57:38Z"
 }
