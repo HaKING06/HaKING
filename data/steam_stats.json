@@ -1,7 +1,7 @@
 {
   "schema_version": 4,
   "total_games": 275,
-  "total_hours": "2,213h",
+  "total_hours": "2,216h",
   "games": [
     {
       "appid": 730,
@@ -368,6 +368,12 @@
       "name": "Mortal Kombat 11",
       "playtime_minutes": 190,
       "icon_hash": "315c46ce25bcb6afa47473588b5fd8edeb3afdfa"
+    },
+    {
+      "appid": 898650,
+      "name": "The Shapeshifting Detective",
+      "playtime_minutes": 184,
+      "icon_hash": "62f05c8f90dede57c692ef5084349b1884d62b67"
     },
     {
       "appid": 48000,
@@ -1522,12 +1528,6 @@
       "icon_hash": "0efc0c5e80b66389d33981aceaf67b7309b4baec"
     },
     {
-      "appid": 898650,
-      "name": "The Shapeshifting Detective",
-      "playtime_minutes": 0,
-      "icon_hash": "62f05c8f90dede57c692ef5084349b1884d62b67"
-    },
-    {
       "appid": 1012460,
       "name": "Through Abandoned: The Refuge",
       "playtime_minutes": 0,
@@ -1704,10 +1704,10 @@
       "cover_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/812140/header.jpg?t=1793886405"
     }
   ],
-  "system_status": "OFFLINE",
+  "system_status": "ONLINE",
   "account_value_usd": 2222,
   "account_value_list_usd": 3848,
   "account_value_priced_apps": 247,
   "account_value_region": "TR",
-  "updated_at": "2026-11-28T01:48:21Z"
+  "updated_at": "2026-11-28T09:56:41Z"
 }
